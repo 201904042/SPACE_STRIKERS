@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3503471818972377597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6893912385846946241}
+  - component: {fileID: 7321341894720769415}
+  - component: {fileID: 8554844358371738763}
+  m_Layer: 0
+  m_Name: skill_ChargeShotLauncher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6893912385846946241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3503471818972377597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7321341894720769415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3503471818972377597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd874e1782d5953478e8086102ed8098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  skill_proj: {fileID: 2575614921708366721, guid: 63172c5606ee6b947bfa5077e1f62d6e, type: 3}
+  player_stat: {fileID: 0}
+  enemies: []
+  level: 0
+  Stat_Damage: 0
+  DamageRate: 0
+  coolTime: 0
+  proj_num: 0
+  timer: 0
+  is_penetrate: 0
+--- !u!114 &8554844358371738763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3503471818972377597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb3d80a2c4df78c4386a0cd6bbd83b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
+  icon: {fileID: -1898946432, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
+  skill_intro: "<\uCC28\uC9C0\uC0F7>\\n\uAC15\uB825\uD55C \uC5D0\uB108\uC9C0 \uAD6C\uCCB4\uB97C
+    \uBC1C\uC0AC\uD569\uB2C8\uB2E4"

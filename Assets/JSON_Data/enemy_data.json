@@ -1,0 +1,71 @@
+{
+   "enemy" : [
+	{
+         "e_id":0,
+	"e_grade":"cummon",
+         "e_name":"sandBag",
+	"e_move_attack":false,
+	"e_is_aiming":false,
+	 "e_maxHP":10000,
+         "e_damage":0,
+	 "e_move_speed":0,
+	 "e_attack_speed":0,
+         "e_exp_amount":10,
+	 "e_score_amount":1000
+      } ,
+
+      {
+         "e_id":1,
+	"e_grade":"cummon",
+         "e_name":"Earth_cummon1",
+	"e_move_attack":false,
+	"e_is_aiming":false,
+	 "e_maxHP":50,
+         "e_damage":10,
+	 "e_move_speed":5,
+	 "e_attack_speed":5,
+         "e_exp_amount":1,
+	 "e_score_amount":100
+      } ,
+	{
+         "e_id":2,
+	"e_grade":"cummon",
+         "e_name":"Earth_cummon2",
+	"e_move_attack":true,
+	"e_is_aiming":true,
+	 "e_maxHP":30,
+         "e_damage":10,
+	 "e_move_speed":3,
+	 "e_attack_speed":5,
+         "e_exp_amount":1,
+	 "e_score_amount":100
+      },
+	{
+         "e_id":3,
+	"e_grade":"elite",
+         "e_name":"Earth_elite1",
+	"e_move_attack":false,
+	"e_is_aiming":false,
+	 "e_maxHP":100,
+         "e_damage":10,
+	 "e_move_speed":5,
+	 "e_attack_speed":5,
+         "e_exp_amount":1,
+	 "e_score_amount":300
+      } ,
+	{
+         "e_id":4,
+	"e_grade":"elite",
+         "e_name":"Earth_elite2",
+	"e_move_attack":true,
+	"e_is_aiming":false,
+	 "e_maxHP":50,
+         "e_damage":10,
+	 "e_move_speed":5,
+	 "e_attack_speed":5,
+         "e_exp_amount":1,
+	 "e_score_amount":300
+      }  
+
+  ]
+}

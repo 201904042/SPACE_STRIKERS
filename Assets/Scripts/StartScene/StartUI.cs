@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartUI : MonoBehaviour
 {
@@ -18,14 +19,18 @@ public class StartUI : MonoBehaviour
 
     public void StartBtn()
     {
-
+        SceneManager.LoadScene("MainMenu");
     }
-    public void OptionBtn()
+    public void EndBtn()
     {
-
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application,Quit();
+        #endif
     }
     public void HomePageBtn()
     {
-
+        Application.OpenURL("https://naver.com");
     }
 }

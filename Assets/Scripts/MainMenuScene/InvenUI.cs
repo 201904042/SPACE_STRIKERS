@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class InvenUI : UI_Parent
 {
+    public GameObject upgradeinterfaceobj;
+    public GameObject sellinterfaceobj;
+
     protected override void Awake()
     {
         base.Awake();
@@ -13,5 +16,19 @@ public class InvenUI : UI_Parent
     void Update()
     {
         
+    }
+
+    public void BackBtn()
+    {
+        gameObject.SetActive(false);
+        Main.SetActive(true);
+    }
+    public void UpgradeBtn()
+    {
+        upgradeinterfaceobj.SetActive(true);
+    }
+    public void SellBtn()
+    {
+        sellinterfaceobj.SetActive(true);
     }
 }

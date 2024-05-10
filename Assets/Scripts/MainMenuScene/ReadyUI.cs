@@ -14,4 +14,16 @@ public class ReadyUI : UI_Parent
     {
         
     }
+
+    public void BackBtn()
+    {
+        gameObject.SetActive(false);
+        Stage.SetActive(true);
+        
+    }
+    public void NextBtn()
+    {
+        gameObject.SetActive(false);
+        //인게임 씬 전환
+    }
 }

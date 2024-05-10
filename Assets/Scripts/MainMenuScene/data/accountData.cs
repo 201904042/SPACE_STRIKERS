@@ -18,16 +18,21 @@ public class PlayerAccount
     public int clearedPlanet4Stage;
 }
 
+
 [System.Serializable]
 public class PlayerAccountList
 {
     public PlayerAccount[] Account;
 }
 
+
+
+
 public class accountData : MonoBehaviour
 {
     public TextAsset jsonFile;
     public PlayerAccountList playerAccountList;
+    
 
     public bool is_Planet1Clear = false;
     public bool is_Planet2Clear = false;
@@ -45,6 +50,7 @@ public class accountData : MonoBehaviour
         {
             string json = jsonFile.text;
             playerAccountList = JsonUtility.FromJson<PlayerAccountList>(json);
+
 
             /*if (playerAccountList != null && playerAccountList.Account != null)
             {

@@ -1,0 +1,65 @@
+{
+   "parts" : [
+      {
+	"PartsId":1,
+	"PartsCode":1,
+        "PartsName":"Parts1",
+        "PartsType":"Parts",
+	"PartsLevel":1,
+	"PartsRank":"C",
+	"Partsability1":"str/10",
+	"Partsability2":"mspd/10",
+	"Partsability3":"null",
+	"Partsability4":"null",
+	"Partsability5":"null"
+      },	
+      {
+	"PartsId":2,
+	"PartsCode":2,
+        "PartsName":"Parts2",
+        "PartsType":"Parts",
+	"PartsLevel":4,
+	"PartsRank":"A",
+	"Partsability1":"str/10",
+	"Partsability2":"mspd/10",
+	"Partsability3":"asped/5",
+	"Partsability4":"asped/5",
+	"Partsability5":"null"
+       }
+   ],
+   "ingredients":[
+      {
+	"ingredId":1,
+	"ingredName":"고철",
+	"ingredAmount" : 0
+      },
+      {
+	"ingredId":2,
+	"ingredName":"전선",
+	"ingredAmount" : 0
+      },
+      {
+	"ingredId":3,
+	"ingredName":"기어",
+	"ingredAmount" : 0
+      }
+   ],
+   "consumables":[
+      {
+	"consId":1,
+	"consName":"BST-35",
+	"consAmount" : 0
+      },
+      {
+	"consId":2,
+	"consName":"전투AI",
+	"consAmount" : 0
+      },
+      {
+	"consId":3,
+	"consName":"자기장 코어",
+	"consAmount" : 0
+      }
+   ]
+
+}

@@ -46,11 +46,17 @@ public class invenScroll : MonoBehaviour
                     partsInvenSrt.PartsType = parts.PartsType;
                     partsInvenSrt.PartsLevel = parts.PartsLevel;
                     partsInvenSrt.PartsRank = parts.PartsRank;
+                    partsInvenSrt.mainAmount = parts.mainAmount;
                     partsInvenSrt.Partsability1 = parts.Partsability1;
+                    partsInvenSrt.abilityAmount1 = parts.abilityAmount1;
                     partsInvenSrt.Partsability2 = parts.Partsability2;
+                    partsInvenSrt.abilityAmount2 = parts.abilityAmount2;
                     partsInvenSrt.Partsability3 = parts.Partsability3;
+                    partsInvenSrt.abilityAmount3 = parts.abilityAmount3;
                     partsInvenSrt.Partsability4 = parts.Partsability4;
+                    partsInvenSrt.abilityAmount4 = parts.abilityAmount4;
                     partsInvenSrt.Partsability5 = parts.Partsability5;
+                    partsInvenSrt.abilityAmount5 = parts.abilityAmount5;
                 }
             }
         }

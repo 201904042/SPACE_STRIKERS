@@ -7,11 +7,17 @@
         "PartsType":"Parts",
 	"PartsLevel":1,
 	"PartsRank":"C",
-	"Partsability1":"str/10",
-	"Partsability2":"mspd/10",
+	"mainAmount":20,
+	"Partsability1":"Dmg",
+	"abilityAmount1":10,
+	"Partsability2":"MSpd",
+	"abilityAmount2":20,
 	"Partsability3":"null",
+	"abilityAmount3":0,
 	"Partsability4":"null",
-	"Partsability5":"null"
+	"abilityAmount4":0,
+	"Partsability5":"null",
+	"abilityAmount5":0
       },	
       {
 	"PartsId":2,
@@ -20,11 +26,17 @@
         "PartsType":"Parts",
 	"PartsLevel":4,
 	"PartsRank":"A",
-	"Partsability1":"str/10",
-	"Partsability2":"mspd/10",
-	"Partsability3":"asped/5",
-	"Partsability4":"asped/5",
-	"Partsability5":"null"
+	"mainAmount":40,
+	"Partsability1":"Dmg",
+	"abilityAmount1":10,
+	"Partsability2":"MSpd",
+	"abilityAmount2":20,
+	"Partsability3":"ExpUp",
+	"abilityAmount3":5,
+	"Partsability4":"ItemUp",
+	"abilityAmount4":8,
+	"Partsability5":"null",
+	"abilityAmount5":0
        }
    ],
    "ingredients":[

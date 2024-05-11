@@ -11,11 +11,17 @@ public class Parts
     public string PartsType;
     public int PartsLevel;
     public string PartsRank;
+    public int mainAmount;
     public string Partsability1;
+    public int abilityAmount1;
     public string Partsability2;
+    public int abilityAmount2;
     public string Partsability3;
+    public int abilityAmount3;
     public string Partsability4;
+    public int abilityAmount4;
     public string Partsability5;
+    public int abilityAmount5;
 }
 [System.Serializable]
 public class Ingredients

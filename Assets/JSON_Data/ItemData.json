@@ -52,12 +52,12 @@
       },
       {
 	"consId":2,
-	"consName":"전투AI",
+	"consName":"학습AI",
 	"consAmount" : 0
       },
       {
 	"consId":3,
-	"consName":"자기장 코어",
+	"consName":"자기장코어",
 	"consAmount" : 0
       }
    ]

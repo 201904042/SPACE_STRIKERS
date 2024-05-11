@@ -8,8 +8,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class InvenUI : UI_Parent
 {
-    public GameObject upgradePageobj;
-    public GameObject sellPageobj;
+    
     public GameObject ChosingCharPageObj;
     public int curPlayer=0;
 
@@ -87,14 +86,6 @@ public class InvenUI : UI_Parent
     {
         gameObject.SetActive(false);
         Main.SetActive(true);
-    }
-    public void UpgradeBtn()
-    {
-        upgradePageobj.SetActive(true);
-    }
-    public void SellBtn()
-    {
-        sellPageobj.SetActive(true);
     }
 
     public void Player_Btn() {

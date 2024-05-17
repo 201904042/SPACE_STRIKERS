@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
     private GameObject DamageRate_instance;
     private TextMeshProUGUI TMPro;
 
+    private float Enemy_saveHP;
+
 
 
     private void Awake()
@@ -55,6 +57,7 @@ public class Enemy : MonoBehaviour
         Enemy_IsAiming = enemy_stat.is_Aiming;
         Enemy_MaxHP = enemy_stat.MaxHP;
         Enemy_CurHP = Enemy_MaxHP;
+        Enemy_saveHP = Enemy_CurHP;
         Enemy_Damage = enemy_stat.Damage;
         Enemy_MoveSpeed = enemy_stat.MoveSpeed;
         Enemy_AttackSpeed = enemy_stat.AttackSpeed;
@@ -71,8 +74,9 @@ public class Enemy : MonoBehaviour
         hpBar = hpBar_instance.GetComponent<RectTransform>();
         hpSlider = hpBar_instance.GetComponent<Slider>();
         hpBar.sizeDelta = new Vector2(transform.localScale.x * 200, hpBar.sizeDelta.y);
+        hpBar_instance.SetActive(false);
 
-        if(gameObject.name == "sandBag")
+        if (gameObject.name == "sandBag")
         {
             DamageRate_instance = Instantiate(e_DamageRate, canvas.transform);
             TMPro = DamageRate_instance.GetComponent<TextMeshProUGUI>();
@@ -83,7 +87,19 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        hpBar_update();
+        if (Enemy_CurHP != Enemy_saveHP)
+        {
+            if (!hpBar_instance.activeSelf)
+            {
+                hpBar_instance.SetActive(true);
+            }
+            Enemy_saveHP = Enemy_CurHP;
+        }
+        if (Enemy_CurHP < Enemy_MaxHP)
+        {
+            hpBar_update();
+        }
+        
         
 
         if (Enemy_CurHP <= 0)

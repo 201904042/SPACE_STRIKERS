@@ -37,6 +37,7 @@ public class PartsInvenPref : MonoBehaviour
     public Sprite partsSprite5;
     public GameObject inventoryScroll;
     public GameObject partsInformPage;
+    
     private ItemInformPage partsinformSrt;
 
 
@@ -138,7 +139,9 @@ public class PartsInvenPref : MonoBehaviour
             else
                 partsinformSrt.SubAbility5.text = "¿·±Ë";
 
-
+            partsInformPage.GetComponent<ItemInformPage>().itemLevel = PartsLevel;
+            partsInformPage.GetComponent<ItemInformPage>().itemRank = PartsRank;
+            partsInformPage.GetComponent<ItemInformPage>().itemCode = PartsCode;
             partsInformPage.SetActive(true);
         }
     }

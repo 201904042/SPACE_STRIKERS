@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ReadyUI : UI_Parent
+public class OptionUI : MonoBehaviour
 {
-    protected override void Awake()
+    public GameObject GameEndUI;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        base.Awake();
+        
     }
 
     // Update is called once per frame
@@ -16,15 +18,15 @@ public class ReadyUI : UI_Parent
         
     }
 
-    public void BackBtn()
+    public void Endbtn()
     {
         gameObject.SetActive(false);
-        Stage.SetActive(true);
-        
+        GameEndUI.SetActive(true);
+        //이경우 무조건 패배
+
     }
-    public void NextBtn()
+    public void CancelBtn()
     {
         gameObject.SetActive(false);
-        SceneManager.LoadScene("InGameTest");
     }
 }

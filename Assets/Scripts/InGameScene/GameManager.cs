@@ -9,13 +9,21 @@ public class GameManager : MonoBehaviour
     public GameObject earth_cummon;
     public GameObject CommonSpawnZones;
     
-    Transform[] CommonSpawnPoints;
+    
     public  int ranEnemy;
     public int cummonpointNum;
     public float maxSpawnDelay;
     public float curSpawnDelay;
+    public bool battleStart;
+
+    public string StageName;
+    public string StageGain;
+
+    private Transform[] CommonSpawnPoints;
 
     private int stage;
+
+    
 
     private void Awake()
     {
@@ -23,21 +31,26 @@ public class GameManager : MonoBehaviour
         maxSpawnDelay = 4f;
         curSpawnDelay = 4f;
         cummonpointNum = 11;
+        battleStart = false;
         CommonSpawnPoints = new Transform[cummonpointNum];
-        spanwPointSet();
+        spawnPointSet();
     }
     private void Update()
     {
-        curSpawnDelay += Time.deltaTime;
-
-        if(curSpawnDelay > maxSpawnDelay)
+        if (battleStart)
         {
-            SpawnEnemy();
-            
-            curSpawnDelay = 0;
+            curSpawnDelay += Time.deltaTime;
+
+            if (curSpawnDelay > maxSpawnDelay)
+            {
+                SpawnEnemy();
+                curSpawnDelay = 0;
+            }
         }
+        
     }
-    void spanwPointSet()
+
+    void spawnPointSet()
     {
         for(int i=0;i < cummonpointNum; i++)
         {

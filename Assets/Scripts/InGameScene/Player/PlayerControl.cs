@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour
     private Vector3 curPosition;
     private float basic_speed;
 
+    public GameManager gameManager;
     public bool is_invincible;
     public bool is_moveable;
 

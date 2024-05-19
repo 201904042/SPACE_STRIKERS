@@ -22,11 +22,14 @@ public class OptionUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         GameEndUI.SetActive(true);
+        Time.timeScale = 1.0f;
         //이경우 무조건 패배
 
     }
     public void CancelBtn()
     {
+
         gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 }

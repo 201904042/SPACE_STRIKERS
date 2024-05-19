@@ -65,6 +65,7 @@ public class PlanetUI : UI_Parent
     }
     public void NextBtn()
     {
+        PlayerPrefs.SetInt("ChosenPlanet", planetId);
         gameObject.SetActive(false);
         Stage.SetActive(true);
     }

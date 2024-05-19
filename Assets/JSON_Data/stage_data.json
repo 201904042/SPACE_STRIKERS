@@ -1,0 +1,36 @@
+{
+   "stage": [
+      {
+         "stageCode": 1,
+         "stageEnemy": [{"enemyCode": 0, "enemyAmount": 50},{"enemyCode": 1, "enemyAmount": 50}],
+         "stageFirstGain": [
+            {"itemName": "미네랄", "itemAmount": 500},
+            {"itemName": "랜덤재료", "itemAmount": 3},
+            {"itemName": "뽑기권", "itemAmount": 1}
+         ],
+         "stageDefaultGain": [
+            {"itemName": "미네랄", "itemAmount": 100},
+            {"itemName": "랜덤재료", "itemAmount": 1}
+         ],
+         "defaultFullGain": [
+            {"itemName": "뽑기권", "itemAmount": 1}
+         ]
+      },
+      {
+         "stageCode": 2,
+         "stageEnemy": [{"enemyCode": 0, "enemyAmount": 50},{"enemyCode": 1, "enemyAmount": 50}],
+         "stageFirstGain": [
+            {"itemName": "미네랄", "itemAmount": 500},
+            {"itemName": "랜덤재료", "itemAmount": 3},
+            {"itemName": "뽑기권", "itemAmount": 1}
+         ],
+         "stageDefaultGain": [
+            {"itemName": "미네랄", "itemAmount": 100},
+            {"itemName": "랜덤재료", "itemAmount": 1}
+         ],
+         "defaultFullGain": [
+            {"itemName": "뽑기권", "itemAmount": 1}
+         ]
+      }
+   ]
+}

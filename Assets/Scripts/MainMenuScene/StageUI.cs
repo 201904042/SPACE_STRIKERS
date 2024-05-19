@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,6 @@ public class StageUI : UI_Parent
     {
         base.Awake();
         stagesPnt = transform.GetChild(0).GetChild(0).GetChild(0);
-        Debug.Log(stagesPnt);
         maxStage = 0;
         curStage = 0;
         curPlanet = 0;
@@ -93,6 +93,7 @@ public class StageUI : UI_Parent
     }
     public void NextBtn()
     {
+        PlayerPrefs.SetInt("ChosenStage",curStage);
         gameObject.SetActive(false);
         Ready.SetActive(true);
     }

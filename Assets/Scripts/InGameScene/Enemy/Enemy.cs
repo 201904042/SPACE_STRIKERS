@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    EnemyStat enemy_stat;
+    public EnemyStat enemy_stat;
+    public GameManager gameManager;
     public int Enemy_ID;
     public string Enemy_Name;
     public string Enemy_Grade;
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject e_DamageRate;
     private GameObject DamageRate_instance;
-    private TextMeshProUGUI TMPro;
+    private TextMeshProUGUI damageRateText;
 
     private float Enemy_saveHP;
 
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         enemy_stat = GetComponent<EnemyStat>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         EnemyStat_set();
         hpBar_set();
     }
@@ -75,15 +77,17 @@ public class Enemy : MonoBehaviour
         hpSlider = hpBar_instance.GetComponent<Slider>();
         hpBar.sizeDelta = new Vector2(transform.localScale.x * 200, hpBar.sizeDelta.y);
         hpBar_instance.SetActive(false);
+        
 
         if (gameObject.name == "sandBag")
         {
             DamageRate_instance = Instantiate(e_DamageRate, canvas.transform);
-            TMPro = DamageRate_instance.GetComponent<TextMeshProUGUI>();
-
-            TMPro.text = Enemy_CurHP.ToString();
+            damageRateText = DamageRate_instance.GetComponent<TextMeshProUGUI>();
+            DamageRate_instance.SetActive(false);
+            damageRateText.text = Enemy_CurHP.ToString();
         }
     }
+
 
     private void Update()
     {
@@ -92,6 +96,10 @@ public class Enemy : MonoBehaviour
             if (!hpBar_instance.activeSelf)
             {
                 hpBar_instance.SetActive(true);
+            }
+            if (gameObject.name == "sandBag"&&!DamageRate_instance.activeSelf)
+            {
+                DamageRate_instance.SetActive(true);
             }
             Enemy_saveHP = Enemy_CurHP;
         }
@@ -117,13 +125,12 @@ public class Enemy : MonoBehaviour
         {
             Vector3 DamageRate_pos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y) * 2, 0));
             DamageRate_instance.transform.position = DamageRate_pos;
-            TMPro.text = Enemy_CurHP.ToString();
+            damageRateText.text = Enemy_CurHP.ToString();
         }
 
         hpSlider.value = Enemy_CurHP/Enemy_MaxHP;
-        
-
     }
+
     public void EnemyEliminate()
     {
         Destroy(hpBar.gameObject);
@@ -133,12 +140,15 @@ public class Enemy : MonoBehaviour
             Destroy(DamageRate_instance.gameObject);
         }
     }
+
     public void EnemyDeath() //적 사망시
     {
         for(int i=0; i<exp_amount; i++)
         {
             Instantiate(exp, transform.position, transform.rotation); //생성되는 위치가 조금씩 차이가 나도록 바꿔보자
         }
+
+        gameManager.stageScore += score_amount;
         
         Destroy(hpBar.gameObject);
         Destroy(gameObject);
@@ -149,6 +159,15 @@ public class Enemy : MonoBehaviour
         
         //스코어 증가 코드 추가할것
     }
+
+    public void Enemydamaged(float damage, GameObject attackObj)
+    {
+        Enemy_CurHP -= damage;
+        Debug.Log(attackObj + " 에 의해 " + damage + " 의 데미지를 입음");
+    }
+
+    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -158,15 +177,9 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == "BulletBorder")
+        if (collision.tag == "BulletBorder")
         {
             EnemyEliminate();
         }
-    }
-
-    public void Enemydamaged(float damage, GameObject attackObj)
-    {
-        Enemy_CurHP -= damage;
-        Debug.Log(attackObj + " 에 의해 " + damage + " 의 데미지를 입음");
     }
 }

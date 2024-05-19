@@ -16,7 +16,7 @@ class player_character
 public class PlayerStat : PlayerjsonReader
 {
     public bool is_firstSet_done;
-
+    public GameManager gameManager;
     [Header("기본 정보")]
     public int cur_playerID;
     public int level;
@@ -58,15 +58,22 @@ public class PlayerStat : PlayerjsonReader
     {
         p_control = GameObject.Find("Player").GetComponent<PlayerControl>();
         is_firstSet_done = false;
-        is_shootable = true;
+        is_shootable = false;
         is_hitted = false;
         cur_playerID =1;
         LoadData();
         setStat(cur_playerID);
     }
-
+    private void Update()
+    {
+        if (gameManager.isBattleStart)
+        {
+            is_shootable = gameManager.isBattleStart;
+        }
+    }
     public void setStat(int cur_id)
     {
+        
         if(is_firstSet_done == false)
         {
             player1_set();

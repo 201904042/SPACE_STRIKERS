@@ -55,10 +55,7 @@ public class LevelUP_UI : MonoBehaviour
             buttons[i] = skillSlot.GetChild(i).GetComponent<Button>();
         }
     }
-    private void Update()
-    {
-        
-    }
+    
     private void instantSkillSlot()
     {
         if (countFalseInLevelMax() < skillSlotNum)

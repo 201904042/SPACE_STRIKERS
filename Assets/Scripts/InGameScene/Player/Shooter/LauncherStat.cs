@@ -29,6 +29,10 @@ public class LauncherStat : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (player_stat.is_shootable)
+        {
+            Launcher_shootable = player_stat.is_shootable;
+        }
         if (cur_statspeed != player_stat.attack_speed)
         {
             shootSpeed = basic_speed - (player_stat.attack_speed / 100);

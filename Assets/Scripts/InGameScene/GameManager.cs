@@ -3,41 +3,78 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : StageJsonReader
 {
+    [Header("스테이지 관련")]
+    public float stageScore;
+    public StageEnemy[] curStageEnemy;
+    public Item[] curStagefirstGain;
+    public Item[] curStageDefaultGain;
+    public Item[] curDefaultFullGain;
+    public int planet = 1;
+    public int stage=1;
+    public int openStage = 5; //현재 열린 스테이지
+
+
+    public float stageMaxTime = 15;
+    public float stageTime;
+    public float minutes;
+    public float seconds;
+
+    [Header("스폰관련")]
     public GameObject sandbag;
     public GameObject earth_cummon;
     public GameObject CommonSpawnZones;
-    
+    public int stageEnemyAmount;
     
     public  int ranEnemy;
     public int cummonpointNum;
-    public float maxSpawnDelay;
-    public float curSpawnDelay;
-    public bool battleStart;
-
-    public string StageName;
-    public string StageGain;
-
-    private Transform[] CommonSpawnPoints;
-
-    private int stage;
-
     
 
-    private void Awake()
+    public float maxSpawnDelay;
+    public float curSpawnDelay;
+
+    public bool isBattleStart;
+    public bool isGameClear;
+    public bool isPerfectClear;
+
+    private Transform[] CommonSpawnPoints;
+    
+
+    protected override void Awake()
     {
-        stage = 0;
+        base.Awake ();
+        
+        planet = PlayerPrefs.GetInt("ChosenPlanet");
+        Debug.Log(planet);
+        stage = PlayerPrefs.GetInt("ChosenStage");
+        Debug.Log(stage);
+        StageDataSet();
+        stageScore = 0;
+        stageTime = 0;
+
+        foreach (StageEnemy enemy in curStageEnemy)
+        {
+            stageEnemyAmount += enemy.enemyAmount;
+        }
+
         maxSpawnDelay = 4f;
         curSpawnDelay = 4f;
         cummonpointNum = 11;
-        battleStart = false;
+        isBattleStart = false;
+        isGameClear = false;
         CommonSpawnPoints = new Transform[cummonpointNum];
+
+
         spawnPointSet();
     }
     private void Update()
     {
-        if (battleStart)
+        stageTime += Time.deltaTime;
+        minutes = Mathf.FloorToInt(stageTime / 60f);
+        seconds = Mathf.FloorToInt(stageTime % 60f);
+
+        if (isBattleStart)
         {
             curSpawnDelay += Time.deltaTime;
 
@@ -75,7 +112,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
+    void SpawnEnemy() //스폰 요소 고치기
     {
         if(stage == 0)
         {
@@ -112,5 +149,25 @@ public class GameManager : MonoBehaviour
         int ranPoint = Random.Range(0, cummonpointNum);
         EnemyStat enemy = Instantiate(earth_cummon, CommonSpawnPoints[ranPoint].position,
             CommonSpawnPoints[ranPoint].rotation).GetComponent<EnemyStat>();
+    }
+
+    void StageDataSet()
+    {
+        int stageCode = ((planet-1)*10) + stage;
+        Debug.Log(stageCode);
+
+        foreach (StageData stageData in dataContainer.stage)
+        {
+            if(stageData.stageCode == stageCode)
+            {
+                curStageEnemy = stageData.stageEnemy;
+                
+                curStagefirstGain= stageData.stageFirstGain;
+                
+                
+                curStageDefaultGain = stageData.stageDefaultGain;
+                curDefaultFullGain = stageData.defaultFullGain;
+            }
+        }
     }
 }

@@ -9995,7 +9995,9 @@ MonoBehaviour:
   SubAbility3: {fileID: 1625733427}
   SubAbility4: {fileID: 808759531}
   SubAbility5: {fileID: 2856314}
-  isSet: 0
+  itemRank: 
+  itemLevel: 0
+  itemCode: 0
 --- !u!114 &536054641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10778,9 +10780,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 572503762}
-  - component: {fileID: 572503761}
   - component: {fileID: 572503763}
   - component: {fileID: 572503764}
+  - component: {fileID: 572503765}
   m_Layer: 0
   m_Name: UI_Manager
   m_TagString: Untagged
@@ -10788,25 +10790,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &572503761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572503760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4bab5f2b075de4f9578f37a0fe4c90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jsonFile: {fileID: 4900000, guid: 59d8edc9de1f82546b56f5f642deecd1, type: 3}
-  playerAccountList:
-    Account: []
-  is_Planet1Clear: 0
-  is_Planet2Clear: 0
-  is_Planet3Clear: 0
-  is_Planet4Clear: 0
 --- !u!4 &572503762
 Transform:
   m_ObjectHideFlags: 0
@@ -10834,7 +10817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47295c9f2b55caa499127046c66eb9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayertextJSON: {fileID: 4900000, guid: cdd9850c342e4b34db5422d80a55b974, type: 3}
   myPlayerList:
     player: []
 --- !u!114 &572503764
@@ -10849,13 +10831,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196f8c7e14021e644a6b0f53c13b900f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonFile: {fileID: 4900000, guid: e68c68d3c90e4f04a8c26b237ee3b0c3, type: 3}
+  partsList:
+    parts: []
+  ingredList:
+    ingredients: []
+  consList:
+    consumables: []
+--- !u!114 &572503765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572503760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4bab5f2b075de4f9578f37a0fe4c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAccountList:
+    Account: []
   playerPartsList:
     parts: []
   playerIngredList:
     ingredients: []
   playerConsList:
     consumables: []
+  is_Planet1Clear: 0
+  is_Planet2Clear: 0
+  is_Planet3Clear: 0
+  is_Planet4Clear: 0
 --- !u!1 &587097597
 GameObject:
   m_ObjectHideFlags: 0
@@ -22319,6 +22324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30abd42dc2f09bb4eaad242e3934ceba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradImage: {fileID: 0}
+  upgradeIngred: {fileID: 0}
+  upgradeExplain: {fileID: 0}
 --- !u!1 &1226897590
 GameObject:
   m_ObjectHideFlags: 0
@@ -23701,7 +23709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0dd11eaac3b4d4d9f483af179ee528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 572503761}
+  data: {fileID: 0}
   UIs: {fileID: 0}
   Main: {fileID: 0}
   Planet: {fileID: 0}
@@ -35751,7 +35759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5ba68506e64b94a8166a84a88787a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 572503761}
+  data: {fileID: 0}
   UIs: {fileID: 0}
   Main: {fileID: 0}
   Planet: {fileID: 0}

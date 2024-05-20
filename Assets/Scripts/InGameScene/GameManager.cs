@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class GameManager : StageJsonReader
 {
+    public GameObject gameEndUI;
+
     [Header("스테이지 관련")]
     public float stageScore;
     public StageEnemy[] curStageEnemy;
     public Item[] curStagefirstGain;
     public Item[] curStageDefaultGain;
     public Item[] curDefaultFullGain;
+
     public int planet = 1;
     public int stage=1;
     public int openStage = 5; //현재 열린 스테이지
@@ -44,7 +47,7 @@ public class GameManager : StageJsonReader
     protected override void Awake()
     {
         base.Awake ();
-        
+        Time.timeScale = 1;
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         Debug.Log(planet);
         stage = PlayerPrefs.GetInt("ChosenStage");
@@ -70,18 +73,25 @@ public class GameManager : StageJsonReader
     }
     private void Update()
     {
-        stageTime += Time.deltaTime;
-        minutes = Mathf.FloorToInt(stageTime / 60f);
-        seconds = Mathf.FloorToInt(stageTime % 60f);
-
         if (isBattleStart)
         {
+            stageTime += Time.deltaTime;
+            minutes = Mathf.FloorToInt(stageTime / 60f);
+            seconds = Mathf.FloorToInt(stageTime % 60f);
+
             curSpawnDelay += Time.deltaTime;
 
             if (curSpawnDelay > maxSpawnDelay)
             {
                 SpawnEnemy();
                 curSpawnDelay = 0;
+            }
+
+            if (stageEnemyAmount <= 0 || minutes >= 15) //승리조건 만족시 게임 종료
+            {
+                Time.timeScale = 0;
+                isGameClear = true;
+                gameEndUI.SetActive(true);
             }
         }
         
@@ -161,10 +171,7 @@ public class GameManager : StageJsonReader
             if(stageData.stageCode == stageCode)
             {
                 curStageEnemy = stageData.stageEnemy;
-                
-                curStagefirstGain= stageData.stageFirstGain;
-                
-                
+                curStagefirstGain = stageData.stageFirstGain;
                 curStageDefaultGain = stageData.stageDefaultGain;
                 curDefaultFullGain = stageData.defaultFullGain;
             }

@@ -4,32 +4,32 @@
          "stageCode": 1,
          "stageEnemy": [{"enemyCode": 0, "enemyAmount": 50},{"enemyCode": 1, "enemyAmount": 50}],
          "stageFirstGain": [
-            {"itemName": "미네랄", "itemAmount": 500},
-            {"itemName": "랜덤재료", "itemAmount": 3},
-            {"itemName": "뽑기권", "itemAmount": 1}
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
+            {"itemName": "랜덤재료1","itemType":"Randomingred", "itemCode":0, "itemAmount": 3},
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
          ],
          "stageDefaultGain": [
-            {"itemName": "미네랄", "itemAmount": 100},
-            {"itemName": "랜덤재료", "itemAmount": 1}
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 100},
+            {"itemName": "랜덤재료1","itemType":"Randomingred", "itemCode":0, "itemAmount": 1}
          ],
          "defaultFullGain": [
-            {"itemName": "뽑기권", "itemAmount": 1}
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
          ]
       },
       {
          "stageCode": 2,
          "stageEnemy": [{"enemyCode": 0, "enemyAmount": 50},{"enemyCode": 1, "enemyAmount": 50}],
          "stageFirstGain": [
-            {"itemName": "미네랄", "itemAmount": 500},
-            {"itemName": "랜덤재료", "itemAmount": 3},
-            {"itemName": "뽑기권", "itemAmount": 1}
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
+            {"itemName": "랜덤재료1","itemType":"Randomingred", "itemCode":0, "itemAmount": 3},
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
          ],
          "stageDefaultGain": [
-            {"itemName": "미네랄", "itemAmount": 100},
-            {"itemName": "랜덤재료", "itemAmount": 1}
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 100},
+            {"itemName": "랜덤재료1","itemType":"Randomingred", "itemCode":0, "itemAmount": 1}
          ],
          "defaultFullGain": [
-            {"itemName": "뽑기권", "itemAmount": 1}
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
          ]
       }
    ]

@@ -1,0 +1,63 @@
+{
+   "parts" : [
+      {
+         "PartsId": 1, 
+         "PartsName": "Parts1", 
+         "PartsType": "core"
+      },
+      {
+         "PartsId": 2,
+         "PartsName": "Parts2",
+         "PartsType": "booster"
+      },
+      {
+         "PartsId": 3,
+         "PartsName": "Parts3",
+         "PartsType": "freezer"
+      }
+   ],
+   "ingredients": [
+      {
+         "ingredId": 1,
+         "ingredName": "고철",
+         "ingredStage": 1
+      },
+      {
+         "ingredId": 2,
+         "ingredName": "전선",
+         "ingredStage": 1
+      },
+      {
+         "ingredId": 3,
+         "ingredName": "기어",
+         "ingredStage": 1
+      }
+   ],
+   "consumables": [
+      {
+         "consId": 1,
+         "consName": "하급뽑기권",
+         "consType": "gotcha"
+      },
+      {
+         "consId": 2,
+         "consName": "하급재료뽑기권",
+         "consType": "gotcha"
+      },
+      {
+         "consId": 3,
+         "consName": "BST-35",
+         "consType": "stageBooster"
+      },
+      {
+         "consId": 4,
+         "consName": "학습AI",
+         "consType": "stageBooster"
+      },
+      {
+         "consId": 5,
+         "consName": "자기장코어",
+         "consType": "stageBooster"
+      }
+   ]
+}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class StageEnemy
 public class Item
 {
     public string itemName;
+    public string itemType;
+    public int itemCode;
     public int itemAmount;
 }
 
@@ -37,20 +40,13 @@ public class StageDataContainer
 
 public class StageJsonReader : MonoBehaviour
 {
-    public TextAsset jsonFile;
+    private string filePath = "Assets/JSON_Data/stage_data.json";
     public StageDataContainer dataContainer = new StageDataContainer();
 
     protected virtual void Awake()
     {
-        if (jsonFile != null)
-        {
-            string jsonText = jsonFile.text;
-            dataContainer = JsonUtility.FromJson<StageDataContainer>(jsonText);
-        }
-        else
-        {
-            Debug.LogError("JSON file is not assigned.");
-        }
+        string json = File.ReadAllText(filePath);
+        dataContainer = JsonUtility.FromJson<StageDataContainer>(json);
     }
 }
 

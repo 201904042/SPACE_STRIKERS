@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
-using static PlayerjsonReader;
+
 
 [System.Serializable]
 public class Player
@@ -25,7 +26,7 @@ public class PlayerList
 
 public class PlayerjsonReader : MonoBehaviour
 {
-    public TextAsset PlayertextJSON;
+    private string filePath = "Assets/JSON_Data/player_data.json";
     public PlayerList myPlayerList = new PlayerList();
 
     private void Awake()
@@ -35,16 +36,8 @@ public class PlayerjsonReader : MonoBehaviour
 
     public void LoadData()
     {
-        if (PlayertextJSON != null)
-        {
-            string json = PlayertextJSON.text;
-            myPlayerList = JsonUtility.FromJson<PlayerList>(json);
-
-        }
-        else
-        {
-            Debug.LogError("No JSON file assigned.");
-        }
+        string json = File.ReadAllText(filePath);
+        myPlayerList = JsonUtility.FromJson<PlayerList>(json);
     }
 
 

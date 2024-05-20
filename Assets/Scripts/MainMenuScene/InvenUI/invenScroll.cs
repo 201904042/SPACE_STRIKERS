@@ -11,7 +11,7 @@ public class invenScroll : MonoBehaviour
     public GameObject consContent;
 
     public GameObject UIManager;
-    private itemsData itemData;
+    private AccountData accountData;
     public GameObject partsInven;
     public GameObject ingredInven;
     public GameObject consInven;
@@ -21,7 +21,7 @@ public class invenScroll : MonoBehaviour
     private void Awake()
     {
         invenScrollRect = gameObject.GetComponent<ScrollRect>();
-        itemData = UIManager.GetComponent<itemsData>();
+        accountData = UIManager.GetComponent<AccountData>();
         
     }
 
@@ -35,7 +35,7 @@ public class invenScroll : MonoBehaviour
     public void invenLoad() {
         if (partsContent.activeSelf)
         {
-            foreach (var parts in itemData.playerPartsList.parts)
+            foreach (var parts in accountData.playerPartsList.parts)
             {
                 if (!isPartsAlreadyInstatiate(parts.PartsId))
                 {
@@ -62,7 +62,7 @@ public class invenScroll : MonoBehaviour
         }
         else if (ingredContent.activeSelf)
         {
-            foreach (var ingred in itemData.playerIngredList.ingredients)
+            foreach (var ingred in accountData.playerIngredList.ingredients)
             {
                 if (!isPartsAlreadyInstatiate(ingred.ingredId))
                 {
@@ -76,7 +76,7 @@ public class invenScroll : MonoBehaviour
         }
         else if (consContent.activeSelf)
         {
-            foreach (var cons in itemData.playerConsList.consumables)
+            foreach (var cons in accountData.playerConsList.consumables)
             {
                 if (!isPartsAlreadyInstatiate(cons.consId))
                 {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 
+
 [System.Serializable]
 public class PlayerAccount
 {
@@ -20,62 +21,105 @@ public class PlayerAccount
 
 
 [System.Serializable]
+public class Parts
+{
+    public int PartsId;
+    public int PartsCode;
+    public string PartsName;
+    public string PartsType;
+    public int PartsLevel;
+    public string PartsRank;
+    public int mainAmount;
+    public string Partsability1;
+    public int abilityAmount1;
+    public string Partsability2;
+    public int abilityAmount2;
+    public string Partsability3;
+    public int abilityAmount3;
+    public string Partsability4;
+    public int abilityAmount4;
+    public string Partsability5;
+    public int abilityAmount5;
+}
+[System.Serializable]
+public class Ingredients
+{
+    public int ingredId;
+    public string ingredName;
+    public int ingredAmount;
+}
+[System.Serializable]
+public class Consumables
+{
+    public int consId;
+    public string consName;
+    public int consAmount;
+}
+
+[System.Serializable]
+public class PlayerPartsList
+{
+    public Parts[] parts;
+}
+[System.Serializable]
+public class PlayerIngredList
+{
+    public Ingredients[] ingredients;
+}
+[System.Serializable]
+public class PlayerConsList
+{
+    public Consumables[] consumables;
+}
+
+
+
+[System.Serializable]
 public class PlayerAccountList
 {
     public PlayerAccount[] Account;
 }
 
 
-
-
-public class accountData : MonoBehaviour
+public class AccountData : MonoBehaviour
 {
-    public TextAsset jsonFile;
+    private string filePath = "Assets/JSON_Data/account_data.json";
+
     public PlayerAccountList playerAccountList;
-    
+    public PlayerPartsList playerPartsList;
+    public PlayerIngredList playerIngredList;
+    public PlayerConsList playerConsList;
+
 
     public bool is_Planet1Clear = false;
     public bool is_Planet2Clear = false;
     public bool is_Planet3Clear = false;
     public bool is_Planet4Clear = false;
 
+
     private void Awake()
     {
         LoadData();
     }
 
-    private void LoadData()
+    private void Update()
     {
-        if (jsonFile != null)
+        if (PlayerPrefs.GetInt("isAccountDataChanged") == 1)
         {
-            string json = jsonFile.text;
-            playerAccountList = JsonUtility.FromJson<PlayerAccountList>(json);
-
-
-            /*if (playerAccountList != null && playerAccountList.Account != null)
-            {
-                Debug.Log("Loaded " + playerAccountList.Account.Length + " accounts.");
-
-                foreach (var account in playerAccountList.Account)
-                {
-                    Debug.Log("Account Code: " + account.accountCode);
-                    Debug.Log("Account Name: " + account.accountName);
-                    Debug.Log("Account Level: " + account.accountLevel);
-                    Debug.Log("Mineral: " + account.mineral);
-                    Debug.Log("Ruby: " + account.ruby);
-                    Debug.Log("Is Player 2 Open: " + account.is_player2Open);
-                    Debug.Log("Is Player 3 Open: " + account.is_player3Open);
-                    Debug.Log("Is Player 4 Open: " + account.is_player4Open);
-                }
-            }
-            else
-            {
-                Debug.LogError("Failed to load player account data.");
-            }*/
+            LoadData();
+            PlayerPrefs.SetInt("isAccountDataChanged", 0);
         }
-        else
-        {
-            Debug.LogError("No JSON file assigned.");
-        }
+    }
+
+    public void LoadData()
+    {
+        string json = File.ReadAllText(filePath);
+
+        playerAccountList = JsonUtility.FromJson<PlayerAccountList>(json);
+        playerPartsList = JsonUtility.FromJson<PlayerPartsList>(json);
+        playerIngredList = JsonUtility.FromJson<PlayerIngredList>(json);
+        playerConsList = JsonUtility.FromJson<PlayerConsList>(json);
+
+
     }
 }

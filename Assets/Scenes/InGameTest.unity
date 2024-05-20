@@ -502,6 +502,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1653252713}
     - target: {fileID: 4413102146236822029, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: jsonFile
+      value: 
+      objectReference: {fileID: 4900000, guid: e68c68d3c90e4f04a8c26b237ee3b0c3, type: 3}
+    - target: {fileID: 4413102146236822029, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: accountData
+      value: 
+      objectReference: {fileID: 4900000, guid: 59d8edc9de1f82546b56f5f642deecd1, type: 3}
+    - target: {fileID: 4413102146236822029, guid: ed030da652c2a4847a8121992f243963, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1653252713}
@@ -662,6 +670,7 @@ MonoBehaviour:
   jsonFile: {fileID: 4900000, guid: 74ef6dcf2856c064cb4a9cb54dc65ba2, type: 3}
   dataContainer:
     stage: []
+  gameEndUI: {fileID: 2095215164}
   stageScore: 0
   curStageEnemy: []
   curStagefirstGain: []
@@ -773,6 +782,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2095215164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6388701695144634678, guid: ed030da652c2a4847a8121992f243963, type: 3}
+  m_PrefabInstance: {fileID: 1452531521}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2099926385 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2445714135734172816, guid: 7880ce45c8307a8429a928b9908648d8, type: 3}

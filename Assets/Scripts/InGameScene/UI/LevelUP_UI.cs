@@ -23,7 +23,7 @@ public class LevelUP_UI : MonoBehaviour
     private Transform p_skillSlot; //플레이어의 스킬칸
     private Transform skillSlot; //UI의 스킬버튼이 들어갈 장소
     private bool[] levelMax;
-    private Button[] buttons;
+
 
     private int skillSlotNum = 3;
     private int skillNum;
@@ -49,11 +49,8 @@ public class LevelUP_UI : MonoBehaviour
         {
             levelMax[i] = is_skillLevelMax(i);
         }
+
         instantSkillSlot();
-        for(int i = 0; i<skillSlotNum; i++)
-        {
-            buttons[i] = skillSlot.GetChild(i).GetComponent<Button>();
-        }
     }
     
     private void instantSkillSlot()

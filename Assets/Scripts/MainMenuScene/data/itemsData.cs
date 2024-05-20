@@ -1,83 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [System.Serializable]
-public class Parts
+public class ItemParts
 {
     public int PartsId;
-    public int PartsCode;
     public string PartsName;
     public string PartsType;
-    public int PartsLevel;
-    public string PartsRank;
-    public int mainAmount;
-    public string Partsability1;
-    public int abilityAmount1;
-    public string Partsability2;
-    public int abilityAmount2;
-    public string Partsability3;
-    public int abilityAmount3;
-    public string Partsability4;
-    public int abilityAmount4;
-    public string Partsability5;
-    public int abilityAmount5;
+    
 }
 [System.Serializable]
-public class Ingredients
+public class ItemIngred
 {
     public int ingredId;
     public string ingredName;
-    public int ingredAmount;
+    public int ingredStage;
 }
 [System.Serializable]
-public class Consumables
+public class ItemCons
 {
     public int consId;
     public string consName;
-    public int consAmount;
+    public string consType;
 }
 
 [System.Serializable]
-public class PlayerPartsList
+public class ItemPartsList
 {
-    public Parts[] parts;
+    public ItemParts[] parts;
 }
 [System.Serializable]
-public class PlayerIngredList
+public class ItemIngredList
 {
-    public Ingredients[] ingredients;
+    public ItemIngred[] ingredients;
 }
 [System.Serializable]
-public class PlayerConsList
+public class ItemConsList
 {
-    public Consumables[] consumables;
+    public ItemCons[] consumables;
 }
 
-public class itemsData : MonoBehaviour
+public class ItemsData : MonoBehaviour
 {
-    public TextAsset jsonFile;
-    public PlayerPartsList playerPartsList;
-    public PlayerIngredList playerIngredList;
-    public PlayerConsList playerConsList;
-    private void Awake()
+    private string filePath = "Assets/JSON_Data/item_data.json";
+
+    public ItemPartsList partsList;
+    public ItemIngredList ingredList;
+    public ItemConsList consList;
+    protected virtual void Awake()
     {
         LoadData();
     }
 
     private void LoadData()
     {
-        if (jsonFile != null)
-        {
-            string json = jsonFile.text;
-            playerPartsList = JsonUtility.FromJson<PlayerPartsList>(json);
-            playerIngredList = JsonUtility.FromJson<PlayerIngredList>(json);
-            playerConsList = JsonUtility.FromJson<PlayerConsList>(json);
+        string json = File.ReadAllText(filePath);
 
-        }
-        else
-        {
-            Debug.LogError("No JSON file assigned.");
-        }
+        partsList = JsonUtility.FromJson<ItemPartsList>(json);
+        ingredList = JsonUtility.FromJson<ItemIngredList>(json);
+        consList = JsonUtility.FromJson<ItemConsList>(json);
     }
 }

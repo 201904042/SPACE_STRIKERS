@@ -1,18 +1,92 @@
 {
-   "Account" : [
-      {
-         "accountCode":1,
-         "accountName":"space",
-	 "accountLevel":1,
-         "mineral":1000,
-	 "ruby":100,
-	"is_player2Open":true,
-	"is_player3Open":false,
-	"is_player4Open":false,
-	"clearedPlanet1Stage":5,
-	"clearedPlanet2Stage":1,
-	"clearedPlanet3Stage":1,
-	"clearedPlanet4Stage":1
-      }
-   ]
+    "Account": [
+        {
+            "accountCode": 1,
+            "accountName": "space",
+            "accountLevel": 1,
+            "mineral": 1400,
+            "ruby": 100,
+            "is_player2Open": true,
+            "is_player3Open": false,
+            "is_player4Open": false,
+            "clearedPlanet1Stage": 5,
+            "clearedPlanet2Stage": 1,
+            "clearedPlanet3Stage": 1,
+            "clearedPlanet4Stage": 1
+        }
+    ],
+    "parts": [
+        {
+            "PartsId": 1,
+            "PartsCode": 1,
+            "PartsName": "Parts1",
+            "PartsType": "Parts",
+            "PartsLevel": 1,
+            "PartsRank": "C",
+            "mainAmount": 20,
+            "Partsability1": "Dmg",
+            "abilityAmount1": 10,
+            "Partsability2": "MSpd",
+            "abilityAmount2": 20,
+            "Partsability3": "null",
+            "abilityAmount3": 0,
+            "Partsability4": "null",
+            "abilityAmount4": 0,
+            "Partsability5": "null",
+            "abilityAmount5": 0
+        },
+        {
+            "PartsId": 2,
+            "PartsCode": 2,
+            "PartsName": "Parts2",
+            "PartsType": "Parts",
+            "PartsLevel": 4,
+            "PartsRank": "A",
+            "mainAmount": 40,
+            "Partsability1": "Dmg",
+            "abilityAmount1": 10,
+            "Partsability2": "MSpd",
+            "abilityAmount2": 20,
+            "Partsability3": "ExpUp",
+            "abilityAmount3": 5,
+            "Partsability4": "ItemUp",
+            "abilityAmount4": 8,
+            "Partsability5": "null",
+            "abilityAmount5": 0
+        }
+    ],
+    "ingredients": [
+        {
+            "ingredId": 1,
+            "ingredName": "고철",
+            "ingredAmount": 0
+        },
+        {
+            "ingredId": 2,
+            "ingredName": "전선",
+            "ingredAmount": 0
+        },
+        {
+            "ingredId": 3,
+            "ingredName": "기어",
+            "ingredAmount": 0
+        }
+    ],
+    "consumables": [
+        {
+            "consId": 1,
+            "consName": "BST-35",
+            "consAmount": 0
+        },
+        {
+            "consId": 2,
+            "consName": "학습AI",
+            "consAmount": 0
+        },
+        {
+            "consId": 3,
+            "consName": "자기장코어",
+            "consAmount": 0
+        }
+    ]
 }

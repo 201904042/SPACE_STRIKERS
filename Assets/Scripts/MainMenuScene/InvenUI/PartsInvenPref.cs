@@ -100,8 +100,6 @@ public class PartsInvenPref : MonoBehaviour
             case 6:
                 PartsMainAbility = "Def"; break;
         }
-        Debug.Log(PartsCode);
-        Debug.Log(PartsMainAbility);
     }
 
     public void invenBtn()

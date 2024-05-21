@@ -6,10 +6,10 @@ using UnityEngine;
 [System.Serializable]
 public class ItemParts
 {
-    public int PartsId;
-    public string PartsName;
-    public string PartsType;
-    
+    public int partsId;
+    public string partsName;
+    public string partsType;
+    public string partsExplain;
 }
 [System.Serializable]
 public class ItemIngred
@@ -17,6 +17,7 @@ public class ItemIngred
     public int ingredId;
     public string ingredName;
     public int ingredStage;
+    public string ingredPrice;
 }
 [System.Serializable]
 public class ItemCons
@@ -24,6 +25,7 @@ public class ItemCons
     public int consId;
     public string consName;
     public string consType;
+    public string consPrice;
 }
 
 [System.Serializable]
@@ -44,7 +46,7 @@ public class ItemConsList
 
 public class ItemsData : MonoBehaviour
 {
-    private string filePath = "Assets/JSON_Data/item_data.json";
+    private string itemDataPath = "Assets/JSON_Data/item_data.json";
 
     public ItemPartsList partsList;
     public ItemIngredList ingredList;
@@ -56,7 +58,7 @@ public class ItemsData : MonoBehaviour
 
     private void LoadData()
     {
-        string json = File.ReadAllText(filePath);
+        string json = File.ReadAllText(itemDataPath);
 
         partsList = JsonUtility.FromJson<ItemPartsList>(json);
         ingredList = JsonUtility.FromJson<ItemIngredList>(json);

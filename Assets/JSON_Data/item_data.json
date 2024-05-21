@@ -1,63 +1,116 @@
 {
    "parts" : [
       {
-         "PartsId": 1, 
-         "PartsName": "Parts1", 
-         "PartsType": "core"
+         "partsId": 1, 
+         "partsName": "증폭기", 
+         "partsType": "dmg",
+         "partsExplain":"증폭기 설명"
       },
       {
-         "PartsId": 2,
-         "PartsName": "Parts2",
-         "PartsType": "booster"
+         "partsId": 2,
+         "partsName": "추진체",
+         "partsType": "mSpd",
+         "partsExplain":"추진체 설명"
       },
       {
-         "PartsId": 3,
-         "PartsName": "Parts3",
-         "PartsType": "freezer"
+         "partsId": 3,
+         "partsName": "냉각기",
+         "partsType": "Aspd",
+         "partsExplain":"냉각기 설명"
+      },
+      {
+         "partsId": 4, 
+         "partsName": "전투용AI", 
+         "partsType": "exp",
+         "partsExplain":"전투용ai 설명"
+      },
+      {
+         "partsId": 5,
+         "partsName": "적재창고",
+         "partsType": "reward",
+         "partsExplain":"적재창고 설명"
+      },
+      {
+         "partsId": 6,
+         "partsName": "코팅배리어 배터리",
+         "partsType": "def",
+         "partsExplain":"코팅배리어 배터리"
       }
    ],
    "ingredients": [
       {
          "ingredId": 1,
-         "ingredName": "고철",
-         "ingredStage": 1
+         "ingredName": "강철파편",
+         "ingredStage": 1,
+         "ingredPrice" : 100
       },
       {
          "ingredId": 2,
-         "ingredName": "전선",
-         "ingredStage": 1
+         "ingredName": "재활용전선",
+         "ingredStage": 1,
+         "ingredPrice" : 100
       },
       {
          "ingredId": 3,
-         "ingredName": "기어",
-         "ingredStage": 1
+         "ingredName": "재활용기어",
+         "ingredStage": 1,
+         "ingredPrice" : 100
+      },
+      {
+         "ingredId": 4,
+         "ingredName": "재사용칩셋",
+         "ingredStage": 1,
+         "ingredPrice" : 100
+      },
+      {
+         "ingredId": 5,
+         "ingredName": "보급형 디스플레이",
+         "ingredStage": 1,
+         "ingredPrice" : 100
+      },
+      {
+         "ingredId": 6,
+         "ingredName": "재사용코일",
+         "ingredStage": 1,
+         "ingredPrice" : 100
       }
    ],
    "consumables": [
       {
          "consId": 1,
          "consName": "하급뽑기권",
-         "consType": "gotcha"
+         "consType": "gotcha",
+         "consPrice" : 1000
       },
       {
          "consId": 2,
-         "consName": "하급재료뽑기권",
-         "consType": "gotcha"
+         "consName": "중급뽑기권",
+         "consType": "gotcha",
+         "consPrice" : 10000
       },
       {
          "consId": 3,
-         "consName": "BST-35",
-         "consType": "stageBooster"
+         "consName": "고급뽑기권",
+         "consType": "gotcha",
+         "consPrice" : 100000
       },
       {
          "consId": 4,
          "consName": "학습AI",
-         "consType": "stageBooster"
+         "consType": "stageBooster",
+         "consPrice" : 500
       },
       {
          "consId": 5,
          "consName": "자기장코어",
-         "consType": "stageBooster"
+         "consType": "stageBooster",
+         "consPrice" : 500
+      },
+      {
+         "consId": 6,
+         "consName": "BST-35",
+         "consType": "stageBooster",
+         "consPrice" : 500
       }
    ]
 }

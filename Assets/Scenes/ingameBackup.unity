@@ -123,6 +123,22 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &45205743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6388701695144634678, guid: ed030da652c2a4847a8121992f243963, type: 3}
+  m_PrefabInstance: {fileID: 1452531521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &424818922 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6857946582959707979, guid: ed030da652c2a4847a8121992f243963, type: 3}
+  m_PrefabInstance: {fileID: 1452531521}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,9 +244,21 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2445714135734172816, guid: 7880ce45c8307a8429a928b9908648d8, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1653252713}
+    - target: {fileID: 2445714135734172816, guid: 7880ce45c8307a8429a928b9908648d8, type: 3}
       propertyPath: splash_skillPref
       value: 
       objectReference: {fileID: 1465766006621411463, guid: 9fe08a8bdb51e114ebe0c5edd56c8297, type: 3}
+    - target: {fileID: 2796726503674503060, guid: 7880ce45c8307a8429a928b9908648d8, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1653252713}
+    - target: {fileID: 3276550643570364575, guid: 7880ce45c8307a8429a928b9908648d8, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1653252713}
     - target: {fileID: 8370591950090371793, guid: 7880ce45c8307a8429a928b9908648d8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -473,6 +501,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -162.9
       objectReference: {fileID: 0}
+    - target: {fileID: 4413102146236822029, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: accountData
+      value: 
+      objectReference: {fileID: 4900000, guid: 59d8edc9de1f82546b56f5f642deecd1, type: 3}
+    - target: {fileID: 4413102146236822029, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1653252713}
     - target: {fileID: 5151946347349039816, guid: ed030da652c2a4847a8121992f243963, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -493,6 +529,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: NextBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 5991194653520710020, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: timeText
+      value: 
+      objectReference: {fileID: 424818922}
+    - target: {fileID: 5991194653520710020, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1653252713}
     - target: {fileID: 6113156501599830188, guid: ed030da652c2a4847a8121992f243963, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -640,10 +684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d40c33ea4a9444c9efa152b42b6bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonFile: {fileID: 0}
   dataContainer:
     stage: []
-  gameEndUI: {fileID: 0}
+  gameEndUI: {fileID: 45205743}
   stageScore: 0
   curStageEnemy: []
   curStagefirstGain: []

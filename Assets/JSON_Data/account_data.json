@@ -4,7 +4,7 @@
             "accountCode": 1,
             "accountName": "space",
             "accountLevel": 1,
-            "mineral": 1400,
+            "mineral": 1600,
             "ruby": 100,
             "is_player2Open": true,
             "is_player3Open": false,
@@ -58,35 +58,29 @@
     "ingredients": [
         {
             "ingredId": 1,
-            "ingredName": "고철",
-            "ingredAmount": 0
+            "ingredCode": 1,
+            "ingredName": "강철파편",
+            "ingredAmount": 1
         },
         {
             "ingredId": 2,
-            "ingredName": "전선",
-            "ingredAmount": 0
+            "ingredCode": 3,
+            "ingredName": "재활용기어",
+            "ingredAmount": 1
         },
         {
             "ingredId": 3,
-            "ingredName": "기어",
-            "ingredAmount": 0
+            "ingredCode": 6,
+            "ingredName": "재사용코일",
+            "ingredAmount": 1
         }
     ],
     "consumables": [
         {
             "consId": 1,
-            "consName": "BST-35",
-            "consAmount": 0
-        },
-        {
-            "consId": 2,
-            "consName": "학습AI",
-            "consAmount": 0
-        },
-        {
-            "consId": 3,
-            "consName": "자기장코어",
-            "consAmount": 0
+            "consCode": 1,
+            "consName": "하급뽑기권",
+            "consAmount": 1
         }
     ]
 }

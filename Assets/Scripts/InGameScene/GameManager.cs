@@ -49,9 +49,7 @@ public class GameManager : StageJsonReader
         base.Awake ();
         Time.timeScale = 1;
         planet = PlayerPrefs.GetInt("ChosenPlanet");
-        Debug.Log(planet);
         stage = PlayerPrefs.GetInt("ChosenStage");
-        Debug.Log(stage);
         StageDataSet();
         stageScore = 0;
         stageTime = 0;
@@ -164,8 +162,6 @@ public class GameManager : StageJsonReader
     void StageDataSet()
     {
         int stageCode = ((planet-1)*10) + stage;
-        Debug.Log(stageCode);
-
         foreach (StageData stageData in dataContainer.stage)
         {
             if(stageData.stageCode == stageCode)

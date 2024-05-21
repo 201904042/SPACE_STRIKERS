@@ -7,11 +7,14 @@ using UnityEngine;
 
 public class Player_specialSkill : MonoBehaviour
 {
+    public GameManager gameManager;
+
     [Header("스킬의 프리팹들")]
     public GameObject balance_skillPref;
     public GameObject bomber_skillPref;
     public GameObject tanker_skillPref;
     public GameObject splash_skillPref;
+  
 
     private GameObject player;
     private PlayerStat player_stat;
@@ -42,8 +45,10 @@ public class Player_specialSkill : MonoBehaviour
     {
         player = GameObject.Find("Player");
         player_stat = player.GetComponent<PlayerStat>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        player_id = player_stat.cur_playerID;
+
+    player_id = player_stat.cur_playerID;
         special_count = 3; //기체레벨에 비례하여 증가하도록 수정예정
 
         power_level = 0;
@@ -63,45 +68,48 @@ public class Player_specialSkill : MonoBehaviour
 
     private void Update()
     {
-        if(!first_set|| (cur_statDamage!= player_stat.damage) 
-            || (cur_damageRate!= damage_increaseRate) || cur_playerId != player_id)
+        if (gameManager.isBattleStart)
         {
-            player_id = player_stat.cur_playerID;
-            special_Damage = player_stat.damage * damage_increaseRate;
-            first_set=  true;
-        }
-       
-
-        if (special_Active)
-        {
-            special_FireTime -= Time.deltaTime;
-        }
-        
-        if(special_FireTime <= 0 && special_Active) //특수공격이 시작되고 최대 10초후 특수공격 종료
-        {
-            special_Active = false; 
-        }
-
-        if (power_increase <= power_increaseMax && !special_Active)
-        {
-            //파워가 맥스치보다 적거나 스페셜이 비활성화일 경우에만 파워가 올라간다.
-            power_increase += Time.deltaTime * power_increaseRate;
-        }
-
-        PowerLvSet();
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (special_count > 0 && !special_Active && power_level != 0)
+            if (!first_set || (cur_statDamage != player_stat.damage)
+            || (cur_damageRate != damage_increaseRate) || cur_playerId != player_id)
             {
-                special_count--;
-                specialFire();
+                player_id = player_stat.cur_playerID;
+                special_Damage = player_stat.damage * damage_increaseRate;
+                first_set = true;
             }
-            else
+
+
+            if (special_Active)
             {
-                Debug.Log("cant do specialattack");
+                special_FireTime -= Time.deltaTime;
             }
-            
+
+            if (special_FireTime <= 0 && special_Active) //특수공격이 시작되고 최대 10초후 특수공격 종료
+            {
+                special_Active = false;
+            }
+
+            if (power_increase <= power_increaseMax && !special_Active)
+            {
+                //파워가 맥스치보다 적거나 스페셜이 비활성화일 경우에만 파워가 올라간다.
+                power_increase += Time.deltaTime * power_increaseRate;
+            }
+
+            PowerLvSet();
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                if (special_count > 0 && !special_Active && power_level != 0)
+                {
+                    special_count--;
+                    specialFire();
+                }
+                else
+                {
+                    Debug.Log("cant do specialattack");
+                }
+
+            }
         }
     }
 

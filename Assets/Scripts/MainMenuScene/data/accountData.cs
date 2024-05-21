@@ -45,6 +45,7 @@ public class Parts
 public class Ingredients
 {
     public int ingredId;
+    public int ingredCode;
     public string ingredName;
     public int ingredAmount;
 }
@@ -52,6 +53,7 @@ public class Ingredients
 public class Consumables
 {
     public int consId;
+    public int consCode;
     public string consName;
     public int consAmount;
 }

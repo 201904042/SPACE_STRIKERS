@@ -18,7 +18,7 @@ public class InvenUI : UI_Parent
     public Sprite playerImage4;
     public GameObject playerImage;
 
-    public PlayerjsonReader playerstat;
+    public PlayerJsonReader playerstat;
     public TextMeshProUGUI playerInformText;
     public int playerLv;
     private float playerHp;
@@ -58,7 +58,7 @@ public class InvenUI : UI_Parent
     }
 
     private void playerStat() {
-        foreach (var player in playerstat.myPlayerList.player)
+        foreach (var player in playerstat.PlayerList.player)
         {
             if (player.id == curPlayer)
             {

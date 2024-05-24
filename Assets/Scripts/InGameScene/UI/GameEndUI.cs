@@ -204,8 +204,6 @@ public class invenAccountData
                 }
             }
 
-            
-
             // 전체 데이터를 JSON 문자열로 변환
             modifiedJson = JsonUtility.ToJson(invenData, true);
 

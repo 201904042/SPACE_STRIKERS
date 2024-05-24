@@ -29,10 +29,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3867730462709308181}
-  - {fileID: 7379709351771403852}
+  - {fileID: 92063991117048151}
   - {fileID: 5235290155012409019}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3425429041791490471
 PrefabInstance:
@@ -42,6 +42,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2649559478427866663}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile
@@ -108,6 +112,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2649559478427866663}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile (2)
@@ -174,6 +182,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2649559478427866663}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile (3)
@@ -227,7 +239,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
---- !u!4 &7379709351771403852 stripped
+--- !u!4 &92063991117048151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7435140859992252188, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
   m_PrefabInstance: {fileID: 7379709351771403851}

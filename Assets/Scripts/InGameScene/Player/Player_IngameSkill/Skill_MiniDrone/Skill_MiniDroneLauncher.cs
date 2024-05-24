@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_MiniDroneLauncher : Ingame_Skill
+public class Skill_MiniDroneLauncher : Ingame_Active
 {
     [Header("미니드론 고유 스텟")]
-    public bool is_levelUp;
+    public bool isLevelUp;
 
 
     public float shootSpeedRate;
@@ -15,28 +15,28 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
         DamageRate = 0.5f;
         coolTime = 20;
         timer = 0;
-        proj_num = 1;
+        projNum = 1;
         shootSpeedRate = -0.2f;
 
-        is_levelUp = false;
+        isLevelUp = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (level != transform.GetComponent<skill_interface>().level)
+        if (level != transform.GetComponent<SkillInterface>().level)
         {
-            level = transform.GetComponent<skill_interface>().level;
+            level = transform.GetComponent<SkillInterface>().level;
             LevelSet(level);
         }
 
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            for (int i = 0; i < proj_num; i++)
+            for (int i = 0; i < projNum; i++)
             {
-                GameObject drone = Instantiate(skill_proj, transform.position, Quaternion.identity);
+                GameObject drone = Instantiate(skillProj, transform.position, Quaternion.identity);
                 skill_MiniDrone dronestat = drone.GetComponent<skill_MiniDrone>();
                 dronestat.damageRate = DamageRate;
                 dronestat.shootSpeedRate = shootSpeedRate;
@@ -59,9 +59,9 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 0.5f;
             coolTime = 20;
             timer = 0;
-            proj_num = 1;
+            projNum = 1;
             shootSpeedRate = -0.2f;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<미니드론>\n데미지 20% 증가";
 
         }
@@ -70,9 +70,9 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 0.7f;
             coolTime = 20;
             timer = 0;
-            proj_num = 1;
+            projNum = 1;
             shootSpeedRate = -0.2f;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<미니드론>\n드론 공격 속도 30% 증가";
 
         }
@@ -81,9 +81,9 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 0.7f;
             coolTime = 30;
             timer = coolTime;
-            proj_num = 1;
+            projNum = 1;
             shootSpeedRate = 0.1f;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<미니드론>\n드론 1개 증가";
         }
         else if (level == 4)
@@ -91,9 +91,9 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 0.7f;
             coolTime = 20;
             timer = 0;
-            proj_num = 2;
+            projNum = 2;
             shootSpeedRate = 0.1f;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<미니드론>\n데미지 30% 증가";
         }
         else if (level == 5)
@@ -101,9 +101,9 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 1f;
             coolTime = 20;
             timer = 0;
-            proj_num = 2;
+            projNum = 2;
             shootSpeedRate = 0.1f;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<미니드론>\n드론 공격 속도 30% 증가";
         }
         else if (level == 6)
@@ -111,9 +111,9 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 1;
             coolTime = 20;
             timer = 0;
-            proj_num = 2;
+            projNum = 2;
             shootSpeedRate = 0.3f;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<미니드론>\n데미지 50% 증가\n드론개수 2개 증가\n드론 공격 속도 20% 증가";
         }
         else if (level == 7)
@@ -121,7 +121,7 @@ public class Skill_MiniDroneLauncher : Ingame_Skill
             DamageRate = 1.5f;
             coolTime = 20;
             timer = 0;
-            proj_num = 4;
+            projNum = 4;
             shootSpeedRate = 0.5f;
 
         }

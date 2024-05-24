@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ShooterUp : ItemBasic
 {
-    player_ShooterUpgrade p_shooter;
+    private playerShooterUpgrade playerShooter;
     protected override void Awake()
     {
         base.Awake();
-        p_shooter = player.transform.GetChild(0).GetComponent<player_ShooterUpgrade>();
+        playerShooter = player.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
     }
     
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class ShooterUp : ItemBasic
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            p_shooter.level_UP();
+            playerShooter.ShooterUPBtn();
             Destroy(gameObject);
         }
     }

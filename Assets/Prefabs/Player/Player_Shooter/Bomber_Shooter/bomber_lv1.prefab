@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 3352050835376454642}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5308069686208799982
 PrefabInstance:
@@ -40,6 +40,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4091534442654282551}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile

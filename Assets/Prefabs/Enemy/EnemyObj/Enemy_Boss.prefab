@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 915711137546637731}
   - component: {fileID: 2223943805713869409}
   - component: {fileID: 5949802325496082526}
-  - component: {fileID: 1319370717812905491}
   - component: {fileID: 4605924845136019100}
   m_Layer: 0
   m_Name: Enemy_Boss
@@ -150,27 +149,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1319370717812905491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093731688987580955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c215743b8ef66f944aae1c46a237a29d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemytextJSON: {fileID: 11500000, guid: 402b7bacfacf8c84aaf21e4c636282b0, type: 3}
-  cur_EnemyID: 0
-  MaxHP: 0
-  CurHP: 0
-  Damage: 0
-  MoveSpeed: 0
-  AttackSpeed: 0
-  exp_amount: 0
-  score_amount: 0
 --- !u!114 &4605924845136019100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,16 +161,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy_MaxHP: 0
-  Enemy_CurHP: 0
-  Enemy_Damage: 0
-  Enemy_MoveSpeed: 0
-  Enemy_AttackSpeed: 0
-  exp_amount: 0
-  score_amount: 0
-  Attack_Type: 0
-  Enemy_Projectile: {fileID: 0}
+  enemyStat: {fileID: 0}
+  gameManager: {fileID: 0}
+  curEnemyId: 0
+  enemyId: 0
+  enemyName: 
+  enemyGrade: 
+  enemyMoveAttack: 0
+  enemyIsAiming: 0
+  enemyMaxHP: 0
+  enemyCurHP: 0
+  enemyDamage: 0
+  enemyMoveSpeed: 0
+  enemyAttackSpeed: 0
+  expAmount: 0
+  scoreAmount: 0
+  attackType: 0
+  attackable: 0
+  isSlow: 0
   exp: {fileID: 0}
-  e_hpBar: {fileID: 0}
-  canvas: {fileID: 0}
-  hpSlider: {fileID: 0}
+  enemyHpBar: {fileID: 0}
+  enemyDamageRate: {fileID: 0}

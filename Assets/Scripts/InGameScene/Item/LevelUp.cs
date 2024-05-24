@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class LevelUp : ItemBasic
 {
-    Player_InGame_Exp p_exp;
+    PlayerInGameExp playerExp;
     protected override void Awake()
     {
         base.Awake();
-        p_exp = player.GetComponent<Player_InGame_Exp>();
+        playerExp = player.GetComponent<PlayerInGameExp>();
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class LevelUp : ItemBasic
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            p_exp.LevelUP();
+            playerExp.LevelUP();
             Destroy(gameObject);
         }
     }

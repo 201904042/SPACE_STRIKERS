@@ -13,18 +13,19 @@ public class Skill_DefenceIncrease : Ingame_Passive
     // Update is called once per frame
     void Update()
     {
-        if (passive_level != transform.GetComponent<skill_interface>().level)
+        if (passiveLevel != transform.GetComponent<SkillInterface>().level)
         {
-            passive_level = transform.GetComponent<skill_interface>().level;
-            LevelSet(passive_level);
+            passiveLevel = transform.GetComponent<SkillInterface>().level;
+            LevelSet(passiveLevel);
         }
+
     }
 
     protected override void LevelSet(int level)
     {
         base.LevelSet(level);
 
-        p_stat.defence_increaseRate = increase_Rate;
-        p_stat.applyStat();
+        playerStat.defenceIncreaseRate = increaseRate;
+        playerStat.ApplyStat();
     }
 }

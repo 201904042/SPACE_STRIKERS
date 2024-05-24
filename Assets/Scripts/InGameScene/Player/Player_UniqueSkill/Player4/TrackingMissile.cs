@@ -11,14 +11,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TrackingMissile : PlayerShoot
 {
-    private Player_specialSkill speicalScript;
+    private PlayerSpecialSkill speicalScript;
     private float damage;
 
     GameObject[] enemies;
     GameObject targetEnemy;
     private Vector2 startPosition;
     private Vector2 endPosition;
-    private Vector2 basic_endPosition; //적이 없을 경우의 엔드포인트
+    private Vector2 basicEndPosition; //적이 없을 경우의 엔드포인트
     private Vector2 handlePosition; // 한 개의 핸들 포인트
 
     public float handleDistanceMultiplier = 1.0f; // 핸들 포인트의 거리를 조절하는 계수
@@ -31,11 +31,11 @@ public class TrackingMissile : PlayerShoot
     {
         base.Awake();
         onHit = false ;
-        speicalScript = player.GetComponent<Player_specialSkill>();
-        damage = speicalScript.special_Damage*2;
+        speicalScript = player.GetComponent<PlayerSpecialSkill>();
+        damage = speicalScript.specialDamage*2;
 
         startPosition = player.transform.position; //시작지점
-        basic_endPosition = startPosition + Vector2.up * 20;
+        basicEndPosition = startPosition + Vector2.up * 20;
         handlePosition = startPosition + Vector2.right * Random.Range(-3, 4); //굽어지는 정도
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -50,7 +50,7 @@ public class TrackingMissile : PlayerShoot
         else //생성됬을때 적이 없음
         {
             targetEnemy = null;
-            endPosition = basic_endPosition;
+            endPosition = basicEndPosition;
             targetSet = false;
         }
 
@@ -62,7 +62,7 @@ public class TrackingMissile : PlayerShoot
 
         if (curpos == endPosition && onHit == false) //적의 위치에 왔지만 타격하지 못함 -> 타겟의 위치로 재설정
         {
-            endPosition = basic_endPosition;
+            endPosition = basicEndPosition;
         }
 
         if (targetSet == true)
@@ -72,7 +72,6 @@ public class TrackingMissile : PlayerShoot
                 targetSet = false; //적이 도중에 사라질경우 -> 타겟설정을 거짓으로 두고 목표위치를 기본목표위치로
             }
         }
-
         if (!targetSet)  //타겟이 설정되지 않았을시 
         {
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -84,7 +83,7 @@ public class TrackingMissile : PlayerShoot
             }
             else
             {
-                endPosition = basic_endPosition;
+                endPosition = basicEndPosition;
             }
         }
 
@@ -123,11 +122,15 @@ public class TrackingMissile : PlayerShoot
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            collision.GetComponent<Enemy>().Enemydamaged(damage, gameObject);
+            collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
             onHit = true;
             Destroy(gameObject);
         }
-        
+    }
+
+    protected override void OnTriggerExit2D(Collider2D collision)
+    {
+        base.OnTriggerExit2D(collision);
     }
 }
 

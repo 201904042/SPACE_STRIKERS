@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skill_HpRegenerateRate : Ingame_Passive
 {
-    private bool is_active;
+    private bool isActive;
     private float generateTime;
     private float timer;
     private float hitTime;
@@ -16,32 +16,32 @@ public class Skill_HpRegenerateRate : Ingame_Passive
         timer = generateTime;
         hitTime = 3; //타격된 후 3초 뒤부터 회복
         hitTimer = hitTime;
-        is_active = false;
+        isActive = false;
     }
 
     void Update()
     {
-        if (passive_level != transform.GetComponent<skill_interface>().level)
+        if (passiveLevel != transform.GetComponent<SkillInterface>().level)
         {
-            passive_level = transform.GetComponent<skill_interface>().level;
-            LevelSet(passive_level);
+            passiveLevel = transform.GetComponent<SkillInterface>().level;
+            LevelSet(passiveLevel);
         }
-        if (p_stat.is_hitted)
+        if (playerStat.isHitted)
         {
             hitTimer -= Time.deltaTime;
             if(hitTimer <= 0)
             {
-                p_stat.is_hitted = false;
+                playerStat.isHitted = false;
                 hitTimer = hitTime;
             }
         }
 
-        if (is_active && !p_stat.is_hitted)
+        if (isActive && !playerStat.isHitted)
         {
             timer -= Time.deltaTime;
-            if(timer <= 0 && p_stat.cur_hp < p_stat.hp)
+            if(timer <= 0 && playerStat.cur_hp < playerStat.hp)
             {
-                p_stat.cur_hp = p_stat.cur_hp + p_stat.hp * (increase_Rate);
+                playerStat.cur_hp = playerStat.cur_hp + playerStat.hp * (increaseRate);
                 timer = generateTime;
             }
            
@@ -52,33 +52,33 @@ public class Skill_HpRegenerateRate : Ingame_Passive
     {
         if (level == 0)
         {
-            increase_Rate = 0f;
-            is_active = false;
+            increaseRate = 0f;
+            isActive = false;
         }
         else if (level == 1)
         {
-            increase_Rate = 0.002f;
-            is_active = true;
+            increaseRate = 0.002f;
+            isActive = true;
         }
         else if (level == 2)
         {
-            increase_Rate = 0.004f;
-            is_active = true;
+            increaseRate = 0.004f;
+            isActive = true;
         }
         else if (level == 3)
         {
-            increase_Rate = 0.006f;
-            is_active = true;
+            increaseRate = 0.006f;
+            isActive = true;
         }
         else if (level == 4)
         {
-            increase_Rate = 0.008f;
-            is_active = true;
+            increaseRate = 0.008f;
+            isActive = true;
         }
         else if (level == 5)
         {
-            increase_Rate = 0.01f;
-            is_active = true;
+            increaseRate = 0.01f;
+            isActive = true;
         }
         else
         {

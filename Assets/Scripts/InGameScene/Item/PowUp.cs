@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PowUp : ItemBasic
 {
-    Player_specialSkill p_skill;
+    PlayerSpecialSkill PlayerSkill;
     protected override void Awake()
     {
         base.Awake();
-        p_skill = player.GetComponent<Player_specialSkill>();
+        PlayerSkill = player.GetComponent<PlayerSpecialSkill>();
     }
 
     // Update is called once per frame
@@ -28,14 +28,14 @@ public class PowUp : ItemBasic
     }
     void PowUP()
     {
-        switch (p_skill.power_level)
+        switch (PlayerSkill.powerLevel)
         {
             case 0:
-                p_skill.power_level = 1; p_skill.power_increase = 5; break;
+                PlayerSkill.powerLevel = 1; PlayerSkill.powerIncrease = 5; break;
             case 1:
-                p_skill.power_level = 2; p_skill.power_increase = 15; break;
+                PlayerSkill.powerLevel = 2; PlayerSkill.powerIncrease = 15; break;
             case 2:
-                p_skill.power_level = 3; p_skill.power_increase = 30; break;
+                PlayerSkill.powerLevel = 3; PlayerSkill.powerIncrease = 30; break;
         }
     }
 }

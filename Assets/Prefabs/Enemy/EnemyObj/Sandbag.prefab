@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 790285341441865430}
   - component: {fileID: 9118003235103689142}
   - component: {fileID: 5635618670956767347}
-  - component: {fileID: -2482064409046396925}
   - component: {fileID: 3177062489424814627}
   m_Layer: 0
   m_Name: Sandbag
@@ -132,31 +131,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0459208, y: 1.3486402}
   m_EdgeRadius: 0
---- !u!114 &-2482064409046396925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3737570111088939941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c215743b8ef66f944aae1c46a237a29d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemytextJSON: {fileID: 4900000, guid: 39bcbceb8b556fc4892a5cf47b6834c0, type: 3}
-  cur_EnemyID: 0
-  Name: 
-  Grade: 
-  MoveAttack: 0
-  is_Aiming: 0
-  MaxHP: 0
-  CurHP: 0
-  Damage: 0
-  MoveSpeed: 0
-  AttackSpeed: 0
-  exp_amount: 0
-  score_amount: 0
 --- !u!114 &3177062489424814627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,21 +143,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy_ID: 0
-  Enemy_Name: 
-  Enemy_Grade: 
-  Enemy_MoveAttack: 0
-  Enemy_IsAiming: 0
-  Enemy_MaxHP: 0
-  Enemy_CurHP: 0
-  Enemy_Damage: 0
-  Enemy_MoveSpeed: 0
-  Enemy_AttackSpeed: 0
-  exp_amount: 0
-  score_amount: 0
-  Attack_Type: 0
-  Can_Attack: 0
-  is_Slow: 0
+  enemyStat: {fileID: 0}
+  gameManager: {fileID: 0}
+  curEnemyId: 0
+  enemyId: 0
+  enemyName: 
+  enemyGrade: 
+  enemyMoveAttack: 0
+  enemyIsAiming: 0
+  enemyMaxHP: 0
+  enemyCurHP: 0
+  enemyDamage: 0
+  enemyMoveSpeed: 0
+  enemyAttackSpeed: 0
+  expAmount: 0
+  scoreAmount: 0
+  attackType: 0
+  attackable: 0
+  isSlow: 0
   exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
-  e_hpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
-  e_DamageRate: {fileID: 2986098347415986032, guid: 018ead14c5414c644b1696cc6b31f8eb, type: 3}
+  enemyHpBar: {fileID: 0}
+  enemyDamageRate: {fileID: 0}

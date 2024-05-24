@@ -5,25 +5,25 @@ using UnityEngine.UIElements;
 
 public class Skill_ElecShock : PlayerShoot
 {
-    private float shock_damage;
-    private float player_statDamage;
-    public float shock_damageRate;
-    public float shock_range;
-    private float shock_speed;
+    private float shockDamage;
+    private float playerStatDamage;
+    public float shockDamageRate;
+    public float shockRange;
+    private float shockSpeed;
     public float slowRate;
     public float slowTime;
-    public bool is_ExtraDamageToSlowEnemyOn;
+    public bool isExtraDamageToSlowEnemyOn;
     private float damageTime;
     private float damageTimer;
 
     protected override void Awake()
     {
         base.Awake();
-        shock_damageRate = 1.5f;
-        shock_range = 1.0f;
-        player_statDamage = player_stat.damage;
-        shock_speed = 1f;
-        shock_damage = player_statDamage * shock_damageRate;
+        shockDamageRate = 1.5f;
+        shockRange = 1.0f;
+        playerStatDamage = playerStat.damage;
+        shockSpeed = 1f;
+        shockDamage = playerStatDamage * shockDamageRate;
 
         damageTime = 0.5f;
         damageTimer = 0;
@@ -33,14 +33,14 @@ public class Skill_ElecShock : PlayerShoot
     void Update()
     {
         damageTimer -= Time.deltaTime;
-        if (!is_firstSet)
+        if (!isFirstSet)
         {
-            shock_damage = player_statDamage * shock_damageRate;
-            transform.localScale *= shock_range;
-            is_firstSet = true;
+            shockDamage = playerStatDamage * shockDamageRate;
+            transform.localScale *= shockRange;
+            isFirstSet = true;
         }
         
-        transform.position += transform.up * shock_speed * Time.deltaTime/2;
+        transform.position += transform.up * shockSpeed * Time.deltaTime/2;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -50,23 +50,23 @@ public class Skill_ElecShock : PlayerShoot
             if(damageTimer <= 0)
             {
                 damageTimer = damageTime;
-                if (collision.GetComponent<Enemy>() != null)
+                if (collision.GetComponent<EnemyObject>() != null)
                 {
-                    Enemy enemy = collision.GetComponent<Enemy>();
-                    if (enemy.is_Slow)
+                    EnemyObject enemy = collision.GetComponent<EnemyObject>();
+                    if (enemy.isSlow)
                     {
-                        enemy.Enemydamaged(shock_damage * 2, gameObject);
+                        enemy.EnemyDamaged(shockDamage * 2, gameObject);
                     }
                     else
                     {
-                        collision.GetComponent<Enemy>().Enemydamaged(shock_damage, gameObject);
+                        collision.GetComponent<EnemyObject>().EnemyDamaged(shockDamage, gameObject);
                     }
 
                 }
                 
             }
 
-            if (!collision.GetComponent<Enemy>().is_Slow)
+            if (!collision.GetComponent<EnemyObject>().isSlow)
             {
                 StartCoroutine(getSlow(collision));
             }
@@ -76,21 +76,21 @@ public class Skill_ElecShock : PlayerShoot
 
     IEnumerator getSlow(Collider2D collision)
     {
-        Enemy enemy = collision.GetComponent<Enemy>();
+        EnemyObject enemy = collision.GetComponent<EnemyObject>();
         SpriteRenderer enemySprite = collision.GetComponent<SpriteRenderer>();
 
-        float original_speed = enemy.Enemy_MoveSpeed;
+        float originalSpeed = enemy.enemyMoveSpeed;
 
-        enemy.Can_Attack = false;
-        enemy.is_Slow = true;
-        enemy.Enemy_MoveSpeed *= 1 - slowRate;
+        enemy.attackable = false;
+        enemy.isSlow = true;
+        enemy.enemyMoveSpeed *= 1 - slowRate;
         enemySprite.color = new Color(1, 0.5f, 0.5f, 1);
         yield return new WaitForSeconds(slowTime);
         if (enemy != null)
         {
-            enemy.Can_Attack = true;
-            enemy.is_Slow = false;
-            enemy.Enemy_MoveSpeed = original_speed;
+            enemy.attackable = true;
+            enemy.isSlow = false;
+            enemy.enemyMoveSpeed = originalSpeed;
             enemySprite.color = new Color(1, 1f, 1f, 1);
         }
         

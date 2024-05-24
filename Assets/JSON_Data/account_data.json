@@ -4,7 +4,7 @@
             "accountCode": 1,
             "accountName": "space",
             "accountLevel": 1,
-            "mineral": 1600,
+            "mineral": 2000,
             "ruby": 100,
             "is_player2Open": true,
             "is_player3Open": false,
@@ -58,21 +58,27 @@
     "ingredients": [
         {
             "ingredId": 1,
-            "ingredCode": 1,
-            "ingredName": "강철파편",
+            "ingredCode": 2,
+            "ingredName": "재활용전선",
             "ingredAmount": 1
         },
         {
             "ingredId": 2,
-            "ingredCode": 3,
-            "ingredName": "재활용기어",
+            "ingredCode": 4,
+            "ingredName": "재사용칩셋",
             "ingredAmount": 1
         },
         {
             "ingredId": 3,
-            "ingredCode": 6,
-            "ingredName": "재사용코일",
-            "ingredAmount": 1
+            "ingredCode": 1,
+            "ingredName": "강철파편",
+            "ingredAmount": 2
+        },
+        {
+            "ingredId": 4,
+            "ingredCode": 3,
+            "ingredName": "재활용기어",
+            "ingredAmount": 2
         }
     ],
     "consumables": [
@@ -80,7 +86,7 @@
             "consId": 1,
             "consCode": 1,
             "consName": "하급뽑기권",
-            "consAmount": 1
+            "consAmount": 2
         }
     ]
 }

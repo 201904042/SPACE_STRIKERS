@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SpecialUp : ItemBasic
 {
-    private Player_specialSkill p_special;
+    private PlayerSpecialSkill playerSpecial;
     protected override void Awake()
     {
         base.Awake();
-        p_special = player.GetComponent<Player_specialSkill>();
+        playerSpecial = player.GetComponent<PlayerSpecialSkill>();
     }
 
     protected override void Update()
@@ -21,7 +21,7 @@ public class SpecialUp : ItemBasic
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            p_special.special_count++;
+            playerSpecial.specialCount++;
             Destroy(gameObject);
         }
     }

@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class Special_Num : MonoBehaviour
 {
-    Player_specialSkill specialScript;
+    PlayerSpecialSkill specialScript;
     TextMeshProUGUI text;
 
     private int curNum;
     private void Awake()
     {
-        specialScript = GameObject.Find("Player").GetComponent<Player_specialSkill>();
-        curNum = specialScript.special_count;
+        specialScript = GameObject.Find("Player").GetComponent<PlayerSpecialSkill>();
+        curNum = specialScript.specialCount;
         text = GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        curNum = specialScript.special_count;
+        curNum = specialScript.specialCount;
         text.text = curNum.ToString();
     }
 }

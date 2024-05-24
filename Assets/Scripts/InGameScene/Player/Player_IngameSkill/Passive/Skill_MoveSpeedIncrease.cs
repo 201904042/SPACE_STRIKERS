@@ -12,10 +12,10 @@ public class Skill_MoveSpeedIncrease : Ingame_Passive
     // Update is called once per frame
     void Update()
     {
-        if (passive_level != transform.GetComponent<skill_interface>().level)
+        if (passiveLevel != transform.GetComponent<SkillInterface>().level)
         {
-            passive_level = transform.GetComponent<skill_interface>().level;
-            LevelSet(passive_level);
+            passiveLevel = transform.GetComponent<SkillInterface>().level;
+            LevelSet(passiveLevel);
         }
         
     }
@@ -24,7 +24,7 @@ public class Skill_MoveSpeedIncrease : Ingame_Passive
     {
         base.LevelSet(level);
 
-        p_stat.move_speed_increaseRate = increase_Rate;
-        p_stat.applyStat();
+        playerStat.moveSpeedIncreaseRate = increaseRate;
+        playerStat.ApplyStat();
     }
 }

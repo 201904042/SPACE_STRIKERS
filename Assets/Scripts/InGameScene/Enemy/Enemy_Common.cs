@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
-using static PlayerjsonReader;
+
 
 public class Enemy_Common : MonoBehaviour
 {
-    public GameObject Enemy_Projectile;
-    Enemy cur_enemy;
-    int proj_num;
+    public GameObject enemyProjectile;
+    EnemyObject curEnemy;
+    int projNum;
     float bulletSpeed = 3f;
-    float attack_timeRange;
-    float col_stopZone;
-    float stop_height; //1이면 상단 2면 중단에 정지 후 공격
-    bool move_stop;
+    float attackTimeRange;
+    float colStopZone;
+    float stopHeight; //1이면 상단 2면 중단에 정지 후 공격
+    bool moveStop;
     float spacing;
-    float attack_Timer;
-    bool can_Attack;
+    float attackTimer;
+    bool isEnemyAttackable;
     bool isAttacking = false;
     
 
     private void Awake()
     {
-        cur_enemy = GetComponent<Enemy>();
-        proj_num_set();
-        can_Attack = cur_enemy.Can_Attack;
-        stop_height = 1;
-        col_stopZone = 0;
-        attack_timeRange = cur_enemy.Enemy_MoveAttack ? 2f : 4f;
-        attack_Timer = attack_timeRange;
-        move_stop = false;
+        curEnemy = GetComponent<EnemyObject>();
+        projNumSet();
+        isEnemyAttackable = curEnemy.attackable;
+        stopHeight = 1;
+        colStopZone = 0;
+        attackTimeRange = curEnemy.enemyMoveAttack ? 2f : 4f;
+        attackTimer = attackTimeRange;
+        moveStop = false;
 
-        if(!cur_enemy.Enemy_MoveAttack)
+        if(!curEnemy.enemyMoveAttack)
         {
             StartCoroutine(StopEnemyRoutine());
         }
@@ -43,52 +43,52 @@ public class Enemy_Common : MonoBehaviour
         
     }
 
-    void proj_num_set()
+    void projNumSet()
     {
-        if (cur_enemy.Enemy_ID < 10)
+        if (curEnemy.curEnemyId < 10)
         {
-            proj_num = 1;
+            projNum = 1;
         }
-        else if(cur_enemy.Enemy_ID < 20 || cur_enemy.Enemy_ID > 10)
+        else if(curEnemy.curEnemyId < 20 || curEnemy.curEnemyId > 10)
         {
-            proj_num = 3;
+            projNum = 3;
         }
     }
 
     private void Update()
     {
-        can_Attack = cur_enemy.Can_Attack;
-        if (can_Attack)
+        isEnemyAttackable = curEnemy.attackable;
+        if (isEnemyAttackable)
         {
-            attack_Timer -= Time.deltaTime;
+            attackTimer -= Time.deltaTime;
         }
        
 
-        if (isAttacking && (attack_Timer <=0))
+        if (isAttacking && (attackTimer <=0))
         {
-            if (can_Attack)
+            if (isEnemyAttackable)
             {
                 Attack();
-                attack_Timer = attack_timeRange;
+                attackTimer = attackTimeRange;
             }
         }
     }
     void Attack()
     {
 
-        if (cur_enemy.Enemy_IsAiming)
+        if (curEnemy.enemyIsAiming)
         {
             Transform player = GameObject.Find("Player").transform;
 
             Vector3 dir = (player.position - transform.position).normalized;
             
-            GameObject proj = Instantiate(Enemy_Projectile, transform.position, transform.rotation);
-            Enemy_Bullet e_proj = proj.GetComponent<Enemy_Bullet>();
+            GameObject proj = Instantiate(enemyProjectile, transform.position, transform.rotation);
+            EnemyBullet e_proj = proj.GetComponent<EnemyBullet>();
             if(e_proj == null)
             {
                 Debug.Log("not have EnemyBullet");
             }
-            e_proj.setDamage(cur_enemy.Enemy_Damage);
+            e_proj.setDamage(curEnemy.enemyDamage);
             Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
             rb.velocity = dir * bulletSpeed;
 
@@ -99,30 +99,30 @@ public class Enemy_Common : MonoBehaviour
         {
 
             Vector3 dir = transform.up;
-            for (int i = 0; i < proj_num; i++)
+            for (int i = 0; i < projNum; i++)
             {
-                if(proj_num == 1)
+                if(projNum == 1)
                 {
-                    GameObject proj = Instantiate(Enemy_Projectile, transform.position, transform.rotation);
-                    Enemy_Bullet e_proj = proj.GetComponent<Enemy_Bullet>();
+                    GameObject proj = Instantiate(enemyProjectile, transform.position, transform.rotation);
+                    EnemyBullet e_proj = proj.GetComponent<EnemyBullet>();
                     if (e_proj == null)
                     {
                         Debug.Log("not have EnemyBullet");
                     }
-                    e_proj.setDamage(cur_enemy.Enemy_Damage);
+                    e_proj.setDamage(curEnemy.enemyDamage);
                     Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
                     rb.velocity = dir * bulletSpeed;
                 }
-                else if(proj_num%2==1)//홀수 발사
+                else if(projNum%2==1)//홀수 발사
                 {
                     spacing = 0.2f;
-                    GameObject proj = Instantiate(Enemy_Projectile, transform.position + new Vector3(-spacing * (proj_num / 2) + spacing * i, 0f, 0f), transform.rotation);
-                    Enemy_Bullet e_proj = proj.GetComponent<Enemy_Bullet>();
+                    GameObject proj = Instantiate(enemyProjectile, transform.position + new Vector3(-spacing * (projNum / 2) + spacing * i, 0f, 0f), transform.rotation);
+                    EnemyBullet e_proj = proj.GetComponent<EnemyBullet>();
                     if (e_proj == null)
                     {
                         Debug.Log("not have EnemyBullet");
                     }
-                    e_proj.setDamage(cur_enemy.Enemy_Damage);
+                    e_proj.setDamage(curEnemy.enemyDamage);
                     Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
                     rb.velocity = dir * bulletSpeed;
                 }
@@ -140,7 +140,7 @@ public class Enemy_Common : MonoBehaviour
             isAttacking = true;
             yield return new WaitForSeconds(10f); //10초간 멈춰서 공격
             isAttacking = false;
-            move_stop = false;
+            moveStop = false;
         }
     }
 
@@ -155,21 +155,21 @@ public class Enemy_Common : MonoBehaviour
 
     IEnumerator move_down()
     {
-        while (!move_stop)
+        while (!moveStop)
         {
-            transform.Translate(Vector3.up * cur_enemy.Enemy_MoveSpeed * Time.deltaTime);
+            transform.Translate(Vector3.up * curEnemy.enemyMoveSpeed * Time.deltaTime);
             yield return null;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy_StopZone")
+        if (collision.tag == "EnemyStopZone")
         {
-            col_stopZone += 1;
-            if (col_stopZone == stop_height&& !cur_enemy.Enemy_MoveAttack)
+            colStopZone += 1;
+            if (colStopZone == stopHeight&& !curEnemy.enemyMoveAttack)
             {
-                move_stop = true;
+                moveStop = true;
             }
         }
     }

@@ -29,9 +29,9 @@ public class skill_MiniDroneBullet : PlayerShoot
         }
         if (collision.gameObject.tag == "Enemy")
         {
-            if (collision.GetComponent<Enemy>() != null)
+            if (collision.GetComponent<EnemyObject>() != null)
             {
-                collision.GetComponent<Enemy>().Enemydamaged(damage, gameObject);
+                collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
             }
 
             hashit = true;

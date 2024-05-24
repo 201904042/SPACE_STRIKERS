@@ -5,28 +5,28 @@ using UnityEngine;
 public class Skill_Shield : MonoBehaviour
 {
     GameObject player;
-    private PlayerControl p_control;
-    private PlayerStat p_stat;
-    private Skill_ShieldGenerator s_gen;
-    private float shield_damage;
-    public float cur_damageRate;
-    private bool is_firstSet;
+    private PlayerControl playerControl;
+    private PlayerStat playerStat;
+    private Skill_ShieldGenerator skillGenerator;
+    private float shieldDamage;
+    public float curDamagerate;
+    private bool isFirstSet;
 
     private void Awake()
     {
         player = GameObject.Find("Player");
-        p_stat = player.GetComponent<PlayerStat>();
-        p_control = player.GetComponent<PlayerControl>();
-        s_gen = gameObject.GetComponentInParent<Skill_ShieldGenerator>();
+        playerStat = player.GetComponent<PlayerStat>();
+        playerControl = player.GetComponent<PlayerControl>();
+        skillGenerator = gameObject.GetComponentInParent<Skill_ShieldGenerator>();
     }
 
     private void Update()
     {
-        if (!is_firstSet || cur_damageRate != s_gen.DamageRate)
+        if (!isFirstSet || curDamagerate != skillGenerator.DamageRate)
         {
-            shield_damage = p_stat.damage * s_gen.DamageRate;
-            cur_damageRate = s_gen.DamageRate;
-            is_firstSet = true;
+            shieldDamage = playerStat.damage * skillGenerator.DamageRate;
+            curDamagerate = skillGenerator.DamageRate;
+            isFirstSet = true;
         }
     }
 
@@ -34,12 +34,12 @@ public class Skill_Shield : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("Enemy_Projectile"))
         {
-            if (collision.GetComponent<Enemy>() != null)
+            if (collision.GetComponent<EnemyObject>() != null)
             {
-                collision.GetComponent<Enemy>().Enemydamaged(shield_damage, gameObject);
+                collision.GetComponent<EnemyObject>().EnemyDamaged(shieldDamage, gameObject);
             }
-            p_control.player_push(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
-            s_gen.is_shieldOn = false;
+            playerControl.player_push(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+            skillGenerator.isShieldOn = false;
             Destroy(gameObject);
         }
     }

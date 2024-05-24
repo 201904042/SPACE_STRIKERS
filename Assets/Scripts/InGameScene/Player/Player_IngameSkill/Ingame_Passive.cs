@@ -6,53 +6,52 @@ public class Ingame_Passive : MonoBehaviour
 {
     private GameObject player;
     [HideInInspector]
-    public PlayerStat p_stat;
+    public PlayerStat playerStat;
 
     [Header("패시브 스킬 공통")]
-    public int passive_level;
-    public float increase_Rate;
+    public int passiveLevel;
+    public float increaseRate;
     protected virtual void Awake()
     {
         player = GameObject.Find("Player");
-        p_stat= player.GetComponent<PlayerStat>();
+        playerStat = player.GetComponent<PlayerStat>();
 
-        passive_level = transform.GetComponent<skill_interface>().level;
-        increase_Rate = 1;
+        passiveLevel = transform.GetComponent<SkillInterface>().level;
+        increaseRate = 1;
     }
     
     protected virtual void LevelSet(int level)
     {
         if (level == 1)
         {
-            increase_Rate = 1.2f;
+            increaseRate = 1.2f;
         }
         else if (level == 2)
         {
-            increase_Rate = 1.5f;
+            increaseRate = 1.5f;
         }
         else if (level == 3)
         {
-            increase_Rate = 2f;
+            increaseRate = 2f;
         }
         else if (level == 4)
         {
-            increase_Rate = 2.5f;
+            increaseRate = 2.5f;
         }
         else if (level == 5)
         {
-            increase_Rate = 3f;
+            increaseRate = 3f;
         }
         else
         {
             Debug.Log("Already Max or Min");
         }
-
     }
 
-    public void LevelUp()
+    public void PassiveLevelUp()
     {
-        passive_level += 1;
-        LevelSet(passive_level);
+        passiveLevel += 1;
+        LevelSet(passiveLevel);
     }
 
 }

@@ -1,26 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static EnemyJsonReader;
+
 
 public class Skill_EnergyField : PlayerShoot
 {
 
-    public float e_damageRate;
-    public float e_duration;
-    public bool e_is_shootable;
+    public float enemyDamagerate;
+    public float enemyDuration;
+    public bool isEnemyShootable;
+    public float enemyDamage;
 
-
-    public float e_damage;
     private bool isDamaging;
     private float damageTik;
     private float timer;
-    private float cur_damageRate;
+    private float curDamageRate;
     // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        player = GameObject.Find("Player");
-        player_stat = player.GetComponent<PlayerStat>();
+        base.Awake();
         isDamaging = false;
         damageTik = 0.1f;
     }
@@ -28,19 +26,19 @@ public class Skill_EnergyField : PlayerShoot
     // Update is called once per frame
     void Update()
     {
-        if (!is_firstSet || cur_damageRate != e_damageRate)
+        if (!isFirstSet || curDamageRate != enemyDamagerate)
         {
-            e_damage = player_stat.damage * e_damageRate;
-            cur_damageRate = e_damageRate;
-            timer = e_duration;
-            is_firstSet = true;
+            enemyDamage = playerStat.damage * enemyDamagerate;
+            curDamageRate = enemyDamagerate;
+            timer = enemyDuration;
+            isFirstSet = true;
         }
 
         
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
-            if (e_is_shootable)
+            if (isEnemyShootable)
             {
                 if(transform.parent != null)
                 {
@@ -80,9 +78,9 @@ public class Skill_EnergyField : PlayerShoot
         {
             if (enemy.gameObject.tag == "Enemy")
             {
-                if (enemy.gameObject.GetComponent<Enemy>() != null)
+                if (enemy.gameObject.GetComponent<EnemyObject>() != null)
                 {
-                    enemy.gameObject.GetComponent<Enemy>().Enemydamaged(e_damage, gameObject);
+                    enemy.gameObject.GetComponent<EnemyObject>().EnemyDamaged(enemyDamage, gameObject);
                 }
             }
             yield return new WaitForSeconds(damageTik); // 데미지 간격만큼 대기

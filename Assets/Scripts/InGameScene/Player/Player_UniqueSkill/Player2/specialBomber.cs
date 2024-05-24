@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static PlayerjsonReader;
 
-public class specialBomber : MonoBehaviour
+public class SpecialBomber : MonoBehaviour
 {
     public GameObject Explosion_range;
 
     private GameObject player;
-    private Player_specialSkill specialScript;
+    private PlayerSpecialSkill specialScript;
     private float speed;
     private float damage;
     private int level;
@@ -20,10 +19,10 @@ public class specialBomber : MonoBehaviour
     {
         mainCamera = Camera.main;
         player = GameObject.Find("Player");
-        specialScript = player.GetComponent<Player_specialSkill>();
+        specialScript = player.GetComponent<PlayerSpecialSkill>();
 
-        damage = specialScript.special_Damage;
-        level = specialScript.power_level;
+        damage = specialScript.specialDamage;
+        level = specialScript.powerLevel;
         speed = 5;
     }
     private void Update()
@@ -31,7 +30,7 @@ public class specialBomber : MonoBehaviour
         transform.Translate(Vector3.up * speed * Time.deltaTime);
         if (!IsVisibleFrom(mainCamera)) //화면밖으로 나갈시 미사일 폭발
         {
-            missile_explosion();
+            MissileExplosion();
         }
     }
 
@@ -39,14 +38,15 @@ public class specialBomber : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            missile_explosion(); //적에게 닿을시 폭발
+            MissileExplosion(); //적에게 닿을시 폭발
         }
         
     }
 
-    void missile_explosion()
+    void MissileExplosion()
     {
-        specialBomber_explosionRange range = Instantiate(Explosion_range, transform.position, transform.rotation).GetComponent<specialBomber_explosionRange>();
+        ExplosionRangeOfSpecialBomber range = Instantiate(Explosion_range, transform.position, transform.rotation)
+            .GetComponent<ExplosionRangeOfSpecialBomber>();
         range.damage = damage;
         range.level = level;
         Destroy(gameObject);

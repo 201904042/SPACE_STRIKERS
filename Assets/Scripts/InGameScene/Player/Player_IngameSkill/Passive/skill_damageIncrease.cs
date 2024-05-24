@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class skill_damageIncrease : Ingame_Passive
+public class skill_DamageIncrease : Ingame_Passive
 {
     protected override void Awake()
     {
         base.Awake();
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (passive_level != transform.GetComponent<skill_interface>().level)
+        if (passiveLevel != transform.GetComponent<SkillInterface>().level)
         {
-            passive_level = transform.GetComponent<skill_interface>().level;
-            LevelSet(passive_level);
+            passiveLevel = transform.GetComponent<SkillInterface>().level;
+            LevelSet(passiveLevel);
         }
     }
 
@@ -24,9 +23,8 @@ public class skill_damageIncrease : Ingame_Passive
     {
         base.LevelSet(level);
 
-        p_stat.damage_increaseRate = increase_Rate;
-        p_stat.applyStat();
+        playerStat.damageIncreaseRate = increaseRate;
+        playerStat.ApplyStat();
     }
 
-    
 }

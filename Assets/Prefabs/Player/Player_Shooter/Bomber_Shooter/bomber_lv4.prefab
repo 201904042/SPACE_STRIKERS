@@ -30,10 +30,10 @@ Transform:
   m_Children:
   - {fileID: 7652380725684272193}
   - {fileID: 8251507848570138248}
-  - {fileID: 960928234466981023}
+  - {fileID: 7672737502324108162}
   - {fileID: 8387471250365676933}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &944729535404860253
 PrefabInstance:
@@ -43,6 +43,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2612696283652686056}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile (2)
@@ -109,6 +113,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2612696283652686056}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile (4)
@@ -162,7 +170,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
---- !u!4 &960928234466981023 stripped
+--- !u!4 &7672737502324108162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7435140859992252188, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
   m_PrefabInstance: {fileID: 960928234466981022}
@@ -175,6 +183,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2612696283652686056}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile (5)
@@ -241,6 +253,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2612696283652686056}
     m_Modifications:
+    - target: {fileID: 192642795661258199, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
+      propertyPath: projObj
+      value: 
+      objectReference: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
     - target: {fileID: 3779470595581831562, guid: 11b3e714bd184e54b8cdd687a2ab438c, type: 3}
       propertyPath: m_Name
       value: missile (3)

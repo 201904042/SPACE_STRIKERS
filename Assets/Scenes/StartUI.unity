@@ -1639,31 +1639,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5293104062674415451, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5293104062674415451, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5293104062674415451, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6924799909199265352, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6924799909199265352, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6924799909199265352, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8113718879373679110, guid: 813461b76d4e395488469063418c4fe0, type: 3}
       propertyPath: m_Name
       value: OptionPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113718879373679110, guid: 813461b76d4e395488469063418c4fe0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

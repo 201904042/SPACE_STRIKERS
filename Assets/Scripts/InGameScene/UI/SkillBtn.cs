@@ -7,28 +7,28 @@ using UnityEngine.UI;
 public class SkillBtn : MonoBehaviour
 {
     public Sprite btnImage;
-    public bool is_imageSet;
+    public bool isImageSet;
     public TextMeshProUGUI LvText;
     public TextMeshProUGUI explainText;
     public Transform imageObj;
 
     public int skillId;
     public string skillType;
-    public bool is_buttonSelected;
+    public bool isButtonSelected;
 
     private void Awake()
     {
         imageObj = transform.GetChild(0);
         LvText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         explainText = transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
-        is_buttonSelected = false;
+        isButtonSelected = false;
     }
     private void Update()
     {
-        if (!is_imageSet)
+        if (!isImageSet)
         {
             imageObj.GetComponent<Image>().sprite = btnImage;
-            is_imageSet = true;
+            isImageSet = true;
         }
         
     }

@@ -4,57 +4,57 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_pow_Bar : MonoBehaviour
+public class PlayerPowBar : MonoBehaviour
 {
     GameObject player;
-    Player_specialSkill player_specialScr;
+    PlayerSpecialSkill playerSpecialSkill;
     Slider hp_bar;
     Transform fill;
-    Image fill_image;
+    Image fillImage;
     TextMeshProUGUI pow_text;
 
-    private int power_level;
-    private float player_max_time;
-    private float cur_player_time;
+    private int powerLevel;
+    private float maxPlayerTime;
+    private float curPlayerTime;
     private void Awake()
     {
         player = GameObject.Find("Player");
-        player_specialScr = player.GetComponent<Player_specialSkill>();
+        playerSpecialSkill = player.GetComponent<PlayerSpecialSkill>();
         fill = transform.GetChild(1).GetChild(0);
-        fill_image = fill.GetComponent<Image>();
+        fillImage = fill.GetComponent<Image>();
         pow_text = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        power_level = player_specialScr.power_level;
-        player_max_time = player_specialScr.power_increaseMax;
-        cur_player_time = player_specialScr.power_increase;
+        powerLevel = playerSpecialSkill.powerLevel;
+        maxPlayerTime = playerSpecialSkill.powerIncreaseMax;
+        curPlayerTime = playerSpecialSkill.powerIncrease;
         hp_bar = transform.GetComponent<Slider>();
 
     }
 
     private void Update()
     {
-        power_level = player_specialScr.power_level;
-        player_max_time = player_specialScr.power_increaseMax;
-        cur_player_time = player_specialScr.power_increase;
+        powerLevel = playerSpecialSkill.powerLevel;
+        maxPlayerTime = playerSpecialSkill.powerIncreaseMax;
+        curPlayerTime = playerSpecialSkill.powerIncrease;
 
-        hp_bar.value = cur_player_time / player_max_time;
-        if(power_level == 0)
+        hp_bar.value = curPlayerTime / maxPlayerTime;
+        if(powerLevel == 0)
         {
-            fill_image.color = Color.white;
+            fillImage.color = Color.white;
             pow_text.text = "POW Lv 0";
         }
-        else if(power_level == 1)
+        else if(powerLevel == 1)
         {
-            fill_image.color = Color.green;
+            fillImage.color = Color.green;
             pow_text.text = "POW Lv 1";
         }
-        else if (power_level == 2)
+        else if (powerLevel == 2)
         {
-            fill_image.color = Color.yellow;
+            fillImage.color = Color.yellow;
             pow_text.text = "POW Lv 2";
         }
-        else if (power_level == 3)
+        else if (powerLevel == 3)
         {
-            fill_image.color = Color.red;
+            fillImage.color = Color.red;
             pow_text.text = "POW Lv MAX";
         }
 

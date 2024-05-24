@@ -19,8 +19,8 @@ public class LevelUP_UI : MonoBehaviour
     public string chosenSkillType;
 
     private GameObject player;
-    private Player_InGame_Exp p_exp;
-    private Transform p_skillSlot; //플레이어의 스킬칸
+    private PlayerInGameExp playerExp;
+    private Transform playerSkillSlot; //플레이어의 스킬칸
     private Transform skillSlot; //UI의 스킬버튼이 들어갈 장소
     private bool[] levelMax;
 
@@ -38,8 +38,8 @@ public class LevelUP_UI : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Player");
-        p_exp = player.GetComponent<Player_InGame_Exp>();
-        p_skillSlot = player.transform.GetChild(1);
+        playerExp = player.GetComponent<PlayerInGameExp>();
+        playerSkillSlot = player.transform.GetChild(1);
         skillSlot = transform.GetChild(1);
         skillNum = ActiveSkill.Length + PassiveSkill.Length;
         levelMax = new bool[skillNum];
@@ -50,14 +50,14 @@ public class LevelUP_UI : MonoBehaviour
             levelMax[i] = is_skillLevelMax(i);
         }
 
-        instantSkillSlot();
+        InstantSkillSlot();
     }
     
-    private void instantSkillSlot()
+    private void InstantSkillSlot()
     {
-        if (countFalseInLevelMax() < skillSlotNum)
+        if (CountFalseInLevelMax() < skillSlotNum)
         {
-            skillSlotNum = countFalseInLevelMax();
+            skillSlotNum = CountFalseInLevelMax();
         }
 
         if (skillSlotNum == 0) //extra 스킬 지정
@@ -66,18 +66,18 @@ public class LevelUP_UI : MonoBehaviour
         }
         else //active, passive 스킬 랜덤 지정
         {
-            HashSet<int> setid = new HashSet<int>();
-            while (setid.Count < skillSlotNum)
+            HashSet<int> setId = new HashSet<int>();
+            while (setId.Count < skillSlotNum)
             {
                 
                 int randomNum = UnityEngine.Random.Range(0, skillNum);
-                if (!setid.Contains(randomNum) && !levelMax[randomNum]) //중복과 만렙 제거
+                if (!setId.Contains(randomNum) && !levelMax[randomNum]) //중복과 만렙 제거
                 {
-                    setid.Add(randomNum);
+                    setId.Add(randomNum);
                 }
             }
             int[] skillId = new int[skillSlotNum];
-            setid.CopyTo(skillId);
+            setId.CopyTo(skillId);
 
             for (int i = 0; i < skillSlotNum; i++) //UI에 스킬 버튼을 띄우는 과정
             {
@@ -86,7 +86,7 @@ public class LevelUP_UI : MonoBehaviour
         }
     }
 
-    private int countFalseInLevelMax() //만렙이 아닌 A,P스킬의 개수
+    private int CountFalseInLevelMax() //만렙이 아닌 A,P스킬의 개수
     {
         int falseCount = 0;
         foreach (bool element in levelMax)
@@ -101,28 +101,28 @@ public class LevelUP_UI : MonoBehaviour
 
     private bool is_skillLevelMax(int i)
     {
-        float p_skillSlotCount = p_skillSlot.childCount;
-        skill_interface s_interface = null;
+        float playerSkillSlotCount = playerSkillSlot.childCount;
+        SkillInterface s_interface = null;
         if (i < ActiveSkill.Length) //Active 스킬일 경우
         {
-            return checkSkillLvLoop(s_interface, p_skillSlotCount, ActiveSkill[i]);
+            return checkSkillLvLoop(s_interface, playerSkillSlotCount, ActiveSkill[i]);
         }
         else if (i >= ActiveSkill.Length) //Passive 스킬일 경우
         {
             i -= ActiveSkill.Length;
-            return checkSkillLvLoop(s_interface, p_skillSlotCount, PassiveSkill[i]);
+            return checkSkillLvLoop(s_interface, playerSkillSlotCount, PassiveSkill[i]);
         }
         return false;
     }
 
-    private bool checkSkillLvLoop(skill_interface s_interf, float p_slotNum, GameObject skill)
+    private bool checkSkillLvLoop(SkillInterface s_interf, float playerSlotNum, GameObject skill)
     {
         int j = 0;
-        while (p_slotNum != j)
+        while (playerSlotNum != j)
         {
-            if (skill.name + Clone == p_skillSlot.GetChild(j).name)
+            if (skill.name + Clone == playerSkillSlot.GetChild(j).name)
             {
-                s_interf = p_skillSlot.GetChild(j).GetComponent<skill_interface>();
+                s_interf = playerSkillSlot.GetChild(j).GetComponent<SkillInterface>();
                 if (s_interf.level >= 5)
                 { //플레이어의 스킬이 5레벨 이상이라면 true
                     return true;
@@ -136,99 +136,98 @@ public class LevelUP_UI : MonoBehaviour
 
     private void SetSkillSlot(int i)
     {
-        int skillSlotCount = p_skillSlot.childCount;
+        int skillSlotCount = playerSkillSlot.childCount;
         if(i == -1)
         {
-            skill_interface s_interface =  otherSkill.GetComponent<skill_interface>();
-            makeSkillSlot(i, Extra, s_interface);
+            SkillInterface s_interface =  otherSkill.GetComponent<SkillInterface>();
+            MakeSkillSlot(i, Extra, s_interface);
         }
         else if (i < ActiveSkill.Length) //Active 스킬일 경우
         {
-            checkSkillSlot(skillSlotCount, i, Active, ActiveSkill[i]);
+            CheckSkillSlot(skillSlotCount, i, Active, ActiveSkill[i]);
         }
         else if (i >= ActiveSkill.Length) //Passive 스킬일 경우
         {
             i -= ActiveSkill.Length;
-            checkSkillSlot(skillSlotCount, i, Passive, PassiveSkill[i]);
+            CheckSkillSlot(skillSlotCount, i, Passive, PassiveSkill[i]);
         }
     }
 
-    private void checkSkillSlot(int skillSlotnum,int s_id, string s_type,GameObject skill)
+    private void CheckSkillSlot(int skillSlotnum,int s_id, string s_type,GameObject skill)
     {
-        skill_interface s_interface = skill.GetComponent<skill_interface>();
+        SkillInterface s_interface = skill.GetComponent<SkillInterface>();
         int j = 0;
         while (skillSlotnum != j)
         {
-            if (skill.name + Clone == p_skillSlot.GetChild(j).name)
+            if (skill.name + Clone == playerSkillSlot.GetChild(j).name)
             {
-                s_interface = p_skillSlot.GetChild(j).GetComponent<skill_interface>();
+                s_interface = playerSkillSlot.GetChild(j).GetComponent<SkillInterface>();
                 break;
             }
             j++;
         }
-        makeSkillSlot(s_id, s_type, s_interface);
+        MakeSkillSlot(s_id, s_type, s_interface);
     }
 
-    private void makeSkillSlot(int s_id, string s_type,skill_interface s_interf)
+    private void MakeSkillSlot(int skillId, string skillType, SkillInterface s_interf)
     {
         SkillBtn skillBtnObj = Instantiate(skillBtn, skillSlot).GetComponent<SkillBtn>();
         skillBtnObj.btnImage = s_interf.icon;
         skillBtnObj.LvText.text = "LV : " + s_interf.level.ToString();
-        skillBtnObj.explainText.text = s_interf.skill_intro.ToString();
-        skillBtnObj.is_imageSet = false;
-        skillBtnObj.skillId = s_id;
-        skillBtnObj.skillType = s_type;
+        skillBtnObj.explainText.text = s_interf.skillIntro.ToString();
+        skillBtnObj.isImageSet = false;
+        skillBtnObj.skillId = skillId;
+        skillBtnObj.skillType = skillType;
+    }
+
+    private void FindChosenSkillInPlayerSkill(int playerSlotNum,GameObject skill)
+    {
+        bool isAlreadyHave = false;
+        int i = 0;
+        while (playerSlotNum != i)
+        {
+            if (skill.name + Clone == playerSkillSlot.GetChild(i).name)
+            {
+                playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().level++;
+                isAlreadyHave = true;
+                break;
+            }
+            i++;
+        }
+        if (!isAlreadyHave)
+        {
+            Instantiate(skill, playerSkillSlot);
+        }
     }
 
     public void AcceptBtn()
     {
         if (chosenSkillId != -1)
         {
-            int skillSlotCount = p_skillSlot.childCount;
+            int skillSlotCount = playerSkillSlot.childCount;
 
             if (chosenSkillType == Active)
             {
-                compareChosenToPSkill(skillSlotCount, ActiveSkill[chosenSkillId]);
+                FindChosenSkillInPlayerSkill(skillSlotCount, ActiveSkill[chosenSkillId]);
             }
             else if (chosenSkillType == Passive)
             {
-                compareChosenToPSkill(skillSlotCount, PassiveSkill[chosenSkillId]);
+                FindChosenSkillInPlayerSkill(skillSlotCount, PassiveSkill[chosenSkillId]);
             }
         }
-        else if(chosenSkillId == -1)
+        else if (chosenSkillId == -1)
         {
-            Instantiate(otherSkill, p_skillSlot);
+            Instantiate(otherSkill, playerSkillSlot);
         }
 
         Time.timeScale = 1.0f;
         Destroy(gameObject);
     }
-
-    void compareChosenToPSkill(int p_slotNum,GameObject skill)
-    {
-        bool already_has_skill = false;
-        int i = 0;
-        while (p_slotNum != i)
-        {
-            if (skill.name + Clone == p_skillSlot.GetChild(i).name)
-            {
-                p_skillSlot.GetChild(i).GetComponent<skill_interface>().level++;
-                already_has_skill = true;
-                break;
-            }
-            i++;
-        }
-        if (!already_has_skill)
-        {
-            Instantiate(skill, p_skillSlot);
-        }
-    }
-
     public void RewindBtn()
     {
-        p_exp.InGame_Lv--;
-        p_exp.max_exp -= exp_increase;
-        p_exp.cur_exp = p_exp.max_exp / 2;
+        playerExp.InGameLv--;
+        playerExp.maxExp -= exp_increase;
+        playerExp.curExp = playerExp.maxExp / 2;
         Time.timeScale = 1.0f;
         Destroy(gameObject);
     }

@@ -2,32 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class skill_instantHeal : MonoBehaviour
+public class Skill_InstantHeal : MonoBehaviour
 {
     GameObject player;
-    PlayerStat p_stat;
+    PlayerStat playerStat;
 
     private float healAmount;
     private float damagedHP;
     private void Awake()
     {
         player = GameObject.Find("Player");
-        p_stat = player.GetComponent<PlayerStat>();
-        healAmount = p_stat.hp * 0.3f; //힐량은 최대체력의 30%
-        damagedHP = p_stat.hp - p_stat.cur_hp;
+        playerStat = player.GetComponent<PlayerStat>();
+        healAmount = playerStat.hp * 0.3f; //힐량은 최대체력의 30%
+        damagedHP = playerStat.hp - playerStat.cur_hp;
 
         instantHeal();
     }
 
     private void instantHeal()
     {
-        if(p_stat.cur_hp < p_stat.hp)
+        if(playerStat.cur_hp < playerStat.hp)
         {
             if(healAmount > damagedHP)
             {
                  healAmount = damagedHP;
             }
-            p_stat.cur_hp += healAmount;
+            playerStat.cur_hp += healAmount;
         }
         Destroy(gameObject);
     }

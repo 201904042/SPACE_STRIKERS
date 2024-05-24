@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8069179449585964425}
   - component: {fileID: 7925736101229654319}
   - component: {fileID: 1683043107534909543}
-  - component: {fileID: 1233798283290112273}
   - component: {fileID: 8997929942412045687}
   - component: {fileID: 8687632768353315452}
   m_Layer: 0
@@ -164,31 +163,6 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
---- !u!114 &1233798283290112273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2528677358454710507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c215743b8ef66f944aae1c46a237a29d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemytextJSON: {fileID: 4900000, guid: 39bcbceb8b556fc4892a5cf47b6834c0, type: 3}
-  cur_EnemyID: 1
-  Name: 
-  Grade: 
-  MoveAttack: 0
-  is_Aiming: 0
-  MaxHP: 10
-  CurHP: 10
-  Damage: 10
-  MoveSpeed: 5
-  AttackSpeed: 5
-  exp_amount: 1
-  score_amount: 100
 --- !u!114 &8997929942412045687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,24 +175,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy_ID: 0
-  Enemy_Name: 
-  Enemy_Grade: 
-  Enemy_MoveAttack: 0
-  Enemy_IsAiming: 0
-  Enemy_MaxHP: 10
-  Enemy_CurHP: 10
-  Enemy_Damage: 10
-  Enemy_MoveSpeed: 5
-  Enemy_AttackSpeed: 5
-  exp_amount: 1
-  score_amount: 100
-  Attack_Type: 0
-  Can_Attack: 0
-  is_Slow: 0
+  curEnemyId: 0
+  enemyName: 
+  enemyGrade: 
+  enemyMoveAttack: 0
+  enemyIsAiming: 0
+  enemyMaxHP: 0
+  enemyCurHP: 0
+  enemyDamage: 0
+  enemyMoveSpeed: 0
+  enemyAttackSpeed: 0
+  expAmount: 0
+  scoreAmount: 0
+  attackType: 0
+  attackable: 0
+  isSlow: 0
   exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
-  e_hpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
-  e_DamageRate: {fileID: 0}
+  enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
+  enemyDamageRate: {fileID: 2986098347415986032, guid: 018ead14c5414c644b1696cc6b31f8eb, type: 3}
 --- !u!114 &8687632768353315452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,4 +205,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72bbdd83af433b44a253e9e5d39aef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy_Projectile: {fileID: 1921941541285907538, guid: 04221b9da28e3064ba3d6b024322a244, type: 3}
+  enemyProjectile: {fileID: 1921941541285907538, guid: 04221b9da28e3064ba3d6b024322a244, type: 3}

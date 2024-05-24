@@ -1,16 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Timers;
-using TMPro;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    
-    private PlayerStat player_stat;
-    private SpriteRenderer player_sprite;
+    private GameManager gameManager;
 
+    private PlayerStat playerStat;
+    private SpriteRenderer playerSprite;
 
     private float speed;
     private bool isTop;
@@ -20,34 +16,33 @@ public class PlayerControl : MonoBehaviour
 
     private Vector3 targetPosition;
     private Vector3 curPosition;
-    private float basic_speed;
+    private float basicSpeed = 3f;
 
-    public GameManager gameManager;
-    public bool is_invincible;
-    public bool is_moveable;
+    public bool isMoveable;
+    public bool isInvincible;
 
     private float invincibleDuration = 3f;
 
     // Update is called once per frame
     private void Awake()
     {
-        player_stat = transform.GetComponent<PlayerStat>();
-        player_sprite = transform.GetComponent<SpriteRenderer>();
-        basic_speed = 3;
-        speed = basic_speed + (player_stat.move_speed/5);
+        playerStat = transform.GetComponent<PlayerStat>();
+        playerSprite = transform.GetComponent<SpriteRenderer>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        is_invincible = false;
-        is_moveable = true;
+        speed = basicSpeed + (playerStat.moveSpeed/5);
+
+        isInvincible = false;
+        isMoveable = true;
     }
-    void Update()
+    private void Update()
     {
-        
-        speed = basic_speed + (player_stat.move_speed / 5);
-        if (is_moveable)
+        speed = basicSpeed + (playerStat.moveSpeed / 5);
+        if (isMoveable)
         {
             Move();
         }
-        invincible_sprite();
+        InvincibleSprite();
     }
 
     private void Move()
@@ -65,49 +60,27 @@ public class PlayerControl : MonoBehaviour
         transform.position = curPos + nextPos;
     }
 
-    private void invincible_sprite() //플레이어가 무적 모드여부에 따른 투명도 적용
+    private void InvincibleSprite() //플레이어가 무적 모드여부에 따른 투명도 적용
     {
-        if (is_invincible)
+        if (isInvincible)
         {
-            player_sprite.color = new Color(1, 1, 1, 0.5f);
+            playerSprite.color = new Color(1, 1, 1, 0.5f);
         }
         else
         {
-            player_sprite.color = new Color(1, 1, 1, 1);
+            playerSprite.color = new Color(1, 1, 1, 1);
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Border") //보더에 부딫힐시 해당 보더에 부딫히고 있다는것 전달
-        {
-            switch(collision.gameObject.name) {
-                case "Top":
-                    isTop = true; break;
-                case "Bottom": 
-                    isBottom = true; break;
-                case "Right":
-                    isRight = true; break;
-                case "Left":
-                    isLeft = true; break;
-            }
-        }
-
-        //적이나 적 발사체에 계속 닿고 있다
-        if(collision.gameObject.tag == "Enemy") 
-        {
-            player_stat.Player_damaged(collision.GetComponent<Enemy>().Enemy_Damage, collision.gameObject);
-        }
-    }
-    public void player_Attacked(GameObject attack_obj)
+    public void PlayerAttacked(GameObject attack_obj)
     {
         Collider2D e_obj_collider = attack_obj.GetComponent<Collider2D>();
-        if (is_invincible == false)
+        if (isInvincible == false)
         {
             if (e_obj_collider != null)
             {
-                is_invincible = true;
-                StartCoroutine(player_invincible(invincibleDuration));
+                isInvincible = true;
+                StartCoroutine(playerInvincible(invincibleDuration));
                 player_push(e_obj_collider);
             }
         }
@@ -116,18 +89,18 @@ public class PlayerControl : MonoBehaviour
     public void player_push(Collider2D collision)
     {
         curPosition = transform.position;
-        targetPosition = cal_targetposition(curPosition, collision);
+        targetPosition = CalTargetposition(curPosition, collision);
 
-        StartCoroutine(pushbackLerp(curPosition, targetPosition));
+        StartCoroutine(PushbackLerp(curPosition, targetPosition));
     }
 
-    public Vector3 cal_targetposition(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
+    public Vector3 CalTargetposition(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
     {
         Vector2 pushDirection = (curpos - col.transform.position).normalized;
         return curpos - new Vector3(-pushDirection.x, -pushDirection.y, 0) * 2;
     }
 
-    IEnumerator pushbackLerp(Vector3 startPos, Vector3 endPos)
+    private IEnumerator PushbackLerp(Vector3 startPos, Vector3 endPos)
     {
         float startTime = Time.time;
         float elapseTime = 0f;
@@ -145,9 +118,9 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    IEnumerator player_invincible(float invincible_time)
+    private IEnumerator playerInvincible(float invincible_time)
     {
-        if(is_invincible == false)
+        if(isInvincible == false)
         {
             yield break;
         }
@@ -160,10 +133,32 @@ public class PlayerControl : MonoBehaviour
 
             yield return null;
         }
-        is_invincible = false;
+        isInvincible = false;
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Border") //보더에 부딫힐시 해당 보더에 부딫히고 있다는것 전달
+        {
+            switch (collision.gameObject.name)
+            {
+                case "Top":
+                    isTop = true; break;
+                case "Bottom":
+                    isBottom = true; break;
+                case "Right":
+                    isRight = true; break;
+                case "Left":
+                    isLeft = true; break;
+            }
+        }
 
+        //적이나 적 발사체에 계속 닿고 있다
+        if (collision.gameObject.tag == "Enemy")
+        {
+            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyDamage, collision.gameObject);
+        }
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Border")

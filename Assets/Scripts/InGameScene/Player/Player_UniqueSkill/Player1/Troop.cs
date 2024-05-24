@@ -6,29 +6,29 @@ using UnityEngine;
 public class Troop : MonoBehaviour
 {
     private GameObject player;
-    private Player_specialSkill p_specialskill;
+    private PlayerSpecialSkill palyerSpecialSkill;
     private float fireTime;
     private float startTimer;
-    private string root_path;
-    private string cur_level_path;
-    public float slow_yPos = -2f;
+    private string rootPath;
+    private string curLevelPath;
+    public float slowYPos = -2f;
     public float speed = 5f;
-    private int skill_level;
+    private int skillLevel;
 
     private void Awake()
     {
-        root_path = "Assets/Prefabs/Player/Player_UniqueSkill/Troop_Shooter/shooter_";
+        rootPath = "Assets/Prefabs/Player/Player_UniqueSkill/Troop_Shooter/shooter_";
         player = GameObject.Find("Player");
-        p_specialskill = player.GetComponent<Player_specialSkill>();
-        fireTime = p_specialskill.special_FireTime;
-        skill_level = p_specialskill.power_level;
-        cur_level_path = change_shooter_path_level(skill_level);
+        palyerSpecialSkill = player.GetComponent<PlayerSpecialSkill>();
+        fireTime = palyerSpecialSkill.specialFireTime;
+        skillLevel = palyerSpecialSkill.powerLevel;
+        curLevelPath = ChangeShooterLevelPath(skillLevel);
         InstantShooter();
     }
     private void Update()
     {
         
-        if (transform.position.y > slow_yPos ) //속도 감소
+        if (transform.position.y > slowYPos) //속도 감소
         {
             speed = 0.2f;
         }
@@ -37,11 +37,11 @@ public class Troop : MonoBehaviour
         {
             //특수공격 종료
             speed = 5f;
-            p_specialskill.special_Active = false;
+            palyerSpecialSkill.specialActive = false;
         }
         transform.Translate(Vector3.up* speed * Time.deltaTime); //이동
     }
-    private string change_shooter_path_level(int shooter_level)
+    private string ChangeShooterLevelPath(int shooter_level)
     {
         switch (shooter_level)
         {
@@ -55,13 +55,12 @@ public class Troop : MonoBehaviour
                 return "lvMax";
         }
     }
-    void InstantShooter()
+    private void InstantShooter()
     {
-        GameObject shooter = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(root_path + cur_level_path + ".prefab");
+        GameObject shooter = AssetDatabase.LoadAssetAtPath<GameObject>(rootPath + curLevelPath + ".prefab");
         if (shooter == null)
         {
             Debug.Log("load fail");
-
         }
         else
         {
@@ -69,19 +68,17 @@ public class Troop : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag =="Enemy_Projectile")
         {
             Destroy(collision.gameObject);
         }
 
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
         if (collision.gameObject.tag == "TroopBorder")
         {
             Destroy(gameObject);
         }
+
     }
 }

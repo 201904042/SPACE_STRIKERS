@@ -2,49 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class skill_ChargeShot : PlayerShoot
+public class Skill_ChargeShot : PlayerShoot
 {
     public float damageRate;
-    public bool is_penetrate;
+    public bool isPenetrate;
 
-    private float chargeShot_damage;
-    private float speed;
-    private bool hashit;
+    private float chargeShotDamage;
+    private float chargeShotSpeed;
+    private bool hasHit;
 
     protected override void Awake()
     {
         base.Awake();
-        speed = 2f;
-        hashit = false;
+        chargeShotSpeed = 2f;
+        hasHit = false;
     }
 
     private void Update()
     {
-        if (!is_firstSet)
+        if (!isFirstSet)
         {
-            chargeShot_damage = player_stat.damage * damageRate;
-            is_firstSet = true;
+            chargeShotDamage = playerStat.damage * damageRate;
+            isFirstSet = true;
         }
-        transform.position += transform.up * speed * Time.deltaTime;
+        transform.position += transform.up * chargeShotSpeed * Time.deltaTime;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            if (hashit && !is_penetrate)
+            if (hasHit && !isPenetrate)
             {
                 return;
             }
-            if (collision.GetComponent<Enemy>() != null)
+            if (collision.GetComponent<EnemyObject>() != null)
             {
-                collision.GetComponent<Enemy>().Enemydamaged(chargeShot_damage, gameObject);
-                hashit = true;
+                collision.GetComponent<EnemyObject>().EnemyDamaged(chargeShotDamage, gameObject);
+                hasHit = true;
             }
-            if (!is_penetrate)
+            if (!isPenetrate)
             {
                 Destroy(gameObject);
             }
-            
         }
     }
 }

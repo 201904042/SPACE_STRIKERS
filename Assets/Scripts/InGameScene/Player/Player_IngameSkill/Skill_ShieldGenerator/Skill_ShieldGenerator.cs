@@ -2,40 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_ShieldGenerator : Ingame_Skill
+public class Skill_ShieldGenerator : Ingame_Active
 {
     [Header("쉴드 고유 스텟")]
-    public bool is_levelUp;
-    public bool is_penetrate;
-    public bool is_shieldOn;
+    public bool isLevelUp;
+    public bool isPenetrate;
+    public bool isShieldOn;
     protected override void Awake()
     {
         base.Awake();
         DamageRate = 1f;
         coolTime = 20;
         timer = 0;
-        is_shieldOn = false;
-        is_levelUp = false;
+        isShieldOn = false;
+        isLevelUp = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (level != transform.GetComponent<skill_interface>().level)
+        if (level != transform.GetComponent<SkillInterface>().level)
         {
-            level = transform.GetComponent<skill_interface>().level;
+            level = transform.GetComponent<SkillInterface>().level;
             LevelSet(level);
 
         }
 
-        if (!is_shieldOn)
+        if (!isShieldOn)
         {
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                GameObject shield = Instantiate(skill_proj, transform);
+                GameObject shield = Instantiate(skillProj, transform);
                 shield.GetComponent<Skill_Shield>();
-                is_shieldOn= true;
+                isShieldOn= true;
                 timer = coolTime;
             }
         }
@@ -48,42 +48,42 @@ public class Skill_ShieldGenerator : Ingame_Skill
         {
             DamageRate = 1f;
             coolTime = 20;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<쉴드>\n재생성 3초 감소";
         }
         else if (level == 2)
         {
             DamageRate = 1f;
             coolTime = 17;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<쉴드>\n재생성 3초 감소";
         }
         else if (level == 3)
         {
             DamageRate = 1f;
             coolTime = 14;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<쉴드>\n충돌한 적에게 150% 데미지";
         }
         else if (level == 4)
         {
             DamageRate = 1.5f;
             coolTime = 14;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<쉴드>\n재생성 3초 감소";
         }
         else if (level == 5)
         {
             DamageRate = 1.5f;
             coolTime = 11;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<쉴드>\n재생성 3초 감소";
         }
         else if (level == 6)
         {
             DamageRate = 1.5f;
             coolTime = 8;
-            transform.GetComponent<skill_interface>().skill_intro =
+            transform.GetComponent<SkillInterface>().skillIntro =
                 "<쉴드>\n충돌한 적에게 300% 데미지";
         }
         else if (level == 7)

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1032848167425109897}
   - component: {fileID: 8565702768103144416}
   - component: {fileID: 6977090463044875708}
-  - component: {fileID: 4208400242174032474}
   - component: {fileID: 1882921610607055355}
   m_Layer: 0
   m_Name: Enemy_Elite
@@ -160,31 +159,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4208400242174032474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2451726243676805503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c215743b8ef66f944aae1c46a237a29d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemytextJSON: {fileID: 11500000, guid: 402b7bacfacf8c84aaf21e4c636282b0, type: 3}
-  cur_EnemyID: 0
-  Name: 
-  Grade: 
-  MoveAttack: 0
-  is_Aiming: 0
-  MaxHP: 0
-  CurHP: 0
-  Damage: 0
-  MoveSpeed: 0
-  AttackSpeed: 0
-  exp_amount: 0
-  score_amount: 0
 --- !u!114 &1882921610607055355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,21 +171,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy_ID: 0
-  Enemy_Name: 
-  Enemy_Grade: 
-  Enemy_MoveAttack: 0
-  Enemy_IsAiming: 0
-  Enemy_MaxHP: 0
-  Enemy_CurHP: 0
-  Enemy_Damage: 0
-  Enemy_MoveSpeed: 0
-  Enemy_AttackSpeed: 0
-  exp_amount: 0
-  score_amount: 0
-  Attack_Type: 0
-  Can_Attack: 0
-  is_Slow: 0
+  enemyStat: {fileID: 0}
+  gameManager: {fileID: 0}
+  curEnemyId: 0
+  enemyId: 0
+  enemyName: 
+  enemyGrade: 
+  enemyMoveAttack: 0
+  enemyIsAiming: 0
+  enemyMaxHP: 0
+  enemyCurHP: 0
+  enemyDamage: 0
+  enemyMoveSpeed: 0
+  enemyAttackSpeed: 0
+  expAmount: 0
+  scoreAmount: 0
+  attackType: 0
+  attackable: 0
+  isSlow: 0
   exp: {fileID: 0}
-  e_hpBar: {fileID: 0}
-  e_DamageRate: {fileID: 0}
+  enemyHpBar: {fileID: 0}
+  enemyDamageRate: {fileID: 0}

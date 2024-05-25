@@ -12,6 +12,7 @@ public class SkillElecShockLauncher : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_ElecShock.prefab");
         DamageRate = 0.3f;
         coolTime = 5;
         timer = coolTime;

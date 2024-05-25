@@ -14,6 +14,7 @@ public class Skill_EnergyFieldGenerator : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_EnergyField.prefab");
         DamageRate = 0.2f;
         coolTime = 10;
         timer = 0;

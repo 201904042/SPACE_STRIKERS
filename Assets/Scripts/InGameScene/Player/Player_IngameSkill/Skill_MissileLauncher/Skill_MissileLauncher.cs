@@ -14,6 +14,7 @@ public class Skill_MissileLauncher : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_missile.prefab");
         DamageRate = 1.5f;
         coolTime = 3;
         timer = coolTime;

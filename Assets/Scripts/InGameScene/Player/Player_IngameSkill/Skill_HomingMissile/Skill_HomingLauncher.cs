@@ -10,6 +10,7 @@ public class Skill_HomingLauncher : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_Homing.prefab");
         DamageRate = 0.8f;
         coolTime = 2;
         timer = coolTime;

@@ -8,7 +8,7 @@ using UnityEngine.PlayerLoop;
 public class Enemy_Common : MonoBehaviour
 {
     public GameObject enemyProjectile;
-    EnemyObject curEnemy;
+    private EnemyObject curEnemy;
     int projNum;
     float bulletSpeed = 3f;
     float attackTimeRange;
@@ -24,8 +24,7 @@ public class Enemy_Common : MonoBehaviour
     private void Awake()
     {
         curEnemy = GetComponent<EnemyObject>();
-        projNumSet();
-        isEnemyAttackable = curEnemy.attackable;
+        ProjNumSet();
         stopHeight = 1;
         colStopZone = 0;
         attackTimeRange = curEnemy.enemyMoveAttack ? 2f : 4f;
@@ -43,7 +42,7 @@ public class Enemy_Common : MonoBehaviour
         
     }
 
-    void projNumSet()
+    private void ProjNumSet()
     {
         if (curEnemy.curEnemyId < 10)
         {
@@ -75,29 +74,24 @@ public class Enemy_Common : MonoBehaviour
     }
     void Attack()
     {
-
         if (curEnemy.enemyIsAiming)
         {
             Transform player = GameObject.Find("Player").transform;
 
             Vector3 dir = (player.position - transform.position).normalized;
-            
-            GameObject proj = Instantiate(enemyProjectile, transform.position, transform.rotation);
-            EnemyBullet e_proj = proj.GetComponent<EnemyBullet>();
-            if(e_proj == null)
+
+            EnemyBullet enemyBulletProj = Instantiate(enemyProjectile, transform.position, transform.rotation).GetComponent<EnemyBullet>();
+
+            if(enemyBulletProj == null)
             {
                 Debug.Log("not have EnemyBullet");
             }
-            e_proj.setDamage(curEnemy.enemyDamage);
-            Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
+            enemyBulletProj.setDamage(curEnemy.enemyDamage);
+            Rigidbody2D rb = enemyBulletProj.GetComponent<Rigidbody2D>();
             rb.velocity = dir * bulletSpeed;
-
-            
-
         }
         else
         {
-
             Vector3 dir = transform.up;
             for (int i = 0; i < projNum; i++)
             {
@@ -135,8 +129,8 @@ public class Enemy_Common : MonoBehaviour
     {
         while (true)
         {
-            yield return StartCoroutine(move_down());
-            StopCoroutine(move_down());
+            yield return StartCoroutine(MoveDown());
+            StopCoroutine(MoveDown());
             isAttacking = true;
             yield return new WaitForSeconds(10f); //10ÃÊ°£ ¸ØÃç¼­ °ø°Ý
             isAttacking = false;
@@ -149,11 +143,11 @@ public class Enemy_Common : MonoBehaviour
         isAttacking = true;
         while (true)
         {
-            yield return StartCoroutine(move_down());
+            yield return StartCoroutine(MoveDown());
         }
     }
 
-    IEnumerator move_down()
+    IEnumerator MoveDown()
     {
         while (!moveStop)
         {
@@ -164,7 +158,7 @@ public class Enemy_Common : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "EnemyStopZone")
+        if (collision.tag == "Enemy_StopZone")
         {
             colStopZone += 1;
             if (colStopZone == stopHeight&& !curEnemy.enemyMoveAttack)

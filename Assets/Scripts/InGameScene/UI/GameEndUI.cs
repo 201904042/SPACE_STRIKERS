@@ -1,18 +1,7 @@
-
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-
-[System.Serializable]
-public class invenAccountData
-{
-    public PlayerAccount[] Account;
-    public Parts[] parts;
-    public Ingredients[] ingredients;
-    public Consumables[] consumables;
-}
 
     public class GameEndUI : ItemsData
 {

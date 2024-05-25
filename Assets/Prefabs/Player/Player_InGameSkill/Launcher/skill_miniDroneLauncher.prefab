@@ -45,17 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e48c55f4664e584797096cf012dbd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  skill_proj: {fileID: 6486308639380917487, guid: e3f7b04772703394d8b87fa71776c9e2, type: 3}
-  player_stat: {fileID: 0}
+  skillProj: {fileID: 0}
   enemies: []
   level: 0
   Stat_Damage: 0
   DamageRate: 0
   coolTime: 0
-  proj_num: 0
+  projNum: 0
   timer: 0
-  is_levelUp: 0
+  isLevelUp: 0
   shootSpeedRate: 0
 --- !u!114 &5235054708595101166
 MonoBehaviour:
@@ -69,7 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3d80a2c4df78c4386a0cd6bbd83b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
   icon: {fileID: 566014115, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
-  skill_intro: "<\uBBF8\uB2C8\uB4DC\uB860>\\n\uD50C\uB808\uC774\uC5B4 \uC8FC\uBCC0\uC758
-    \uC801\uC744 \uC790\uB3D9 \uACF5\uACA9\uD558\uB294 \uB4DC\uB860\uC744 \uCD9C\uACA9\uC2DC\uD0B5\uB2C8\uB2E4."
+  skillIntro: "\uBBF8\uB2C8\uB4DC\uB860"

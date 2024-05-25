@@ -11,6 +11,7 @@ public class Skill_ShieldGenerator : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_shield.prefab");
         DamageRate = 1f;
         coolTime = 20;
         timer = 0;

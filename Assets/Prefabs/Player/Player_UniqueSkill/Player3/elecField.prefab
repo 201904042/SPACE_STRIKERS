@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8478655320316280746}
   - component: {fileID: 797375929097017875}
   m_Layer: 0
-  m_Name: ElecField
+  m_Name: elecField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

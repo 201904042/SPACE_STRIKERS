@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2768266258289629381}
   - component: {fileID: 159162281917694163}
   m_Layer: 0
-  m_Name: splash_range
+  m_Name: skill_missileSplash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

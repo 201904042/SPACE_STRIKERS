@@ -20,6 +20,7 @@ public class PlayerMissile : PlayerShoot
     protected override void Awake()
     {
         base.Awake();
+        splashColliderObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/splashRange.prefab");
         missileDamageRate = 1.5f;
         explosionRange = 1.0f;
         playerStatDamage = playerStat.damage;

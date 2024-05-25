@@ -38,8 +38,10 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         playerStat = transform.GetComponent<PlayerStat>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-
+        balanceSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player1/troop.prefab");
+        bomberSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player2/specialBomb.prefab");
+        tankerSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player3/elecField.prefab");
+        splashSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player4/trackingMissile.prefab");
         playerId = playerStat.curPlayerID;
         specialCount = 3; //기체레벨에 비례하여 증가하도록 수정예정
 

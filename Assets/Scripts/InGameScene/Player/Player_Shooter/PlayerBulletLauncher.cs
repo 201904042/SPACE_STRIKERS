@@ -14,6 +14,7 @@ public class PlayerBulletLauncher : LauncherStat
     protected override void Awake()
     {
         base.Awake();
+        projObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/PlayerBullet.prefab");
         basicSpeed = 1;
         shootSpeed = basicSpeed - (playerStat.attackSpeed/100);
         bulletSpeed = 10f;
@@ -34,7 +35,7 @@ public class PlayerBulletLauncher : LauncherStat
 
     private void Fire()
     {
-        Vector2 fireDirection = player.transform.up;
+        Vector2 fireDirection = transform.up;
         GameObject bullet = Instantiate(projObj, transform.position, transform.rotation);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = fireDirection * bulletSpeed;

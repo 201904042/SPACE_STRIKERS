@@ -11,8 +11,8 @@ public class LevelUP_UI : MonoBehaviour
     [Header("스킬 버튼")]
     public GameObject skillBtn;
     [Header("스킬 목록")]
-    public GameObject[] ActiveSkill;
-    public GameObject[] PassiveSkill;
+    public GameObject[] activeSkill;
+    public GameObject[] passiveSkill;
     public GameObject otherSkill;
     [Header("선택된 버튼 정보")]
     public int chosenSkillId;
@@ -28,10 +28,10 @@ public class LevelUP_UI : MonoBehaviour
     private int skillSlotNum = 3;
     private int skillNum;
 
-    private string Active = "Active";
-    private string Passive = "Passive";
-    private string Extra = "Extra";
-    private string Clone = "(Clone)";
+    private string active = "active";
+    private string passive = "passive";
+    private string extra = "extra";
+    private string clone = "(Clone)";
 
     private float exp_increase = 5f;
 
@@ -41,7 +41,7 @@ public class LevelUP_UI : MonoBehaviour
         playerExp = player.GetComponent<PlayerInGameExp>();
         playerSkillSlot = player.transform.GetChild(1);
         skillSlot = transform.GetChild(1);
-        skillNum = ActiveSkill.Length + PassiveSkill.Length;
+        skillNum = activeSkill.Length + passiveSkill.Length;
         levelMax = new bool[skillNum];
         Array.Fill(levelMax, false); //levelMax배열의 모든 배열 false로 초기화
         chosenSkillId = -1;
@@ -103,14 +103,14 @@ public class LevelUP_UI : MonoBehaviour
     {
         float playerSkillSlotCount = playerSkillSlot.childCount;
         SkillInterface s_interface = null;
-        if (i < ActiveSkill.Length) //Active 스킬일 경우
+        if (i < activeSkill.Length) //active 스킬일 경우
         {
-            return checkSkillLvLoop(s_interface, playerSkillSlotCount, ActiveSkill[i]);
+            return checkSkillLvLoop(s_interface, playerSkillSlotCount, activeSkill[i]);
         }
-        else if (i >= ActiveSkill.Length) //Passive 스킬일 경우
+        else if (i >= activeSkill.Length) //passive 스킬일 경우
         {
-            i -= ActiveSkill.Length;
-            return checkSkillLvLoop(s_interface, playerSkillSlotCount, PassiveSkill[i]);
+            i -= activeSkill.Length;
+            return checkSkillLvLoop(s_interface, playerSkillSlotCount, passiveSkill[i]);
         }
         return false;
     }
@@ -120,7 +120,7 @@ public class LevelUP_UI : MonoBehaviour
         int j = 0;
         while (playerSlotNum != j)
         {
-            if (skill.name + Clone == playerSkillSlot.GetChild(j).name)
+            if (skill.name + clone == playerSkillSlot.GetChild(j).name)
             {
                 s_interf = playerSkillSlot.GetChild(j).GetComponent<SkillInterface>();
                 if (s_interf.level >= 5)
@@ -140,16 +140,16 @@ public class LevelUP_UI : MonoBehaviour
         if(i == -1)
         {
             SkillInterface s_interface =  otherSkill.GetComponent<SkillInterface>();
-            MakeSkillSlot(i, Extra, s_interface);
+            MakeSkillSlot(i, extra, s_interface);
         }
-        else if (i < ActiveSkill.Length) //Active 스킬일 경우
+        else if (i < activeSkill.Length) //active 스킬일 경우
         {
-            CheckSkillSlot(skillSlotCount, i, Active, ActiveSkill[i]);
+            CheckSkillSlot(skillSlotCount, i, active, activeSkill[i]);
         }
-        else if (i >= ActiveSkill.Length) //Passive 스킬일 경우
+        else if (i >= activeSkill.Length) //passive 스킬일 경우
         {
-            i -= ActiveSkill.Length;
-            CheckSkillSlot(skillSlotCount, i, Passive, PassiveSkill[i]);
+            i -= activeSkill.Length;
+            CheckSkillSlot(skillSlotCount, i, passive, passiveSkill[i]);
         }
     }
 
@@ -159,7 +159,7 @@ public class LevelUP_UI : MonoBehaviour
         int j = 0;
         while (skillSlotnum != j)
         {
-            if (skill.name + Clone == playerSkillSlot.GetChild(j).name)
+            if (skill.name + clone == playerSkillSlot.GetChild(j).name)
             {
                 s_interface = playerSkillSlot.GetChild(j).GetComponent<SkillInterface>();
                 break;
@@ -186,7 +186,7 @@ public class LevelUP_UI : MonoBehaviour
         int i = 0;
         while (playerSlotNum != i)
         {
-            if (skill.name + Clone == playerSkillSlot.GetChild(i).name)
+            if (skill.name + clone == playerSkillSlot.GetChild(i).name)
             {
                 playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().level++;
                 isAlreadyHave = true;
@@ -206,13 +206,13 @@ public class LevelUP_UI : MonoBehaviour
         {
             int skillSlotCount = playerSkillSlot.childCount;
 
-            if (chosenSkillType == Active)
+            if (chosenSkillType == active)
             {
-                FindChosenSkillInPlayerSkill(skillSlotCount, ActiveSkill[chosenSkillId]);
+                FindChosenSkillInPlayerSkill(skillSlotCount, activeSkill[chosenSkillId]);
             }
-            else if (chosenSkillType == Passive)
+            else if (chosenSkillType == passive)
             {
-                FindChosenSkillInPlayerSkill(skillSlotCount, PassiveSkill[chosenSkillId]);
+                FindChosenSkillInPlayerSkill(skillSlotCount, passiveSkill[chosenSkillId]);
             }
         }
         else if (chosenSkillId == -1)

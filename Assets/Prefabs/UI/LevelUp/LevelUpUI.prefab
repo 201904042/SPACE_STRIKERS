@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillBtn: {fileID: 1991217876107656802, guid: b0497ba258a74364ea004a618db8abdd, type: 3}
-  ActiveSkill:
+  activeSkill:
   - {fileID: 7069132135488840850, guid: e95c2d7da45f7ad43a8b240679b79448, type: 3}
   - {fileID: 3503471818972377597, guid: 0cc32d7b4244c7242867fc7088b82ccd, type: 3}
   - {fileID: 1919880622079911250, guid: 1d8634ee5995e3d4480b9a144a41ce4d, type: 3}
@@ -434,7 +434,7 @@ MonoBehaviour:
   - {fileID: 5317711672589702834, guid: 3295405684b225f41a9ff9b62e1f567d, type: 3}
   - {fileID: 2434176220471505357, guid: c21fe979716c68c4cb164cce56e0d3be, type: 3}
   - {fileID: 1725432599304669288, guid: 28ea1bc37c4195b42bfeaff0a5970aa7, type: 3}
-  PassiveSkill:
+  passiveSkill:
   - {fileID: 5249390050728385306, guid: 56d8a67ca3d3ae4489c8a63daf90aed2, type: 3}
   - {fileID: 6277164576240139422, guid: 5570507ced91e244bb3765daaae86193, type: 3}
   - {fileID: 534401173017352200, guid: 6f464ae38d0ad4b4a9a27b8406986932, type: 3}

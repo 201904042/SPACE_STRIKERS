@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9d356b90f61484bb508ed60da58878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  p_stat: {fileID: 0}
-  passive_level: 0
-  increase_Rate: 0
+  playerStat: {fileID: 0}
+  passiveLevel: 0
+  increaseRate: 0
 --- !u!114 &-3381990251559911419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,5 +62,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   icon: {fileID: -435223175, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
-  skill_intro: "<\uC5D4\uC9C0\uB2C8\uC5B4\uBD07> \\n\uCD08\uB2F9 hp \uC7AC\uC0DD\uB960\uC744
-    0.2% \uC99D\uAC00\uD569\uB2C8\uB2E4"
+  skillIntro: "\uCD08\uB2F9 \uD68C\uBCF5"

@@ -12,6 +12,7 @@ public class Skill_MiniDroneLauncher : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_miniDrone.prefab");
         DamageRate = 0.5f;
         coolTime = 20;
         timer = 0;

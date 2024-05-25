@@ -15,6 +15,7 @@ public class skill_Missile : PlayerShoot
     protected override void Awake()
     {
         base.Awake();
+        splashColliderObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_missileSplash.prefab");
         missileDamageRate = 1.5f;
         explosionRange = 1.0f;
         playerStatDamage = playerStat.damage;

@@ -11,6 +11,7 @@ public class PlayerHomingLauncher : LauncherStat
     protected override void Awake()
     {
         base.Awake();
+        projObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/PlayerHoming.prefab");
         basicSpeed = 1.0f;
         shootSpeed = basicSpeed - (playerStat.attackSpeed/100) ;
     }

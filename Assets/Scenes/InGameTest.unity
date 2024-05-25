@@ -613,13 +613,25 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 783560415}
+    - target: {fileID: 209591494247669844, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShooterDownBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 209591494247669844, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: playerShooterUpgrade, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2103813149515975589, guid: ed030da652c2a4847a8121992f243963, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 783560415}
     - target: {fileID: 2103813149515975589, guid: ed030da652c2a4847a8121992f243963, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: level_UP
+      value: ShooterUPBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103813149515975589, guid: ed030da652c2a4847a8121992f243963, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: playerShooterUpgrade, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2761030611761129426, guid: ed030da652c2a4847a8121992f243963, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

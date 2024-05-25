@@ -11,6 +11,7 @@ public class Skill_ChargeShotLauncher : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
+        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_ChargeShot.prefab");
         DamageRate = 2f;
         coolTime = 5;
         timer = 0;

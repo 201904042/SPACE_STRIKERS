@@ -14,6 +14,7 @@ public class PlayerMissileLauncher : LauncherStat
     protected override void Awake()
     {
         base.Awake();
+        projObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/PlayerMissile.prefab");
         basicSpeed = 3f;
         shootSpeed = basicSpeed - (playerStat.attackSpeed/100);
         missileSpeed = 5f ;

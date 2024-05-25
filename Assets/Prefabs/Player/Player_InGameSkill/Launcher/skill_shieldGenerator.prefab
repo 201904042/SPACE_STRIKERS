@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5974878722738946941
 MonoBehaviour:
@@ -45,19 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c00f257d50054c498e013623e7ec27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  skill_proj: {fileID: 179096613868508618, guid: e93d955651657db47b268a4b1904cb52, type: 3}
-  player_stat: {fileID: 0}
+  skillProj: {fileID: 0}
   enemies: []
   level: 0
   Stat_Damage: 0
   DamageRate: 0
   coolTime: 0
-  proj_num: 0
+  projNum: 0
   timer: 0
-  is_levelUp: 0
-  is_penetrate: 0
-  is_shieldOn: 0
+  isLevelUp: 0
+  isPenetrate: 0
+  isShieldOn: 0
 --- !u!114 &1032529095480373371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,5 +70,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   icon: {fileID: -2137122683, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
-  skill_intro: "<\uC274\uB4DC>\\n\uC801\uC758 \uACF5\uACA9\uC744 \uB9C9\uC544\uB0B4\uBA70
-    \uC801\uACFC \uCDA9\uB3CC\uC2DC \uC801\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C \uC90D\uB2C8\uB2E4."
+  skillIntro: "\uC274\uB4DC \uC0DD\uC131"

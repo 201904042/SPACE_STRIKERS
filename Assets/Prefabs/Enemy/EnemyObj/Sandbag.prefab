@@ -143,14 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyStat: {fileID: 0}
-  gameManager: {fileID: 0}
   curEnemyId: 0
-  enemyId: 0
   enemyName: 
   enemyGrade: 
-  enemyMoveAttack: 0
-  enemyIsAiming: 0
   enemyMaxHP: 0
   enemyCurHP: 0
   enemyDamage: 0
@@ -158,9 +153,11 @@ MonoBehaviour:
   enemyAttackSpeed: 0
   expAmount: 0
   scoreAmount: 0
+  enemyMoveAttack: 0
+  enemyIsAiming: 0
   attackType: 0
   attackable: 0
   isSlow: 0
   exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
-  enemyHpBar: {fileID: 0}
-  enemyDamageRate: {fileID: 0}
+  enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
+  enemyDamageRate: {fileID: 2986098347415986032, guid: 018ead14c5414c644b1696cc6b31f8eb, type: 3}

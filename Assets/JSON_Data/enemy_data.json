@@ -4,68 +4,93 @@
          "enemyId":0,
 	"enemyGrade":"cummon",
          "enemyName":"sandBag",
-	"enemyMoveAttack":false,
-	"isEnemyAiming":false,
 	 "enemyMaxHp":10000,
          "enemyDamage":0,
 	 "enemyMoveSpeed":0,
 	 "enemyAttackSpeed":0,
-         "enemyExpAmount":10,
-	 "enemyScoreAmount":1000
+         "enemyExpAmount":0,
+	 "enemyScoreAmount":0,
+	"enemyMoveAttack":false,
+	"isEnemyAiming":false
       } ,
-
       {
          "enemyId":1,
 	"enemyGrade":"cummon",
          "enemyName":"Earth_cummon1",
-	"enemyMoveAttack":false,
-	"isEnemyAiming":false,
 	 "enemyMaxHp":50,
          "enemyDamage":10,
 	 "enemyMoveSpeed":5,
 	 "enemyAttackSpeed":5,
          "enemyExpAmount":1,
-	 "enemyScoreAmount":100
+	 "enemyScoreAmount":100,
+	"enemyMoveAttack":false,
+	"isEnemyAiming":false
       } ,
 	{
          "enemyId":2,
 	"enemyGrade":"cummon",
          "enemyName":"Earth_cummon2",
-	"enemyMoveAttack":true,
-	"isEnemyAiming":true,
 	 "enemyMaxHp":30,
          "enemyDamage":10,
 	 "enemyMoveSpeed":3,
 	 "enemyAttackSpeed":5,
          "enemyExpAmount":1,
-	 "enemyScoreAmount":100
+	 "enemyScoreAmount":100,
+	"enemyMoveAttack":true,
+	"isEnemyAiming":true
       },
 	{
          "enemyId":3,
 	"enemyGrade":"elite",
          "enemyName":"Earth_elite1",
-	"enemyMoveAttack":false,
-	"isEnemyAiming":false,
 	 "enemyMaxHp":100,
          "enemyDamage":10,
 	 "enemyMoveSpeed":5,
 	 "enemyAttackSpeed":5,
          "enemyExpAmount":1,
-	 "enemyScoreAmount":300
+	 "enemyScoreAmount":300,
+	"enemyMoveAttack":false,
+	"isEnemyAiming":false
       } ,
 	{
          "enemyId":4,
 	"enemyGrade":"elite",
          "enemyName":"Earth_elite2",
-	"enemyMoveAttack":true,
-	"isEnemyAiming":false,
 	 "enemyMaxHp":50,
          "enemyDamage":10,
 	 "enemyMoveSpeed":5,
 	 "enemyAttackSpeed":5,
          "enemyExpAmount":1,
-	 "enemyScoreAmount":300
-      }  
+	 "enemyScoreAmount":300,
+	"enemyMoveAttack":true,
+	"isEnemyAiming":false
+      } ,
+	{
+         "enemyId":5,
+	"enemyGrade":"midBoss",
+         "enemyName":"Earth_midBoss",
+	 "enemyMaxHp":500,
+         "enemyDamage":10,
+	 "enemyMoveSpeed":5,
+	 "enemyAttackSpeed":5,
+         "enemyExpAmount":50,
+	 "enemyScoreAmount":5000,
+	"enemyMoveAttack":true,
+	"isEnemyAiming":false
+      }  ,
+	{
+         "enemyId":6,
+	"enemyGrade":"Boss",
+         "enemyName":"Earth_Boss",
+	 "enemyMaxHp":1000,
+         "enemyDamage":10,
+	 "enemyMoveSpeed":5,
+	 "enemyAttackSpeed":5,
+         "enemyExpAmount":100,
+	 "enemyScoreAmount":10000,
+	"enemyMoveAttack":true,
+	"isEnemyAiming":false
+      }   
 
   ]
 }

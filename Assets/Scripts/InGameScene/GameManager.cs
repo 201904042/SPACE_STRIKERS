@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
     [Header("스폰관련")]
     public GameObject sandbag;
     public GameObject earth_cummon;
-    public GameObject CommonSpawnZones;
+    public Transform spawnZoneY;
+    public Transform spawnZoneXLeft;
+    public Transform spawnZoneXRight;
+    public Transform bossSpawnZone;
     public int stageEnemyAmount;
     
     public  int ranEnemy;
@@ -41,9 +44,6 @@ public class GameManager : MonoBehaviour
     public bool isBattleStart;
     public bool isGameClear;
     public bool isPerfectClear;
-
-    private Transform[] CommonSpawnPoints;
-    
 
     private void Awake()
     {
@@ -65,10 +65,7 @@ public class GameManager : MonoBehaviour
         cummonpointNum = 11;
         isBattleStart = false;
         isGameClear = false;
-        CommonSpawnPoints = new Transform[cummonpointNum];
 
-
-        spawnPointSet();
     }
     private void Update()
     {
@@ -95,19 +92,7 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
-    void spawnPointSet()
-    {
-        for(int i=0;i < cummonpointNum; i++)
-        {
-            if(CommonSpawnZones.transform.GetChild(i) == null)
-            {
-                Debug.Log(i + "번째");
-            }
-            CommonSpawnPoints[i] = CommonSpawnZones.transform.GetChild(i);
-            
-        }
-    }
+    
     public void stageChange()
     {
         deleteEnemy();
@@ -145,19 +130,19 @@ public class GameManager : MonoBehaviour
     void SpawnSandbag()
     {
         deleteEnemy();
-        EnemyObject sandbag1 = Instantiate(sandbag, CommonSpawnPoints[3].position - new Vector3(0,2,0),
-            CommonSpawnPoints[3].rotation).GetComponent<EnemyObject>();
-        EnemyObject sandbag2 = Instantiate(sandbag, CommonSpawnPoints[6].position - new Vector3(0, 2, 0),
-            CommonSpawnPoints[6].rotation).GetComponent<EnemyObject>();
-        EnemyObject sandbag3 = Instantiate(sandbag, CommonSpawnPoints[9].position - new Vector3(0, 2, 0),
-            CommonSpawnPoints[9].rotation).GetComponent<EnemyObject>();
-
+        EnemyObject sandbag1 = Instantiate(sandbag, new Vector3(-1.5f,2,0),
+            Quaternion.identity).GetComponent<EnemyObject>();
+        EnemyObject sandbag2 = Instantiate(sandbag,new Vector3(0, 2, 0),
+            Quaternion.identity).GetComponent<EnemyObject>();
+        EnemyObject sandbag3 = Instantiate(sandbag,new Vector3(1.5f, 2, 0),
+            Quaternion.identity).GetComponent<EnemyObject>();
     }
     void SpawnCommonEnemy()
     {
-        int ranPoint = Random.Range(0, cummonpointNum);
-        EnemyObject enemy = Instantiate(earth_cummon, CommonSpawnPoints[ranPoint].position,
-            CommonSpawnPoints[ranPoint].rotation).GetComponent<EnemyObject>();
+        float ranPoint = Random.Range(0, cummonpointNum);
+        Vector2 SpawnPosition = new Vector2(Random.Range(-2.5f, 2.5f),spawnZoneY.position.y);
+        EnemyObject enemy = Instantiate(earth_cummon, SpawnPosition,
+            spawnZoneY.rotation).GetComponent<EnemyObject>();
     }
 
     void StageDataSet()

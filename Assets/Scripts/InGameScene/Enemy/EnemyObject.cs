@@ -14,8 +14,6 @@ public class EnemyObject : MonoBehaviour
     public int curEnemyId;
     public string enemyName;
     public string enemyGrade;
-    public bool enemyMoveAttack;
-    public bool enemyIsAiming;
     public float enemyMaxHP;
     public float enemyCurHP;
     public float enemyDamage;
@@ -23,6 +21,9 @@ public class EnemyObject : MonoBehaviour
     public float enemyAttackSpeed;
     public float expAmount;
     public float scoreAmount;
+    public bool enemyMoveAttack;
+    public bool enemyIsAiming;
+
     public bool attackType; //1 : 직선 , 0 : 조준
     public bool attackable;
     public bool isSlow;

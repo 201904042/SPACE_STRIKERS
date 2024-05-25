@@ -11,9 +11,7 @@ TagManager:
   - PlayerShield
   - Enemy_Projectile
   - Enemy_StopZone
-  - troop
   - TroopBorder
-  - Player_Drone
   layers:
   - Default
   - TransparentFX

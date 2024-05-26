@@ -153,11 +153,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f952fc81d8cb07b448ed23f95e6248c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyProjectile: {fileID: 1921941541285907538, guid: 04221b9da28e3064ba3d6b024322a244, type: 3}
+  enemyBullet: {fileID: 1921941541285907538, guid: 04221b9da28e3064ba3d6b024322a244, type: 3}
+  enemyLaser: {fileID: 3421608359731845166, guid: 6ada755e5d7ca034bb344d56e4c79a24, type: 3}
   isforwardShot: 0
   isTargetShot: 0
   isAimToPlayer: 0
   ismultiForwardShot: 0
+  laserDangerZoneTime: 0
+  laserAttackTime: 0
+  isLaserAttack: 0
+  isAimToPlayerLaser: 0
+  ismultiForwardLaser: 0
   defaultSpeed: 0
   enemyProjNum: 0
   enemyProjAngle: 0
@@ -202,7 +208,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -222,7 +228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38894838}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.14, y: 2.56, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -441,9 +447,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &636776833 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7212027622746006241, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
+--- !u!4 &636776834 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3909358083476538098, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
   m_PrefabInstance: {fileID: 1078144450801319660}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &652688496
@@ -559,14 +565,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebf4e86e6d83844196e5fcbdc7eee8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &802962265 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7568995119226277431, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
+--- !u!4 &802962266 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1580299611540362249, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
   m_PrefabInstance: {fileID: 1078144450801319660}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &877349775 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 86543696998502882, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
+--- !u!4 &877349776 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3290604140108700345, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
   m_PrefabInstance: {fileID: 1078144450801319660}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1018983700
@@ -904,10 +910,10 @@ MonoBehaviour:
   seconds: 0
   sandbag: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
   earth_cummon: {fileID: 2528677358454710507, guid: 6f42c24655326ab498d86d8cbfe1a4fa, type: 3}
-  spawnZoneY: {fileID: 636776833}
-  spawnZoneXLeft: {fileID: 1697951599}
-  spawnZoneXRight: {fileID: 877349775}
-  bossSpawnZone: {fileID: 802962265}
+  spawnZoneY: {fileID: 636776834}
+  spawnZoneXLeft: {fileID: 1697951600}
+  spawnZoneXRight: {fileID: 877349776}
+  bossSpawnZone: {fileID: 802962266}
   stageEnemyAmount: 0
   ranEnemy: 0
   cummonpointNum: 0
@@ -931,9 +937,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1697951599 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1120521348798368896, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
+--- !u!4 &1697951600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7930223603465253688, guid: dbd830e11999df74f8243a747f9ee06c, type: 3}
   m_PrefabInstance: {fileID: 1078144450801319660}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2034832126

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8139920606400289545}
   - component: {fileID: 2434633745695713444}
   m_Layer: 0
-  m_Name: SplitBullets
+  m_Name: Enemy_SplitBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

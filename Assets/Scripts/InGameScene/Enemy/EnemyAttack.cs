@@ -5,110 +5,21 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [HideInInspector]
-    public GameObject enemyBullet;
+    public GameObject enemyBullet = UnityEditor.AssetDatabase
+        .LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Bullet.prefab");
     [HideInInspector]
-    public GameObject enemyLaser;
+    public GameObject enemyLaser = UnityEditor.AssetDatabase
+        .LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Laser.prefab");
     [HideInInspector]
-    public GameObject enemySplitBullet;
-    private bool isforwardShot;
-    private bool isTargetShot;
-    private bool isAimToPlayer;
-    private bool ismultiForwardShot;
-
-    private int splitCount;
-    private bool isSplitShot;
-    private bool isTargetSplitShot;
-    private bool ismultiSplitShot;
-
-    private float laserDangerZoneTime;
-    private float laserAttackTime;
-    private bool isLaserAttack;
-    private bool isAimToPlayerLaser;
-    private bool ismultiForwardLaser;
+    public GameObject enemySplitBullet = UnityEditor.AssetDatabase
+        .LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_SplitBullet.prefab");
 
 
-    private float defaultSpeed;
-    private int enemyProjNum;
-    private float enemyProjAngle;
-    private float defaultStraightAngle;
-
-    private Vector2 dirUP;
-    private void Awake()
-    {
-        isforwardShot = false;
-        ismultiForwardShot = false;
-        isTargetShot = false;
-        isAimToPlayer = false;
-
-        splitCount = 3;
-        isSplitShot = false;
-        isTargetSplitShot = false;
-        ismultiSplitShot = false;
-
-        laserDangerZoneTime = 1;
-        laserAttackTime = 3;
-
-        isLaserAttack = false;
-        isAimToPlayerLaser = false;
-        ismultiForwardLaser = false;
-
-
-
-
-        defaultSpeed = 10f;
-        enemyProjNum = 1;
-        enemyProjAngle = 45;
-        defaultStraightAngle = -180;
-        dirUP = transform.up;
-    }
-
-    private void Update()
-    {
-        if (isforwardShot)
-        {
-            SingleShot(enemyBullet, dirUP * defaultSpeed);
-            isforwardShot = false;
-        }
-        if (isTargetShot)
-        {
-            TargetShot(enemyBullet);
-            isTargetShot = false;
-        }
-        if (ismultiForwardShot)
-        {
-            MultiShot(enemyBullet, enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle);
-            ismultiForwardShot = false;
-        }
-
-        if (isSplitShot)
-        {
-            SingleShot(enemySplitBullet, dirUP * defaultSpeed, true);
-            isSplitShot = false;
-        }
-        if (isTargetSplitShot)
-        {
-            TargetShot(enemySplitBullet, true);
-            isTargetSplitShot = false;
-        }
-        if (ismultiSplitShot)
-        {
-            MultiShot(enemySplitBullet, enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle, true);
-            ismultiSplitShot = false;
-        }
-
-        if (isLaserAttack)
-        {
-            Laser();
-            isLaserAttack = false;
-        }
-        if (ismultiForwardLaser)
-        {
-            MultiLaser(enemyProjNum, enemyProjAngle, isAimToPlayerLaser, 0);
-            ismultiForwardLaser = false;
-        }
-
-    }
-
+    public int splitCount = 3;
+    public float laserDangerZoneTime = 1;
+    public float laserAttackTime = 3;
+    public float defaultSpeed = 10;
+    //발사할 총알 프리팹, 발사할방향*속도, 분열총알이라면 true
     public void SingleShot(GameObject enemyBullet, Vector3 velocity, bool split = false)
     {
         GameObject enemyProj = Instantiate(enemyBullet, transform.position, Quaternion.identity);
@@ -120,6 +31,8 @@ public class EnemyAttack : MonoBehaviour
         rigid.velocity = new Vector2(velocity.x, velocity.y); //fireDirection * bulletSpeed;
     }
 
+
+    //발사할 총알 프리팹, 분열총알이라면 true
     public void TargetShot(GameObject enemyBullet, bool split = false)
     {
         Transform player = GameObject.FindWithTag("Player").transform;
@@ -135,9 +48,7 @@ public class EnemyAttack : MonoBehaviour
 
     }
 
-    //projNum은 발사하고 싶은 발사체의 개수
-    //projAngle 발사할 각도 45, 90 , 180, 360
-    //projBasicAngle가 -180일때 default로 총알이 아래로 발사됨 커질수록 우측발사 작을수록 좌측으로 발사
+    //발사할 총알, 총알개수, 사격각도범위, 총알속도, 조준여부, 발사체의 기본 앵글, 분열총알여부
     public void MultiShot(GameObject enemyBullet, int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
     {
         float angleStep = projAngle / projNum;
@@ -192,6 +103,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
+    //레이저 여러발일 경우의 앵글(기본 0), 조준여부
     public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
         EnemyLaser laserObject = Instantiate(enemyLaser).GetComponent<EnemyLaser>();
@@ -211,7 +123,7 @@ public class EnemyAttack : MonoBehaviour
         laserObject.chargingTime = laserDangerZoneTime;
         laserObject.laserTime = laserAttackTime;
     }
-
+    //발사개수, 발사 최대범위, 조준여부 , 기본레이저앵글(기본 0)
     public void MultiLaser(int projNum, float projAngle, bool isAimToPlayer = false, float projBasicAngle = 0)
     {
         float angleStep = projAngle / projNum;

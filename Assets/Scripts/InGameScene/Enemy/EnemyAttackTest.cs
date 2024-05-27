@@ -1,38 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
-public class EnemyAttack : MonoBehaviour
+public class EnemyAttackTest : MonoBehaviour
 {
-    [HideInInspector]
     public GameObject enemyBullet;
-    [HideInInspector]
     public GameObject enemyLaser;
-    [HideInInspector]
     public GameObject enemySplitBullet;
+
+    [SerializeField]
     private bool isforwardShot;
+    [SerializeField]
     private bool isTargetShot;
-    private bool isAimToPlayer;
+    [SerializeField]
+    private bool isAimToPlayer; 
+    [SerializeField]
     private bool ismultiForwardShot;
 
+    [SerializeField]
     private int splitCount;
+    [SerializeField]
     private bool isSplitShot;
+    [SerializeField]
     private bool isTargetSplitShot;
+    [SerializeField]
     private bool ismultiSplitShot;
 
+    [SerializeField]
     private float laserDangerZoneTime;
+    [SerializeField]
     private float laserAttackTime;
+    [SerializeField]
     private bool isLaserAttack;
+    [SerializeField]
     private bool isAimToPlayerLaser;
+    [SerializeField]
     private bool ismultiForwardLaser;
+    
 
 
+    [SerializeField]
     private float defaultSpeed;
+    [SerializeField]
     private int enemyProjNum;
+    [SerializeField]
     private float enemyProjAngle;
+    [SerializeField]
     private float defaultStraightAngle;
+    
 
-    private Vector2 dirUP;
+    Vector2 dirUP;
     private void Awake()
     {
         isforwardShot = false;
@@ -52,7 +72,7 @@ public class EnemyAttack : MonoBehaviour
         isAimToPlayerLaser = false;
         ismultiForwardLaser = false;
 
-
+        
 
 
         defaultSpeed = 10f;
@@ -66,7 +86,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (isforwardShot)
         {
-            SingleShot(enemyBullet, dirUP * defaultSpeed);
+            SingleShot(enemyBullet , dirUP*defaultSpeed);
             isforwardShot = false;
         }
         if (isTargetShot)
@@ -76,23 +96,23 @@ public class EnemyAttack : MonoBehaviour
         }
         if (ismultiForwardShot)
         {
-            MultiShot(enemyBullet, enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle);
+            MultiShot(enemyBullet,enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle);
             ismultiForwardShot = false;
         }
 
-        if (isSplitShot)
+        if(isSplitShot)
         {
-            SingleShot(enemySplitBullet, dirUP * defaultSpeed, true);
+            SingleShot(enemySplitBullet, dirUP * defaultSpeed,true);
             isSplitShot = false;
         }
         if (isTargetSplitShot)
         {
-            TargetShot(enemySplitBullet, true);
+            TargetShot(enemySplitBullet,true);
             isTargetSplitShot = false;
         }
         if (ismultiSplitShot)
         {
-            MultiShot(enemySplitBullet, enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle, true);
+            MultiShot(enemySplitBullet, enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle,true);
             ismultiSplitShot = false;
         }
 
@@ -109,36 +129,36 @@ public class EnemyAttack : MonoBehaviour
 
     }
 
-    public void SingleShot(GameObject enemyBullet, Vector3 velocity, bool split = false)
-    {
+    private void SingleShot(GameObject enemyBullet ,Vector3 velocity ,bool split = false)
+    { 
         GameObject enemyProj = Instantiate(enemyBullet, transform.position, Quaternion.identity);
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
-        if (split)
+        if(split)
         {
             enemyProj.GetComponent<EnemySplitBullet>().splitCount = splitCount;
         }
         rigid.velocity = new Vector2(velocity.x, velocity.y); //fireDirection * bulletSpeed;
     }
 
-    public void TargetShot(GameObject enemyBullet, bool split = false)
+    private void TargetShot(GameObject enemyBullet, bool split = false)
     {
         Transform player = GameObject.FindWithTag("Player").transform;
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if (split)
         {
-            SingleShot(enemyBullet, dirToPlayer * defaultSpeed, true);
+            SingleShot(enemyBullet, dirToPlayer * defaultSpeed,true);
         }
         else
         {
             SingleShot(enemyBullet, dirToPlayer * defaultSpeed);
         }
-
+        
     }
 
     //projNum은 발사하고 싶은 발사체의 개수
     //projAngle 발사할 각도 45, 90 , 180, 360
     //projBasicAngle가 -180일때 default로 총알이 아래로 발사됨 커질수록 우측발사 작을수록 좌측으로 발사
-    public void MultiShot(GameObject enemyBullet, int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
+    private void MultiShot(GameObject enemyBullet, int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
     {
         float angleStep = projAngle / projNum;
         float angleInit;
@@ -192,10 +212,10 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
+    private void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
         EnemyLaser laserObject = Instantiate(enemyLaser).GetComponent<EnemyLaser>();
-        if (isAimtoPlayer)
+        if(isAimtoPlayer)
         {
             Transform player = GameObject.FindWithTag("Player").transform;
             Vector3 direction = player.position - laserObject.gameObject.transform.position;
@@ -206,14 +226,14 @@ public class EnemyAttack : MonoBehaviour
         {
             laserObject.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, multiAngle));
         }
-
+        
         laserObject.startPointObj = gameObject;
         laserObject.chargingTime = laserDangerZoneTime;
         laserObject.laserTime = laserAttackTime;
     }
 
-    public void MultiLaser(int projNum, float projAngle, bool isAimToPlayer = false, float projBasicAngle = 0)
-    {
+    private void MultiLaser(int projNum, float projAngle, bool isAimToPlayer = false, float projBasicAngle =0)
+    { 
         float angleStep = projAngle / projNum;
         float angleInit;
         if (projNum % 2 == 0) //짝수
@@ -231,7 +251,7 @@ public class EnemyAttack : MonoBehaviour
             if (isAimToPlayer)
             {
                 Debug.Log(isAimToPlayer);
-                Laser(angle, isAimToPlayer);
+                Laser(angle , isAimToPlayer);
             }
             else
             {
@@ -239,4 +259,6 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
+
+
 }

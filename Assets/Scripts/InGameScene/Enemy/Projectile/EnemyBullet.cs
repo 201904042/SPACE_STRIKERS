@@ -17,6 +17,11 @@ public class EnemyBullet : MonoBehaviour
         damage = e_damage;
     }
 
+    public void SetDirection(float angle)
+    {
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag == "Player")

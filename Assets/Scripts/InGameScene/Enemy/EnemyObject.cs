@@ -11,6 +11,8 @@ public class EnemyObject : MonoBehaviour
     private EnemyJsonReader enemyData;
     private GameManager gameManager;
 
+    public Enemy curEnemy;
+
     public int curEnemyId;
     public string enemyName;
     public string enemyGrade;
@@ -174,8 +176,6 @@ public class EnemyObject : MonoBehaviour
         {
             Destroy(damageRateInstance.gameObject);
         }
-        
-        //스코어 증가 코드 추가할것
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)

@@ -53,7 +53,7 @@ public class Skill_ElecShock : PlayerShoot
                 if (collision.GetComponent<EnemyObject>() != null)
                 {
                     EnemyObject enemy = collision.GetComponent<EnemyObject>();
-                    if (enemy.isSlow)
+                    if (enemy.isEnemySlow)
                     {
                         enemy.EnemyDamaged(shockDamage * 2, gameObject);
                     }
@@ -66,7 +66,7 @@ public class Skill_ElecShock : PlayerShoot
                 
             }
 
-            if (!collision.GetComponent<EnemyObject>().isSlow)
+            if (!collision.GetComponent<EnemyObject>().isEnemySlow)
             {
                 StartCoroutine(getSlow(collision));
             }
@@ -79,18 +79,18 @@ public class Skill_ElecShock : PlayerShoot
         EnemyObject enemy = collision.GetComponent<EnemyObject>();
         SpriteRenderer enemySprite = collision.GetComponent<SpriteRenderer>();
 
-        float originalSpeed = enemy.enemyMoveSpeed;
+        float originalSpeed = enemy.enemyStat.enemyMoveSpeed;
 
-        enemy.attackable = false;
-        enemy.isSlow = true;
-        enemy.enemyMoveSpeed *= 1 - slowRate;
+        enemy.isEnemyCanAttack = false;
+        enemy.isEnemySlow = true;
+        enemy.enemyStat.enemyMoveSpeed *= 1 - slowRate;
         enemySprite.color = new Color(1, 0.5f, 0.5f, 1);
         yield return new WaitForSeconds(slowTime);
         if (enemy != null)
         {
-            enemy.attackable = true;
-            enemy.isSlow = false;
-            enemy.enemyMoveSpeed = originalSpeed;
+            enemy.isEnemyCanAttack = true;
+            enemy.isEnemySlow = false;
+            enemy.enemyStat.enemyMoveSpeed = originalSpeed;
             enemySprite.color = new Color(1, 1f, 1f, 1);
         }
         

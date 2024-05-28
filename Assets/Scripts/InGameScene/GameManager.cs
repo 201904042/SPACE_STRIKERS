@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
         Vector2 SpawnPosition = new Vector2(Random.Range(-2.5f, 2.5f),spawnZoneY.position.y);
         EnemyObject enemy = Instantiate(earth_cummon, SpawnPosition,
             spawnZoneY.rotation).GetComponent<EnemyObject>();
+        enemy.enemyStat.enemyId = Random.Range(1, 3);
     }
 
     void StageDataSet()

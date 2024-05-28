@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyAttack : MonoBehaviour
 {
     [HideInInspector]
-    public GameObject enemyBullet = UnityEditor.AssetDatabase
-        .LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Bullet.prefab");
+    public GameObject enemyBullet;
     [HideInInspector]
-    public GameObject enemyLaser = UnityEditor.AssetDatabase
-        .LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Laser.prefab");
+    public GameObject enemyLaser;
     [HideInInspector]
-    public GameObject enemySplitBullet = UnityEditor.AssetDatabase
-        .LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_SplitBullet.prefab");
+    public GameObject enemySplitBullet;
 
 
     public int splitCount = 3;
@@ -20,10 +18,22 @@ public class EnemyAttack : MonoBehaviour
     public float laserAttackTime = 3;
     public float defaultSpeed = 10;
     //발사할 총알 프리팹, 발사할방향*속도, 분열총알이라면 true
+
+    protected virtual void Awake()
+    {
+        enemyBullet = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Bullet.prefab");
+        enemyLaser = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Laser.prefab");
+        enemySplitBullet = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_SplitBullet.prefab");
+    }
+
+
     public void SingleShot(GameObject enemyBullet, Vector3 velocity, bool split = false)
     {
         GameObject enemyProj = Instantiate(enemyBullet, transform.position, Quaternion.identity);
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
+        rigid.velocity = Vector2.zero;
+        
+
         if (split)
         {
             enemyProj.GetComponent<EnemySplitBullet>().splitCount = splitCount;
@@ -150,5 +160,21 @@ public class EnemyAttack : MonoBehaviour
                 Laser(angle, isAimToPlayer);
             }
         }
+    }
+
+
+    public void enemyMoveForward(GameObject movingObject)
+    {
+        Vector2 moveDirection = movingObject.transform.up;
+        Rigidbody2D enemyRigid = movingObject.GetComponent<Rigidbody2D>();
+        EnemyObject movingObjectStat = movingObject.GetComponent<EnemyObject>();
+        enemyRigid.velocity = moveDirection * movingObjectStat.enemyStat.enemyMoveSpeed;
+    }
+
+    public void enemyMoveStop(GameObject movingObject)
+    {
+        Rigidbody2D enemyRigid = movingObject.GetComponent<Rigidbody2D>();
+
+        enemyRigid.velocity = Vector2.zero;
     }
 }

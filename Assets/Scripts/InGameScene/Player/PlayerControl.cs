@@ -156,7 +156,7 @@ public class PlayerControl : MonoBehaviour
         //적이나 적 발사체에 계속 닿고 있다
         if (collision.gameObject.tag == "Enemy")
         {
-            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyDamage, collision.gameObject);
+            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.enemyDamage/2, collision.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

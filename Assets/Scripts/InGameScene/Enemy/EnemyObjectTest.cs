@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class EnemyObject : MonoBehaviour
+public class EnemyObjectTest: MonoBehaviour
 {
     public Enemy enemyStat;
     private EnemyJsonReader enemyList;
     private GameManager gameManager;
 
     private int curEnemyId;
-    //[HideInInspector]
+    [HideInInspector]
     public float curHp;
-    //[HideInInspector]
+    [HideInInspector]
     public float curHpSave;
 
     [Header("적 체력바")]
     private GameObject canvas;
+    private EnemyObjectTest enemyObject;
     private RectTransform hpBar;
     private GameObject hpBarInstance;
     private Slider hpSlider;
@@ -27,56 +27,42 @@ public class EnemyObject : MonoBehaviour
 
     public GameObject exp;
 
-    public bool isEnemyCanAttack;
-    public bool isEnemySlow;
-
     private void Awake()
     {
         enemyList = GameObject.Find("DataManager").GetComponent<EnemyJsonReader>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        enemyObject = transform.GetComponent<EnemyObjectTest>();
         canvas = GameObject.Find("Canvas");
-        if (enemyStat.enemyId != curEnemyId)
-        {
-            SetStat();
-            setEnemySprite();
-        }
+
         hpBarSet();
     }
 
     private void Update()
     {
-        if (enemyStat.enemyId != curEnemyId)
+        if(enemyStat.enemyId != curEnemyId)
         {
             SetStat();
             setEnemySprite();
         }
-        if (curHp > 0)
+        if (enemyObject.curHp != enemyObject.curHpSave)
         {
-            if (curHp != curHpSave)
+            if (!hpBarInstance.activeSelf)
             {
-                if (!hpBarInstance.activeSelf)
-                {
-                    hpBarInstance.SetActive(true);
-                }
-                curHpSave = curHp;
+                hpBarInstance.SetActive(true);
             }
-            if (curHp < enemyStat.enemyMaxHp)
-            {
-                HpBarUpdate();
-            }
+            enemyObject.curHpSave = enemyObject.curHp;
         }
-        else
+        if (enemyObject.curHp < enemyObject.enemyStat.enemyMaxHp)
         {
-            EnemyDeath();
+            HpBarUpdate();
         }
-        
     }
 
     private void SetStat()
     {
-        foreach (Enemy enemy in enemyList.EnemyList.enemy)
+        foreach(Enemy enemy in enemyList.EnemyList.enemy)
         {
-            if (enemyStat.enemyId == enemy.enemyId)
+            if(enemyStat.enemyId == enemy.enemyId)
             {
                 enemyStat.enemyGrade = enemy.enemyGrade;
                 enemyStat.enemyName = enemy.enemyName;
@@ -92,8 +78,10 @@ public class EnemyObject : MonoBehaviour
                 curEnemyId = enemyStat.enemyId;
                 curHp = enemyStat.enemyMaxHp;
                 curHpSave = curHp;
-                isEnemyCanAttack = false;
-                isEnemySlow = false;
+            }
+            else
+            {
+                Debug.Log("enemy setStat error");
             }
         }
     }
@@ -116,14 +104,14 @@ public class EnemyObject : MonoBehaviour
     {
         Vector3 hpBar_pos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y), 0));
         hpBar.position = hpBar_pos;
-        hpSlider.value = curHp / enemyStat.enemyMaxHp;
+        hpSlider.value = enemyObject.curHp / enemyObject.enemyStat.enemyMaxHp;
     }
 
     private void EnemyExpInstatiate()
     {
         for (int i = 0; i < enemyStat.enemyExpAmount; i++)
         {
-            Instantiate(exp, transform.position, transform.rotation);
+            Instantiate(exp, transform.position, transform.rotation); //생성되는 위치가 조금씩 차이가 나도록 바꿔보자
         }
     }
     public void EnemyEliminate() //시스템 적 제거. 적처치 보상 없음
@@ -150,13 +138,5 @@ public class EnemyObject : MonoBehaviour
     {
         curHp -= damage;
         Debug.Log(attackObj + " 에 의해 " + damage + " 의 데미지를 입음");
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("BulletBorder"))
-        {
-            EnemyEliminate();
-        }
     }
 }

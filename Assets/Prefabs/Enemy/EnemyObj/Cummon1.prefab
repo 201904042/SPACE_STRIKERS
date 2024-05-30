@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7476484752517862470}
   - component: {fileID: 8506794080873314942}
   - component: {fileID: 4102702229393112315}
-  - component: {fileID: 2257754080017386457}
+  - component: {fileID: 433275977027665460}
   m_Layer: 0
   m_Name: Cummon1
   m_TagString: Enemy
@@ -190,7 +190,7 @@ MonoBehaviour:
   exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
   isEnemyCanAttack: 0
   isEnemySlow: 0
---- !u!114 &2257754080017386457
+--- !u!114 &433275977027665460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,9 +205,9 @@ MonoBehaviour:
   enemyBullet: {fileID: 0}
   enemyLaser: {fileID: 0}
   enemySplitBullet: {fileID: 0}
-  splitCount: 0
-  laserDangerZoneTime: 0
-  laserAttackTime: 0
-  defaultSpeed: 0
+  splitCount: 3
+  laserDangerZoneTime: 1
+  laserAttackTime: 3
+  defaultSpeed: 10
   isAttack: 0
   isMoveforward: 0

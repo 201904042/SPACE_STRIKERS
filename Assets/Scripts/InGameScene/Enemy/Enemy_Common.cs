@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Enemy_Common : EnemyAttack
+public class Enemy_Common : EnemyAct
 {
     private EnemyObject curEnemyObj;
     private GameObject cummonEnemyAttackPref;
@@ -74,7 +74,6 @@ public class Enemy_Common : EnemyAttack
             case 1:
             case 2:
                 {
-                    Debug.Log("id : " + curEnemyObj.enemyStat.enemyId);
                     cummonEnemyAttackPref = enemyBullet;
                     curProjNum = 1;
                     curProjAngle = 45;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +11,7 @@ public class EnemyObject : MonoBehaviour
     public Enemy enemyStat;
     private EnemyJsonReader enemyList;
     private GameManager gameManager;
+    public GameObject[] itemList;
 
     private int curEnemyId;
     //[HideInInspector]
@@ -29,16 +30,16 @@ public class EnemyObject : MonoBehaviour
 
     public bool isEnemyCanAttack;
     public bool isEnemySlow;
-
+    public bool isEnemyDropItem;
     private void Awake()
     {
         enemyList = GameObject.Find("DataManager").GetComponent<EnemyJsonReader>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         canvas = GameObject.Find("Canvas");
+        ItemSet();
         if (enemyStat.enemyId != curEnemyId)
         {
             SetStat();
-            setEnemySprite();
         }
         hpBarSet();
     }
@@ -48,7 +49,6 @@ public class EnemyObject : MonoBehaviour
         if (enemyStat.enemyId != curEnemyId)
         {
             SetStat();
-            setEnemySprite();
         }
         if (curHp > 0)
         {
@@ -68,8 +68,7 @@ public class EnemyObject : MonoBehaviour
         else
         {
             EnemyDeath();
-        }
-        
+        } 
     }
 
     private void SetStat()
@@ -88,19 +87,39 @@ public class EnemyObject : MonoBehaviour
                 enemyStat.enemyScoreAmount = enemy.enemyScoreAmount;
                 enemyStat.enemyMoveAttack = enemy.enemyMoveAttack;
                 enemyStat.isEnemyAiming = enemy.isEnemyAiming;
-
-                curEnemyId = enemyStat.enemyId;
+                curEnemyId = enemy.enemyId;
                 curHp = enemyStat.enemyMaxHp;
                 curHpSave = curHp;
                 isEnemyCanAttack = false;
                 isEnemySlow = false;
             }
         }
+        setEnemySprite();
     }
+    private Vector3 commonScale = new Vector3(0.5f, 0.5f, 0.5f);
+    private Vector3 EliteScale = new Vector3(1.4f, 0.7f, 0.5f);
 
     private void setEnemySprite()
     {
-        //적의 스프라이트와 크기 지정
+        //크기지정
+        if(enemyStat.enemyGrade == "common")
+        {
+            //Common크기
+            gameObject.transform.localScale = commonScale;
+        }
+        else if(enemyStat.enemyGrade == "elite")
+        {
+            gameObject.transform.localScale = EliteScale;
+        }
+
+        //스프라이트 지정
+
+        //아이템 드롭 여부에 따른 색 지정
+        if(isEnemyDropItem)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+
     }
 
     private void hpBarSet()
@@ -137,19 +156,48 @@ public class EnemyObject : MonoBehaviour
     {
         EnemyExpInstatiate();
         AddEnemyScoreToStageScore();
+        if(isEnemyDropItem)
+        {
+            DropItem();
+        }
         Destroy(hpBar.gameObject);
         Destroy(gameObject);
     }
+    private void ItemSet()
+    {
+        string[] guids = AssetDatabase.FindAssets("t:Prefab", new[] {"Assets/Prefabs/Item"});
+        itemList = new GameObject[guids.Length];
+        for (int i = 0; i < itemList.Length; i++)
+        {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guids[i]);
+            itemList[i] = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+        }
+    }
 
+    private void DropItem()
+    {
+        if (GameObject.Find("Player").transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 6)
+        {
+            Instantiate(itemList[0]);
+        }
+        else
+        {
+            int itemMaxIndex = itemList.Length - 1;
+            int randomIndex = Random.Range(0, itemMaxIndex);
+
+            Instantiate(itemList[randomIndex + 1]);
+        }
+    }
+        
     private void AddEnemyScoreToStageScore()
     {
         gameManager.stageScore += enemyStat.enemyScoreAmount;
     }
 
-    public void EnemyDamaged(float damage, GameObject attackObj)
+    public void EnemyDamaged(float _damage, GameObject attackObj)
     {
-        curHp -= damage;
-        Debug.Log(attackObj + " 에 의해 " + damage + " 의 데미지를 입음");
+        curHp -= _damage;
+        Debug.Log(gameObject.name+"이 "+attackObj + " 에 의해 " + _damage + " 의 데미지를 입음");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

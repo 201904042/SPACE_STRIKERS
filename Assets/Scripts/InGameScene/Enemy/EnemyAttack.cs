@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EnemyAttack : MonoBehaviour
+public class EnemyAct : MonoBehaviour
 {
     [HideInInspector]
     public GameObject enemyBullet;

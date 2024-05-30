@@ -2,7 +2,7 @@
    "enemy" : [
 	{
          "enemyId":0,
-	"enemyGrade":"cummon",
+	"enemyGrade":"common",
          "enemyName":"sandBag",
 	 "enemyMaxHp":10000,
          "enemyDamage":0,
@@ -15,8 +15,8 @@
       } ,
       {
          "enemyId":1,
-	"enemyGrade":"cummon",
-         "enemyName":"Earth_cummon1",
+	"enemyGrade":"common",
+         "enemyName":"Earth_common1",
 	 "enemyMaxHp":50,
          "enemyDamage":10,
 	 "enemyMoveSpeed":3,
@@ -28,8 +28,8 @@
       } ,
 	{
          "enemyId":2,
-	"enemyGrade":"cummon",
-         "enemyName":"Earth_cummon2",
+	"enemyGrade":"common",
+         "enemyName":"Earth_common2",
 	 "enemyMaxHp":30,
          "enemyDamage":10,
 	 "enemyMoveSpeed":2,

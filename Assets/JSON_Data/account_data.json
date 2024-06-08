@@ -4,7 +4,7 @@
             "accountCode": 1,
             "accountName": "space",
             "accountLevel": 1,
-            "mineral": 2100,
+            "mineral": 2200,
             "ruby": 100,
             "is_player2Open": true,
             "is_player3Open": false,
@@ -56,9 +56,31 @@
         }
     ],
     "ingredients": [
-        
+        {
+            "ingredId": 1,
+            "ingredCode": 5,
+            "ingredName": "보급형 디스플레이",
+            "ingredAmount": 1
+        },
+        {
+            "ingredId": 2,
+            "ingredCode": 6,
+            "ingredName": "재사용코일",
+            "ingredAmount": 1
+        },
+        {
+            "ingredId": 3,
+            "ingredCode": 2,
+            "ingredName": "재활용전선",
+            "ingredAmount": 1
+        }
     ],
     "consumables": [
-        
+        {
+            "consId": 1,
+            "consCode": 1,
+            "consName": "하급뽑기권",
+            "consAmount": 1
+        }
     ]
 }

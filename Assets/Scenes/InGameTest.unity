@@ -366,6 +366,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Earth_Common
       objectReference: {fileID: 0}
+    - target: {fileID: 3774528676716417827, guid: 37125b7aba05b0f44b03699df3bc9ff7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4102702229393112315, guid: 37125b7aba05b0f44b03699df3bc9ff7, type: 3}
       propertyPath: isEnemyDropItem
       value: 1

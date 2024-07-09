@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
     public class GameEndUI : ItemsData
 {
     public TextAsset accountData;
-    public GameManager gameManager;
 
     public TextMeshProUGUI ClearText;
     public TextMeshProUGUI StageNameText;
@@ -16,8 +15,6 @@ using UnityEngine.SceneManagement;
     public Item[] randomItems;
 
     public invenAccountData invenData;
-    
-    
 
     private string accountFilePath = "Assets/JSON_Data/account_data.json";
     private string modifiedJson;
@@ -38,13 +35,13 @@ using UnityEngine.SceneManagement;
     {
         stageTextSet();
 
-        if (gameManager.isGameClear)
+        if (GameManager.gameInstance.isGameClear)
         {
-            if (gameManager.openStage == ((gameManager.planet - 1) * 10) + gameManager.stage)
+            if (StageManager.stageInstance.openStage == ((StageManager.stageInstance.planet - 1) * 10) + StageManager.stageInstance.stage)
             {
-                rewardInit(gameManager.curStagefirstGain.Length);
+                rewardInit(StageManager.stageInstance.curStagefirstGain.Length);
                 int n = 0;
-                foreach (Item firstGain in gameManager.curStagefirstGain)
+                foreach (Item firstGain in StageManager.stageInstance.curStagefirstGain)
                 {
                     rewardItemSet(firstGain, n);
                     n++;
@@ -52,17 +49,17 @@ using UnityEngine.SceneManagement;
             }
             else
             {
-                rewardInit(gameManager.curStageDefaultGain.Length + gameManager.curDefaultFullGain.Length);
+                rewardInit(StageManager.stageInstance.curStageDefaultGain.Length + StageManager.stageInstance.curDefaultFullGain.Length);
                 int n = 0;
-                foreach (Item defaultGain in gameManager.curStageDefaultGain)
+                foreach (Item defaultGain in StageManager.stageInstance.curStageDefaultGain)
                 {
                     rewardItemSet(defaultGain, n);
                     n++;
                 }
                 //중복퍼펙트 추가보상
-                if (gameManager.isPerfectClear)
+                if (GameManager.gameInstance.isPerfectClear)
                 {
-                    foreach (Item perfectClear in gameManager.curDefaultFullGain)
+                    foreach (Item perfectClear in StageManager.stageInstance.curDefaultFullGain)
                     {
                         rewardItemSet(perfectClear, n);
                         n++;
@@ -89,7 +86,7 @@ using UnityEngine.SceneManagement;
     }
 
     private void stageTextSet() {
-        if (gameManager.isGameClear)
+        if (GameManager.gameInstance.isGameClear)
         {
             ClearText.text = "Stage Clear";
             ClearText.color = Color.green;
@@ -100,8 +97,8 @@ using UnityEngine.SceneManagement;
             ClearText.color = Color.red;
         }
 
-        StageNameText.text = "Stage : " + gameManager.planet.ToString() 
-            + "-" + gameManager.stage.ToString();
+        StageNameText.text = $"Stage : {StageManager.stageInstance.planet.ToString()}" +
+            $"- { StageManager.stageInstance.stage.ToString()}";
     }
 
     private void rewardItemSet(Item rewardGain, int i)
@@ -142,7 +139,7 @@ using UnityEngine.SceneManagement;
 
     private void jsonDataWrite()
     {
-        if (gameManager.isGameClear)
+        if (GameManager.gameInstance.isGameClear)
         {
             for (int i = 0; i < rewardItems.Length; i++) //리워드 아이템의 순회
             {

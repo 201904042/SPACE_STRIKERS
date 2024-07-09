@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    private GameManager gameManager;
-
     private PlayerStat playerStat;
     private SpriteRenderer playerSprite;
 
@@ -28,7 +26,6 @@ public class PlayerControl : MonoBehaviour
     {
         playerStat = transform.GetComponent<PlayerStat>();
         playerSprite = transform.GetComponent<SpriteRenderer>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         speed = basicSpeed + (playerStat.moveSpeed/5);
 

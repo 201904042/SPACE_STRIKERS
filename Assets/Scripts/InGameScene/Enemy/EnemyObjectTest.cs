@@ -131,7 +131,7 @@ public class EnemyObjectTest: MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        gameManager.stageScore += enemyStat.enemyScoreAmount;
+        GameManager.gameInstance.score += enemyStat.enemyScoreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)

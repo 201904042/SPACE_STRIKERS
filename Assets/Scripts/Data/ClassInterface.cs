@@ -31,7 +31,7 @@ public class Enemy
     public float enemyMoveSpeed;
     public float enemyAttackSpeed;
     public float enemyExpAmount;
-    public float enemyScoreAmount;
+    public int enemyScoreAmount;
     public bool enemyMoveAttack; //false면 멈춰서 공격 true면 이동하면서 공격
     public bool isEnemyAiming; //true면 조준하여 사격 false면 그냥 앞으로 직선 사격
 }

@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    public bool isFirstSetDone;
-    private GameManager gameManager;
+    
     private PlayerJsonReader playerData;
     [Header("기본 정보")]
     public int curPlayerID;
     public int level;
+    public bool isFirstSetDone;
 
     [Header("초기스텟 + 패시브 스텟 적용 \n 각 요소에 직접 참조됨")]
     public float damage; //추가스텟 적용 이후 공격 혹은 이동에 직접 쓰일 변수(패시브 스킬이 추가된 스텟)
@@ -44,7 +44,6 @@ public class PlayerStat : MonoBehaviour
     private void Awake()
     {
         p_control = GameObject.Find("Player").GetComponent<PlayerControl>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerData = GameObject.Find("DataManager").GetComponent<PlayerJsonReader>();
         isFirstSetDone = false;
         isShootable = false;
@@ -54,9 +53,9 @@ public class PlayerStat : MonoBehaviour
     }
     private void Update()
     {
-        if (gameManager.isBattleStart)
+        if (GameManager.gameInstance.isBattleStart)
         {
-            isShootable = gameManager.isBattleStart;
+            isShootable = GameManager.gameInstance.isBattleStart;
         }
     }
     public void SetStat(int cur_id)

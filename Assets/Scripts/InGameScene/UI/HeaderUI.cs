@@ -7,7 +7,6 @@ public class HeaderUI : MonoBehaviour
 {
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI timeText;
-    public GameManager gameManager;
     public GameObject optionUI;
 
 
@@ -20,11 +19,11 @@ public class HeaderUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeText.text = gameManager.minutes.ToString()+" : "+gameManager.seconds.ToString();
-        if (gameManager.stageScore != saveScore)
+        timeText.text = StageManager.stageInstance.minutes.ToString()+" : "+ StageManager.stageInstance.seconds.ToString();
+        if (GameManager.gameInstance.score != saveScore)
         {
-            ScoreText.text = gameManager.stageScore.ToString();
-            saveScore = gameManager.stageScore;
+            ScoreText.text = GameManager.gameInstance.score.ToString();
+            saveScore = GameManager.gameInstance.score;
         }
     }
 

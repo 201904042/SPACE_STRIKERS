@@ -15,8 +15,8 @@ public class Ingame_Passive : MonoBehaviour
     {
         player = GameObject.Find("Player");
         playerStat = player.GetComponent<PlayerStat>();
-
         passiveLevel = transform.GetComponent<SkillInterface>().level;
+
         increaseRate = 1;
     }
     

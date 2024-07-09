@@ -8,8 +8,8 @@ public class Ingame_Active : MonoBehaviour
 {
     private GameObject player;
     private PlayerStat playerStat;
-
     public GameObject skillProj;
+
     [HideInInspector]
     public GameObject[] enemies;
 
@@ -30,7 +30,6 @@ public class Ingame_Active : MonoBehaviour
         Stat_Damage = playerStat.damage;
     }
     
-
     public void FindEnemyWithTag()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");

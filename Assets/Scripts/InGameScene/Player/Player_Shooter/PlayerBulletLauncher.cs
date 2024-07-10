@@ -33,11 +33,12 @@ public class PlayerBulletLauncher : LauncherStat
         }
     }
 
-    private void Fire()
+    protected override void Fire()
     {
-        Vector2 fireDirection = transform.up;
-        GameObject bullet = Instantiate(projObj, transform.position, transform.rotation);
+        base.Fire();
+        GameObject bullet = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Player_Bullet, transform.position, transform.rotation);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = fireDirection * bulletSpeed;
     }
+
 }

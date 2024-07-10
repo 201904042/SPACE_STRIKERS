@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyLaser : MonoBehaviour
+public class EnemyLaser : EnemyProjectile
 {
     [SerializeField]
     private LineRenderer dangerMark;
@@ -24,12 +24,13 @@ public class EnemyLaser : MonoBehaviour
     [SerializeField]
     private float LaserWidthRate;
     private float defaultLaserWidth;
-    public float damage;
+
 
     private bool isFirstSet;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         dangerMark = transform.GetChild(0).GetComponent<LineRenderer>();
         coreLaser = transform.GetChild(1).GetComponent<LineRenderer>();
         outLineLaser = transform.GetChild(2).GetComponent<LineRenderer>();
@@ -47,6 +48,13 @@ public class EnemyLaser : MonoBehaviour
 
         isFirstSet = false;
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+    }
+
 
     private void Update()
     {
@@ -89,10 +97,8 @@ public class EnemyLaser : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject);
+                ObjectPool.poolInstance.ReleasePool(gameObject);
             }
         }
     }
-
-    
 }

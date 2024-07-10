@@ -36,7 +36,7 @@ public class ExplosionSplashDamage : MonoBehaviour
         splashTime -= Time.deltaTime;
         if (splashTime <= 0)
         {
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
     

@@ -26,10 +26,9 @@ public class EnemyAct : MonoBehaviour
         enemySplitBullet = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_SplitBullet.prefab");
     }
 
-
     public void SingleShot(GameObject enemyBullet, Vector3 velocity, bool split = false)
     {
-        GameObject enemyProj = Instantiate(enemyBullet, transform.position, Quaternion.identity);
+        GameObject enemyProj = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Enemy_Bullet, transform.position, Quaternion.identity);
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.zero;
         
@@ -116,7 +115,7 @@ public class EnemyAct : MonoBehaviour
     //레이저 여러발일 경우의 앵글(기본 0), 조준여부
     public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
-        EnemyLaser laserObject = Instantiate(enemyLaser).GetComponent<EnemyLaser>();
+        EnemyLaser laserObject = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
         if (isAimtoPlayer)
         {
             Transform player = GameObject.FindWithTag("Player").transform;
@@ -163,7 +162,7 @@ public class EnemyAct : MonoBehaviour
     }
 
 
-    public void enemyMoveForward(GameObject movingObject)
+    public void EnemyMoveForward(GameObject movingObject)
     {
         Vector2 moveDirection = movingObject.transform.up;
         Rigidbody2D enemyRigid = movingObject.GetComponent<Rigidbody2D>();
@@ -171,7 +170,7 @@ public class EnemyAct : MonoBehaviour
         enemyRigid.velocity = moveDirection * movingObjectStat.enemyStat.enemyMoveSpeed;
     }
 
-    public void enemyMoveStop(GameObject movingObject)
+    public void EnemyMoveStop(GameObject movingObject)
     {
         Rigidbody2D enemyRigid = movingObject.GetComponent<Rigidbody2D>();
 

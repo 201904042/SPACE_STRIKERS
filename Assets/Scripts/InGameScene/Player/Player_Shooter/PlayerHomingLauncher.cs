@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHomingLauncher : LauncherStat
@@ -29,8 +30,9 @@ public class PlayerHomingLauncher : LauncherStat
         }
     }
 
-    private void Fire()
+    protected override void Fire()
     {
-        Instantiate(projObj, transform.position, transform.rotation);
+        base.Fire();
+        ObjectPool.poolInstance.GetProjPool(ProjPoolType.Player_Homing, transform.position, transform.rotation);
     }
 }

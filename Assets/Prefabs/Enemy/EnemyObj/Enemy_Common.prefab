@@ -28,13 +28,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3774528676716417827}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 3.74, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &5982954555183644477
 SpriteRenderer:
@@ -184,12 +184,14 @@ MonoBehaviour:
     enemyScoreAmount: 0
     enemyMoveAttack: 0
     isEnemyAiming: 0
+  itemList: []
   curHp: 0
   curHpSave: 0
   enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
   exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
   isEnemyCanAttack: 0
   isEnemySlow: 0
+  isEnemyDropItem: 0
 --- !u!114 &433275977027665460
 MonoBehaviour:
   m_ObjectHideFlags: 0

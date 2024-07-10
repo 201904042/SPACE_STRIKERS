@@ -15,15 +15,19 @@ public class LauncherStat : MonoBehaviour
     public float basicSpeed;
     public float shootSpeed;
     public float curStatspeed;
+
     public bool LauncherShootable;
+
+    public Vector2 fireDirection;
 
     protected virtual void Awake()
     {
         player = GameObject.Find("Player");
         playerStat = player.transform.GetComponent<PlayerStat>();
-        LauncherShootable = playerStat.isShootable;
 
+        LauncherShootable = playerStat.isShootable;
         curStatspeed = playerStat.attackSpeed;
+        fireDirection = transform.up;
     }
 
     protected virtual void Update()
@@ -36,5 +40,10 @@ public class LauncherStat : MonoBehaviour
         {
             shootSpeed = basicSpeed - (playerStat.attackSpeed / 100);
         }
+    }
+
+    protected virtual void Fire()
+    {
+        //기타 요소 추가(사운드)
     }
 }

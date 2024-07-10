@@ -96,6 +96,7 @@ public class playerShooterUpgrade : MonoBehaviour
         }
     }
 
+    //슈터의 오브젝트 풀도 만들어보기
     private void ChangeCharacter()
     {
         ChangePlayerImage(characterNumber);

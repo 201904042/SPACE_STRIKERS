@@ -33,11 +33,12 @@ public class PlayerMissileLauncher : LauncherStat
         }
     }
 
-    private void Fire()
+    protected override void Fire()
     {
-        GameObject missile = Instantiate(projObj, transform.position, transform.rotation);
+        base.Fire();
+        GameObject missile = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Player_Missile, transform.position, transform.rotation);
         Rigidbody2D rigid = missile.GetComponent<Rigidbody2D>();
-        rigid.AddForce(Vector2.up * missileSpeed, ForceMode2D.Impulse);
+        rigid.AddForce(fireDirection * missileSpeed, ForceMode2D.Impulse);
     }
 
 }

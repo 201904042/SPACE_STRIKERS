@@ -39,7 +39,7 @@ public class Enemy_Common : EnemyAct
         if(curEnemyObj.enemyStat.enemyMoveAttack)
         {
             //움직이며 공격하는 몹
-            enemyMoveForward(gameObject);
+            EnemyMoveForward(gameObject);
             if (!isAttackCoroutineActive)
             {
                 StartCoroutine(AttackRepeatly(100f,2f));
@@ -50,7 +50,7 @@ public class Enemy_Common : EnemyAct
         {
             if(isMoveforward)
             {
-                enemyMoveForward(gameObject);
+                EnemyMoveForward(gameObject);
             }
             else
             {
@@ -111,7 +111,7 @@ public class Enemy_Common : EnemyAct
             if (stopCount == ++stopTrigCount)
             {
                 isMoveforward = false;
-                enemyMoveStop(gameObject);
+                EnemyMoveStop(gameObject);
             }
         }
     }

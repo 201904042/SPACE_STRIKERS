@@ -6,18 +6,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+
 public class EnemyObject : MonoBehaviour
 {
-    public Enemy enemyStat;
-    private EnemyJsonReader enemyList;
-    private GameManager gameManager;
-    public GameObject[] itemList;
+    public Enemy enemyStat; //이 스텟의 id로 처음에 스텟 초기화
+    private EnemyJsonReader enemyList; //적들의 정보가 담기 데이터리스트
+    public GameObject[] itemList; //적이 스폰할 아이템
 
-    private int curEnemyId;
-    //[HideInInspector]
-    public float curHp;
-    //[HideInInspector]
-    public float curHpSave;
+    public int curEnemyId; //임시. 스텟 초기화 후 id를 바꾼경우를 체크하기 위함
+    public float curHp; //현재의 hp. 이것이 0 이되면 파괴
+    public float curHpSave; //체력바 업데이트를 위한 기준.
 
     [Header("적 체력바")]
     private GameObject canvas;
@@ -31,25 +29,29 @@ public class EnemyObject : MonoBehaviour
     public bool isEnemyCanAttack;
     public bool isEnemySlow;
     public bool isEnemyDropItem;
+
     private void Awake()
     {
-        enemyList = GameObject.Find("DataManager").GetComponent<EnemyJsonReader>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        enemyList =DataManager.dataInstance.GetComponent<EnemyJsonReader>();
         canvas = GameObject.Find("Canvas");
-        ItemSet();
-        if (enemyStat.enemyId != curEnemyId)
-        {
-            SetStat();
-        }
         hpBarSet();
+    }
+
+    private void OnEnable()
+    {
+        //활성화 될때 id에 따라 스텟지정
+        ItemSet();
+        SetStat();
     }
 
     private void Update()
     {
+        //중간에 id를 바꿨을때 내용
         if (enemyStat.enemyId != curEnemyId)
         {
             SetStat();
         }
+
         if (curHp > 0)
         {
             if (curHp != curHpSave)
@@ -124,13 +126,14 @@ public class EnemyObject : MonoBehaviour
 
     private void hpBarSet()
     {
+        if (hpBar != null) return;
         hpBarInstance = Instantiate(enemyHpBar, canvas.transform);
         hpBar = hpBarInstance.GetComponent<RectTransform>();
         hpSlider = hpBarInstance.GetComponent<Slider>();
         hpBar.sizeDelta = new Vector2(transform.localScale.x * 200, hpBar.sizeDelta.y);
         hpBarInstance.SetActive(false);
-
     }
+
     private void HpBarUpdate() //hp바의 위치를 업데이트
     {
         Vector3 hpBar_pos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y), 0));
@@ -147,9 +150,8 @@ public class EnemyObject : MonoBehaviour
     }
     public void EnemyEliminate() //시스템 적 제거. 적처치 보상 없음
     {
-
-        Destroy(hpBar.gameObject);
-        Destroy(gameObject);
+        hpBar.gameObject.SetActive(false);
+        ObjectPool.poolInstance.ReleasePool(gameObject);
     }
 
     public void EnemyDeath() //적 사망시. 적 처치 보상 있음
@@ -160,8 +162,8 @@ public class EnemyObject : MonoBehaviour
         {
             DropItem();
         }
-        Destroy(hpBar.gameObject);
-        Destroy(gameObject);
+        hpBar.gameObject.SetActive(false);
+        ObjectPool.poolInstance.ReleasePool(gameObject);
     }
     private void ItemSet()
     {
@@ -197,6 +199,7 @@ public class EnemyObject : MonoBehaviour
     public void EnemyDamaged(float _damage, GameObject attackObj)
     {
         curHp -= _damage;
+        curHp = Mathf.Max(curHp, 0);
         Debug.Log(gameObject.name+"이 "+attackObj + " 에 의해 " + _damage + " 의 데미지를 입음");
     }
 

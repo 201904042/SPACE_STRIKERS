@@ -35,7 +35,7 @@ public class PlayerBullet : PlayerShoot
             }
             
             hashit = true;
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
 

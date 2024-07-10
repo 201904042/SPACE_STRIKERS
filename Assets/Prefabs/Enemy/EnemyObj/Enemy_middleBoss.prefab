@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4935361975481495958}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.89, y: 1.96, z: 0}
   m_LocalScale: {x: 2.1049, y: 2.1049, z: 2.1049}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8229324849959605567
 SpriteRenderer:
@@ -177,24 +177,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyStat: {fileID: 0}
-  gameManager: {fileID: 0}
-  curEnemyId: 0
-  enemyId: 0
-  enemyName: 
-  enemyGrade: 
-  enemyMoveAttack: 0
-  enemyIsAiming: 0
-  enemyMaxHP: 0
-  enemyCurHP: 0
-  enemyDamage: 0
-  enemyMoveSpeed: 0
-  enemyAttackSpeed: 0
-  expAmount: 0
-  scoreAmount: 0
-  attackType: 0
-  attackable: 0
-  isSlow: 0
-  exp: {fileID: 0}
-  enemyHpBar: {fileID: 0}
-  enemyDamageRate: {fileID: 0}
+  enemyStat:
+    enemyId: 0
+    enemyGrade: 
+    enemyName: 
+    enemyMaxHp: 0
+    enemyDamage: 0
+    enemyMoveSpeed: 0
+    enemyAttackSpeed: 0
+    enemyExpAmount: 0
+    enemyScoreAmount: 0
+    enemyMoveAttack: 0
+    isEnemyAiming: 0
+  itemList: []
+  curHp: 0
+  curHpSave: 0
+  enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
+  exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
+  isEnemyCanAttack: 0
+  isEnemySlow: 0
+  isEnemyDropItem: 0

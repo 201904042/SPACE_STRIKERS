@@ -59,16 +59,33 @@ public class SpawnManager : MonoBehaviour
     {
         if (StageManager.stageInstance.stage == 0)
         {
-            SpawnSandbag();
+            ObjectPool.poolInstance.GetEnemyPool(0, new Vector3(-2f, 2, 0),Quaternion.identity);
+            ObjectPool.poolInstance.GetEnemyPool(0, new Vector3(0f, 2, 0), Quaternion.identity);
+            ObjectPool.poolInstance.GetEnemyPool(0, new Vector3(2f, 2, 0), Quaternion.identity);
         }
-        else if (StageManager.stageInstance.stage == 1)
+        else if (StageManager.stageInstance.stage >= 1)
         {
-            SpawnCommonEnemy();
+            Debug.Log("커먼 소환");
+            int enemyId = SelectSpawnEnemy();
+
+            Transform selectedSpawnZone = spawnZoneY; //일단은 스폰존 고정. 기준스폰을 랜덤으로하는 메서드 첨부할것
+            Vector2 spawnPosition= new Vector2(Random.Range(-2.5f, 2.5f), selectedSpawnZone.position.y);
+
+            ObjectPool.poolInstance.GetEnemyPool(2, spawnPosition, selectedSpawnZone.rotation);
         }
     }
 
+    private int SelectSpawnEnemy()
+    {
+        //생성할 적의 코드를 결정하고 리턴. 이후 적을 스폰하도록
+        int randRate = Random.Range(1, 3); // 1은 고정형 일반. 2는 직전형 일반
+        
+        //일단은 커먼 적만 생성
+        return randRate;
+    }
+
     //모든 적들을 시스템으로 사망(보상없음)
-    public void deleteEnemy()
+    public void DeleteEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
@@ -76,38 +93,5 @@ public class SpawnManager : MonoBehaviour
             enemies[i].GetComponent<EnemyObject>().EnemyEliminate();
         }
     }
-
-    //전투력 측정용 샌드백
-    public void SpawnSandbag()
-    {
-        deleteEnemy();
-        EnemyObject sandbag1 = Instantiate(sandbag, new Vector3(-1.5f, 2, 0),
-            Quaternion.identity).GetComponent<EnemyObject>();
-        EnemyObject sandbag2 = Instantiate(sandbag, new Vector3(0, 2, 0),
-            Quaternion.identity).GetComponent<EnemyObject>();
-        EnemyObject sandbag3 = Instantiate(sandbag, new Vector3(1.5f, 2, 0),
-            Quaternion.identity).GetComponent<EnemyObject>();
-    }
-
-    //임시로 적 생성 테스트
-    public void SpawnCommonEnemy()
-    {
-        float ranPoint = Random.Range(0, 11);
-        Vector2 spawnPosition = new Vector2(Random.Range(-2.5f, 2.5f), spawnZoneY.position.y);
-        
-        EnemyObject enemy = Instantiate(earth_cummon, spawnPosition,
-            spawnZoneY.rotation).GetComponent<EnemyObject>();
-        enemy.enemyStat.enemyId = Random.Range(1, 3); //직전형 고정형 타입
-    }
-
-    public void SpawnFromPool(ObjectPool<GameObject> pool, Vector3 position)
-    {
-        GameObject enemy = pool.Get();
-        enemy.transform.position = position;
-        enemy.transform.rotation = Quaternion.identity;
-        enemy.GetComponent<EnemyObject>().enemyStat.enemyId = Random.Range(1, 3); //직전형 고정형 타입
-    }
-
-
 
 }

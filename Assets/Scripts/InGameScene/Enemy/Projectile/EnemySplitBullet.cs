@@ -2,19 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySplitBullet : MonoBehaviour
+public class EnemySplitBullet : EnemyProjectile
 {
     public GameObject enemyBullet;
 
     public int splitCount;
-    public float damage;
     private float speed;
 
-    private void Awake()
+    protected override void Awake()
     {
         splitCount =5;
         speed = 5f;
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+    }
+
 
     private void SplitBullet()
     {
@@ -29,17 +35,17 @@ public class EnemySplitBullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerStat>().PlayerDamaged(damage, gameObject);
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
         else if (collision.CompareTag("Border"))
         {
             SplitBullet();
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
 }

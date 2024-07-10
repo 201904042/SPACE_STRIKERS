@@ -38,7 +38,7 @@ public class StageManager : MonoBehaviour
 
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         stage = PlayerPrefs.GetInt("ChosenStage");
-        stageData = GameObject.Find("DataManager").GetComponent<StageJsonReader>();
+        stageData = DataManager.dataInstance.GetComponent<StageJsonReader>();
 
         StageDataSet();
 
@@ -75,7 +75,7 @@ public class StageManager : MonoBehaviour
     //임시 스테이지 변경. 이후에는 쓸일 없음.
     public void StageChange()
     {
-        SpawnManager.spawnInstance.deleteEnemy();
+        SpawnManager.spawnInstance.DeleteEnemy();
         
         if (stage == 0)
         {
@@ -86,7 +86,4 @@ public class StageManager : MonoBehaviour
             stage = 0;
         }
     }
-
-
-
 }

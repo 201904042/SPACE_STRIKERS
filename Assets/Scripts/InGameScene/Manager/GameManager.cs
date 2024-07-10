@@ -31,7 +31,10 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 1;
+    }
 
+    private void Start()
+    {
         score = 0;
         isBattleStart = false;
         isGameClear = false;

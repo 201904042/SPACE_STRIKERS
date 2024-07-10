@@ -33,6 +33,10 @@ public class SpawnManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+
+    private void Start()
+    {
         foreach (StageEnemy enemy in StageManager.stageInstance.curStageEnemy)
         {
             stageEnemyAmount += enemy.enemyAmount;

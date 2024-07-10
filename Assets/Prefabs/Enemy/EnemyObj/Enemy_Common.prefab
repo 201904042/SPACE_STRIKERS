@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4102702229393112315}
   - component: {fileID: 433275977027665460}
   m_Layer: 0
-  m_Name: Cummon1
+  m_Name: Enemy_Common
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -39,10 +39,14 @@ public class StageManager : MonoBehaviour
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         stage = PlayerPrefs.GetInt("ChosenStage");
         stageData = GameObject.Find("DataManager").GetComponent<StageJsonReader>();
+
         StageDataSet();
-        
+
+    }
+
+    private void Start()
+    {
         stageTime = 0;
-        
     }
 
     //현재 스테이지의 정보를 데이터에서 가져와 현재 변수에 세팅

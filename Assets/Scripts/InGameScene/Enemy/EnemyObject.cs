@@ -12,13 +12,7 @@ public class EnemyObject : MonoBehaviour
     public Enemy enemyStat; //이 스텟의 id로 처음에 스텟 초기화
     public int curEnemyId; //임시. 스텟 초기화 후 id를 바꾼경우를 체크하기 위함
     public float curHp; //현재의 maxHp. 이것이 0 이되면 파괴
-    public float curHpSave; //체력바 업데이트를 위한 기준.
     public GameObject enemyHpBar;
-
-    public bool isAttackReady;
-    public bool isEnemySlow;
-    public bool isEnemyDropItem;
-
 
     protected EnemyJsonReader enemyList; //적들의 정보가 담긴 데이터리스트
     protected GameObject canvas;
@@ -26,11 +20,22 @@ public class EnemyObject : MonoBehaviour
     protected RectTransform hpBar;
     protected Slider hpSlider;
 
+    public bool isAttackReady; //공격할 준비 완료
+    public bool isEnemySlow; //현재 감속 상태
+    public bool isEnemyDropItem; //해당 적이 아이템을 드롭할지
+
+    protected bool isAttack; //공격중
+    protected bool isMove; //움직이는 중
+
     protected virtual void Awake()
     {
-        enemyList = DataManager.dataInstance.GetComponent<EnemyJsonReader>();
         canvas = GameObject.Find("Canvas");
-        hpBarSet();
+
+    }
+    private void Start()
+    {
+        enemyList = DataManager.dataInstance.GetComponent<EnemyJsonReader>();
+        HpBarSet();
         SetStat();
     }
 
@@ -42,7 +47,7 @@ public class EnemyObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        //중간에 id를 바꿨을때 내용
+        //중간에 id를 바꿨을때 내용(디버그용)
         if (enemyStat.enemyId != curEnemyId)
         {
             SetStat();
@@ -53,17 +58,14 @@ public class EnemyObject : MonoBehaviour
             EnemyDeath();
             return;
         }
-
-        if (curHp != curHpSave)
+        
+        if (curHp < enemyStat.enemyMaxHp)
         {
             if (!hpBarInstance.activeSelf)
             {
                 hpBarInstance.SetActive(true);
             }
-            curHpSave = curHp;
-        }
-        if (curHp < enemyStat.enemyMaxHp)
-        {
+
             HpBarUpdate();
         }
         
@@ -87,18 +89,18 @@ public class EnemyObject : MonoBehaviour
                 enemyStat.isEnemyAiming = enemy.isEnemyAiming;
                 curEnemyId = enemy.enemyId;
                 curHp = enemyStat.enemyMaxHp;
-                curHpSave = curHp;
             }
         }
+
         isAttackReady = true;
         isEnemySlow = false;
-        setEnemySprite();
+        SetEnemySprite();
     }
 
     private Vector3 commonScale = new Vector3(0.5f, 0.5f, 0.5f);
     private Vector3 EliteScale = new Vector3(1.4f, 0.7f, 0.5f);
 
-    private void setEnemySprite()
+    private void SetEnemySprite()
     {
         gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         //임시 크기지정
@@ -126,7 +128,7 @@ public class EnemyObject : MonoBehaviour
     /// <summary>
     /// hp바 없으면 생성하고 세팅후 비활성화
     /// </summary>
-    private void hpBarSet()
+    private void HpBarSet()
     {
         if (hpBar != null) return;
         hpBarInstance = Instantiate(enemyHpBar, canvas.transform); //오브젝트 풀 필요없다.
@@ -143,6 +145,9 @@ public class EnemyObject : MonoBehaviour
         hpSlider.value = curHp / enemyStat.enemyMaxHp;
     }
 
+    /// <summary>
+    /// 적 사망시 exp 생성
+    /// </summary>
     private void EnemyExpInstatiate()
     {
         for (int i = 0; i < enemyStat.enemyExpAmount; i++)
@@ -150,12 +155,19 @@ public class EnemyObject : MonoBehaviour
             ObjectPool.poolInstance.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
         }
     }
-    public void EnemyEliminate() //시스템 적 제거. 적처치 보상 없음
+
+    /// <summary>
+    /// 시스템에 의한 적을 제거(보상이 없는 제거)
+    /// </summary>
+    public void EnemyEliminate()
     {
         hpBar.gameObject.SetActive(false);
         ObjectPool.poolInstance.ReleasePool(gameObject);
     }
 
+    /// <summary>
+    /// 플레이어에 의한 적 제거 (보상을 생성하는 제거)
+    /// </summary>
     public void EnemyDeath() //적 사망시. 적 처치 보상 있음
     {
         EnemyExpInstatiate();
@@ -170,7 +182,7 @@ public class EnemyObject : MonoBehaviour
 
     private void DropItem()
     {
-        if (GameObject.Find("Player").transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 6)
+        if (GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 6)
         {
             ObjectPool.poolInstance.GetProj(ProjType.Item_ShooterUP,transform.position, transform.rotation);
         }
@@ -182,20 +194,28 @@ public class EnemyObject : MonoBehaviour
             ObjectPool.poolInstance.GetProj(randomItemList[randomIndex],transform.position,transform.rotation);
         }
     }
-        
+    
+    /// <summary>
+    /// 적 사망시 스코어 증가
+    /// </summary>
     private void AddEnemyScoreToStageScore()
     {
         GameManager.gameInstance.score += enemyStat.enemyScoreAmount;
     }
 
-    public void EnemyDamaged(float _damage, GameObject attackObj)
+    /// <summary>
+    /// 적 데미지를 받은 경우
+    /// </summary>
+    public void EnemyDamaged(float damage, GameObject attackObj)
     {
-        curHp -= _damage;
+        curHp -= damage;
         curHp = Mathf.Max(curHp, 0);
-        Debug.Log(gameObject.name+"이 "+attackObj + " 에 의해 " + _damage + " 의 데미지를 입음");
+        Debug.Log(gameObject.name+"이 "+attackObj + " 에 의해 " + damage + " 의 데미지를 입음");
     }
 
-
+    /// <summary>
+    /// 보더와 충돌시 적 제거
+    /// </summary>
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("BulletBorder"))

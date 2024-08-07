@@ -20,6 +20,23 @@ public class GameManager : MonoBehaviour
     public bool isGameClear;
     public bool isPerfectClear;
 
+    public bool isBattleOn
+    {
+        get => isBattleStart;
+        set
+        {
+            isBattleStart = value;
+            if (isBattleStart)
+            {
+                StartCoroutine(SpawnManager.spawnInstance.SpawnCheckCoroutine());
+            }
+            else
+            {
+                StopCoroutine(SpawnManager.spawnInstance.SpawnCheckCoroutine());
+            }
+        }
+    }
+
     private void Awake()
     {
         if (gameInstance == null)
@@ -37,7 +54,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         score = 0;
-        isBattleStart = false;
+        isBattleOn = true;
         isGameClear = false;
     }
 
@@ -46,8 +63,6 @@ public class GameManager : MonoBehaviour
         if (isBattleStart)
         {
             StageManager.stageInstance.StageTimer();
-            SpawnManager.spawnInstance.SpawnCheck();
-
             if (SpawnManager.spawnInstance.stageEnemyAmount <= 0 || StageManager.stageInstance.minutes >= 15) //승리조건 만족시 게임 종료
             {
                 Time.timeScale = 0;

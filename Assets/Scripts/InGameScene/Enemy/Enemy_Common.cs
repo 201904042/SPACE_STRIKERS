@@ -6,16 +6,13 @@ using UnityEngine;
 
 public class Enemy_Common : EnemyAct
 {
-    [Header("커먼 스텟")]
-    public bool isAttack;
-    public bool isMoveforward;
+    private int curProjNum; //현재 발사체 숫자
+    private float curProjAngle; //현재 발사체의 각도
 
-    [SerializeField]private int curProjNum;
-    [SerializeField] private float curProjAngle;
-    private int stopTrigCount;
-    private int stopCount;
-    private float enemyAttackTime;
-    private float enemyAttackDealy;
+    private int stopTrigCount; //몇번 스탑라인을 통과해야 멈출지
+    private int stopCount; //스탑라인을 통과한 수
+    private float enemyAttackTime; //적이 공격하는 시간
+    private float enemyAttackDealy; //공격과 공격 사이의 딜레이
 
     private bool isAttackCoroutineActive = false;
 
@@ -33,7 +30,7 @@ public class Enemy_Common : EnemyAct
 
     private void Init()
     {
-        isMoveforward = true;
+        isMove = true;
         stopTrigCount = 0;
         stopCount = Random.Range(1, 3);
         enemyAttackTime = 10;
@@ -48,6 +45,7 @@ public class Enemy_Common : EnemyAct
     protected override void Update()
     {
         base.Update();
+
         if (enemyStat.enemyMoveAttack)
         {
             //움직이며 공격하는 몹
@@ -60,7 +58,7 @@ public class Enemy_Common : EnemyAct
         }
         else
         {
-            if(isMoveforward)
+            if(isMove)
             {
                 EnemyMoveForward(gameObject);
             }
@@ -83,12 +81,6 @@ public class Enemy_Common : EnemyAct
         curProjAngle = 45;
     }
 
-    private void Attack()
-    {
-        Debug.Log("공격");
-        MultiShot(curProjNum, curProjAngle,enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
-    }
-
     private IEnumerator AttackRepeatly(float attackTime, float attackDelay)
     {
         float timer = 0f;
@@ -101,8 +93,14 @@ public class Enemy_Common : EnemyAct
             yield return new WaitForSeconds(attackDelay);
             timer += attackDelay;
         }
-        isMoveforward = true;
+        isMove = true;
         isAttackCoroutineActive= false;
+    }
+
+    private void Attack()
+    {
+        Debug.Log("공격");
+        MultiShot(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -113,7 +111,7 @@ public class Enemy_Common : EnemyAct
             stopTrigCount++;
             if (stopCount == stopTrigCount)
             {
-                isMoveforward = false;
+                isMove = false;
                 EnemyMoveStop(gameObject);
             }
         }

@@ -83,7 +83,6 @@ public class EnemyAct : EnemyObject
                 dirToPlayer = (player.position - transform.position).normalized;
 
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
-                Debug.Log($"사격");
                 if (split)
                 {
                     SingleShot( velocity * bulletSpeed, true);
@@ -95,7 +94,6 @@ public class EnemyAct : EnemyObject
             }
             else
             {
-                Debug.Log($"샷 진입4");
                 //조준이 아닐경우
                 float projectileDirXPosition = transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180);
                 float projectileDirYPosition = transform.position.y + Mathf.Cos((angle * Mathf.PI) / 180);
@@ -163,7 +161,6 @@ public class EnemyAct : EnemyObject
             }
         }
     }
-
 
     public void EnemyMoveForward(GameObject movingObject)
     {

@@ -45,9 +45,9 @@
          "enemyName":"Earth_elite1",
 	 "enemyMaxHp":100,
          "enemyDamage":10,
-	 "enemyMoveSpeed":5,
+	 "enemyMoveSpeed":3,
 	 "enemyAttackSpeed":3,
-         "enemyExpAmount":1,
+         "enemyExpAmount":3,
 	 "enemyScoreAmount":300,
 	"enemyMoveAttack":false,
 	"isEnemyAiming":false
@@ -58,9 +58,9 @@
          "enemyName":"Earth_elite2",
 	 "enemyMaxHp":50,
          "enemyDamage":10,
-	 "enemyMoveSpeed":5,
+	 "enemyMoveSpeed":2,
 	 "enemyAttackSpeed":3,
-         "enemyExpAmount":1,
+         "enemyExpAmount":3,
 	 "enemyScoreAmount":300,
 	"enemyMoveAttack":true,
 	"isEnemyAiming":false

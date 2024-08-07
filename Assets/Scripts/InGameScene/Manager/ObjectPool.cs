@@ -76,7 +76,7 @@ public class ObjectPool : MonoBehaviour
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
                 skillDic[skillType].Add(newObject);
-                Debug.Log($"{newObject} 积己");
+                //Debug.Log($"{newObject} 积己");
                 return newObject;
             }
         }
@@ -93,7 +93,7 @@ public class ObjectPool : MonoBehaviour
                 obj.transform.position = position;
                 obj.transform.rotation = rotation;
                 obj.SetActive(true);
-                Debug.Log($"{obj} 劝己拳");
+                //Debug.Log($"{obj} 劝己拳");
                 return obj;
             }
         }
@@ -108,7 +108,7 @@ public class ObjectPool : MonoBehaviour
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
                 projDic[projType].Add(newObject);
-                Debug.Log($"{newObject} 积己");
+                //Debug.Log($"{newObject} 积己");
                 return newObject;
             }
         }
@@ -134,22 +134,22 @@ public class ObjectPool : MonoBehaviour
             enemyType = EnemyType.SandBag;
             return true;
         }
-        else if (enemyId > 0 && enemyId < 100)
+        else if (enemyId > 0 && enemyId < 10)
         {
             enemyType = EnemyType.Common;
             return true;
         }
-        else if (enemyId >= 100 && enemyId < 200)
+        else if (enemyId >= 10 && enemyId < 20)
         {
             enemyType = EnemyType.Elite;
             return true;
         }
-        else if (enemyId >= 200 && enemyId < 300)
+        else if (enemyId >= 20 && enemyId < 30)
         {
             enemyType = EnemyType.MidBoss;
             return true;
         }
-        else if (enemyId >= 300 && enemyId < 400)
+        else if (enemyId >= 30 && enemyId < 40)
         {
             enemyType = EnemyType.Boss;
             return true;
@@ -173,11 +173,11 @@ public class ObjectPool : MonoBehaviour
                 {
                     obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
                 }
-                /* 唱赣瘤 利 累己饶 馆康
                 else if (enemyType == EnemyType.Elite)
                 {
                     obj.GetComponent<Enemy_Elite>().enemyStat.enemyId = enemyId;
                 }
+                /*
                 else if (enemyType == EnemyType.Common)
                 {
                     obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
@@ -186,7 +186,7 @@ public class ObjectPool : MonoBehaviour
                 {
                     obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
                 }*/
-                Debug.Log($"{obj} 劝己拳");
+                //Debug.Log($"{obj} 劝己拳");
                 obj.SetActive(true);
                 SpawnManager.spawnInstance.activeEnemyList.Add(obj);
                 return obj;
@@ -205,11 +205,11 @@ public class ObjectPool : MonoBehaviour
                 {
                     newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
                 }
-                /* 唱赣瘤 利 累己饶 馆康
                 else if (enemyType == EnemyType.Elite)
                 {
                     newObject.GetComponent<Enemy_Elite>().enemyStat.enemyId = enemyId;
                 }
+                /*
                 else if (enemyType == EnemyType.Common)
                 {
                     newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
@@ -220,7 +220,7 @@ public class ObjectPool : MonoBehaviour
                 }*/
                 newObject.SetActive(true);
                 enemyDic[enemyType].Add(newObject);
-                Debug.Log($"{newObject} 积己");
+                //Debug.Log($"{newObject} 积己");
                 SpawnManager.spawnInstance.activeEnemyList.Add(newObject);
                 return newObject;
             }

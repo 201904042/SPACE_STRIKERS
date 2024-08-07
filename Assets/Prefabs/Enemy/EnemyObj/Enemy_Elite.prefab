@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1032848167425109897}
   - component: {fileID: 8565702768103144416}
   - component: {fileID: 6977090463044875708}
+  - component: {fileID: 6325421395440303216}
   m_Layer: 0
   m_Name: Enemy_Elite
   m_TagString: Enemy
@@ -158,3 +159,39 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6325421395440303216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451726243676805503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8fa33d4ad569943b65aeb3f06ec78d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStat:
+    enemyId: 0
+    enemyGrade: 
+    enemyName: 
+    enemyMaxHp: 0
+    enemyDamage: 0
+    enemyMoveSpeed: 0
+    enemyAttackSpeed: 0
+    enemyExpAmount: 0
+    enemyScoreAmount: 0
+    enemyMoveAttack: 0
+    isEnemyAiming: 0
+  curEnemyId: 0
+  curHp: 0
+  enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
+  isAttackReady: 0
+  isEnemySlow: 0
+  isEnemyDropItem: 0
+  splitCount: 3
+  laserDangerZoneTime: 1
+  laserAttackTime: 3
+  defaultSpeed: 10
+  curProjNum: 0
+  curProjAngle: 0

@@ -4,18 +4,27 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Pool;
 
+
+[System.Serializable]
+public class SpawnPattern
+{
+    public int enemyId; // 적의 종류를 나타내는 ID
+    public int amount; // 스폰할 적의 수
+    public Transform spawnZone;
+    public Vector2[] positions; // 적이 스폰될 위치
+}
+
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager spawnInstance;
 
     [Header("스폰관련")]
-    public GameObject sandbag;
-    public GameObject earth_cummon;
-    public Transform spawnZoneY;
-    public Transform spawnZoneXLeft;
-    public Transform spawnZoneXRight;
+    public Transform mainSpawnZone;
+    public Transform sideSpawnZoneL;
+    public Transform sideSpawnZoneR;
     public Transform bossSpawnZone;
     public int stageEnemyAmount;
+    public List<SpawnPattern> spawnPatterns;
 
     public int ranEnemy;
 
@@ -34,6 +43,61 @@ public class SpawnManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SpawnPatternSet();
+    }
+
+    private void SpawnPatternSet()
+    {
+        spawnPatterns = new List<SpawnPattern>()
+        {
+            //메인스폰존
+            new SpawnPattern() { 
+                enemyId = 1,
+                amount = 5,
+                spawnZone = mainSpawnZone,
+                positions = new Vector2[]
+                {
+                    new Vector2(-2f, mainSpawnZone.position.y),
+                    new Vector2(-1f, mainSpawnZone.position.y),
+                    new Vector2(0f, mainSpawnZone.position.y),
+                    new Vector2(1f, mainSpawnZone.position.y),
+                    new Vector2(2f, mainSpawnZone.position.y)
+                }
+            },
+            new SpawnPattern() {
+                enemyId = 2,
+                amount = 3,
+                spawnZone = mainSpawnZone,
+                positions = new Vector2[]
+                {
+                    new Vector2(-1f, mainSpawnZone.position.y),
+                    new Vector2(0f, mainSpawnZone.position.y),
+                    new Vector2(1f, mainSpawnZone.position.y)
+                }
+            },
+            new SpawnPattern
+            {
+                enemyId = 11, 
+                amount = 2,
+                spawnZone = mainSpawnZone,
+                positions = new Vector2[]
+                {
+                    new Vector2(-2f, mainSpawnZone.position.y),
+                    new Vector2(2f, mainSpawnZone.position.y)
+                }
+            },
+            new SpawnPattern
+            {
+                enemyId = 12, 
+                amount = 1,
+                spawnZone = mainSpawnZone,
+                positions = new Vector2[]
+                {
+                    new Vector2(0, mainSpawnZone.position.y),
+                }
+            }
+
+        };
 
     }
 
@@ -47,17 +111,22 @@ public class SpawnManager : MonoBehaviour
         maxSpawnDelay = 4f;
         curSpawnDelay = 4f;
     }
-    public void SpawnCheck()
-    {
-        curSpawnDelay += Time.deltaTime;
 
-        if (curSpawnDelay > maxSpawnDelay)
+    public IEnumerator SpawnCheckCoroutine()
+    {
+        while (true)
         {
-            SpawnEnemy();
-            curSpawnDelay = 0;
+            yield return new WaitForSeconds(maxSpawnDelay);
+            SetSpawnType();
         }
     }
-    public void SpawnEnemy() //스폰 요소 고치기
+
+    private void SetSpawnType()
+    {
+        SpawnEnemy();
+    }
+
+    private void SpawnEnemy() //스폰 요소 고치기
     {
         if (StageManager.stageInstance.stage == 0)
         {
@@ -65,24 +134,17 @@ public class SpawnManager : MonoBehaviour
             ObjectPool.poolInstance.GetEnemy(0, new Vector3(0f, 2, 0), Quaternion.identity);
             ObjectPool.poolInstance.GetEnemy(0, new Vector3(2f, 2, 0), Quaternion.identity);
         }
+
         else if (StageManager.stageInstance.stage >= 1)
         {
-            int enemyId = SelectSpawnEnemy();
+            int patternIndex = Random.Range(0, spawnPatterns.Count); // 랜덤으로 패턴 선택
+            SpawnPattern selectedPattern = spawnPatterns[patternIndex];
 
-            Transform selectedSpawnZone = spawnZoneY; //일단은 스폰존 고정. 기준스폰을 랜덤으로하는 메서드 첨부할것
-            Vector2 spawnPosition= new Vector2(Random.Range(-2.5f, 2.5f), selectedSpawnZone.position.y);
-
-            ObjectPool.poolInstance.GetEnemy(enemyId, spawnPosition, selectedSpawnZone.rotation);
+            foreach (Vector2 pos in selectedPattern.positions)
+            {
+                ObjectPool.poolInstance.GetEnemy(selectedPattern.enemyId, pos,selectedPattern.spawnZone.rotation);
+            }
         }
-    }
-
-    private int SelectSpawnEnemy()
-    {
-        //생성할 적의 코드를 결정하고 리턴. 이후 적을 스폰하도록
-        int randRate = Random.Range(1, 3); // 1은 고정형 일반. 2는 직전형 일반
-        
-        //일단은 커먼 적만 생성
-        return randRate;
     }
 
     //모든 적들을 시스템으로 사망(보상없음)

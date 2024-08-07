@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb88d04783d0e642bd505f0c722328b, type: 3}
   m_Name: Enemy_Sandbag
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3774528676716417827, guid: 37125b7aba05b0f44b03699df3bc9ff7, type: 3}
-  enemyType: 2
+  prefab: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
+  enemyType: 1

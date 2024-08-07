@@ -9,7 +9,7 @@ public class ShooterUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        playerShooter = player.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
+        playerShooter = GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
     }
     
     // Update is called once per frame

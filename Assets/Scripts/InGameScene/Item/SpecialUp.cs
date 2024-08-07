@@ -8,7 +8,7 @@ public class SpecialUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        playerSpecial = player.GetComponent<PlayerSpecialSkill>();
+        playerSpecial = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
     protected override void Update()

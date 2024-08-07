@@ -81,19 +81,20 @@ public class PlayerSpecialSkill : MonoBehaviour
 
             PowerLvSet();
 
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                if (specialCount > 0 && !specialActive && powerLevel != 0)
-                {
-                    specialCount--;
-                    SpecialFire();
-                }
-                else
-                {
-                    Debug.Log("cant do specialattack");
-                }
+            
+        }
+    }
 
-            }
+    public void PlayerSkillOn()
+    {
+        if (specialCount > 0 && !specialActive && powerLevel != 0)
+        {
+            specialCount--;
+            SpecialFire();
+        }
+        else
+        {
+            Debug.Log("cant do specialattack");
         }
     }
 

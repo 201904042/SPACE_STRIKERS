@@ -26,17 +26,17 @@ public class Skill_HpRegenerateRate : Ingame_Passive
             passiveLevel = transform.GetComponent<SkillInterface>().level;
             LevelSet(passiveLevel);
         }
-        if (playerStat.isHitted)
+        if (playerControl.isHitted)
         {
             hitTimer -= Time.deltaTime;
             if(hitTimer <= 0)
             {
-                playerStat.isHitted = false;
+                playerControl.isHitted = false;
                 hitTimer = hitTime;
             }
         }
 
-        if (isActive && !playerStat.isHitted)
+        if (isActive && !playerControl.isHitted)
         {
             timer -= Time.deltaTime;
             if(timer <= 0 && playerStat.curHp < playerStat.maxHp)

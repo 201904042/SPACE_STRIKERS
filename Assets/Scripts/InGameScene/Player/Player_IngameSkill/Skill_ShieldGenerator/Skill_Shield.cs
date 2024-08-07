@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Skill_Shield : MonoBehaviour
 {
-    GameObject player;
     private PlayerControl playerControl;
     private PlayerStat playerStat;
     private GameObject shieldGenerator;
@@ -14,9 +13,8 @@ public class Skill_Shield : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.GetComponent<PlayerStat>();
-        playerControl = player.GetComponent<PlayerControl>();
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.gameInstance.myPlayer.GetComponent<PlayerControl>();
         shieldGenerator = GameObject.Find("skill_shieldGenerator");
         transform.SetParent(shieldGenerator.transform);
     }

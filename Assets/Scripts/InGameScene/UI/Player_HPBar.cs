@@ -5,27 +5,22 @@ using UnityEngine.UI;
 
 public class Player_HPBar : MonoBehaviour
 {
-    GameObject player;
     PlayerStat player_stat;
     Slider hp_bar;
 
-    private float player_max_hp;
-    private float cur_player_hp;
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        player_stat = player.GetComponent<PlayerStat>();
-        player_max_hp = player_stat.maxHp;
-        cur_player_hp = player_stat.curHp;
         hp_bar = transform.GetComponent<Slider>();
-        
+    }
+
+    private void Start()
+    {
+        player_stat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+
     }
 
     private void Update()
     {
-        player_max_hp = player_stat.maxHp;
-        cur_player_hp = player_stat.curHp;
-        hp_bar.value = cur_player_hp / player_max_hp;
-
+        hp_bar.value = player_stat.curHp / player_stat.maxHp;
     }
 }

@@ -10,6 +10,7 @@ public class playerShooterUpgrade : MonoBehaviour
 
     public int shooterLevel;
     public int characterNumber;
+
     private string rootPath;
     private string characterPathName;
     private string curLevelPath;

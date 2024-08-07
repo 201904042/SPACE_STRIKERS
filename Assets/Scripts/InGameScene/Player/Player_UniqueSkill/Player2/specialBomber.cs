@@ -6,8 +6,6 @@ using UnityEngine;
 public class SpecialBomber : MonoBehaviour
 {
     public GameObject Explosion_range;
-
-    private GameObject player;
     private PlayerSpecialSkill specialScript;
     private float speed;
     private float damage;
@@ -18,8 +16,7 @@ public class SpecialBomber : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
-        player = GameObject.Find("Player");
-        specialScript = player.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
 
         damage = specialScript.specialDamage;
         level = specialScript.powerLevel;

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MissileSplashDamage : MonoBehaviour
 {
-    GameObject player;
     private float missileSplashDamage;
     private float playerStatDamage;
     private float missileSplashDamageRate;
@@ -15,8 +14,7 @@ public class MissileSplashDamage : MonoBehaviour
     {
         missileSplashDamageRate = 0.5f;
         explodeRadius = 2.5f;
-        player = GameObject.Find("Player");
-        playerStatDamage = player.GetComponent<PlayerStat>().damage;
+        playerStatDamage = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>().damage;
         missileSplashDamage = playerStatDamage * missileSplashDamageRate;
         splashTime = 0;
     }

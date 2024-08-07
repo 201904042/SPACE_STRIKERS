@@ -31,10 +31,10 @@ public class TrackingMissile : PlayerShoot
     {
         base.Awake();
         onHit = false ;
-        speicalScript = player.GetComponent<PlayerSpecialSkill>();
+        speicalScript = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
         damage = speicalScript.specialDamage*2;
 
-        startPosition = player.transform.position; //시작지점
+        startPosition = GameManager.gameInstance.myPlayer.transform.position; //시작지점
         basicEndPosition = startPosition + Vector2.up * 20;
         handlePosition = startPosition + Vector2.right * Random.Range(-3, 4); //굽어지는 정도
         enemies = GameObject.FindGameObjectsWithTag("Enemy");

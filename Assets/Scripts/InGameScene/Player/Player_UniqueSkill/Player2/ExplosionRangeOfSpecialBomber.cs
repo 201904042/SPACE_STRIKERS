@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class ExplosionRangeOfSpecialBomber : MonoBehaviour
 {
-    private GameObject player;
     private PlayerSpecialSkill specialScript;
     public float damage; // specialBomber에서 받아옴
     private float damageTik;//데미지 사이의 간격
@@ -18,8 +17,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
     private bool time_has_set;
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        specialScript = player.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
         damageTik = 0.1f;
         isDamaging = false;
         time_has_set = false;

@@ -16,14 +16,12 @@ public class TroopShooter : MonoBehaviour
     private float delay;
 
     float basicSpeed = 1;
-    GameObject player;
     PlayerStat player_stat;
 
 
     void Awake()
     {
-        player = GameObject.Find("Player");
-        player_stat = player.transform.GetComponent<PlayerStat>();
+        player_stat = GameManager.gameInstance.myPlayer.transform.GetComponent<PlayerStat>();
         shootSpeed =  basicSpeed * 5f;
         bulletSpeed = basicSpeed * 10f;
         shooter_Transform = GetComponentInParent<Transform>();

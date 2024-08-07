@@ -8,6 +8,7 @@ public class LauncherStat : MonoBehaviour
     public GameObject player;
     [HideInInspector]
     public PlayerStat playerStat;
+    protected PlayerControl playerControl;
 
     [Header("런쳐 기본 스텟")]
     public GameObject projObj;
@@ -22,19 +23,18 @@ public class LauncherStat : MonoBehaviour
 
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.transform.GetComponent<PlayerStat>();
-
-        LauncherShootable = playerStat.isShootable;
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.gameInstance.myPlayer.GetComponent<PlayerControl>();
+        LauncherShootable = playerControl.isShootable;
         curStatspeed = playerStat.attackSpeed;
         fireDirection = transform.up;
     }
 
     protected virtual void Update()
     {
-        if (playerStat.isShootable)
+        if (playerControl.isShootable)
         {
-            LauncherShootable = playerStat.isShootable;
+            LauncherShootable = playerControl.isShootable;
         }
         if (curStatspeed != playerStat.attackSpeed)
         {

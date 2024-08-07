@@ -138,7 +138,7 @@ public class EnemyAttackTest : MonoBehaviour
 
     private void TargetShot(bool split = false)
     {
-        Transform player = GameObject.FindWithTag("Player").transform;
+        Transform player = GameManager.gameInstance.myPlayer.transform;
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if (split)
         {
@@ -174,7 +174,7 @@ public class EnemyAttackTest : MonoBehaviour
             {
                 //조준일 경우
                 Vector3 dirToPlayer;
-                Transform player = GameObject.FindWithTag("Player").transform;
+                Transform player = GameManager.gameInstance.myPlayer.transform;
                 dirToPlayer = (player.position - transform.position).normalized;
 
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
@@ -213,7 +213,7 @@ public class EnemyAttackTest : MonoBehaviour
         EnemyLaser laserObject = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Laser,transform.position, transform.rotation).GetComponent<EnemyLaser>();
         if(isAimtoPlayer)
         {
-            Transform player = GameObject.FindWithTag("Player").transform;
+            Transform player = GameManager.gameInstance.myPlayer.transform;
             Vector3 direction = player.position - laserObject.gameObject.transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             laserObject.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90 - multiAngle));

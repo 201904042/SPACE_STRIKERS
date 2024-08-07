@@ -13,7 +13,6 @@ public class Shield : MonoBehaviour
     private Color shieldColor_lv2 = new Color(1f, 153f/255f, 153f/255f, 60f/255f);
     private Color shieldColor_lv3 = new Color(1f, 56f/255f, 56f/255f, 60f/255f);
 
-    GameObject player;
     PlayerControl playerControlScript;
     public int shieldMaxNum;
     
@@ -36,15 +35,11 @@ public class Shield : MonoBehaviour
         shieldRestoreTime = 10f; //플레이어의 공격속도 비례로 고칠것
         shieldTimer = 0;
         shieldIsActive = true;
-        player = GameObject.Find("Player");
-        if (player == null)
-        {
-            Debug.Log("can't find player");
-        }
+        
 
-        playerControlScript = player.GetComponent<PlayerControl>();
+        playerControlScript = GameManager.gameInstance.myPlayer.GetComponent<PlayerControl>();
         shieldHasDamageable = true;
-        playerStatDamage = player.GetComponent<PlayerStat>().damage ;
+        playerStatDamage = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>().damage ;
         shieldDamage = playerStatDamage * shieldDamageRate;
 
     }

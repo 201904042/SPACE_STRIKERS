@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Skill_InstantHeal : MonoBehaviour
 {
-    GameObject player;
     PlayerStat playerStat;
 
     private float healAmount;
     private float damagedHP;
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.GetComponent<PlayerStat>();
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
         
     }
 

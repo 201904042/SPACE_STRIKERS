@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Elec_Field : MonoBehaviour
 {
-    private GameObject player;
     private PlayerSpecialSkill specialScript;
 
     private float damage;
@@ -14,8 +13,7 @@ public class Elec_Field : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        specialScript = player.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
         damage = specialScript.specialDamage;
         isDamaging = false;
         damageTik = 0.1f;

@@ -9,6 +9,7 @@ using UnityEngine.Pool;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameInstance;
+    public GameObject myPlayer;
     public GameObject gameEndUI;
 
     [Header("오브젝트 풀 관련")]
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        myPlayer = GameObject.FindWithTag("Player");
         Time.timeScale = 1;
     }
 

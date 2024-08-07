@@ -7,7 +7,6 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Ingame_Active : MonoBehaviour
 {
-    private GameObject player;
     private PlayerStat playerStat;
     protected SkillInterface skillInterface;
 
@@ -22,8 +21,7 @@ public class Ingame_Active : MonoBehaviour
 
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.GetComponent<PlayerStat>();
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
         skillInterface = transform.GetComponent<SkillInterface>();
         level = skillInterface.level;
     }

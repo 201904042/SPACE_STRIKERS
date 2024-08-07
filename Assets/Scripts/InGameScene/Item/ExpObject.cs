@@ -5,21 +5,19 @@ using UnityEngine;
 
 public class Exp_object : MonoBehaviour
 {
-    GameObject player;
     private float expAmount;
     private float expSpeed;
     private void Awake()
     {
-        player = GameObject.Find("Player");
         expAmount = 1f;
         expSpeed = 5f;
     }
 
     private void Update()
     {
-        if (player != null)
+        if (GameManager.gameInstance.myPlayer != null)
         {
-            Vector2 direction = player.transform.position - transform.position;
+            Vector2 direction = GameManager.gameInstance.myPlayer.transform.position - transform.position;
             transform.up = direction;
 
             Rigidbody2D rigid = transform.GetComponent<Rigidbody2D>();

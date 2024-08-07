@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class PlayerExpBar : MonoBehaviour
 {
-    GameObject player;
     PlayerInGameExp playerExpScr;
     Slider exp_bar;
 
 
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        playerExpScr = player.GetComponent<PlayerInGameExp>();
-
         exp_bar = transform.GetComponent<Slider>();
+    }
 
+    private void Start()
+    {
+        playerExpScr = GameManager.gameInstance.myPlayer.GetComponent<PlayerInGameExp>();
     }
 
     private void Update()

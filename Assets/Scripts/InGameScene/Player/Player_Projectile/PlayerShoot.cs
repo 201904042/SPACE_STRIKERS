@@ -7,7 +7,6 @@ using UnityEngine.Timeline;
 public class PlayerShoot : MonoBehaviour
 {
     //플레이어가 발사하는 모든 발사체의 스크립트
-    public GameObject player;
     public  PlayerStat playerStat;
     public GameObject launcher;
 
@@ -15,8 +14,7 @@ public class PlayerShoot : MonoBehaviour
 
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.GetComponent<PlayerStat>();
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
     }
 
     protected virtual void OnEnable()

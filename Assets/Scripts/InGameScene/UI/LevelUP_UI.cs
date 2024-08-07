@@ -18,7 +18,6 @@ public class LevelUP_UI : MonoBehaviour
     public SkillData ChosenSkillData;
 
     //플레이어
-    private GameObject player;
     private PlayerInGameExp playerExp;
     private Transform playerSkillSlot; //플레이어의 스킬칸
 
@@ -33,9 +32,8 @@ public class LevelUP_UI : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        playerExp = player.GetComponent<PlayerInGameExp>();
-        playerSkillSlot = player.transform.GetChild(1);
+        playerExp = GameManager.gameInstance.myPlayer.GetComponent<PlayerInGameExp>();
+        playerSkillSlot = GameManager.gameInstance.myPlayer.transform.GetChild(1);
         skillSlot = transform.GetChild(1);
         skillSlotInit();
         ableAPSkill = new List<SkillData>();

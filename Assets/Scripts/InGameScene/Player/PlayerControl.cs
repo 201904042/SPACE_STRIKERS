@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
     private PlayerStat playerStat;
+    private PlayerInput playerInput;
     private SpriteRenderer playerSprite;
 
-    private float speed;
+    private Vector2 moveInput;
+    private float playerObjSpeed;
 
     private bool isTopCollide;
     private bool isBottomCollide;
@@ -15,53 +20,82 @@ public class PlayerControl : MonoBehaviour
 
     private float basicSpeed = 3f;
 
-    public bool canMove;
-    public bool isInvincible;
+    public bool isAbleToMove; //움직이기가 가능한상태
+    public bool isInvincibleState; //무적상태
+    public bool isShootable; //발사가 가능한 상태
+    public bool isHitted; //데미지를 받은 상태
 
     private float invincibleDuration = 3f;
 
-    // Update is called once per frame
     private void Awake()
     {
         playerStat = transform.GetComponent<PlayerStat>();
         playerSprite = transform.GetComponent<SpriteRenderer>();
 
-        speed = basicSpeed + (playerStat.moveSpeed/5);
+        playerObjSpeed = basicSpeed + (playerStat.moveSpeed/5);
 
-        isInvincible = false;
-        canMove = true;
+        isShootable = true;
+        isHitted = false;
+        isInvincibleState = false;
+        isAbleToMove = true;
     }
+
+    private void OnEnable()
+    {
+        playerInput = new PlayerInput();
+        playerInput.Player.Enable();
+        playerInput.Player.Move.performed += OnPlayerMove;
+        playerInput.Player.Skill.performed += OnPlayerSkill;
+    }
+
+    private void OnDisable()
+    {
+        playerInput = new PlayerInput();
+        playerInput.Player.Move.performed -= OnPlayerMove;
+        playerInput.Player.Skill.performed -= OnPlayerSkill;
+        playerInput.Player.Disable();
+    }
+
+    private void OnPlayerSkill(InputAction.CallbackContext context)
+    {
+        GetComponent<PlayerSpecialSkill>().PlayerSkillOn();
+    }
+
+    private void OnPlayerMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
+
 
     private void Update()
     {
-        speed = basicSpeed + (playerStat.moveSpeed / 5);
+        playerObjSpeed = basicSpeed + (playerStat.moveSpeed / 5);
 
-        if (canMove)
+        if (isAbleToMove)
         {
             PlayerMove();
         }
 
-        InvincibleSprite();
+        MakePlayerTranslucent();
     }
 
-    //컨트롤 뉴인풋시스템 적용 예정
     private void PlayerMove()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        if ((isRightCollide && h == 1) || (isLeftCollide && h == -1))
-            h = 0;
-        float v = Input.GetAxisRaw("Vertical");
-        if ((isTopCollide && v == 1) || (isBottomCollide && v == -1))
-            v = 0;
+        float h = moveInput.x;
+        if ((isRightCollide && h == 1) || (isLeftCollide && h == -1)) h = 0;
+
+        float v = moveInput.y;
+        if ((isTopCollide && v == 1) || (isBottomCollide && v == -1)) v = 0;
+
         Vector3 curPos = transform.position;
-        Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime;
+        Vector3 nextPos = new Vector3(h, v, 0) * playerObjSpeed * Time.deltaTime;
 
         transform.position = curPos + nextPos;
     }
 
-    private void InvincibleSprite() //플레이어가 무적 모드여부에 따른 투명도 적용
+    private void MakePlayerTranslucent()
     {
-        if (isInvincible)
+        if (isInvincibleState)
         {
             playerSprite.color = new Color(1, 1, 1, 0.5f);
         }
@@ -73,12 +107,12 @@ public class PlayerControl : MonoBehaviour
 
     public void PlayerDamagedAction(GameObject attack_obj)
     {
-        if (isInvincible == true) { return; }
+        if (isInvincibleState == true) { return; }
         
         Collider2D attackingCollider = attack_obj.GetComponent<Collider2D>();
         if (attackingCollider != null)
         {
-            isInvincible = true;
+            isInvincibleState = true;
             StartCoroutine(invinciblePlayer(invincibleDuration));
             PlayerKnockBack(attackingCollider);
         }
@@ -92,7 +126,7 @@ public class PlayerControl : MonoBehaviour
         StartCoroutine(PushbackLerp(curPosition, targetPosition));
     }
 
-    public Vector2 CalculateTargetPos(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
+    private Vector2 CalculateTargetPos(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
     {
         Vector2 pushDirection = (curpos - col.transform.position).normalized;
         return curpos - new Vector3(-pushDirection.x, -pushDirection.y, 0) * 2;
@@ -121,16 +155,16 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     private IEnumerator invinciblePlayer(float invincible_time)
     {
-        isInvincible = true;
+        isInvincibleState = true;
 
         yield return new WaitForSeconds(invincible_time);
         
-        isInvincible = false;
+        isInvincibleState = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Border") //보더에 부딫힐시 해당 보더에 부딫히고 있다는것 전달
+        if (collision.gameObject.tag == "Border") 
         {
             switch (collision.gameObject.name)
             {
@@ -144,13 +178,17 @@ public class PlayerControl : MonoBehaviour
                     isLeftCollide = true; break;
             }
         }
+    }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
         //적이나 적 발사체에 계속 닿고 있다
         if (collision.gameObject.tag == "Enemy")
         {
-            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.enemyDamage/2, collision.gameObject);
+            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.enemyDamage / 2, collision.gameObject);
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Border")

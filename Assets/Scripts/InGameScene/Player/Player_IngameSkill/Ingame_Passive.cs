@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Ingame_Passive : MonoBehaviour
 {
-    private GameObject player;
-    [HideInInspector]
     public PlayerStat playerStat;
+    protected PlayerControl playerControl;
 
     [Header("패시브 스킬 공통")]
     public int passiveLevel;
     public float increaseRate;
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.GetComponent<PlayerStat>();
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.gameInstance.myPlayer.GetComponent<PlayerControl>();
         passiveLevel = transform.GetComponent<SkillInterface>().level;
 
         increaseRate = 1;

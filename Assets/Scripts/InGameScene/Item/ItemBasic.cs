@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ItemBasic : MonoBehaviour
 {
-    public GameObject player;
     public PlayerStat playerStat;
 
     private Rigidbody2D itemRigid;
@@ -12,8 +11,7 @@ public class ItemBasic : MonoBehaviour
 
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player");
-        playerStat = player.GetComponent<PlayerStat>();
+        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
 
         itemRigid = GetComponent<Rigidbody2D>();
         liveTime = 10f;

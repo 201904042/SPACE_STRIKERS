@@ -34,9 +34,7 @@ public class PlayerStat : MonoBehaviour
     public float attackSpeedIncreaseRate;
     public float hpRegenRate;
 
-    [Header("ป๓ลย")]
-    public bool isShootable;
-    public bool isHitted;
+    
 
     private PlayerControl playerController;
 
@@ -44,20 +42,17 @@ public class PlayerStat : MonoBehaviour
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerControl>();
         playerData = GameObject.Find("DataManager").GetComponent<PlayerJsonReader>();
+        Init();
+    }
+
+    private void Init()
+    {
         isFirstSetDone = false;
-        isShootable = false;
-        isHitted = false;
-        curPlayerID =1;
+        
+        curPlayerID = 1;
         SetStat(curPlayerID);
     }
 
-    private void Update()
-    {
-        if (GameManager.gameInstance.isBattleStart)
-        {
-            isShootable = GameManager.gameInstance.isBattleStart;
-        }
-    }
     public void SetStat(int playerId)
     {
         PlayerSet(playerId);
@@ -110,9 +105,9 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void PlayerDamaged(float damage, GameObject attackObj)
     {
-        if (!playerController.isInvincible)
+        if (!playerController.isInvincibleState)
         {
-            isHitted = true;
+            playerController.isHitted = true;
             float applyDamage = damage * (1 - (0.01f * defence));
 
             curHp -= applyDamage;

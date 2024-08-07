@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerPowBar : MonoBehaviour
 {
-    GameObject player;
     PlayerSpecialSkill playerSpecialSkill;
     Slider hp_bar;
     Transform fill;
@@ -16,27 +15,32 @@ public class PlayerPowBar : MonoBehaviour
     private int powerLevel;
     private float maxPlayerTime;
     private float curPlayerTime;
+
     private void Awake()
     {
-        player = GameObject.Find("Player");
-        playerSpecialSkill = player.GetComponent<PlayerSpecialSkill>();
         fill = transform.GetChild(1).GetChild(0);
         fillImage = fill.GetComponent<Image>();
         pow_text = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        powerLevel = playerSpecialSkill.powerLevel;
-        maxPlayerTime = playerSpecialSkill.powerIncreaseMax;
-        curPlayerTime = playerSpecialSkill.powerIncrease;
         hp_bar = transform.GetComponent<Slider>();
+    }
+
+    private void Start()
+    {
+        VariableSet();
+    }
+
+    private void VariableSet()
+    {
+        playerSpecialSkill = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
 
     }
 
     private void Update()
     {
         powerLevel = playerSpecialSkill.powerLevel;
-        maxPlayerTime = playerSpecialSkill.powerIncreaseMax;
-        curPlayerTime = playerSpecialSkill.powerIncrease;
 
-        hp_bar.value = curPlayerTime / maxPlayerTime;
+        hp_bar.value = playerSpecialSkill.powerIncrease / playerSpecialSkill.powerIncreaseMax;
+
         if(powerLevel == 0)
         {
             fillImage.color = Color.white;

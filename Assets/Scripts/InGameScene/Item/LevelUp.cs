@@ -8,7 +8,7 @@ public class LevelUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        playerExp = player.GetComponent<PlayerInGameExp>();
+        playerExp = GameManager.gameInstance.myPlayer.GetComponent<PlayerInGameExp>();
     }
 
     // Update is called once per frame

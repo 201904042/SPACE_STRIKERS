@@ -24,7 +24,6 @@ public class ShooterUp : ItemBasic
         if (collision.gameObject.CompareTag("Player"))
         {
             playerShooter.ShooterUPBtn();
-            Destroy(gameObject);
         }
     }
 }

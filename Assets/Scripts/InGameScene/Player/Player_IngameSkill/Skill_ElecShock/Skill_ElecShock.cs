@@ -5,96 +5,105 @@ using UnityEngine.UIElements;
 
 public class Skill_ElecShock : PlayerShoot
 {
-    private float shockDamage;
-    private float playerStatDamage;
+
+    private float damage;
     public float shockDamageRate;
     public float shockRange;
     private float shockSpeed;
     public float slowRate;
     public float slowTime;
-    public bool isExtraDamageToSlowEnemyOn;
-    private float damageTime;
-    private float damageTimer;
 
+    public bool isExtraDamageToSlowEnemyOn;
+
+    public List<GameObject> hittedEnemy;
+    private SkillElecShockLauncher elecShockLauncher;
     protected override void Awake()
     {
         base.Awake();
-        shockDamageRate = 1.5f;
-        shockRange = 1.0f;
-        playerStatDamage = playerStat.damage;
-        shockSpeed = 1f;
-        shockDamage = playerStatDamage * shockDamageRate;
-
-        damageTime = 0.5f;
-        damageTimer = 0;
+        shockSpeed = 1;
     }
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        hittedEnemy= new List<GameObject>();
+
+        launcher = GameObject.Find("skill_ElecShockLauncher");
+        elecShockLauncher = launcher.GetComponent<SkillElecShockLauncher>();
+
+        shockDamageRate = elecShockLauncher.damageRate;
+        shockRange = elecShockLauncher.shockRange;
+        slowRate = elecShockLauncher.slowRate;
+        slowTime = elecShockLauncher.slowTime;
+        isExtraDamageToSlowEnemyOn = elecShockLauncher.isExtraDamageToSlowEnemy;
+        damage = playerStat.damage * shockDamageRate;
+        transform.localScale *= shockRange;
+    }
+
+    private void OnDisable()
+    {
+        transform.localScale /= shockRange;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        damageTimer -= Time.deltaTime;
-        if (!isFirstSet)
-        {
-            shockDamage = playerStatDamage * shockDamageRate;
-            transform.localScale *= shockRange;
-            isFirstSet = true;
-        }
-        
-        transform.position += transform.up * shockSpeed * Time.deltaTime/2;
+        transform.position += transform.up * shockSpeed * Time.deltaTime;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Enemy")
+        if(collision.gameObject.tag == "Enemy")
         {
-            if(damageTimer <= 0)
+            EnemyObject enemy = collision.GetComponent<EnemyObject>();
+            if (hittedEnemy.Contains(collision.gameObject) == false)
             {
-                damageTimer = damageTime;
-                if (collision.GetComponent<EnemyObject>() != null)
+                if (enemy != null)
                 {
-                    EnemyObject enemy = collision.GetComponent<EnemyObject>();
                     if (enemy.isEnemySlow)
                     {
-                        enemy.EnemyDamaged(shockDamage * 2, gameObject);
+                        enemy.EnemyDamaged(damage * 2, gameObject);
                     }
                     else
                     {
-                        collision.GetComponent<EnemyObject>().EnemyDamaged(shockDamage, gameObject);
+                        enemy.EnemyDamaged(damage, gameObject);
                     }
-
+                    hittedEnemy.Add(collision.gameObject);
                 }
-                
-            }
 
-            if (!collision.GetComponent<EnemyObject>().isEnemySlow)
-            {
-                StartCoroutine(getSlow(collision));
+                if (!enemy.isEnemySlow)
+                {
+                    StartCoroutine(SlowEnemy(collision));
+                }
             }
-           
         }
     }
 
-    IEnumerator getSlow(Collider2D collision)
+    private IEnumerator SlowEnemy(Collider2D collision)
     {
         EnemyObject enemy = collision.GetComponent<EnemyObject>();
         SpriteRenderer enemySprite = collision.GetComponent<SpriteRenderer>();
 
         float originalSpeed = enemy.enemyStat.enemyMoveSpeed;
 
-        enemy.isEnemyCanAttack = false;
+        enemy.isAttackReady = false;
         enemy.isEnemySlow = true;
-        enemy.enemyStat.enemyMoveSpeed *= 1 - slowRate;
-        enemySprite.color = new Color(1, 0.5f, 0.5f, 1);
+        enemy.enemyStat.enemyMoveSpeed = enemy.enemyStat.enemyMoveSpeed *(1 - slowRate);
+        enemySprite.color = new Color(0.5f, 0.5f, 1f, 1);
+
         yield return new WaitForSeconds(slowTime);
-        if (enemy != null)
+
+        if (enemy.gameObject.activeSelf != false && enemy.isEnemySlow == true)
         {
-            enemy.isEnemyCanAttack = true;
+            enemy.isAttackReady = true;
             enemy.isEnemySlow = false;
             enemy.enemyStat.enemyMoveSpeed = originalSpeed;
             enemySprite.color = new Color(1, 1f, 1f, 1);
         }
-        
-
-
     }
 }

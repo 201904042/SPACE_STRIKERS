@@ -15,16 +15,16 @@ public class Player_HPBar : MonoBehaviour
     {
         player = GameObject.Find("Player");
         player_stat = player.GetComponent<PlayerStat>();
-        player_max_hp = player_stat.hp;
-        cur_player_hp = player_stat.cur_hp;
+        player_max_hp = player_stat.maxHp;
+        cur_player_hp = player_stat.curHp;
         hp_bar = transform.GetComponent<Slider>();
         
     }
 
     private void Update()
     {
-        player_max_hp = player_stat.hp;
-        cur_player_hp = player_stat.cur_hp;
+        player_max_hp = player_stat.maxHp;
+        cur_player_hp = player_stat.curHp;
         hp_bar.value = cur_player_hp / player_max_hp;
 
     }

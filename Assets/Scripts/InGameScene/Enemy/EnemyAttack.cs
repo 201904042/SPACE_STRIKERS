@@ -3,35 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EnemyAct : MonoBehaviour
+public class EnemyAct : EnemyObject
 {
-    [HideInInspector]
-    public GameObject enemyBullet;
-    [HideInInspector]
-    public GameObject enemyLaser;
-    [HideInInspector]
-    public GameObject enemySplitBullet;
-
-
+    [Header("공통 행동")]
     public int splitCount = 3;
     public float laserDangerZoneTime = 1;
     public float laserAttackTime = 3;
     public float defaultSpeed = 10;
-    //발사할 총알 프리팹, 발사할방향*속도, 분열총알이라면 true
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        enemyBullet = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Bullet.prefab");
-        enemyLaser = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_Laser.prefab");
-        enemySplitBullet = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemy/EnemyProj/Enemy_SplitBullet.prefab");
+        base.Awake();
     }
 
-    public void SingleShot(GameObject enemyBullet, Vector3 velocity, bool split = false)
+    protected override void OnEnable()
     {
-        GameObject enemyProj = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Enemy_Bullet, transform.position, Quaternion.identity);
+        base.OnEnable();
+    }
+
+    protected override void Update()
+    {
+        base.Update(); 
+    }
+
+    public void SingleShot(Vector3 velocity, bool split = false)
+    {
+        GameObject enemyProj = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.zero;
-        
 
         if (split)
         {
@@ -42,24 +41,26 @@ public class EnemyAct : MonoBehaviour
 
 
     //발사할 총알 프리팹, 분열총알이라면 true
-    public void TargetShot(GameObject enemyBullet, bool split = false)
+    public void TargetShot(bool split = false)
     {
         Transform player = GameObject.FindWithTag("Player").transform;
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if (split)
         {
-            SingleShot(enemyBullet, dirToPlayer * defaultSpeed, true);
+            SingleShot(dirToPlayer * defaultSpeed, true);
         }
         else
         {
-            SingleShot(enemyBullet, dirToPlayer * defaultSpeed);
+            SingleShot(dirToPlayer * defaultSpeed);
         }
 
     }
 
     //발사할 총알, 총알개수, 사격각도범위, 총알속도, 조준여부, 발사체의 기본 앵글, 분열총알여부
-    public void MultiShot(GameObject enemyBullet, int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
+    public void MultiShot(int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
     {
+        //Debug.Log($"샷 진입" +
+           // $"projNum {projNum} projAngle {projAngle}  bulletSpeed {bulletSpeed},  isAimToPlayer {isAimToPlayer} , projBasicAngle {projBasicAngle} , split {split}");
         float angleStep = projAngle / projNum;
         float angleInit;
         if (projNum % 2 == 0) //짝수
@@ -82,17 +83,19 @@ public class EnemyAct : MonoBehaviour
                 dirToPlayer = (player.position - transform.position).normalized;
 
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
+                Debug.Log($"사격");
                 if (split)
                 {
-                    SingleShot(enemyBullet, velocity * bulletSpeed, true);
+                    SingleShot( velocity * bulletSpeed, true);
                 }
                 else
                 {
-                    SingleShot(enemyBullet, velocity * bulletSpeed);
+                    SingleShot(velocity * bulletSpeed);
                 }
             }
             else
             {
+                Debug.Log($"샷 진입4");
                 //조준이 아닐경우
                 float projectileDirXPosition = transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180);
                 float projectileDirYPosition = transform.position.y + Mathf.Cos((angle * Mathf.PI) / 180);
@@ -102,11 +105,11 @@ public class EnemyAct : MonoBehaviour
                 Vector3 velocity = new Vector3(projectileMoveDirection.x, projectileMoveDirection.y, 0);
                 if (split)
                 {
-                    SingleShot(enemyBullet, velocity, true);
+                    SingleShot( velocity, true);
                 }
                 else
                 {
-                    SingleShot(enemyBullet, velocity);
+                    SingleShot(velocity);
                 }
             }
         }
@@ -115,7 +118,7 @@ public class EnemyAct : MonoBehaviour
     //레이저 여러발일 경우의 앵글(기본 0), 조준여부
     public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
-        EnemyLaser laserObject = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
+        EnemyLaser laserObject = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
         if (isAimtoPlayer)
         {
             Transform player = GameObject.FindWithTag("Player").transform;
@@ -175,5 +178,10 @@ public class EnemyAct : MonoBehaviour
         Rigidbody2D enemyRigid = movingObject.GetComponent<Rigidbody2D>();
 
         enemyRigid.velocity = Vector2.zero;
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
     }
 }

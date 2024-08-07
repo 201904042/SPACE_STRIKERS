@@ -14,12 +14,6 @@ public class PlayerSpecialSkill : MonoBehaviour
     private float curDamageRate;
     private float curPlayerId;
 
-    [Header("스킬의 프리팹들")]
-    public GameObject balanceSkillPref;
-    public GameObject bomberSkillPref;
-    public GameObject tankerSkillPref;
-    public GameObject splashSkillPref;
-
     [Header("파워관련")]
     public  int powerLevel; //스페셜을 쓴 시간을 기준으로 파워증가(무차별적인 스페셜 난사 방지)
     public float powerIncreaseRate; //파워 증가율. 파츠나 각종 능력치로 증가
@@ -38,10 +32,6 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         playerStat = transform.GetComponent<PlayerStat>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        balanceSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player1/troop.prefab");
-        bomberSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player2/specialBomb.prefab");
-        tankerSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player3/elecField.prefab");
-        splashSkillPref = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_UniqueSkill/Player4/trackingMissile.prefab");
         playerId = playerStat.curPlayerID;
         specialCount = 3; //기체레벨에 비례하여 증가하도록 수정예정
 
@@ -196,14 +186,15 @@ public class PlayerSpecialSkill : MonoBehaviour
         for (int i = 0; i < spawnNum; i++)
         {
             Vector3 SpawnPosition = new Vector3(spawnXpos + (i * space), spawnYpos, 0f);
-            Instantiate(balanceSkillPref, SpawnPosition, transform.rotation);
+            ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
+                transform.rotation);
         }
     }
 
 
     private void BomberSpecial()
     {
-        Instantiate(bomberSkillPref, transform.position, transform.rotation);
+        ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
     }
 
     private void TankerSpecial()
@@ -214,7 +205,9 @@ public class PlayerSpecialSkill : MonoBehaviour
         shield.ShieldColorChange();
         shield.shieldIsActive = true;
 
-        GameObject field = Instantiate(tankerSkillPref, transform);
+        GameObject field = ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
+        field.transform.SetParent(transform);
+
         if (powerLevel == 1)
         {
             field.transform.localScale = new Vector3(7f, 7f, 7f);
@@ -238,7 +231,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     private IEnumerator Bomber_End(float timer, GameObject field)
     {
         yield return new WaitForSeconds(timer);
-        Destroy(field);
+        ObjectPool.poolInstance.ReleasePool(field);
     }
 
     private void SplashSpecial()
@@ -265,7 +258,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         while (num!=0)
         {
-            Instantiate(splashSkillPref, transform.position, transform.rotation);
+            ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
             num--;
             yield return new WaitForSeconds(0.1f);
         }

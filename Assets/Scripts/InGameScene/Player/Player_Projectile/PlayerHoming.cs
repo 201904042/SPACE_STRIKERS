@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PlayerHoming : PlayerShoot
 {
-    private bool hasHit = false;
 
     [Header("±âº» ÃÑ¾Ë ½ºÅÝ")]
     [SerializeField]
@@ -28,6 +27,19 @@ public class PlayerHoming : PlayerShoot
         homingSpeed = 15;
         homingDamage = playerStatDamage * homingDamageRate;
     }
+
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+
+    }
+
+
     private void FindEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");

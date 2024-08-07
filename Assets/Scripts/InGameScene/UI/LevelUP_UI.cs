@@ -1,39 +1,35 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class LevelUP_UI : MonoBehaviour
 {
-    [Header("스킬 버튼")]
-    public GameObject skillBtn;
     [Header("스킬 목록")]
-    public GameObject[] activeSkill;
-    public GameObject[] passiveSkill;
-    public GameObject otherSkill;
-    [Header("선택된 버튼 정보")]
-    public int chosenSkillId;
-    public string chosenSkillType;
+    public List<SkillData> ASkillData; //액티브 스킬의 데이터
+    public List<SkillData> PSkillData; //패시브 스킬의 데이터
+    public List<SkillData> OSkillData; //인스턴트 힐 등 남은 스킬이 없을때 쓰일 데이터
 
+    public List<SkillData> ableAPSkill; //나올수 있는 Ap스킬
+
+    public List<int> randomCodeIndexList;
+
+    [Header("선택된 버튼 정보")]
+    public SkillData ChosenSkillData;
+
+    //플레이어
     private GameObject player;
     private PlayerInGameExp playerExp;
     private Transform playerSkillSlot; //플레이어의 스킬칸
+
     private Transform skillSlot; //UI의 스킬버튼이 들어갈 장소
-    private bool[] levelMax;
 
-
-    private int skillSlotNum = 3;
-    private int skillNum;
-
-    private string active = "active";
-    private string passive = "passive";
-    private string extra = "extra";
-    private string clone = "(Clone)";
+    public int skillSlotAmount = 3; //생성될 스킬슬롯의 수
+    public int APSkillAmount; //액티브 패시브 스킬의 개수
 
     private float exp_increase = 5f;
+
+    public Button ActBtn;
 
     private void Awake()
     {
@@ -41,194 +37,142 @@ public class LevelUP_UI : MonoBehaviour
         playerExp = player.GetComponent<PlayerInGameExp>();
         playerSkillSlot = player.transform.GetChild(1);
         skillSlot = transform.GetChild(1);
-        skillNum = activeSkill.Length + passiveSkill.Length;
-        levelMax = new bool[skillNum];
-        Array.Fill(levelMax, false); //levelMax배열의 모든 배열 false로 초기화
-        chosenSkillId = -1;
-        for (int i = 0; i < levelMax.Length; i++)
+        skillSlotInit();
+        ableAPSkill = new List<SkillData>();
+        foreach (SkillData Askills in ASkillData)
         {
-            levelMax[i] = is_skillLevelMax(i);
+            ableAPSkill.Add(Askills);
+        }
+        foreach (SkillData Pskills in PSkillData)
+        {
+            ableAPSkill.Add(Pskills);
         }
 
+        APSkillAmount = ableAPSkill.Count;
+    }
+
+    private void skillSlotInit()
+    {
+        skillSlot.GetChild(0).gameObject.SetActive(true);
+        skillSlot.GetChild(1).gameObject.SetActive(true);
+        skillSlot.GetChild(2).gameObject.SetActive(true);
+        skillSlot.GetChild(0).gameObject.SetActive(false);
+        skillSlot.GetChild(1).gameObject.SetActive(false);
+        skillSlot.GetChild(2).gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        Init();
+    }
+    private void OnDisable()
+    {
+        skillSlot.GetChild(0).gameObject.SetActive(false);
+        skillSlot.GetChild(1).gameObject.SetActive(false);
+        skillSlot.GetChild(2).gameObject.SetActive(false);
+    }
+
+    private void Init()
+    {
+        ChosenSkillData = null;
+        randomCodeIndexList = new List<int>();
+        ActBtn.interactable = false;
         InstantSkillSlot();
     }
-    
+
     private void InstantSkillSlot()
     {
-        if (CountFalseInLevelMax() < skillSlotNum)
+        if(APSkillAmount == 0)
         {
-            skillSlotNum = CountFalseInLevelMax();
+            skillSlot.GetChild(0).gameObject.SetActive(true);
+            skillSlot.GetChild(0).GetComponent<SkillBtn>().SkillData = OSkillData[0];
+            return;
         }
 
-        if (skillSlotNum == 0) //extra 스킬 지정
-        {
-            SetSkillSlot(-1);
-        }
-        else //active, passive 스킬 랜덤 지정
-        {
-            HashSet<int> setId = new HashSet<int>();
-            while (setId.Count < skillSlotNum)
-            {
-                
-                int randomNum = UnityEngine.Random.Range(0, skillNum);
-                if (!setId.Contains(randomNum) && !levelMax[randomNum]) //중복과 만렙 제거
-                {
-                    setId.Add(randomNum);
-                }
-            }
-            int[] skillId = new int[skillSlotNum];
-            setId.CopyTo(skillId);
 
-            for (int i = 0; i < skillSlotNum; i++) //UI에 스킬 버튼을 띄우는 과정
-            {
-                SetSkillSlot(skillId[i]);
-            }
+        if(APSkillAmount < skillSlotAmount)
+        {
+            skillSlotAmount = APSkillAmount;
+        }
+        
+        for(int i =0; i<skillSlotAmount; i++)
+        {
+            SkillData randomSkill = RandomSkill();
+            skillSlot.GetChild(i).gameObject.SetActive(true);
+
+            Debug.Log("스킬데이터 전달");
+            skillSlot.GetChild(i).GetComponent<SkillBtn>().SkillData = randomSkill;
         }
     }
 
-    private int CountFalseInLevelMax() //만렙이 아닌 A,P스킬의 개수
+    private SkillData RandomSkill()
     {
-        int falseCount = 0;
-        foreach (bool element in levelMax)
+        int randomIndex = Random.Range(0, APSkillAmount);
+        while(randomCodeIndexList.Contains(randomIndex) == true)
         {
-            if (!element)
-            {
-                falseCount++;
-            }
+            randomIndex = Random.Range(0, APSkillAmount);
         }
-        return falseCount;
+
+        randomCodeIndexList.Add(randomIndex);
+        return ableAPSkill[randomIndex];
     }
 
-    private bool is_skillLevelMax(int i)
-    {
-        float playerSkillSlotCount = playerSkillSlot.childCount;
-        SkillInterface s_interface = null;
-        if (i < activeSkill.Length) //active 스킬일 경우
-        {
-            return checkSkillLvLoop(s_interface, playerSkillSlotCount, activeSkill[i]);
-        }
-        else if (i >= activeSkill.Length) //passive 스킬일 경우
-        {
-            i -= activeSkill.Length;
-            return checkSkillLvLoop(s_interface, playerSkillSlotCount, passiveSkill[i]);
-        }
-        return false;
-    }
-
-    private bool checkSkillLvLoop(SkillInterface s_interf, float playerSlotNum, GameObject skill)
-    {
-        int j = 0;
-        while (playerSlotNum != j)
-        {
-            if (skill.name + clone == playerSkillSlot.GetChild(j).name)
-            {
-                s_interf = playerSkillSlot.GetChild(j).GetComponent<SkillInterface>();
-                if (s_interf.level >= 5)
-                { //플레이어의 스킬이 5레벨 이상이라면 true
-                    return true;
-                }
-                break;
-            }
-            j++;
-        }
-        return false;
-    }
-
-    private void SetSkillSlot(int i)
-    {
-        int skillSlotCount = playerSkillSlot.childCount;
-        if(i == -1)
-        {
-            SkillInterface s_interface =  otherSkill.GetComponent<SkillInterface>();
-            MakeSkillSlot(i, extra, s_interface);
-        }
-        else if (i < activeSkill.Length) //active 스킬일 경우
-        {
-            CheckSkillSlot(skillSlotCount, i, active, activeSkill[i]);
-        }
-        else if (i >= activeSkill.Length) //passive 스킬일 경우
-        {
-            i -= activeSkill.Length;
-            CheckSkillSlot(skillSlotCount, i, passive, passiveSkill[i]);
-        }
-    }
-
-    private void CheckSkillSlot(int skillSlotnum,int s_id, string s_type,GameObject skill)
-    {
-        SkillInterface s_interface = skill.GetComponent<SkillInterface>();
-        int j = 0;
-        while (skillSlotnum != j)
-        {
-            if (skill.name + clone == playerSkillSlot.GetChild(j).name)
-            {
-                s_interface = playerSkillSlot.GetChild(j).GetComponent<SkillInterface>();
-                break;
-            }
-            j++;
-        }
-        MakeSkillSlot(s_id, s_type, s_interface);
-    }
-
-    private void MakeSkillSlot(int skillId, string skillType, SkillInterface s_interf)
-    {
-        SkillBtn skillBtnObj = Instantiate(skillBtn, skillSlot).GetComponent<SkillBtn>();
-        skillBtnObj.btnImage = s_interf.icon;
-        skillBtnObj.LvText.text = "LV : " + s_interf.level.ToString();
-        skillBtnObj.explainText.text = s_interf.skillIntro.ToString();
-        skillBtnObj.isImageSet = false;
-        skillBtnObj.skillId = skillId;
-        skillBtnObj.skillType = skillType;
-    }
-
-    private void FindChosenSkillInPlayerSkill(int playerSlotNum,GameObject skill)
-    {
-        bool isAlreadyHave = false;
-        int i = 0;
-        while (playerSlotNum != i)
-        {
-            if (skill.name + clone == playerSkillSlot.GetChild(i).name)
-            {
-                playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().level++;
-                isAlreadyHave = true;
-                break;
-            }
-            i++;
-        }
-        if (!isAlreadyHave)
-        {
-            Instantiate(skill, playerSkillSlot);
-        }
-    }
 
     public void AcceptBtn()
     {
-        if (chosenSkillId != -1)
+        if(ChosenSkillData == null)
         {
-            int skillSlotCount = playerSkillSlot.childCount;
-
-            if (chosenSkillType == active)
-            {
-                FindChosenSkillInPlayerSkill(skillSlotCount, activeSkill[chosenSkillId]);
-            }
-            else if (chosenSkillType == passive)
-            {
-                FindChosenSkillInPlayerSkill(skillSlotCount, passiveSkill[chosenSkillId]);
-            }
+            Debug.Log("전달된 스킬데이터가 없음");
+            return;
         }
-        else if (chosenSkillId == -1)
+
+        SkillInterface skillInPlayerSlot = FindSkillInPlayerSkill(ChosenSkillData);
+        if (skillInPlayerSlot == null)
         {
-            Instantiate(otherSkill, playerSkillSlot);
+            Debug.Log("플레이어 슬롯에서 찾지못함");
+            return;
+        }
+
+        if(!skillInPlayerSlot.gameObject.activeSelf)
+        {
+            skillInPlayerSlot.gameObject.SetActive(true);
+        }
+        skillInPlayerSlot.level++;
+
+        if(skillInPlayerSlot.skillData.skilltype == SkillType.Active && skillInPlayerSlot.level == 7)
+        {
+            ableAPSkill.Remove(ChosenSkillData);
+            APSkillAmount -= 1;
+        }
+        if (skillInPlayerSlot.skillData.skilltype == SkillType.Passive && skillInPlayerSlot.level == 5)
+        {
+            ableAPSkill.Remove(ChosenSkillData);
+            APSkillAmount -= 1;
         }
 
         Time.timeScale = 1.0f;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+
+    private SkillInterface FindSkillInPlayerSkill(SkillData chosenSkillData)
+    {
+        for (int i = 0; i < playerSkillSlot.childCount; i++)
+        {
+            if (playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().skillId == chosenSkillData.skillID)
+            {
+                return playerSkillSlot.GetChild(i).GetComponent<SkillInterface>();
+            }
+        }
+        return null;
+    }
+
     public void RewindBtn()
     {
         playerExp.InGameLv--;
         playerExp.maxExp -= exp_increase;
         playerExp.curExp = playerExp.maxExp / 2;
         Time.timeScale = 1.0f;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+
 }

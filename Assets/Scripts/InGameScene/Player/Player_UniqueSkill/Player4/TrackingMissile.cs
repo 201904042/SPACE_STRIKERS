@@ -56,6 +56,18 @@ public class TrackingMissile : PlayerShoot
 
     }
 
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+
+    }
+
+
     void Update()
     {
         Vector2 curpos = new Vector2(transform.position.x, transform.position.y);
@@ -124,7 +136,7 @@ public class TrackingMissile : PlayerShoot
         {
             collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
             onHit = true;
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
 

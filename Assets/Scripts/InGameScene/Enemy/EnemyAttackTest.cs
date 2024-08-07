@@ -7,10 +7,6 @@ using UnityEngine.UIElements;
 
 public class EnemyAttackTest : MonoBehaviour
 {
-    public GameObject enemyBullet;
-    public GameObject enemyLaser;
-    public GameObject enemySplitBullet;
-
     [SerializeField]
     private bool isforwardShot;
     [SerializeField]
@@ -86,33 +82,33 @@ public class EnemyAttackTest : MonoBehaviour
     {
         if (isforwardShot)
         {
-            SingleShot(enemyBullet , dirUP*defaultSpeed);
+            SingleShot(dirUP*defaultSpeed);
             isforwardShot = false;
         }
         if (isTargetShot)
         {
-            TargetShot(enemyBullet);
+            TargetShot();
             isTargetShot = false;
         }
         if (ismultiForwardShot)
         {
-            MultiShot(enemyBullet,enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle);
+            MultiShot(enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle);
             ismultiForwardShot = false;
         }
 
         if(isSplitShot)
         {
-            SingleShot(enemySplitBullet, dirUP * defaultSpeed,true);
+            SingleShot(dirUP * defaultSpeed,true);
             isSplitShot = false;
         }
         if (isTargetSplitShot)
         {
-            TargetShot(enemySplitBullet,true);
+            TargetShot(true);
             isTargetSplitShot = false;
         }
         if (ismultiSplitShot)
         {
-            MultiShot(enemySplitBullet, enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle,true);
+            MultiShot(enemyProjNum, enemyProjAngle, defaultSpeed, isAimToPlayer, defaultStraightAngle,true);
             ismultiSplitShot = false;
         }
 
@@ -129,9 +125,9 @@ public class EnemyAttackTest : MonoBehaviour
 
     }
 
-    private void SingleShot(GameObject enemyBullet ,Vector3 velocity ,bool split = false)
+    private void SingleShot(Vector3 velocity ,bool split = false)
     { 
-        GameObject enemyProj = Instantiate(enemyBullet, transform.position, Quaternion.identity);
+        GameObject enemyProj = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
         if(split)
         {
@@ -140,17 +136,17 @@ public class EnemyAttackTest : MonoBehaviour
         rigid.velocity = new Vector2(velocity.x, velocity.y); //fireDirection * bulletSpeed;
     }
 
-    private void TargetShot(GameObject enemyBullet, bool split = false)
+    private void TargetShot(bool split = false)
     {
         Transform player = GameObject.FindWithTag("Player").transform;
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if (split)
         {
-            SingleShot(enemyBullet, dirToPlayer * defaultSpeed,true);
+            SingleShot(dirToPlayer * defaultSpeed,true);
         }
         else
         {
-            SingleShot(enemyBullet, dirToPlayer * defaultSpeed);
+            SingleShot(dirToPlayer * defaultSpeed);
         }
         
     }
@@ -158,7 +154,7 @@ public class EnemyAttackTest : MonoBehaviour
     //projNum은 발사하고 싶은 발사체의 개수
     //projAngle 발사할 각도 45, 90 , 180, 360
     //projBasicAngle가 -180일때 default로 총알이 아래로 발사됨 커질수록 우측발사 작을수록 좌측으로 발사
-    private void MultiShot(GameObject enemyBullet, int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
+    private void MultiShot(int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
     {
         float angleStep = projAngle / projNum;
         float angleInit;
@@ -184,11 +180,11 @@ public class EnemyAttackTest : MonoBehaviour
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
                 if (split)
                 {
-                    SingleShot(enemyBullet, velocity * bulletSpeed, true);
+                    SingleShot(velocity * bulletSpeed, true);
                 }
                 else
                 {
-                    SingleShot(enemyBullet, velocity * bulletSpeed);
+                    SingleShot(velocity * bulletSpeed);
                 }
             }
             else
@@ -202,11 +198,11 @@ public class EnemyAttackTest : MonoBehaviour
                 Vector3 velocity = new Vector3(projectileMoveDirection.x, projectileMoveDirection.y, 0);
                 if (split)
                 {
-                    SingleShot(enemyBullet, velocity, true);
+                    SingleShot(velocity, true);
                 }
                 else
                 {
-                    SingleShot(enemyBullet, velocity);
+                    SingleShot( velocity);
                 }
             }
         }
@@ -214,7 +210,7 @@ public class EnemyAttackTest : MonoBehaviour
 
     private void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
-        EnemyLaser laserObject = Instantiate(enemyLaser).GetComponent<EnemyLaser>();
+        EnemyLaser laserObject = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Laser,transform.position, transform.rotation).GetComponent<EnemyLaser>();
         if(isAimtoPlayer)
         {
             Transform player = GameObject.FindWithTag("Player").transform;

@@ -26,7 +26,8 @@ public class EnemySplitBullet : EnemyProjectile
     {
         for(int i = 0; i < splitCount; i++)
         {
-            GameObject newBullet = Instantiate(enemyBullet, transform.position, Quaternion.identity);
+            GameObject newBullet = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Bullet, 
+                transform.position, Quaternion.identity);
             float angle = i * (360f / splitCount);
             Rigidbody2D rigid = newBullet.GetComponent<Rigidbody2D>();
             newBullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PlayerBullet : PlayerShoot
 {
-    private bool hashit = false;
-
     [Header("±âº» ÃÑ¾Ë ½ºÅÝ")]
     [SerializeField]
     private float bulletDamage;
@@ -21,20 +19,33 @@ public class PlayerBullet : PlayerShoot
         playerStatDamage = playerStat.damage;
         bulletDamage = playerStatDamage * bulletDamageRate;
     }
+
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (hashit)
+        if (hasHit)
         {
             return;
         }
+
         if (collision.gameObject.tag == "Enemy")
         {
             if (collision.GetComponent<EnemyObject>() != null)
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(bulletDamage, gameObject);
             }
-            
-            hashit = true;
+
+            hasHit = true;
             ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }

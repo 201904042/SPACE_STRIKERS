@@ -19,17 +19,25 @@ public class Skill_Homing : PlayerShoot
         playerStatDamage = playerStat.damage;
         homingSpeed = 15;
         homingDamageRate = 0.8f;
+    }
+
+    protected override void OnEnable()
+    {
+        Init();
+
         SetTarget();
     }
+
+    protected override void Init()
+    {
+        base.Init();
+        homingDamage = playerStatDamage * homingDamageRate;
+    }
+
+
     void Update()
     {
-        if(!isFirstSet)
-        {
-            homingDamage = playerStatDamage * homingDamageRate;
-            isFirstSet = true;
-        }
-
-        if (target != null)
+        if (target != null && target.activeSelf == true)
         {
             Vector2 direction = target.transform.position - transform.position;
             transform.up = direction;
@@ -44,11 +52,11 @@ public class Skill_Homing : PlayerShoot
     private void SetTarget()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if(enemies.Length == 0)
+        if(SpawnManager.spawnInstance.activeEnemyList.Count == 0)
         {
             return;
         }
-        target = enemies[Random.Range(0, enemies.Length)];
+        target = SpawnManager.spawnInstance.activeEnemyList[Random.Range(0, SpawnManager.spawnInstance.activeEnemyList.Count)];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,7 +68,7 @@ public class Skill_Homing : PlayerShoot
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
 
     }

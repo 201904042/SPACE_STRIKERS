@@ -1,90 +1,133 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 
 public class Skill_EnergyField : PlayerShoot
 {
-
-    public float enemyDamagerate;
-    public float enemyDuration;
-    public bool isEnemyShootable;
+    public float damageRate;
+    public float activeTime;
+    public bool isShootable;
     public float enemyDamage;
+    public float skillRange;
 
-    private bool isDamaging;
-    private float damageTik;
-    private float timer;
-    private float curDamageRate;
-    // Start is called before the first frame update
+    private float shootSpeed;
+    [SerializeField]
+    private List<GameObject> hittedEnemy;
+    private Skill_EnergyFieldGenerator launcherScr;
+    private bool isActive;
+    private bool isDealing;
+    private bool isShoot;
+
     protected override void Awake()
     {
         base.Awake();
-        isDamaging = false;
-        damageTik = 0.1f;
+        launcher = GameObject.Find("skill_EnergyFieldGenerator");
+        launcherScr = launcher.GetComponent<Skill_EnergyFieldGenerator>();
+        shootSpeed = 3;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        if (!isFirstSet || curDamageRate != enemyDamagerate)
+        Init();
+
+        StartCoroutine(ActiveTimer(activeTime));
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(ActiveTimer(activeTime));
+        StopCoroutine(DealDamage());
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        transform.SetParent(launcher.transform);
+        hittedEnemy = new List<GameObject>();
+        damageRate = launcherScr.damageRate;
+        activeTime = launcherScr.duration;
+        isShootable = launcherScr.isShootable;
+        skillRange = launcherScr.range;
+        enemyDamage = playerStat.damage * damageRate;
+        isActive = false;
+        isDealing = false;
+        isShoot = false;
+        transform.localScale = new Vector3(skillRange, skillRange, 0);
+    }
+
+    private void Update()
+    {
+        if(isActive&& !isDealing&&  hittedEnemy.Count > 0)
         {
-            enemyDamage = playerStat.damage * enemyDamagerate;
-            curDamageRate = enemyDamagerate;
-            timer = enemyDuration;
-            isFirstSet = true;
+            StartCoroutine(DealDamage());
         }
 
-        
-        timer -= Time.deltaTime;
-        if(timer <= 0)
+        if (isShoot)
         {
-            if (isEnemyShootable)
+            transform.position += transform.up * shootSpeed * Time.deltaTime;
+        }
+    }
+
+    private IEnumerator ActiveTimer(float activeTime)
+    {
+        isActive = true;
+        yield return new WaitForSeconds(activeTime);
+
+        if (isShootable)
+        {
+            if (transform.parent != null)
             {
-                if(transform.parent != null)
-                {
-                    transform.parent = null;
-                }
-                transform.position += transform.up * 3 * Time.deltaTime;
+                transform.parent = null;
             }
-            else
-            {
-                Destroy(gameObject);
-            }
-            
+
+            isShoot = true;
+        }
+        else
+        {
+            isActive = false;
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator DealDamage()
     {
-        if (collision.CompareTag("Enemy")) // 적 객체와 충돌한 경우
-        {
-            isDamaging = true; // 데미지를 줄 준비가 되었음을 표시
-            StartCoroutine(DealDamage(collision)); // 데미지 주기 시작
-        }
-    }
-
-    protected override void OnTriggerExit2D(Collider2D collision)
-    {
-        base.OnTriggerExit2D(collision);
-        if (collision.CompareTag("Enemy")) // 적 객체와 충돌이 끝난 경우
-        {
-            isDamaging = false; // 데미지 중단
-        }
-    }
-
-    private IEnumerator DealDamage(Collider2D enemy)
-    {
-        while (enemy != null && enemy.gameObject.activeSelf && isDamaging) // 데미지를 주는 동안
-        {
-            if (enemy.gameObject.tag == "Enemy")
+        isDealing = true;
+        if (hittedEnemy.Count > 0){
+            foreach (GameObject enemy in hittedEnemy)
             {
                 if (enemy.gameObject.GetComponent<EnemyObject>() != null)
                 {
                     enemy.gameObject.GetComponent<EnemyObject>().EnemyDamaged(enemyDamage, gameObject);
                 }
             }
-            yield return new WaitForSeconds(damageTik); // 데미지 간격만큼 대기
+        }
+        yield return new WaitForSeconds(0.1f); // 데미지 간격만큼 대기
+        isDealing = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy")) // 적 객체와 충돌한 경우
+        {
+            if (hittedEnemy.Contains(collision.gameObject) == false)
+            {
+                hittedEnemy.Add(collision.gameObject);
+            }
         }
     }
+
+    protected override void OnTriggerExit2D(Collider2D collision)
+    {
+        base.OnTriggerExit2D(collision);
+        if (collision.CompareTag("Enemy")) // 적 객체와 충돌한 경우
+        {
+            hittedEnemy.Remove(collision.gameObject);
+        }
+    }
+
+    
 
 }

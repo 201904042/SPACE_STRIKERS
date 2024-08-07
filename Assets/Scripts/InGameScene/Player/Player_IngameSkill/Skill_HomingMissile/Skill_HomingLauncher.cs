@@ -1,110 +1,123 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class Skill_HomingLauncher : Ingame_Active
 {
-    [Header("호밍런쳐 고유 스텟")]
-    public bool isLevelUp;
-
     protected override void Awake()
     {
         base.Awake();
-        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_Homing.prefab");
-        DamageRate = 0.8f;
-        coolTime = 2;
-        timer = coolTime;
-        projNum = 2;
-
+        
         isLevelUp = false;
+    }
+
+    protected override void OnEnable()
+    {
+        Init();
+        LevelSet(level);
+    }
+
+    private void OnDisable()
+    {
 
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Init()
     {
-        if (level != transform.GetComponent<SkillInterface>().level)
-        {
-            level = transform.GetComponent<SkillInterface>().level;
+        base.Init();
+        
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (isLevelUp)
+        { 
             LevelSet(level);
-            
+            isLevelUp = false;
         }
 
-        timer -= Time.deltaTime;
-        if(timer <= 0 )
+        if(!activated)
         {
-            for(int i = 0; i<projNum; i++)
-            {
-                Vector3 randx_pos = new Vector3(Random.Range(-0.1f, 0.1f), 0, 0);
-                GameObject homing = Instantiate(skillProj, transform.position + randx_pos, Quaternion.identity);
-                homing.GetComponent<Skill_Homing>().homingDamageRate = DamageRate;
-  
-            }
-
-            timer = coolTime;
+            StartCoroutine(ActiveSkillInDelay(coolTime));
         }
+        
     }
 
-    void LevelSet(int level)
+    private IEnumerator ActiveSkillInDelay(float coolTime)
     {
-        if (level == 1)
+        activated = true;
+
+        for (int i = 0; i < projNum; i++)
         {
-            DamageRate = 0.8f;
-            coolTime = 2;
-            projNum = 2;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<호밍미사일>\n미사일 수 2개 증가";
+            Vector3 randx_pos = new Vector3(Random.Range(-0.1f, 0.1f), 0, 0);
+            GameObject homing = ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_Homing, transform.position + randx_pos, Quaternion.identity);
+            homing.GetComponent<Skill_Homing>().homingDamageRate = damageRate;
+
         }
-        else if (level == 2)
+
+        yield return new WaitForSeconds(coolTime);
+
+        activated = false;
+    }
+
+    protected override void LevelSet(int level)
+    {
+        base.LevelSet(level);
+        switch (level)
         {
-            DamageRate = 0.8f;
-            coolTime = 2;
-            projNum = 4;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<호밍미사일>\n쿨타임 0.5초 감소";
-        }
-        else if (level == 3)
-        {
-            DamageRate = 0.8f;
-            coolTime = 1.5f;
-            projNum = 4;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<호밍미사일>\n미사일 수 2개 증가";
-        }
-        else if (level == 4)
-        {
-            DamageRate = 0.8f;
-            coolTime = 1.5f;
-            projNum = 6;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<호밍미사일>\n쿨타임 0.5초 감소";
-        }
-        else if (level == 5)
-        {
-            DamageRate = 0.8f;
-            coolTime = 1f;
-            projNum = 6;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<호밍미사일>\n미사일 수 2개 증가\n쿨타임 0.5초 감소";
-        }
-        else if (level == 6)
-        {
-            DamageRate = 0.8f;
-            coolTime = 0.5f;
-            projNum = 8;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<호밍미사일>\n미사일 수 2배";
-        }
-        else if (level == 7)
-        {
-            DamageRate = 0.8f;
-            coolTime = 0.5f;
-            projNum = 16;
-            
-        }
-        else
-        {
-            Debug.Log("Already Max or Min");
+            case 1:
+                damageRate = 0.8f;
+                coolTime = 2;
+                projNum = 2;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<호밍미사일>\n미사일 수 2개 증가";
+                break;
+            case 2:
+                damageRate = 0.8f;
+                coolTime = 2;
+                projNum = 4;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<호밍미사일>\n쿨타임 0.5초 감소";
+                break;
+            case 3:
+                damageRate = 0.8f;
+                coolTime = 1.5f;
+                projNum = 4;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<호밍미사일>\n미사일 수 2개 증가";
+                break;
+            case 4:
+                damageRate = 0.8f;
+                coolTime = 1.5f;
+                projNum = 6;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<호밍미사일>\n쿨타임 0.5초 감소";
+                break;
+            case 5:
+                damageRate = 0.8f;
+                coolTime = 1f;
+                projNum = 6;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<호밍미사일>\n미사일 수 2개 증가\n쿨타임 0.5초 감소";
+                break;
+            case 6:
+                damageRate = 0.8f;
+                coolTime = 0.5f;
+                projNum = 8;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<호밍미사일>\n미사일 수 2배";
+                break;
+            case 7:
+                damageRate = 0.8f;
+                coolTime = 0.5f;
+                projNum = 16;
+                break;
+            default:
+                Debug.Log("Already Max or Min");
+                break;
         }
     }
+
 }

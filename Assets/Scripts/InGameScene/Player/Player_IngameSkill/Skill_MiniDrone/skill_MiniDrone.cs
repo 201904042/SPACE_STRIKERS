@@ -10,9 +10,8 @@ using static UnityEngine.GraphicsBuffer;
 public class skill_MiniDrone : MonoBehaviour
 {
     public GameObject proj;
-    private GameObject[] enemies;
 
-    private GameObject target;
+    private GameObject targetEnemy;
     private GameObject player;
     private PlayerStat stat;
     Vector3 targetPosition;
@@ -28,10 +27,12 @@ public class skill_MiniDrone : MonoBehaviour
     private float liveTime;
 
     private float attackRange;
-    private bool is_enemySet;
+    private bool isEnemySet;
     private bool is_firstSet;
 
     private float basic_speed;
+    public bool isDroneActive;
+    private bool isAttack;
 
     void Awake()
     {
@@ -40,109 +41,122 @@ public class skill_MiniDrone : MonoBehaviour
 
         liveTime = 15f;
         attackRange = 5f;
-        is_enemySet = false;
-        drone_damage = stat.damage * damageRate;
         basic_speed = 1;
-        shootSpeed = basic_speed - shootSpeedRate;
         moveSpeed = 10f;
-        shootTimer = shootSpeed;
+    }
 
-        setTarget();
+    private void OnEnable()
+    {
+        Init();
+
+        StartCoroutine(ActiveSkill(liveTime));
+    }
+
+    private void Init()
+    {
+        drone_damage = stat.damage * damageRate;
+        shootSpeed = basic_speed - shootSpeedRate;
+        shootTimer = shootSpeed;
+        isEnemySet = false;
+        isAttack = false;
+        isDroneActive = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        liveTime -= Time.deltaTime;
-        if (liveTime < 0)
-        {
-            Destroy(gameObject);
-        }
         if (!is_firstSet)
         {
             drone_damage = stat.damage * damageRate;
-            shootSpeed = 1;
-            moveSpeed = 10f;
             shootTimer = shootSpeed;
             is_firstSet = true;
         }
 
-        if (!is_enemySet) //타겟이 정해지지 않으면 다시 타겟을 정함
+
+        //에너미가 지정되지 않았거나, 타겟인 에너미가 비활성화되거나 , 적과 플레이어의 위치가 공격범위보다 크게 되면 적 재지정
+        if (!isEnemySet || targetEnemy.activeSelf == false || Vector2.Distance(player.transform.position, targetEnemy.transform.position) > attackRange) //타겟이 정해지지 않으면 다시 타겟을 정함
         {
-            setTarget();
-            returnToPlayer();
-        }
-        else // 타겟이 정해짐
-        {
-            if (target != null && Vector2.Distance(player.transform.position, target.transform.position) > attackRange)
+            SetTarget();
+            if(targetEnemy == null)
             {
-                is_enemySet = false;
+                ReturnToPlayer();
             }
-            else
-            {
-                if (target != null) //타겟이 존재한다면
-                {
-                    targetPosition = target.transform.position + new Vector3(0, -1, 0);
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-                    if (transform.position == targetPosition)
-                    {
-                        shootTimer -= Time.deltaTime;
-                        if (shootTimer < 0)
-                        {
-                            attack();
-
-                            shootTimer = shootSpeed;
-                        }
-
-                    }
-                }
-                else //어떤 이유로 타겟이 없다면
-                {
-                    is_enemySet = false;
-                    returnToPlayer();
-                    setTarget();
-                }
-            }
-
-        }
-    }
-
-    void setTarget()
-    {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject[] inRangeEnemies = new GameObject[4];
-        int count = 0;
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            float dist = Vector2.Distance(enemies[i].transform.position, player.transform.position);
-            if (dist <= attackRange)
-            {
-                inRangeEnemies[count] = enemies[i];
-                count++;
-            }
-        }
-        if (count > 0)
-        {
-            target = inRangeEnemies[Random.Range(0, count)];
-            is_enemySet = true;
         }
         else
         {
-            target = null;
-            is_enemySet = false;
+            MoveToEnemy();
+            if (transform.position == targetPosition)
+            {
+                if (!isAttack)
+                {
+                    StartCoroutine(AttackRoutine(shootSpeed));
+                }
+            }
         }
+    }
+
+    private IEnumerator ActiveSkill(float liveTime)
+    {
+        isDroneActive = true;
+        yield return new WaitForSeconds(liveTime);
+
+        isDroneActive = false;
+
+        ObjectPool.poolInstance.ReleasePool(gameObject);
+    }
+
+    private IEnumerator AttackRoutine(float attackDelay)
+    {
+        isAttack = true;
+        DroneAttack();
+        yield return new WaitForSeconds(attackDelay);
+
+        isAttack = false;
 
     }
 
-    void returnToPlayer()
+    private void SetTarget()
     {
+        List<GameObject> enemyCloseToPlayer = new List<GameObject>();
 
+        foreach(GameObject enemyObj in SpawnManager.spawnInstance.activeEnemyList)
+        {
+            float dist = Vector2.Distance(enemyObj.transform.position, player.transform.position);
+
+            if (dist <= attackRange)
+            {
+                enemyCloseToPlayer.Add(enemyObj);
+            }
+        }
+
+        
+        if (enemyCloseToPlayer.Count > 0)
+        {
+            targetEnemy = enemyCloseToPlayer[Random.Range(0, enemyCloseToPlayer.Count)];
+            isEnemySet = true;
+        }
+        else
+        {
+            targetEnemy = null;
+            isEnemySet = false;
+        }
+    }
+
+    private void MoveToEnemy()
+    {
+        targetPosition = targetEnemy.transform.position + new Vector3(0, -1, 0);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+    }
+
+    private void ReturnToPlayer()
+    {
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveSpeed);
     }
 
-    void attack()
+    private void DroneAttack()
     {
-        GameObject droneBullet = Instantiate(proj, transform.position, Quaternion.identity);
+        
+        GameObject droneBullet = ObjectPool.poolInstance.GetSkill(SkillProjType.Skilll_DroneBullet, transform.position, Quaternion.identity);
         droneBullet.GetComponent<skill_MiniDroneBullet>().damage = drone_damage;
     }
 

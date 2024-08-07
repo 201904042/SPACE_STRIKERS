@@ -36,7 +36,6 @@ public class EnemyProjectile : MonoBehaviour
         }
         if (collision.transform.tag == "BulletBorder")
         {
-            Destroy(gameObject);
             ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }

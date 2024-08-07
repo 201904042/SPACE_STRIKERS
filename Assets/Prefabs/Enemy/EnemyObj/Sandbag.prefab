@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 790285341441865430}
   - component: {fileID: 9118003235103689142}
   - component: {fileID: 5635618670956767347}
-  - component: {fileID: 3177062489424814627}
   m_Layer: 0
   m_Name: Sandbag
   m_TagString: Enemy
@@ -131,35 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0459208, y: 1.3486402}
   m_EdgeRadius: 0
---- !u!114 &3177062489424814627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3737570111088939941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStat:
-    enemyId: 0
-    enemyGrade: 
-    enemyName: 
-    enemyMaxHp: 0
-    enemyDamage: 0
-    enemyMoveSpeed: 0
-    enemyAttackSpeed: 0
-    enemyExpAmount: 0
-    enemyScoreAmount: 0
-    enemyMoveAttack: 0
-    isEnemyAiming: 0
-  itemList: []
-  curHp: 0
-  curHpSave: 0
-  enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
-  exp: {fileID: 8822942749739465661, guid: ae8b8d5ba86814041b5d9f57cc409b37, type: 3}
-  isEnemyCanAttack: 0
-  isEnemySlow: 0
-  isEnemyDropItem: 0

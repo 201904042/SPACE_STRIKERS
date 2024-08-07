@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,122 +6,119 @@ using UnityEngine;
 public class Skill_EnergyFieldGenerator : Ingame_Active
 {
     [Header("에너지필드 고유 스텟")]
-    public bool isLevelUp;
-    private float duration;
-    private float range;
-    private bool isShootable;
-    private GameObject field;
+    public float duration;
+    public float range;
+    public bool isShootable;
+    private GameObject activeField;
 
     protected override void Awake()
     {
         base.Awake();
-        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_EnergyField.prefab");
-        DamageRate = 0.2f;
+        
         coolTime = 10;
-        timer = 0;
-        duration = 5;
-        range = 8;
-        isShootable = false;
         isLevelUp = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        if (level != transform.GetComponent<SkillInterface>().level)
+        Init();
+        LevelSet(level);
+    }
+    protected override void Init()
+    {
+        base.Init();
+        level = transform.GetComponent<SkillInterface>().level;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (isLevelUp)
         {
-            level = transform.GetComponent<SkillInterface>().level;
-            
-            if (field != null)
+            activated = false;
+            if (activeField != null)
             {
-                Destroy(field.gameObject);
+                ObjectPool.poolInstance.ReleasePool(activeField.gameObject);
             }
             LevelSet(level);
         }
-        
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+
+        if (!activated)
         {
-            field = Instantiate(skillProj, transform);
-            Skill_EnergyField fieldstat = field.GetComponent<Skill_EnergyField>();
-            fieldstat.enemyDamagerate = DamageRate;
-            fieldstat.enemyDuration = duration;
-            fieldstat.isEnemyShootable = isShootable;
-            field.transform.localScale = field.transform.localScale * range / 8;
-            timer = coolTime;
+            StartCoroutine(ActiveSkillInDelay(coolTime));
         }
     }
 
-    void LevelSet(int level)
+    private IEnumerator ActiveSkillInDelay(float coolTime)
     {
-        if (level == 1)
-        {
-            DamageRate = 0.2f;
-            duration = 5;
-            range = 8;
-            isShootable = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<에너지 필드>\n데미지 20% 증가";
-        }
-        else if (level == 2)
-        {
-            DamageRate = 0.4f;
-            duration = 5;
-            range = 8;
-            isShootable = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<에너지 필드>\n지속시간 2초 증가";
-        }
-        else if (level == 3)
-        {
-            DamageRate = 0.4f;
-            duration = 7;
-            range = 8;
-            isShootable = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<에너지 필드>\n범위 30%증가";
-        }
-        else if (level == 4)
-        {
-            DamageRate = 0.4f;
-            duration = 7;
-            range = 10;
-            isShootable = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<에너지 필드>\n데미지 30% 증가";
+        Debug.Log("액티브");
+        activated = true;
 
-        }
-        else if (level == 5)
-        {
-            DamageRate = 0.7f;
-            duration = 7;
-            range = 10;
-            isShootable = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<에너지 필드>\n지속시간 2초 증가";
+        Skill_EnergyField energyField = ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_EnergyField,
+                transform.position, transform.rotation).GetComponent<Skill_EnergyField>();
+        activeField = energyField.gameObject;
 
-        }
-        else if (level == 6)
-        {
-            DamageRate = 0.7f;
-            duration = 9;
-            range = 10;
-            isShootable = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<에너지 필드>\n범위 30%증가\n지속시간이 종료된 에너지 필드를 전방으로 사출";
+        yield return new WaitForSeconds(coolTime);
 
-        }
-        else if (level == 7)
+        activated = false;
+    }
+
+    protected override void LevelSet(int level)
+    {
+        switch (level)
         {
-            DamageRate = 0.7f;
-            duration = 9;
-            range = 12;
-            isShootable = true;
+            case 1:
+                damageRate = 0.2f;
+                duration = 5;
+                range = 8;
+                isShootable = false;
+                transform.GetComponent<SkillInterface>().skillIntro = "<에너지 필드>\n데미지 20% 증가";
+                break;
+            case 2:
+                damageRate = 0.4f;
+                duration = 5;
+                range = 8;
+                isShootable = false;
+                transform.GetComponent<SkillInterface>().skillIntro = "<에너지 필드>\n지속시간 2초 증가";
+                break;
+            case 3:
+                damageRate = 0.4f;
+                duration = 7;
+                range = 8;
+                isShootable = false;
+                transform.GetComponent<SkillInterface>().skillIntro = "<에너지 필드>\n범위 30%증가";
+                break;
+            case 4:
+                damageRate = 0.4f;
+                duration = 7;
+                range = 10;
+                isShootable = false;
+                transform.GetComponent<SkillInterface>().skillIntro = "<에너지 필드>\n데미지 30% 증가";
+                break;
+            case 5:
+                damageRate = 0.7f;
+                duration = 7;
+                range = 10;
+                isShootable = false;
+                transform.GetComponent<SkillInterface>().skillIntro = "<에너지 필드>\n지속시간 2초 증가";
+                break;
+            case 6:
+                damageRate = 0.7f;
+                duration = 9;
+                range = 12;
+                isShootable = false;
+                transform.GetComponent<SkillInterface>().skillIntro = "<에너지 필드>\n범위 30%증가\n지속시간이 종료된 에너지 필드를 전방으로 사출";
+                break;
+            case 7:
+                damageRate = 0.7f;
+                duration = 9;
+                range = 12;
+                isShootable = true;
+                break;
+            default:
+                Debug.Log("Already Max or Min");
+                break;
         }
-        else
-        {
-            Debug.Log("Already Max or Min");
-        }
-        timer = 0;
+        isLevelUp = false;
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,30 +16,52 @@ public class ExplosionSplashDamage : MonoBehaviour
     private float splashDamageRate;
     [SerializeField]
     private float splashTime;
-    
-    private bool firstSet;
+
+    private bool isSet;
+  
     private void Awake()
     {
-        firstSet = false;
         splashDamageRate = 0.5f;
         explosionRange = 1f;
         splashTime = 1f;
     }
 
+    private void OnEnable()
+    {
+        isSet = false;
+    }
+
+    private void Setting()
+    {
+        isSet = true;
+        missileDamage = missileDamage * splashDamageRate;
+        transform.localScale *= explosionRange;
+        StartCoroutine(activeTime(splashTime));
+    }
+
+    private void OnDisable()
+    {
+        transform.localScale /= explosionRange;
+    }
+
     private void Update()
     {
-        if (!firstSet)
+        if(isSet == false)
         {
-            splashDamageRate = missileDamage * splashDamageRate;
-            transform.localScale = transform.localScale * explosionRange;
-            firstSet = true;
+            Setting();
         }
-        
-        splashTime -= Time.deltaTime;
-        if (splashTime <= 0)
-        {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
-        }
+    }
+
+    public void SetVariable(float Range, float Damage)
+    {
+        explosionRange = Range;
+        missileDamage = Damage;
+    }
+
+    private IEnumerator activeTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        ObjectPool.poolInstance.ReleasePool(gameObject);
     }
     
 

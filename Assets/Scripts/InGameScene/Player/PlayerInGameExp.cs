@@ -4,40 +4,41 @@ using UnityEngine;
 
 public class PlayerInGameExp : MonoBehaviour
 {
-    public GameObject UI_levelUp;
+    public GameObject selectSkillUI;
     public GameObject Canvas;
 
-    [Header("exp 요소")]
+    [Header("expAmount 요소")]
     public int InGameLv;
     public float maxExp;
     public float curExp;
+    public float ExpGet
+    {
+        get => curExp;
+        set
+        {
+            curExp += value;
+            if (curExp >= maxExp)
+            {
+                LevelUP();
+            }
+        }
+    }
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         InGameLv = 1;
         maxExp = 5f;
         curExp = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(curExp >= maxExp)
-        {
-            LevelUP();
-        }
-            
-    }
     public void LevelUP()
     {
         InGameLv++;
         curExp = 0;
         maxExp = maxExp +5;
 
-        
-        Instantiate(UI_levelUp, Canvas.transform);
+        selectSkillUI.SetActive(true);
+
         Time.timeScale = 0f;
     }
 

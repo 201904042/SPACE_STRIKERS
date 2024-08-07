@@ -36,7 +36,8 @@ public class PlayerBulletLauncher : LauncherStat
     protected override void Fire()
     {
         base.Fire();
-        GameObject bullet = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Player_Bullet, transform.position, transform.rotation);
+        GameObject bullet = ObjectPool.poolInstance.GetProj(ProjType.Player_Bullet, 
+            transform.position, transform.rotation);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = fireDirection * bulletSpeed;
     }

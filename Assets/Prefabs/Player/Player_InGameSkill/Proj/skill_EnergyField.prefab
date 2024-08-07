@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6105492086388150783}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &157615255215604331
 SpriteRenderer:
@@ -100,11 +100,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  player_stat: {fileID: 0}
-  is_firstSet: 0
-  e_damageRate: 0
-  e_duration: 0
-  e_is_shootable: 0
+  playerStat: {fileID: 0}
+  launcher: {fileID: 0}
+  hasHit: 0
+  damageRate: 0
+  activeTime: 0
+  isShootable: 0
+  enemyDamage: 0
+  skillRange: 0
 --- !u!50 &-4317685774816624596
 Rigidbody2D:
   serializedVersion: 4

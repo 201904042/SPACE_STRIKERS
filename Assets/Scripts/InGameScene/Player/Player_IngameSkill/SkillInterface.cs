@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SkillInterface : MonoBehaviour
 {
+    public int skillId;
     public int level = 1;
-    public Sprite icon;
+    public SkillData skillData;
     public string skillIntro;
-
 }

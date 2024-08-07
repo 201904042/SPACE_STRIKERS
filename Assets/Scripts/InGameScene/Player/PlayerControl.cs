@@ -7,16 +7,15 @@ public class PlayerControl : MonoBehaviour
     private SpriteRenderer playerSprite;
 
     private float speed;
-    private bool isTop;
-    private bool isBottom;
-    private bool isLeft;
-    private bool isRight;
 
-    private Vector3 targetPosition;
-    private Vector3 curPosition;
+    private bool isTopCollide;
+    private bool isBottomCollide;
+    private bool isLeftCollide;
+    private bool isRightCollide;
+
     private float basicSpeed = 3f;
 
-    public bool isMoveable;
+    public bool canMove;
     public bool isInvincible;
 
     private float invincibleDuration = 3f;
@@ -30,26 +29,29 @@ public class PlayerControl : MonoBehaviour
         speed = basicSpeed + (playerStat.moveSpeed/5);
 
         isInvincible = false;
-        isMoveable = true;
+        canMove = true;
     }
+
     private void Update()
     {
         speed = basicSpeed + (playerStat.moveSpeed / 5);
-        if (isMoveable)
+
+        if (canMove)
         {
-            Move();
+            PlayerMove();
         }
+
         InvincibleSprite();
     }
 
-    private void Move()
+    //컨트롤 뉴인풋시스템 적용 예정
+    private void PlayerMove()
     {
-        
         float h = Input.GetAxisRaw("Horizontal");
-        if ((isRight && h == 1) || (isLeft && h == -1))
+        if ((isRightCollide && h == 1) || (isLeftCollide && h == -1))
             h = 0;
         float v = Input.GetAxisRaw("Vertical");
-        if ((isTop && v == 1) || (isBottom && v == -1))
+        if ((isTopCollide && v == 1) || (isBottomCollide && v == -1))
             v = 0;
         Vector3 curPos = transform.position;
         Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime;
@@ -69,29 +71,28 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void PlayerAttacked(GameObject attack_obj)
+    public void PlayerDamagedAction(GameObject attack_obj)
     {
-        Collider2D e_obj_collider = attack_obj.GetComponent<Collider2D>();
-        if (isInvincible == false)
+        if (isInvincible == true) { return; }
+        
+        Collider2D attackingCollider = attack_obj.GetComponent<Collider2D>();
+        if (attackingCollider != null)
         {
-            if (e_obj_collider != null)
-            {
-                isInvincible = true;
-                StartCoroutine(playerInvincible(invincibleDuration));
-                player_push(e_obj_collider);
-            }
+            isInvincible = true;
+            StartCoroutine(invinciblePlayer(invincibleDuration));
+            PlayerKnockBack(attackingCollider);
         }
     }
     
-    public void player_push(Collider2D collision)
+    public void PlayerKnockBack(Collider2D collision)
     {
-        curPosition = transform.position;
-        targetPosition = CalTargetposition(curPosition, collision);
+        Vector2 curPosition = transform.position;
+        Vector2 targetPosition = CalculateTargetPos(curPosition, collision);
 
         StartCoroutine(PushbackLerp(curPosition, targetPosition));
     }
 
-    public Vector3 CalTargetposition(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
+    public Vector2 CalculateTargetPos(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
     {
         Vector2 pushDirection = (curpos - col.transform.position).normalized;
         return curpos - new Vector3(-pushDirection.x, -pushDirection.y, 0) * 2;
@@ -104,7 +105,7 @@ public class PlayerControl : MonoBehaviour
 
         while(elapseTime < 0.1f)
         {
-            if (isTop || isBottom || isLeft || isRight)
+            if (isTopCollide || isBottomCollide || isLeftCollide || isRightCollide)
             {
                 break;
             }
@@ -115,21 +116,15 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private IEnumerator playerInvincible(float invincible_time)
+    /// <summary>
+    /// 플레이어의 무적시간 코루틴
+    /// </summary>
+    private IEnumerator invinciblePlayer(float invincible_time)
     {
-        if(isInvincible == false)
-        {
-            yield break;
-        }
+        isInvincible = true;
 
-        float inv_time = invincible_time;
+        yield return new WaitForSeconds(invincible_time);
         
-        while (inv_time > 0)
-        {
-            inv_time-= Time.deltaTime;
-
-            yield return null;
-        }
         isInvincible = false;
     }
 
@@ -140,13 +135,13 @@ public class PlayerControl : MonoBehaviour
             switch (collision.gameObject.name)
             {
                 case "Top":
-                    isTop = true; break;
+                    isTopCollide = true; break;
                 case "Bottom":
-                    isBottom = true; break;
+                    isBottomCollide = true; break;
                 case "Right":
-                    isRight = true; break;
+                    isRightCollide = true; break;
                 case "Left":
-                    isLeft = true; break;
+                    isLeftCollide = true; break;
             }
         }
 
@@ -163,13 +158,13 @@ public class PlayerControl : MonoBehaviour
             switch (collision.gameObject.name)
             {
                 case "Top":
-                    isTop = false; break;
+                    isTopCollide = false; break;
                 case "Bottom":
-                    isBottom = false; break;
+                    isBottomCollide = false; break;
                 case "Right":
-                    isRight = false; break;
+                    isRightCollide = false; break;
                 case "Left":
-                    isLeft = false; break;
+                    isLeftCollide = false; break;
             }
         }
     }

@@ -13,22 +13,21 @@ public class Skill_InstantHeal : MonoBehaviour
     {
         player = GameObject.Find("Player");
         playerStat = player.GetComponent<PlayerStat>();
-        healAmount = playerStat.hp * 0.3f; //힐량은 최대체력의 30%
-        damagedHP = playerStat.hp - playerStat.cur_hp;
+        
+    }
+
+    private void OnEnable()
+    {
+        healAmount = playerStat.maxHp * 0.3f; //힐량은 최대체력의 30%
 
         instantHeal();
     }
 
     private void instantHeal()
     {
-        if(playerStat.cur_hp < playerStat.hp)
-        {
-            if(healAmount > damagedHP)
-            {
-                 healAmount = damagedHP;
-            }
-            playerStat.cur_hp += healAmount;
-        }
-        Destroy(gameObject);
+        playerStat.curHp += healAmount;
+        Mathf.Min(playerStat.curHp, playerStat.maxHp);
+
+        gameObject.SetActive(false);
     }
 }

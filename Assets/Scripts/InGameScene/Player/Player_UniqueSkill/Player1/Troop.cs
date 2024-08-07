@@ -20,11 +20,17 @@ public class Troop : MonoBehaviour
         rootPath = "Assets/Prefabs/Player/Player_UniqueSkill/player1/shooter_";
         player = GameObject.Find("Player");
         palyerSpecialSkill = player.GetComponent<PlayerSpecialSkill>();
+    }
+
+    private void OnEnable()
+    {
+        startTimer = 0;
         fireTime = palyerSpecialSkill.specialFireTime;
         skillLevel = palyerSpecialSkill.powerLevel;
         curLevelPath = ChangeShooterLevelPath(skillLevel);
         InstantShooter();
     }
+
     private void Update()
     {
         
@@ -72,12 +78,12 @@ public class Troop : MonoBehaviour
     {
         if (collision.gameObject.tag =="Enemy_Projectile")
         {
-            Destroy(collision.gameObject);
+            ObjectPool.poolInstance.ReleasePool(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "TroopBorder")
         {
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
 
     }

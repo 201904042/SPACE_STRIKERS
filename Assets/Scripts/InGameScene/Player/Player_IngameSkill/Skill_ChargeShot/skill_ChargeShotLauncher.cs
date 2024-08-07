@@ -11,111 +11,114 @@ public class Skill_ChargeShotLauncher : Ingame_Active
     protected override void Awake()
     {
         base.Awake();
-        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_ChargeShot.prefab");
-        DamageRate = 2f;
+       
+        //시작 변수 세팅
+        damageRate = 2f;
         coolTime = 5;
-        timer = 0;
         projNum = 1;
         isPenetrate = false;
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        if (level != transform.GetComponent<SkillInterface>().level)
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        level = transform.GetComponent<SkillInterface>().level;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (isLevelUp)
         {
-            level = transform.GetComponent<SkillInterface>().level;
             LevelSet(level);
         }
 
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+        if (!activated && SpawnManager.spawnInstance.activeEnemyList.Count != 0)
         {
-            for (int i = 0; i < projNum; i++)
-            {
-                GameObject chargeShot = Instantiate(skillProj, transform.position, Quaternion.identity);
-                Skill_ChargeShot chargeShot_Stat = chargeShot.GetComponent<Skill_ChargeShot>();
-                chargeShot_Stat.damageRate = DamageRate;
-                chargeShot_Stat.isPenetrate = isPenetrate;
-            }
-
-            timer = coolTime;
+            StartCoroutine(ActiveSkillInDelay(coolTime));
         }
     }
 
-    void LevelSet(int level)
+    private IEnumerator ActiveSkillInDelay(float coolTime)
     {
-        if (level == 1)
+        activated = true;
+        for (int i = 0; i < projNum; i++)
         {
-            DamageRate = 2f;
-            coolTime = 5;
-            timer = coolTime;
-            isPenetrate = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<차지샷>\n데미지 계수 20% 증가";
+            ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_ChageShot, 
+                transform.position, Quaternion.identity);
+        }
+        yield return new WaitForSeconds(coolTime);
+        activated = false;
+    }
 
-        }
-        else if (level == 2)
+    protected override void LevelSet(int level)
+    {
+        switch (level)
         {
-            DamageRate = 2.2f;
-            coolTime = 5;
-            timer = coolTime;
-            isPenetrate = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<차지샷>\n쿨타임 1초 감소";
+            case 1:
+                damageRate = 2f;
+                coolTime = 5;
+                isPenetrate = false;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<차지샷>\n데미지 계수 20% 증가";
+                break;
 
+            case 2:
+                damageRate = 2.2f;
+                coolTime = 5;
+                isPenetrate = false;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<차지샷>\n쿨타임 1초 감소";
+                break;
 
-        }
-        else if (level == 3)
-        {
-            DamageRate = 2.2f;
-            coolTime = 4;
-            timer = coolTime;
-            isPenetrate = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<차지샷>\n데미지 계수 30% 증가";
+            case 3:
+                damageRate = 2.2f;
+                coolTime = 4;
+                isPenetrate = false;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<차지샷>\n데미지 계수 30% 증가";
+                break;
 
-        }
-        else if (level == 4)
-        {
-            DamageRate = 2.5f;
-            coolTime = 4;
-            timer = coolTime;
-            isPenetrate = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<차지샷>\n쿨타임 1초 감소";
-        }
-        else if (level == 5)
-        {
-            DamageRate = 2.5f;
-            coolTime = 3;
-            timer = coolTime;
-            isPenetrate = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<차지샷>\n데미지 계수 50% 증가";
-        }
-        else if (level == 6)
-        {
-            DamageRate = 3f;
-            coolTime = 3;
-            timer = coolTime;
-            isPenetrate = false;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<차지샷>\n차징샷이 적을 관통합니다.";
+            case 4:
+                damageRate = 2.5f;
+                coolTime = 4;
+                isPenetrate = false;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<차지샷>\n쿨타임 1초 감소";
+                break;
 
-        }
-        else if (level == 7)
-        {
-            DamageRate = 3f;
-            coolTime = 3;
-            timer = coolTime;
-            isPenetrate = true;
+            case 5:
+                damageRate = 2.5f;
+                coolTime = 3;
+                isPenetrate = false;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<차지샷>\n데미지 계수 50% 증가";
+                break;
 
+            case 6:
+                damageRate = 3f;
+                coolTime = 3;
+                isPenetrate = false;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<차지샷>\n차징샷이 적을 관통";
+                break;
+
+            case 7:
+                damageRate = 3f;
+                coolTime = 3;
+                isPenetrate = true;
+                transform.GetComponent<SkillInterface>().skillIntro = "<차지샷>";
+                break;
+
+            default:
+                Debug.Log("Already Max or Min");
+                break;
         }
-        else
-        {
-            Debug.Log("Already Max or Min");
-        }
+        isLevelUp = false;
     }
 }

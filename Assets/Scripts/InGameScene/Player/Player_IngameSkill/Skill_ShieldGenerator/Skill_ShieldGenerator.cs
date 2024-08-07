@@ -5,97 +5,112 @@ using UnityEngine;
 public class Skill_ShieldGenerator : Ingame_Active
 {
     [Header("쉴드 고유 스텟")]
-    public bool isLevelUp;
     public bool isPenetrate;
     public bool isShieldOn;
     protected override void Awake()
     {
         base.Awake();
-        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_shield.prefab");
-        DamageRate = 1f;
-        coolTime = 20;
-        timer = 0;
-        isShieldOn = false;
+       
+    }
+
+    protected override void OnEnable()
+    {
+        Init();
+        LevelSet(level);
+        GenerateShield();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
         isLevelUp = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if (level != transform.GetComponent<SkillInterface>().level)
+        base.Update();
+        if (isLevelUp)
         {
-            level = transform.GetComponent<SkillInterface>().level;
-            LevelSet(level);
-
-        }
-
-        if (!isShieldOn)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
+            if (transform.GetChild(0).gameObject == null && transform.GetChild(0).gameObject.activeSelf == true)
             {
-                GameObject shield = Instantiate(skillProj, transform);
-                shield.GetComponent<Skill_Shield>();
-                isShieldOn= true;
-                timer = coolTime;
+                transform.GetChild(0).gameObject.SetActive(false);
+                isShieldOn = false;
             }
+            LevelSet(level);
+            isLevelUp = false;
         }
-        
+
+        if (!activated && !isShieldOn)
+        {
+            StartCoroutine(ActiveSkillInDelay(coolTime));
+        }
     }
 
-    void LevelSet(int level)
+    private IEnumerator ActiveSkillInDelay(float coolTime)
     {
-        if (level == 1)
-        {
-            DamageRate = 1f;
-            coolTime = 20;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<쉴드>\n재생성 3초 감소";
-        }
-        else if (level == 2)
-        {
-            DamageRate = 1f;
-            coolTime = 17;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<쉴드>\n재생성 3초 감소";
-        }
-        else if (level == 3)
-        {
-            DamageRate = 1f;
-            coolTime = 14;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<쉴드>\n충돌한 적에게 150% 데미지";
-        }
-        else if (level == 4)
-        {
-            DamageRate = 1.5f;
-            coolTime = 14;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<쉴드>\n재생성 3초 감소";
-        }
-        else if (level == 5)
-        {
-            DamageRate = 1.5f;
-            coolTime = 11;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<쉴드>\n재생성 3초 감소";
-        }
-        else if (level == 6)
-        {
-            DamageRate = 1.5f;
-            coolTime = 8;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<쉴드>\n충돌한 적에게 300% 데미지";
-        }
-        else if (level == 7)
-        {
-            DamageRate = 3f;
-            coolTime = 5;
-        }
-        else
-        {
-            Debug.Log("Already Max or Min");
-        }
-        timer = coolTime;
+        activated = true;
+        yield return new WaitForSeconds(coolTime);
+        activated = false;
+        GenerateShield();
     }
+
+    private void GenerateShield()
+    {
+        ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_Shield, transform.position, transform.rotation);
+        isShieldOn = true;
+    }
+
+
+    protected override void LevelSet(int level)
+    {
+        base.LevelSet(level);
+
+        switch (level)
+        {
+            case 1:
+                damageRate = 1f;
+                coolTime = 20;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<쉴드>\n재생성 3초 감소";
+                break;
+            case 2:
+                damageRate = 1f;
+                coolTime = 17;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<쉴드>\n재생성 3초 감소";
+                break;
+            case 3:
+                damageRate = 1f;
+                coolTime = 14;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<쉴드>\n충돌한 적에게 150% 데미지";
+                break;
+            case 4:
+                damageRate = 1.5f;
+                coolTime = 14;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<쉴드>\n재생성 3초 감소";
+                break;
+            case 5:
+                damageRate = 1.5f;
+                coolTime = 11;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<쉴드>\n재생성 3초 감소";
+                break;
+            case 6:
+                damageRate = 1.5f;
+                coolTime = 8;
+                transform.GetComponent<SkillInterface>().skillIntro =
+                    "<쉴드>\n충돌한 적에게 300% 데미지";
+                break;
+            case 7:
+                damageRate = 3f;
+                coolTime = 5;
+                break;
+            default:
+                Debug.Log("Already Max or Min");
+                break;
+        }
+    }
+
 }

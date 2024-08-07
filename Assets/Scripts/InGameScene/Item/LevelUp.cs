@@ -23,7 +23,6 @@ public class LevelUp : ItemBasic
         if (collision.gameObject.CompareTag("Player"))
         {
             playerExp.LevelUP();
-            Destroy(gameObject);
         }
     }
 }

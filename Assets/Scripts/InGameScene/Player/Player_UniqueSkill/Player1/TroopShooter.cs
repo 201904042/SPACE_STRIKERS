@@ -42,7 +42,7 @@ public class TroopShooter : MonoBehaviour
     void Fire()
     {
         Vector2 fire_direction = shooter_Transform.up;
-        GameObject bullet = Instantiate(bulletobj, transform.position, transform.rotation);
+        GameObject bullet = ObjectPool.poolInstance.GetProj(ProjType.Player_Bullet, transform.position, transform.rotation);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = fire_direction * bulletSpeed;
     }

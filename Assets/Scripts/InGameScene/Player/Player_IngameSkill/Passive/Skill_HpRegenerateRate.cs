@@ -39,9 +39,9 @@ public class Skill_HpRegenerateRate : Ingame_Passive
         if (isActive && !playerStat.isHitted)
         {
             timer -= Time.deltaTime;
-            if(timer <= 0 && playerStat.cur_hp < playerStat.hp)
+            if(timer <= 0 && playerStat.curHp < playerStat.maxHp)
             {
-                playerStat.cur_hp = playerStat.cur_hp + playerStat.hp * (increaseRate);
+                playerStat.curHp = playerStat.curHp + playerStat.maxHp * (increaseRate);
                 timer = generateTime;
             }
            

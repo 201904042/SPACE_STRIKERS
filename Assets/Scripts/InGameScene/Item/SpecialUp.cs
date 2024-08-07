@@ -22,7 +22,6 @@ public class SpecialUp : ItemBasic
         if (collision.gameObject.CompareTag("Player"))
         {
             playerSpecial.specialCount++;
-            Destroy(gameObject);
         }
     }
 }

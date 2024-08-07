@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    
     private PlayerJsonReader playerData;
+
     [Header("기본 정보")]
     public int curPlayerID;
     public int level;
@@ -17,9 +17,8 @@ public class PlayerStat : MonoBehaviour
     public float defence;
     public float moveSpeed;
     public float attackSpeed;
-    public float hp;
-
-    public float cur_hp;
+    public float maxHp;
+    public float curHp;
 
     [Header("초기스텟(기본+파츠스텟+기체레벨스텟)")]
     private float initDamage; //추가스텟이 적용되지 않은 기본의 스텟 변수(기체 레벨 추가스텟 + 파츠 레벨이 적용됨)
@@ -39,11 +38,11 @@ public class PlayerStat : MonoBehaviour
     public bool isShootable;
     public bool isHitted;
 
-    private PlayerControl p_control;
+    private PlayerControl playerController;
 
     private void Awake()
     {
-        p_control = GameObject.Find("Player").GetComponent<PlayerControl>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerControl>();
         playerData = GameObject.Find("DataManager").GetComponent<PlayerJsonReader>();
         isFirstSetDone = false;
         isShootable = false;
@@ -51,6 +50,7 @@ public class PlayerStat : MonoBehaviour
         curPlayerID =1;
         SetStat(curPlayerID);
     }
+
     private void Update()
     {
         if (GameManager.gameInstance.isBattleStart)
@@ -58,13 +58,14 @@ public class PlayerStat : MonoBehaviour
             isShootable = GameManager.gameInstance.isBattleStart;
         }
     }
-    public void SetStat(int cur_id)
+    public void SetStat(int playerId)
     {
-        PlayerSet(cur_id);
+        PlayerSet(playerId);
 
-        hp = initHp;
-        cur_hp = hp;
+        maxHp = initHp;
+        curHp = maxHp;
 
+        //각 스텟의 증가율 : 패시브 스킬이나 아이템적용 등으로 가변
         damageIncreaseRate = 1;
         defenceIncreaseRate = 1;
         moveSpeedIncreaseRate = 1;
@@ -74,6 +75,9 @@ public class PlayerStat : MonoBehaviour
         ApplyStat();
     }
 
+    /// <summary>
+    /// 플레이어 스텟 데이터에서 해당 id의 플레이어의  초기 스텟을 설정
+    /// </summary>
     public void PlayerSet(int id)
     {
         foreach (var player in playerData.PlayerList.player)
@@ -90,6 +94,9 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 초기스텟에 증가율을 곱하여 다른 클래스에 공유될 변수 저장.
+    /// </summary>
     public void ApplyStat()
     {
         damage = initDamage * damageIncreaseRate;
@@ -98,16 +105,19 @@ public class PlayerStat : MonoBehaviour
         attackSpeed = initAttackSpeed * attackSpeedIncreaseRate;
     }
 
-    //플레이어의 가변스텟 변화
+    /// <summary>
+    /// 플레이어가 데미지를 받을 경우
+    /// </summary>
     public void PlayerDamaged(float damage, GameObject attackObj)
     {
-        if (!p_control.isInvincible)
+        if (!playerController.isInvincible)
         {
             isHitted = true;
-            float applyDamage = damage * (1 - (defence / 100));
-            cur_hp -= applyDamage;
+            float applyDamage = damage * (1 - (0.01f * defence));
+
+            curHp -= applyDamage;
             Debug.Log(attackObj.name + " 에 의해 " + applyDamage + " 의 데미지를 입음");
-            p_control.PlayerAttacked(attackObj); //넉백 및 무적 부여
+            playerController.PlayerDamagedAction(attackObj); //넉백 및 무적 부여
         }
     }
 }

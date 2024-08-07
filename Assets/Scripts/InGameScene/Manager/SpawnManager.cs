@@ -22,6 +22,8 @@ public class SpawnManager : MonoBehaviour
     public float maxSpawnDelay;
     public float curSpawnDelay;
 
+    public List<GameObject> activeEnemyList;
+
     private void Awake()
     {
         if (spawnInstance == null)
@@ -59,19 +61,18 @@ public class SpawnManager : MonoBehaviour
     {
         if (StageManager.stageInstance.stage == 0)
         {
-            ObjectPool.poolInstance.GetEnemyPool(0, new Vector3(-2f, 2, 0),Quaternion.identity);
-            ObjectPool.poolInstance.GetEnemyPool(0, new Vector3(0f, 2, 0), Quaternion.identity);
-            ObjectPool.poolInstance.GetEnemyPool(0, new Vector3(2f, 2, 0), Quaternion.identity);
+            ObjectPool.poolInstance.GetEnemy(0, new Vector3(-2f, 2, 0),Quaternion.identity);
+            ObjectPool.poolInstance.GetEnemy(0, new Vector3(0f, 2, 0), Quaternion.identity);
+            ObjectPool.poolInstance.GetEnemy(0, new Vector3(2f, 2, 0), Quaternion.identity);
         }
         else if (StageManager.stageInstance.stage >= 1)
         {
-            Debug.Log("커먼 소환");
             int enemyId = SelectSpawnEnemy();
 
             Transform selectedSpawnZone = spawnZoneY; //일단은 스폰존 고정. 기준스폰을 랜덤으로하는 메서드 첨부할것
             Vector2 spawnPosition= new Vector2(Random.Range(-2.5f, 2.5f), selectedSpawnZone.position.y);
 
-            ObjectPool.poolInstance.GetEnemyPool(2, spawnPosition, selectedSpawnZone.rotation);
+            ObjectPool.poolInstance.GetEnemy(enemyId, spawnPosition, selectedSpawnZone.rotation);
         }
     }
 

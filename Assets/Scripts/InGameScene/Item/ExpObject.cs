@@ -6,13 +6,12 @@ using UnityEngine;
 public class Exp_object : MonoBehaviour
 {
     GameObject player;
-    private float exp;
+    private float expAmount;
     private float expSpeed;
     private void Awake()
     {
         player = GameObject.Find("Player");
-        
-        exp = 1f;
+        expAmount = 1f;
         expSpeed = 5f;
     }
 
@@ -32,8 +31,8 @@ public class Exp_object : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<PlayerInGameExp>().curExp += exp;
-            Destroy(gameObject);
+            collision.GetComponent<PlayerInGameExp>().ExpGet += expAmount;
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
 }

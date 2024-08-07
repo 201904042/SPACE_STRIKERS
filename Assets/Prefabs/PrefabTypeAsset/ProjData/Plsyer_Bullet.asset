@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6c6e70ae01a8640be457f3ee8ec6a7, type: 3}
+  m_Name: Plsyer_Bullet
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6315280985791338441, guid: 45b6cdea3444ac24fa395e3db4d25535, type: 3}
+  projType: 6

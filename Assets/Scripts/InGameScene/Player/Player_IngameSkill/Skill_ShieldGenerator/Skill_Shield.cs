@@ -7,7 +7,7 @@ public class Skill_Shield : MonoBehaviour
     GameObject player;
     private PlayerControl playerControl;
     private PlayerStat playerStat;
-    private Skill_ShieldGenerator skillGenerator;
+    private GameObject shieldGenerator;
     private float shieldDamage;
     public float curDamagerate;
     private bool isFirstSet;
@@ -17,15 +17,29 @@ public class Skill_Shield : MonoBehaviour
         player = GameObject.Find("Player");
         playerStat = player.GetComponent<PlayerStat>();
         playerControl = player.GetComponent<PlayerControl>();
-        skillGenerator = gameObject.GetComponentInParent<Skill_ShieldGenerator>();
+        shieldGenerator = GameObject.Find("skill_shieldGenerator");
+        transform.SetParent(shieldGenerator.transform);
     }
+
+    private void OnEnable()
+    {
+        Init();
+
+    }
+
+    private void Init()
+    {
+        isFirstSet = false;
+    }
+
 
     private void Update()
     {
-        if (!isFirstSet || curDamagerate != skillGenerator.DamageRate)
+        
+        if (!isFirstSet || curDamagerate != shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate)
         {
-            shieldDamage = playerStat.damage * skillGenerator.DamageRate;
-            curDamagerate = skillGenerator.DamageRate;
+            shieldDamage = playerStat.damage * shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
+            curDamagerate = shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
             isFirstSet = true;
         }
     }
@@ -38,9 +52,10 @@ public class Skill_Shield : MonoBehaviour
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(shieldDamage, gameObject);
             }
-            playerControl.player_push(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
-            skillGenerator.isShieldOn = false;
-            Destroy(gameObject);
-        }
+
+            playerControl.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+            shieldGenerator.GetComponent<Skill_ShieldGenerator>().isShieldOn = false;
+            ObjectPool.poolInstance.ReleasePool(gameObject);
+        }   
     }
 }

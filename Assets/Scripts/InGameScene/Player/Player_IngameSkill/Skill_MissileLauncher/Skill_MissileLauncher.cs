@@ -9,119 +9,126 @@ public class Skill_MissileLauncher : Ingame_Active
 {
     [Header("미사일런처 고유 스텟")]
     public float explosionRange;
-    public bool isLevelUp;
+    
 
     protected override void Awake()
     {
         base.Awake();
-        skillProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_missile.prefab");
-        DamageRate = 1.5f;
+        
+        damageRate = 1.5f;
         coolTime = 3;
-        timer = coolTime;
         projNum = 1;
-
         explosionRange = 1.0f;
         isLevelUp = false;
-
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        if (level != transform.GetComponent<SkillInterface>().level)
+        Init();
+    }
+
+
+    protected override void Init()
+    {
+        base.Init();
+        level = skillInterface.level;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (isLevelUp)
         {
-            level = transform.GetComponent<SkillInterface>().level;
             LevelSet(level);
         }
-        timer -= Time.deltaTime;
-        if(timer <= 0)
-        {
-            FindEnemyWithTag();
-            if(enemies.Length == 0)
-            {
-                return;
-            }
-            for (int i = 0; i < projNum; i++)
-            {
-                Vector3 randx_pos = new Vector3(Random.Range(-0.1f, 0.1f), 0, 0);
-                GameObject target = enemies[Random.Range(0, enemies.Length)];
-                Vector3 direction = (target.transform.position - transform.position+ randx_pos).normalized;
-                GameObject missile = Instantiate(skillProj, transform.position+ randx_pos, Quaternion.identity);
-                missile.GetComponent<skill_Missile>().explosionRange = explosionRange;
-                missile.GetComponent<skill_Missile>().missileDamageRate = DamageRate;
-                missile.transform.up = direction;
 
-            }
-            timer = coolTime;
+        if (!activated && SpawnManager.spawnInstance.activeEnemyList.Count != 0)
+        {
+            StartCoroutine(ActiveSkillInDelay(coolTime));
         }
     }
 
-    void LevelSet(int level)
+    private IEnumerator ActiveSkillInDelay(float coolTime)
     {
-        if (level == 1)
+        activated = true;
+        for (int i = 0; i < projNum; i++)
         {
-            DamageRate = 1.5f;
-            coolTime = 3;
-            projNum = 1;
-            explosionRange = 1.0f;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<미사일런쳐>\n미사일 수 1개 증가";
+            Vector3 randx_pos = new Vector3(Random.Range(-0.1f, 0.1f), 0, 0);
+            GameObject target = SpawnManager.spawnInstance.activeEnemyList[Random.Range(0, SpawnManager.spawnInstance.activeEnemyList.Count)];
+            Vector3 direction = (target.transform.position - transform.position + randx_pos).normalized;
+            GameObject missile = ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_Missile, transform.position + randx_pos, Quaternion.identity);
+            
+            missile.transform.up = direction;
         }
-        else if (level == 2)
+        yield return new WaitForSeconds(coolTime);
+        activated = false;
+    }
+
+    protected override void LevelSet(int level)
+    {
+        base.LevelSet(level);
+        switch (level)
         {
-            DamageRate = 1.5f;
-            coolTime = 3;
-            projNum = 2;
-            explosionRange = 1.0f;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<미사일런쳐>\n데미지 계수 20% 증가";
+            case 1:
+                damageRate = 1.5f;
+                coolTime = 3;
+                projNum = 1;
+                explosionRange = 1.0f;
+                skillInterface.skillIntro =
+                    "<미사일런쳐>\n미사일 수 1개 증가";
+                break;
+            case 2:
+                damageRate = 1.5f;
+                coolTime = 3;
+                projNum = 2;
+                explosionRange = 1.0f;
+                skillInterface.skillIntro =
+                    "<미사일런쳐>\n데미지 계수 20% 증가";
+                break;
+            case 3:
+                damageRate = 1.7f;
+                coolTime = 3;
+                projNum = 2;
+                explosionRange = 1.0f;
+                skillInterface.skillIntro =
+                    "<미사일런쳐>\n쿨타임 1초 감소";
+                break;
+            case 4:
+                damageRate = 1.7f;
+                coolTime = 2;
+                projNum = 2;
+                explosionRange = 1.0f;
+                skillInterface.skillIntro =
+                    "<미사일런쳐>\n미사일 수 2개 증가";
+                break;
+            case 5:
+                damageRate = 1.7f;
+                coolTime = 2;
+                projNum = 4;
+                explosionRange = 1.0f;
+                skillInterface.skillIntro =
+                    "<미사일런쳐>\n쿨타임 1초 감소\n데미지 계수 30% 증가";
+                break;
+            case 6:
+                damageRate = 2f;
+                coolTime = 1;
+                projNum = 4;
+                explosionRange = 1.0f;
+                skillInterface.skillIntro =
+                    "<미사일런쳐>\n폭발범위 50% 증가\n데미지 계수 50%증가\n미사일 수 1개 증가 ";
+                break;
+            case 7:
+                damageRate = 2.5f;
+                coolTime = 1;
+                projNum = 5;
+                explosionRange = 1.5f;
+
+                break;
+            default:
+                Debug.Log("레벨이 올바르지 않습니다.");
+                break;
         }
-        else if (level == 3)
-        {
-            DamageRate = 1.7f;
-            coolTime = 3;
-            projNum = 2;
-            explosionRange = 1.0f;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<미사일런쳐>\n쿨타임 1초 감소";
-        }
-        else if (level == 4)
-        {
-            DamageRate = 1.7f;
-            coolTime = 2;
-            projNum = 2;
-            explosionRange = 1.0f;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<미사일런쳐>\n미사일 수 2개 증가";
-        }
-        else if (level == 5)
-        {
-            DamageRate = 1.7f;
-            coolTime = 2;
-            projNum = 4;
-            explosionRange = 1.0f;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<미사일런쳐>\n쿨타임 1초 감소\n데미지 계수 30% 증가";
-        }
-        else if (level == 6)
-        {
-            DamageRate = 2f;
-            coolTime = 1;
-            projNum = 4;
-            explosionRange = 1.0f;
-            transform.GetComponent<SkillInterface>().skillIntro =
-                "<미사일런쳐>\n폭발범위 50% 증가\n데미지 계수 50%증가\n미사일 수 1개 증가 ";
-        }
-        else if (level == 7)
-        {
-            DamageRate = 2.5f;
-            coolTime = 1;
-            projNum = 5;
-            explosionRange = 1.5f;
-        }
-        else
-        {
-            Debug.Log("Already Max or Min");
-        }
+        isLevelUp =false;
     }
 }

@@ -9,7 +9,9 @@ public class Skill_ChargeShot : PlayerShoot
 
     private float chargeShotDamage;
     private float chargeShotSpeed;
-    private bool hasHit;
+
+    private List<GameObject> hittedList;
+    private Skill_ChargeShotLauncher launcherScr;
 
     protected override void Awake()
     {
@@ -18,31 +20,44 @@ public class Skill_ChargeShot : PlayerShoot
         hasHit = false;
     }
 
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        hittedList = new List<GameObject>();
+        launcher = GameObject.Find("skill_ChargeShotLauncher");
+        launcherScr = launcher.GetComponent<Skill_ChargeShotLauncher>();
+        isPenetrate = launcherScr.isPenetrate;
+        damageRate = launcherScr.damageRate;
+
+        chargeShotDamage = playerStat.damage * damageRate;
+    }
+
+
     private void Update()
     {
-        if (!isFirstSet)
-        {
-            chargeShotDamage = playerStat.damage * damageRate;
-            isFirstSet = true;
-        }
         transform.position += transform.up * chargeShotSpeed * Time.deltaTime;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            if (hasHit && !isPenetrate)
-            {
-                return;
-            }
             if (collision.GetComponent<EnemyObject>() != null)
             {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(chargeShotDamage, gameObject);
-                hasHit = true;
+                if (hittedList.Contains(collision.gameObject) == false)
+                {
+                    collision.GetComponent<EnemyObject>().EnemyDamaged(chargeShotDamage, gameObject);
+                    hittedList.Add(collision.gameObject);
+                }
             }
             if (!isPenetrate)
             {
-                Destroy(gameObject);
+                ObjectPool.poolInstance.ReleasePool(gameObject);
             }
         }
     }

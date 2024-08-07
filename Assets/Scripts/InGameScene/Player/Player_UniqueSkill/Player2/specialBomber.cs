@@ -49,7 +49,7 @@ public class SpecialBomber : MonoBehaviour
             .GetComponent<ExplosionRangeOfSpecialBomber>();
         range.damage = damage;
         range.level = level;
-        Destroy(gameObject);
+        ObjectPool.poolInstance.ReleasePool(gameObject);
     }
 
     bool IsVisibleFrom(Camera camera) //객체가 화면 안에 있는가?

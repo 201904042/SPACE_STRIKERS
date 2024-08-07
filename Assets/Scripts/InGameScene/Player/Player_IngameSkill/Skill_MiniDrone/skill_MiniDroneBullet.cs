@@ -16,11 +16,23 @@ public class skill_MiniDroneBullet : PlayerShoot
         speed = 10f;
     }
 
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        hashit = false;
+    }
+
+
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (hashit)
@@ -35,7 +47,7 @@ public class skill_MiniDroneBullet : PlayerShoot
             }
 
             hashit = true;
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
 }

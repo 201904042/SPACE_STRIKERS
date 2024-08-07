@@ -36,7 +36,7 @@ public class PlayerMissileLauncher : LauncherStat
     protected override void Fire()
     {
         base.Fire();
-        GameObject missile = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Player_Missile, transform.position, transform.rotation);
+        GameObject missile = ObjectPool.poolInstance.GetProj(ProjType.Player_Missile, transform.position, transform.rotation);
         Rigidbody2D rigid = missile.GetComponent<Rigidbody2D>();
         rigid.AddForce(fireDirection * missileSpeed, ForceMode2D.Impulse);
     }

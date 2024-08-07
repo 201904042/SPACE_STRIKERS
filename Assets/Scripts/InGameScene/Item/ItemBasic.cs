@@ -25,7 +25,7 @@ public class ItemBasic : MonoBehaviour
         liveTime -= Time.deltaTime;
         if (liveTime < 0)
         {
-            Destroy(gameObject);
+            ObjectPool.poolInstance.ReleasePool(gameObject);
         }
     }
     void ApplyRandomForce()
@@ -37,6 +37,10 @@ public class ItemBasic : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            ObjectPool.poolInstance.ReleasePool(gameObject);
+        }
         if (collision.gameObject.CompareTag("Border"))
         {
             if(collision.gameObject.name=="Top"|| collision.gameObject.name == "Bottom")

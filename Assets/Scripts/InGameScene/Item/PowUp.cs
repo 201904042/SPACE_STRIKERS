@@ -23,7 +23,6 @@ public class PowUp : ItemBasic
         if (collision.gameObject.CompareTag("Player"))
         {
             PowUP();
-            Destroy(gameObject);
         }
     }
     void PowUP()

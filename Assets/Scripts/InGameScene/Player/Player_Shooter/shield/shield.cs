@@ -100,7 +100,7 @@ public class Shield : MonoBehaviour
                 {
                     collision.GetComponent<EnemyObject>().EnemyDamaged(shieldDamage,gameObject);
                 }
-                playerControlScript.player_push(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+                playerControlScript.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
 
                 shieldTimer = 0; // 부딫혔다면 쉴드 타이머 초기화
                 shieldCurNum -= 1;

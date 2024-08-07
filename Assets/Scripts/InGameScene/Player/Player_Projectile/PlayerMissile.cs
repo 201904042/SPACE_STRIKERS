@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMissile : PlayerShoot
 {
-    private bool hashit = false;
     public GameObject splashColliderObject;
 
     [Header("기본미사일 스텟")]
@@ -27,11 +26,24 @@ public class PlayerMissile : PlayerShoot
 
         missileDamage = playerStatDamage * missileDamageRate;
     }
-  
+
+    protected override void OnEnable()
+    {
+        Init();
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+
+    }
+
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(hashit)
+        if(hasHit)
         {
             return;
         }
@@ -39,13 +51,13 @@ public class PlayerMissile : PlayerShoot
         {
             //임시로 적을 맞추면 데미지를 합산
             //적을 만들면 적의 hp를 감소하게끔 바꾸기
-            hashit = true;
+            hasHit = true;
             if (collision.GetComponent<EnemyObject>() != null)
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
             }
             
-            ExplosionSplashDamage splashDamage = ObjectPool.poolInstance.GetProjPool(ProjPoolType.Player_SplashRange, transform.position, transform.rotation).GetComponent<ExplosionSplashDamage>();
+            ExplosionSplashDamage splashDamage = ObjectPool.poolInstance.GetProj(ProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<ExplosionSplashDamage>();
             splashDamage.explosionRange = explosionRange;
             splashDamage.missileDamage = missileDamage;
             ObjectPool.poolInstance.ReleasePool(gameObject);

@@ -6,27 +6,17 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.MaterialProperty;
 
-public enum PoolType
-{
-    None,
-    Proj,
-    Enemy
-}
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool poolInstance;
-    public List<PrefabTypeAsset> prefabAsset;
+    public List<EnemyData> enemyDataList;
+    public List<SkillProjData> SkillDataList;
+    public List<ProjData> ProjDataList;
 
     // Dictionary to hold lists of pooled objects by enemy type
-    public Dictionary<EnemyPoolType, List<GameObject>> enemyPoolList = new Dictionary<EnemyPoolType, List<GameObject>>();
-    public Dictionary<ProjPoolType, List<GameObject>> projPoolList = new Dictionary<ProjPoolType, List<GameObject>>();
-    public GameObject sandBag;
-    public GameObject enemy_Common;
-    public GameObject enemy_Elite;
-    public GameObject enemy_MiddleBoss;
-    public GameObject enemy_Boss;
-
-    public int basicPoolSize = 1;
+    public Dictionary<EnemyType, List<GameObject>> enemyDic = new Dictionary<EnemyType, List<GameObject>>();
+    public Dictionary<SkillProjType, List<GameObject>> skillDic = new Dictionary<SkillProjType, List<GameObject>>();
+    public Dictionary<ProjType, List<GameObject>> projDic = new Dictionary<ProjType, List<GameObject>>();
 
     private void Awake()
     {
@@ -43,47 +33,28 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         Init();
-        BasicPoolObj();
     }
 
     private void Init()
     {
         //Dictionary에 새 List 생성
-        foreach (EnemyPoolType type in System.Enum.GetValues(typeof(EnemyPoolType)))
+        foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
         {
-            enemyPoolList[type] = new List<GameObject>();
+            enemyDic[type] = new List<GameObject>();
         }
-        foreach (ProjPoolType type in System.Enum.GetValues(typeof(ProjPoolType)))
+        foreach (SkillProjType type in System.Enum.GetValues(typeof(SkillProjType)))
         {
-            projPoolList[type] = new List<GameObject>();
+            skillDic[type] = new List<GameObject>();
+        }
+        foreach (ProjType type in System.Enum.GetValues(typeof(ProjType)))
+        {
+            projDic[type] = new List<GameObject>();
         }
     }
 
-    public void BasicPoolObj()
+    public GameObject GetSkill(SkillProjType skillType, Vector2 position, Quaternion rotation)
     {
-        for (int i = 0; i < basicPoolSize * 5; i++)
-        {
-            //CreatePooledObj(EnemyPoolType.Common, enemy_Common);
-        }
-        for (int i = 0; i < basicPoolSize * 3; i++)
-        {
-            //CreatePooledObj(EnemyPoolType.Elite, enemy_Elite);
-        }
-        //CreatePooledObj(EnemyPoolType.MidBoss, enemy_MiddleBoss);
-        //CreatePooledObj(EnemyPoolType.Boss, enemy_Boss);
-    }
-
-    private void CreatePooledObj(EnemyPoolType EnemyPoolType, GameObject gameObject)
-    {
-        //오브젝트를 생성하고 비활성화 한다음 해당 타입의 리스트에 추가
-        GameObject newObject = Instantiate(gameObject);
-        newObject.SetActive(false);
-        enemyPoolList[EnemyPoolType].Add(newObject);
-    }
-
-    public GameObject GetProjPool(ProjPoolType projType, Vector2 position, Quaternion rotation)
-    {
-        List<GameObject> objectList = projPoolList[projType]; //해당 타입의 리스트를 지정
+        List<GameObject> objectList = skillDic[skillType]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
             if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
@@ -96,110 +67,174 @@ public class ObjectPool : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach(PrefabTypeAsset prefabType in prefabAsset)
+        foreach(SkillProjData skillData in SkillDataList)
         {
-            if(projType == prefabType.projPoolType)
+            if(skillType == skillData.skillType)
             {
-                GameObject newObject = Instantiate(prefabType.prefab);
+                GameObject newObject = Instantiate(skillData.prefab);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
-                projPoolList[projType].Add(newObject);
+                skillDic[skillType].Add(newObject);
+                Debug.Log($"{newObject} 생성");
                 return newObject;
             }
-            else
+        }
+        return null;
+    }
+
+    public GameObject GetProj(ProjType projType, Vector2 position, Quaternion rotation)
+    {
+        List<GameObject> objectList = projDic[projType]; //해당 타입의 리스트를 지정
+        foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
+        {
+            if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
             {
-                Debug.LogError("해당 타입의 projTypeAsset이 존재하지 않습니다");
+                obj.transform.position = position;
+                obj.transform.rotation = rotation;
+                obj.SetActive(true);
+                Debug.Log($"{obj} 활성화");
+                return obj;
+            }
+        }
+
+        // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
+        foreach (ProjData projData in ProjDataList)
+        {
+            if (projType == projData.projType)
+            {
+                GameObject newObject = Instantiate(projData.prefab);
+                newObject.transform.position = position;
+                newObject.transform.rotation = rotation;
+                newObject.SetActive(true);
+                projDic[projType].Add(newObject);
+                Debug.Log($"{newObject} 생성");
+                return newObject;
             }
         }
         return null;
     }
 
-    public GameObject GetEnemyPool(int enemyId, Vector2 position, Quaternion rotation)
+    public GameObject GetEnemy(int enemyId, Vector2 position, Quaternion rotation)
     {
-        EnemyPoolType EnemyPoolType;
-        if (CheckExistInDictionary(enemyId, out EnemyPoolType))
+        EnemyType enemyType;
+        if (CheckEnemyDic(enemyId, out enemyType))
         {
-            return ActivePooledEnemy(EnemyPoolType,enemyId, position, rotation);
+            return ActivePooledEnemy(enemyType,enemyId, position, rotation);
         }
 
-        Debug.LogError("주어진 id에 해당하는 적이 없습니다.");
+        Debug.LogWarning("주어진 id에 해당하는 적이 없습니다.");
         return null;
     }
 
-    private bool CheckExistInDictionary(int enemyId, out EnemyPoolType EnemyPoolType)
+    private bool CheckEnemyDic(int enemyId, out EnemyType enemyType)
     {
         if (enemyId == 0)
         {
-            EnemyPoolType = EnemyPoolType.SandBag;
+            enemyType = EnemyType.SandBag;
             return true;
         }
         else if (enemyId > 0 && enemyId < 100)
         {
-            EnemyPoolType = EnemyPoolType.Common;
+            enemyType = EnemyType.Common;
             return true;
         }
         else if (enemyId >= 100 && enemyId < 200)
         {
-            EnemyPoolType = EnemyPoolType.Elite;
+            enemyType = EnemyType.Elite;
             return true;
         }
         else if (enemyId >= 200 && enemyId < 300)
         {
-            EnemyPoolType = EnemyPoolType.MidBoss;
+            enemyType = EnemyType.MidBoss;
             return true;
         }
         else if (enemyId >= 300 && enemyId < 400)
         {
-            EnemyPoolType = EnemyPoolType.Boss;
+            enemyType = EnemyType.Boss;
             return true;
         }
 
-        EnemyPoolType = EnemyPoolType.None;
+        enemyType = EnemyType.None;
         Debug.LogWarning("Id에 해당하는 타입이 없습니다");
         return false;
     }
 
-    public GameObject ActivePooledEnemy(EnemyPoolType EnemyPoolType, int enemyId, Vector2 position, Quaternion rotation)
+    public GameObject ActivePooledEnemy(EnemyType enemyType, int enemyId, Vector2 position, Quaternion rotation)
     {
-        List<GameObject> objectList = enemyPoolList[EnemyPoolType]; //해당 타입의 리스트를 지정
+        List<GameObject> objectList = enemyDic[enemyType]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
             if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
             {
                 obj.transform.position = position;
                 obj.transform.rotation = rotation;
-                obj.GetComponent<EnemyObject>().enemyStat.enemyId = enemyId;
+                if(enemyType == EnemyType.Common)
+                {
+                    obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                }
+                /* 나머지 적 작성후 반영
+                else if (enemyType == EnemyType.Elite)
+                {
+                    obj.GetComponent<Enemy_Elite>().enemyStat.enemyId = enemyId;
+                }
+                else if (enemyType == EnemyType.Common)
+                {
+                    obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                }
+                else if (enemyType == EnemyType.Common)
+                {
+                    obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                }*/
+                Debug.Log($"{obj} 활성화");
                 obj.SetActive(true);
+                SpawnManager.spawnInstance.activeEnemyList.Add(obj);
                 return obj;
             }
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach (PrefabTypeAsset prefabType in prefabAsset)
+        foreach (EnemyData enemyData in enemyDataList)
         {
-            if (EnemyPoolType == prefabType.enemyPoolType)
+            if (enemyType == enemyData.enemyType)
             {
-                GameObject newObject = Instantiate(prefabType.prefab);
+                GameObject newObject = Instantiate(enemyData.prefab);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
-                newObject.GetComponent<EnemyObject>().curEnemyId = enemyId;
+                if (enemyType == EnemyType.Common)
+                {
+                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                }
+                /* 나머지 적 작성후 반영
+                else if (enemyType == EnemyType.Elite)
+                {
+                    newObject.GetComponent<Enemy_Elite>().enemyStat.enemyId = enemyId;
+                }
+                else if (enemyType == EnemyType.Common)
+                {
+                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                }
+                else if (enemyType == EnemyType.Common)
+                {
+                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                }*/
                 newObject.SetActive(true);
-                enemyPoolList[EnemyPoolType].Add(newObject);
+                enemyDic[enemyType].Add(newObject);
+                Debug.Log($"{newObject} 생성");
+                SpawnManager.spawnInstance.activeEnemyList.Add(newObject);
                 return newObject;
             }
-            else
-            {
-                Debug.Log("해당 타입의 projTypeAsset이 존재하지 않습니다");
-            }
         }
-        return null;
-        
-        
+        return null; 
     }
 
     public void ReleasePool(GameObject gameObject)
     {
+        if (SpawnManager.spawnInstance.activeEnemyList.Contains(gameObject))
+        {
+            SpawnManager.spawnInstance.activeEnemyList.Remove(gameObject);
+        }
+        
         gameObject.transform.position = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
         gameObject.SetActive(false);
@@ -208,6 +243,7 @@ public class ObjectPool : MonoBehaviour
     //필요없는 오브젝트 제거
     public void DestroyPool(GameObject gameObject)
     {
+        
         Destroy(gameObject);
     }
 

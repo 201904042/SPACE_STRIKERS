@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1550097197906786086
 Transform:
   m_ObjectHideFlags: 0
@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8446635161503685281}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &668337666372984117
 MonoBehaviour:
@@ -46,14 +46,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillProj: {fileID: 0}
-  enemies: []
   level: 0
   Stat_Damage: 0
-  DamageRate: 0
+  damageRate: 0
   coolTime: 0
   projNum: 0
-  timer: 0
   isLevelUp: 0
+  activated: 0
+  duration: 0
+  range: 0
+  isShootable: 0
 --- !u!114 &5551297556895701145
 MonoBehaviour:
   m_ObjectHideFlags: 0

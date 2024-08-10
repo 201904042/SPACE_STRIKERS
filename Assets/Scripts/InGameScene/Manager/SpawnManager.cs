@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 
 [System.Serializable]
@@ -95,8 +96,52 @@ public class SpawnManager : MonoBehaviour
                 {
                     new Vector2(0, mainSpawnZone.position.y),
                 }
+            },
+            //사이드 스폰존
+            new SpawnPattern
+            {
+                enemyId = 2,
+                amount = 3,
+                spawnZone = sideSpawnZoneL,
+                positions = new Vector2[]
+                {
+                    new Vector2(sideSpawnZoneL.position.x-1, sideSpawnZoneL.position.y),
+                    new Vector2(sideSpawnZoneL.position.x, sideSpawnZoneL.position.y),
+                    new Vector2(sideSpawnZoneL.position.x+1, sideSpawnZoneL.position.y),
+                }
+            },
+             new SpawnPattern
+            {
+                enemyId = 2,
+                amount = 3,
+                spawnZone = sideSpawnZoneR,
+                positions = new Vector2[]
+                {
+                    new Vector2(sideSpawnZoneR.position.x-1, sideSpawnZoneR.position.y),
+                    new Vector2(sideSpawnZoneR.position.x, sideSpawnZoneR.position.y),
+                    new Vector2(sideSpawnZoneR.position.x+1, sideSpawnZoneR.position.y),
+                }
+            },
+             new SpawnPattern
+            {
+                enemyId = 12,
+                amount = 1,
+                spawnZone = sideSpawnZoneL,
+                positions = new Vector2[]
+                {
+                    new Vector2(sideSpawnZoneL.position.x, sideSpawnZoneL.position.y),
+                }
+            },
+             new SpawnPattern
+            {
+                enemyId = 12,
+                amount = 1,
+                spawnZone = sideSpawnZoneR,
+                positions = new Vector2[]
+                {
+                    new Vector2(sideSpawnZoneR.position.x, sideSpawnZoneR.position.y),
+                }
             }
-
         };
 
     }

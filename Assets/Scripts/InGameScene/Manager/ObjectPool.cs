@@ -13,7 +13,11 @@ public class ObjectPool : MonoBehaviour
     public List<SkillProjData> SkillDataList;
     public List<ProjData> ProjDataList;
 
-    // Dictionary to hold lists of pooled objects by enemy type
+    public Transform projPool;
+    public Transform enemyPool;
+    public Transform skillPool;
+
+
     public Dictionary<EnemyType, List<GameObject>> enemyDic = new Dictionary<EnemyType, List<GameObject>>();
     public Dictionary<SkillProjType, List<GameObject>> skillDic = new Dictionary<SkillProjType, List<GameObject>>();
     public Dictionary<ProjType, List<GameObject>> projDic = new Dictionary<ProjType, List<GameObject>>();
@@ -72,6 +76,7 @@ public class ObjectPool : MonoBehaviour
             if(skillType == skillData.skillType)
             {
                 GameObject newObject = Instantiate(skillData.prefab);
+                newObject.transform.SetParent(skillPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -104,6 +109,7 @@ public class ObjectPool : MonoBehaviour
             if (projType == projData.projType)
             {
                 GameObject newObject = Instantiate(projData.prefab);
+                newObject.transform.SetParent(projPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -199,6 +205,7 @@ public class ObjectPool : MonoBehaviour
             if (enemyType == enemyData.enemyType)
             {
                 GameObject newObject = Instantiate(enemyData.prefab);
+                newObject.transform.SetParent(enemyPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 if (enemyType == EnemyType.Common)

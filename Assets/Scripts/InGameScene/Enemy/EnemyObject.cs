@@ -41,7 +41,6 @@ public class EnemyObject : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        //활성화 될때 id에 따라 스텟지정
         SetStat();
     }
 

@@ -29,13 +29,17 @@ public class EnemyAct : EnemyObject
     public void SingleShot(Vector3 velocity, bool split = false)
     {
         GameObject enemyProj = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
+        enemyProj.GetComponent<EnemySplitBullet>().setDamage(enemyStat.enemyDamage);
+        
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.zero;
 
         if (split)
         {
             enemyProj.GetComponent<EnemySplitBullet>().splitCount = splitCount;
+            
         }
+        
         rigid.velocity = new Vector2(velocity.x, velocity.y); //fireDirection * bulletSpeed;
     }
 
@@ -117,6 +121,7 @@ public class EnemyAct : EnemyObject
     public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
         EnemyLaser laserObject = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
+        laserObject.setDamage(enemyStat.enemyDamage);
         if (isAimtoPlayer)
         {
             Transform player = GameManager.gameInstance.myPlayer.transform;

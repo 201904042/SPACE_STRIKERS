@@ -61,9 +61,9 @@ public class skill_Missile : PlayerShoot
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
             }
 
-            ExplosionSplashDamage splashDamage = ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<ExplosionSplashDamage>();
+            ExplosionSplashDamage splashDamage = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<ExplosionSplashDamage>();
             splashDamage.SetVariable(explosionRange, missileDamage);
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 }

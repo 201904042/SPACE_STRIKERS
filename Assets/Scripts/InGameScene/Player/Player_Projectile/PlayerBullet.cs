@@ -46,7 +46,7 @@ public class PlayerBullet : PlayerShoot
             }
 
             hasHit = true;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 

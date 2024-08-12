@@ -76,12 +76,12 @@ public class Troop : MonoBehaviour
     {
         if (collision.gameObject.tag =="Enemy_Projectile")
         {
-            ObjectPool.poolInstance.ReleasePool(collision.gameObject);
+            PoolManager.poolInstance.ReleasePool(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "TroopBorder")
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
 
     }

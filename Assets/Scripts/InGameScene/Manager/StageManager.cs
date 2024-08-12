@@ -15,6 +15,7 @@ public class StageManager : MonoBehaviour
     public Item[] curStagefirstGain;
     public Item[] curStageDefaultGain;
     public Item[] curDefaultFullGain;
+    public List<int> useEnemyid;
 
     public int planet = 1;
     public int stage = 1;
@@ -36,12 +37,21 @@ public class StageManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        Init();
+    }
+
+    public void Init()
+    {
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         stage = PlayerPrefs.GetInt("ChosenStage");
         stageData = DataManager.dataInstance.GetComponent<StageJsonReader>();
-
+        useEnemyid  = new List<int>();  
         StageDataSet();
 
+        foreach(StageEnemy enemy in curStageEnemy)
+        {
+            useEnemyid.Add(enemy.enemyCode);
+        }
     }
 
     private void Start()

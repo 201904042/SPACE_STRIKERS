@@ -49,7 +49,7 @@ public class Skill_ChargeShotLauncher : Ingame_Active
         activated = true;
         for (int i = 0; i < projNum; i++)
         {
-            ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_ChageShot, 
+            PoolManager.poolInstance.GetSkill(SkillProjType.Skill_ChageShot, 
                 transform.position, Quaternion.identity);
         }
         yield return new WaitForSeconds(coolTime);

@@ -56,7 +56,7 @@ public class Skill_ShieldGenerator : Ingame_Active
 
     private void GenerateShield()
     {
-        ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_Shield, transform.position, transform.rotation);
+        PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Shield, transform.position, transform.rotation);
         isShieldOn = true;
     }
 

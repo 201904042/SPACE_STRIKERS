@@ -88,7 +88,7 @@ public class Skill_EnergyField : PlayerShoot
         else
         {
             isActive = false;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 

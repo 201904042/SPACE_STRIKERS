@@ -31,7 +31,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (collision.gameObject.tag == "BulletBorder")
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 }

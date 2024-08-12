@@ -33,6 +33,6 @@ public class PlayerHomingLauncher : LauncherStat
     protected override void Fire()
     {
         base.Fire();
-        ObjectPool.poolInstance.GetProj(ProjType.Player_Homing, transform.position, transform.rotation);
+        PoolManager.poolInstance.GetProj(ProjType.Player_Homing, transform.position, transform.rotation);
     }
 }

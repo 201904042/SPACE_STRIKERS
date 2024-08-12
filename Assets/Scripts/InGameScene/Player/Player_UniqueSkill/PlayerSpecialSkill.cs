@@ -187,7 +187,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         for (int i = 0; i < spawnNum; i++)
         {
             Vector3 SpawnPosition = new Vector3(spawnXpos + (i * space), spawnYpos, 0f);
-            ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
+            PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
                 transform.rotation);
         }
     }
@@ -195,7 +195,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void BomberSpecial()
     {
-        ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
+        PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
     }
 
     private void TankerSpecial()
@@ -206,7 +206,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         shield.ShieldColorChange();
         shield.shieldIsActive = true;
 
-        GameObject field = ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
+        GameObject field = PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
         field.transform.SetParent(transform);
 
         if (powerLevel == 1)
@@ -232,7 +232,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     private IEnumerator Bomber_End(float timer, GameObject field)
     {
         yield return new WaitForSeconds(timer);
-        ObjectPool.poolInstance.ReleasePool(field);
+        PoolManager.poolInstance.ReleasePool(field);
     }
 
     private void SplashSpecial()
@@ -259,7 +259,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         while (num!=0)
         {
-            ObjectPool.poolInstance.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
+            PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
             num--;
             yield return new WaitForSeconds(0.1f);
         }

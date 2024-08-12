@@ -16,6 +16,11 @@ public class EnemyAct : EnemyObject
         base.Awake();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -28,8 +33,8 @@ public class EnemyAct : EnemyObject
 
     public void SingleShot(Vector3 velocity, bool split = false)
     {
-        GameObject enemyProj = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
-        enemyProj.GetComponent<EnemySplitBullet>().setDamage(enemyStat.enemyDamage);
+        GameObject enemyProj = PoolManager.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
+        enemyProj.GetComponent<EnemyBullet>().setDamage(enemyStat.enemyDamage);
         
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.zero;
@@ -120,7 +125,7 @@ public class EnemyAct : EnemyObject
     //레이저 여러발일 경우의 앵글(기본 0), 조준여부
     public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
-        EnemyLaser laserObject = ObjectPool.poolInstance.GetProj(ProjType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
+        EnemyLaser laserObject = PoolManager.poolInstance.GetProj(ProjType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
         laserObject.setDamage(enemyStat.enemyDamage);
         if (isAimtoPlayer)
         {

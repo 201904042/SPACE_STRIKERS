@@ -38,7 +38,7 @@ public class Skill_EnergyFieldGenerator : Ingame_Active
             activated = false;
             if (activeField != null)
             {
-                ObjectPool.poolInstance.ReleasePool(activeField.gameObject);
+                PoolManager.poolInstance.ReleasePool(activeField.gameObject);
             }
             LevelSet(level);
         }
@@ -54,7 +54,7 @@ public class Skill_EnergyFieldGenerator : Ingame_Active
         Debug.Log("¾×Æ¼ºê");
         activated = true;
 
-        Skill_EnergyField energyField = ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_EnergyField,
+        Skill_EnergyField energyField = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_EnergyField,
                 transform.position, transform.rotation).GetComponent<Skill_EnergyField>();
         activeField = energyField.gameObject;
 

@@ -14,7 +14,7 @@ public class EnemyObject : MonoBehaviour
     public float curHp; //현재의 maxHp. 이것이 0 이되면 파괴
     public GameObject enemyHpBar;
 
-    protected EnemyJsonReader enemyList; //적들의 정보가 담긴 데이터리스트
+    protected EnemyJsonReader enemyData; //적들의 정보가 담긴 데이터리스트
     protected GameObject canvas;
     protected GameObject hpBarInstance;
     protected RectTransform hpBar;
@@ -30,11 +30,10 @@ public class EnemyObject : MonoBehaviour
     protected virtual void Awake()
     {
         canvas = GameObject.Find("Canvas");
-
+        enemyData = DataManager.dataInstance.gameObject.GetComponent<EnemyJsonReader>();
     }
-    private void Start()
+    protected virtual void Start()
     {
-        enemyList = DataManager.dataInstance.GetComponent<EnemyJsonReader>();
         HpBarSet();
         SetStat();
     }
@@ -72,7 +71,7 @@ public class EnemyObject : MonoBehaviour
 
     private void SetStat()
     {
-        foreach (Enemy enemy in enemyList.EnemyList.enemy)
+        foreach (Enemy enemy in enemyData.EnemyList.enemy)
         {
             if (enemyStat.enemyId == enemy.enemyId)
             {
@@ -101,19 +100,6 @@ public class EnemyObject : MonoBehaviour
 
     private void SetEnemySprite()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        //임시 크기지정
-        if(enemyStat.enemyGrade == "common")
-        {
-            //Common크기
-            gameObject.transform.localScale = commonScale;
-        }
-        else if(enemyStat.enemyGrade == "elite")
-        {
-            gameObject.transform.localScale = EliteScale;
-        }
-        
-
         //스프라이트 지정
 
         //아이템 드롭 여부에 따른 색 지정
@@ -131,6 +117,7 @@ public class EnemyObject : MonoBehaviour
     {
         if (hpBar != null) return;
         hpBarInstance = Instantiate(enemyHpBar, canvas.transform); //오브젝트 풀 필요없다.
+        hpBarInstance.transform.SetParent(canvas.transform.GetChild(0));
         hpBar = hpBarInstance.GetComponent<RectTransform>();
         hpSlider = hpBarInstance.GetComponent<Slider>();
         hpBar.sizeDelta = new Vector2(transform.localScale.x * 200, hpBar.sizeDelta.y);
@@ -151,7 +138,7 @@ public class EnemyObject : MonoBehaviour
     {
         for (int i = 0; i < enemyStat.enemyExpAmount; i++)
         {
-            ObjectPool.poolInstance.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
+            PoolManager.poolInstance.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
         }
     }
 
@@ -161,7 +148,7 @@ public class EnemyObject : MonoBehaviour
     public void EnemyEliminate()
     {
         hpBar.gameObject.SetActive(false);
-        ObjectPool.poolInstance.ReleasePool(gameObject);
+        PoolManager.poolInstance.ReleasePool(gameObject);
     }
 
     /// <summary>
@@ -176,21 +163,21 @@ public class EnemyObject : MonoBehaviour
             DropItem();
         }
         hpBar.gameObject.SetActive(false);
-        ObjectPool.poolInstance.ReleasePool(gameObject);
+        PoolManager.poolInstance.ReleasePool(gameObject);
     }
 
     private void DropItem()
     {
         if (GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 6)
         {
-            ObjectPool.poolInstance.GetProj(ProjType.Item_ShooterUP,transform.position, transform.rotation);
+            PoolManager.poolInstance.GetProj(ProjType.Item_ShooterUP,transform.position, transform.rotation);
         }
         else
         {
             ProjType[] randomItemList = new ProjType[] { ProjType.Item_LevelUp, ProjType.Item_PowUp, ProjType.Item_SpecialUp };
 
             int randomIndex = Random.Range(0, randomItemList.Length);
-            ObjectPool.poolInstance.GetProj(randomItemList[randomIndex],transform.position,transform.rotation);
+            PoolManager.poolInstance.GetProj(randomItemList[randomIndex],transform.position,transform.rotation);
         }
     }
     

@@ -26,6 +26,7 @@ public class SpawnManager : MonoBehaviour
     public Transform bossSpawnZone;
     public int stageEnemyAmount;
     public List<SpawnPattern> spawnPatterns;
+    public List<SpawnPattern> canSpawnList;
 
     public int ranEnemy;
 
@@ -49,6 +50,7 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnPatternSet()
     {
+        canSpawnList = new List<SpawnPattern>();
         spawnPatterns = new List<SpawnPattern>()
         {
             //메인스폰존
@@ -153,8 +155,21 @@ public class SpawnManager : MonoBehaviour
             stageEnemyAmount += enemy.enemyAmount;
         }
 
-        maxSpawnDelay = 4f;
-        curSpawnDelay = 4f;
+        CheckPossiblePattern();
+
+        maxSpawnDelay = 8f;
+        curSpawnDelay = maxSpawnDelay;
+    }
+
+    private void CheckPossiblePattern()
+    {
+        foreach(SpawnPattern pattern in spawnPatterns)
+        {
+            if (StageManager.stageInstance.useEnemyid.Contains(pattern.enemyId))
+            {
+                canSpawnList.Add(pattern);
+            }
+        }
     }
 
     public IEnumerator SpawnCheckCoroutine()
@@ -175,19 +190,19 @@ public class SpawnManager : MonoBehaviour
     {
         if (StageManager.stageInstance.stage == 0)
         {
-            ObjectPool.poolInstance.GetEnemy(0, new Vector3(-2f, 2, 0),Quaternion.identity);
-            ObjectPool.poolInstance.GetEnemy(0, new Vector3(0f, 2, 0), Quaternion.identity);
-            ObjectPool.poolInstance.GetEnemy(0, new Vector3(2f, 2, 0), Quaternion.identity);
+            PoolManager.poolInstance.GetEnemy(0, new Vector3(-2f, 2, 0),Quaternion.identity);
+            PoolManager.poolInstance.GetEnemy(0, new Vector3(0f, 2, 0), Quaternion.identity);
+            PoolManager.poolInstance.GetEnemy(0, new Vector3(2f, 2, 0), Quaternion.identity);
         }
 
         else if (StageManager.stageInstance.stage >= 1)
         {
-            int patternIndex = Random.Range(0, spawnPatterns.Count); // 랜덤으로 패턴 선택
-            SpawnPattern selectedPattern = spawnPatterns[patternIndex];
+            int patternIndex = Random.Range(0, canSpawnList.Count); // 랜덤으로 패턴 선택
+            SpawnPattern selectedPattern = canSpawnList[patternIndex];
 
             foreach (Vector2 pos in selectedPattern.positions)
             {
-                ObjectPool.poolInstance.GetEnemy(selectedPattern.enemyId, pos,selectedPattern.spawnZone.rotation);
+                PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, pos,selectedPattern.spawnZone.rotation);
             }
         }
     }

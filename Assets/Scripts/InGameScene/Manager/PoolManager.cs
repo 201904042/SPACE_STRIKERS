@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.MaterialProperty;
 
-public class ObjectPool : MonoBehaviour
+public class PoolManager : MonoBehaviour
 {
-    public static ObjectPool poolInstance;
+    public static PoolManager poolInstance;
     public List<EnemyData> enemyDataList;
     public List<SkillProjData> SkillDataList;
     public List<ProjData> ProjDataList;
@@ -186,11 +186,11 @@ public class ObjectPool : MonoBehaviour
                 /*
                 else if (enemyType == EnemyType.Common)
                 {
-                    obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                    obj.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
                 }
                 else if (enemyType == EnemyType.Common)
                 {
-                    obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                    obj.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
                 }*/
                 //Debug.Log($"{obj} È°¼ºÈ­");
                 obj.SetActive(true);
@@ -219,11 +219,11 @@ public class ObjectPool : MonoBehaviour
                 /*
                 else if (enemyType == EnemyType.Common)
                 {
-                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
                 }
                 else if (enemyType == EnemyType.Common)
                 {
-                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
+                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
                 }*/
                 newObject.SetActive(true);
                 enemyDic[enemyType].Add(newObject);

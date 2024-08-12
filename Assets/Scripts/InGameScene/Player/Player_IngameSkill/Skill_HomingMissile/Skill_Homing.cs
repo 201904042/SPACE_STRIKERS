@@ -68,7 +68,7 @@ public class Skill_Homing : PlayerShoot
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
 
     }

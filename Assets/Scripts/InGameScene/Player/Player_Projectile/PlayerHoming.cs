@@ -76,7 +76,7 @@ public class PlayerHoming : PlayerShoot
         }
         else
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 
@@ -93,7 +93,7 @@ public class PlayerHoming : PlayerShoot
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
             hasHit = true;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 }

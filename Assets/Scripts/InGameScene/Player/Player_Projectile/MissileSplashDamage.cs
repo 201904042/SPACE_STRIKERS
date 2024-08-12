@@ -24,7 +24,7 @@ public class MissileSplashDamage : MonoBehaviour
         splashTime += 0.01f;
         if (splashTime > timeDelay)
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
     

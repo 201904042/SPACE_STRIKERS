@@ -32,11 +32,11 @@ public class EnemyProjectile : MonoBehaviour
         if (collision.transform.tag == "Player")
         {
             playerStat.PlayerDamaged(damage, gameObject);
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
         if (collision.transform.tag == "BulletBorder")
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 }

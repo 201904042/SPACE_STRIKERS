@@ -136,7 +136,7 @@ public class TrackingMissile : PlayerShoot
         {
             collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
             onHit = true;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 

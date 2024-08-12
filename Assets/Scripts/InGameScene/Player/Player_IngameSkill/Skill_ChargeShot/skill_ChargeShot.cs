@@ -57,7 +57,7 @@ public class Skill_ChargeShot : PlayerShoot
             }
             if (!isPenetrate)
             {
-                ObjectPool.poolInstance.ReleasePool(gameObject);
+                PoolManager.poolInstance.ReleasePool(gameObject);
             }
         }
     }

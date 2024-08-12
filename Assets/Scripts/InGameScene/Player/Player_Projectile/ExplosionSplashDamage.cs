@@ -61,7 +61,7 @@ public class ExplosionSplashDamage : MonoBehaviour
     private IEnumerator activeTime(float time)
     {
         yield return new WaitForSeconds(time);
-        ObjectPool.poolInstance.ReleasePool(gameObject);
+        PoolManager.poolInstance.ReleasePool(gameObject);
     }
     
 

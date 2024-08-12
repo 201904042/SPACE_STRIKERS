@@ -101,7 +101,7 @@ public class skill_MiniDrone : MonoBehaviour
 
         isDroneActive = false;
 
-        ObjectPool.poolInstance.ReleasePool(gameObject);
+        PoolManager.poolInstance.ReleasePool(gameObject);
     }
 
     private IEnumerator AttackRoutine(float attackDelay)
@@ -155,7 +155,7 @@ public class skill_MiniDrone : MonoBehaviour
     private void DroneAttack()
     {
         
-        GameObject droneBullet = ObjectPool.poolInstance.GetSkill(SkillProjType.Skilll_DroneBullet, transform.position, Quaternion.identity);
+        GameObject droneBullet = PoolManager.poolInstance.GetSkill(SkillProjType.Skilll_DroneBullet, transform.position, Quaternion.identity);
         droneBullet.GetComponent<skill_MiniDroneBullet>().damage = drone_damage;
     }
 

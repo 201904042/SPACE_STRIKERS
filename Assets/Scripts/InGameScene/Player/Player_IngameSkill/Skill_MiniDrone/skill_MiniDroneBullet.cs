@@ -47,7 +47,7 @@ public class skill_MiniDroneBullet : PlayerShoot
             }
 
             hashit = true;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 }

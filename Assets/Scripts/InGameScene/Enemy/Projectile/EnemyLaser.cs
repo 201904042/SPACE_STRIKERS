@@ -97,7 +97,7 @@ public class EnemyLaser : EnemyProjectile
             }
             else
             {
-                ObjectPool.poolInstance.ReleasePool(gameObject);
+                PoolManager.poolInstance.ReleasePool(gameObject);
             }
         }
     }

@@ -63,7 +63,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
         if (activeTime <= 0)
         {
             specialScript.specialActive = false;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
 

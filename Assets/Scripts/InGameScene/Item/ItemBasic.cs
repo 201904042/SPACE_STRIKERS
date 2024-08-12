@@ -23,7 +23,7 @@ public class ItemBasic : MonoBehaviour
         liveTime -= Time.deltaTime;
         if (liveTime < 0)
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }
     void ApplyRandomForce()
@@ -37,7 +37,7 @@ public class ItemBasic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }
         if (collision.gameObject.CompareTag("Border"))
         {

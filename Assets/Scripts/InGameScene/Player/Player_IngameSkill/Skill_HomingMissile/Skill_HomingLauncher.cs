@@ -52,7 +52,7 @@ public class Skill_HomingLauncher : Ingame_Active
         for (int i = 0; i < projNum; i++)
         {
             Vector3 randx_pos = new Vector3(Random.Range(-0.1f, 0.1f), 0, 0);
-            GameObject homing = ObjectPool.poolInstance.GetSkill(SkillProjType.Skill_Homing, transform.position + randx_pos, Quaternion.identity);
+            GameObject homing = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Homing, transform.position + randx_pos, Quaternion.identity);
             homing.GetComponent<Skill_Homing>().homingDamageRate = damageRate;
 
         }

@@ -2,7 +2,7 @@
    "stage": [
       {
          "stageCode": 1,
-         "stageEnemy": [{"enemyCode": 0, "enemyAmount": 50},{"enemyCode": 1, "enemyAmount": 50}],
+         "stageEnemy": [{"enemyCode": 1, "enemyAmount": 50},{"enemyCode": 2, "enemyAmount": 50}],
          "stageFirstGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
@@ -11,8 +11,7 @@
          "stageDefaultGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 100},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
- {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
-
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
          ],
          "defaultFullGain": [
             {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
@@ -20,7 +19,55 @@
       },
       {
          "stageCode": 2,
-         "stageEnemy": [{"enemyCode": 0, "enemyAmount": 50},{"enemyCode": 1, "enemyAmount": 50}],
+         "stageEnemy": [{"enemyCode": 1, "enemyAmount": 50},{"enemyCode": 2, "enemyAmount": 50},{"enemyCode": 11, "enemyAmount": 10},{"enemyCode": 12, "enemyAmount": 10}],
+         "stageFirstGain": [
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
+            {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
+         ],
+         "stageDefaultGain": [
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 100},
+            {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 1}
+         ],
+         "defaultFullGain": [
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
+         ]
+      },
+      {
+         "stageCode": 3,
+         "stageEnemy": [{"enemyCode": 1, "enemyAmount": 50},{"enemyCode": 2, "enemyAmount": 50},{"enemyCode": 11, "enemyAmount": 10},{"enemyCode": 12, "enemyAmount": 10},{"enemyCode": 21, "enemyAmount": 1}],
+         "stageFirstGain": [
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
+            {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
+         ],
+         "stageDefaultGain": [
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 100},
+            {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 1}
+         ],
+         "defaultFullGain": [
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
+         ]
+      },
+      {
+         "stageCode": 4,
+         "stageEnemy": [{"enemyCode": 1, "enemyAmount": 50},{"enemyCode": 2, "enemyAmount": 50},{"enemyCode": 11, "enemyAmount": 10},{"enemyCode": 12, "enemyAmount": 10}],
+         "stageFirstGain": [
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
+            {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
+         ],
+         "stageDefaultGain": [
+            {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 100},
+            {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 1}
+         ],
+         "defaultFullGain": [
+            {"itemName": "하급뽑기권","itemType":"cons", "itemCode":1, "itemAmount": 1}
+         ]
+      },
+      {
+         "stageCode": 5,
+         "stageEnemy": [{"enemyCode": 1, "enemyAmount": 50},{"enemyCode": 2, "enemyAmount": 50},{"enemyCode": 11, "enemyAmount": 10},{"enemyCode": 12, "enemyAmount": 10},{"enemyCode": 31, "enemyAmount": 1}],
          "stageFirstGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},

@@ -53,7 +53,7 @@ public class Skill_Shield : MonoBehaviour
 
             playerControl.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
             shieldGenerator.GetComponent<Skill_ShieldGenerator>().isShieldOn = false;
-            ObjectPool.poolInstance.ReleasePool(gameObject);
+            PoolManager.poolInstance.ReleasePool(gameObject);
         }   
     }
 }

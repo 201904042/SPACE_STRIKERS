@@ -82,11 +82,11 @@
          "enemyId":31,
 	"enemyGrade":"Boss",
          "enemyName":"Earth_Boss",
-	 "enemyMaxHp":1000,
+	 "enemyMaxHp":10000,
          "enemyDamage":10,
 	 "enemyMoveSpeed":5,
 	 "enemyAttackSpeed":3,
-         "enemyExpAmount":100,
+         "enemyExpAmount":0,
 	 "enemyScoreAmount":10000,
 	"enemyMoveAttack":true,
 	"isEnemyAiming":false

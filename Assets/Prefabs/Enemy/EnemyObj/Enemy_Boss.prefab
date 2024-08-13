@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 915711137546637731}
   - component: {fileID: 2223943805713869409}
   - component: {fileID: 5949802325496082526}
+  - component: {fileID: -2863428868553297135}
   m_Layer: 0
   m_Name: Enemy_Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093731688987580955}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
   m_LocalPosition: {x: 0.17, y: 3.88, z: 0}
-  m_LocalScale: {x: 2, y: 2.5, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
 --- !u!212 &915711137546637731
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -115,12 +116,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.0000002, y: 2.0000005}
-  m_Direction: 0
+  m_Size: {x: 1.08, y: 1.89}
+  m_Direction: 1
 --- !u!50 &5949802325496082526
 Rigidbody2D:
   serializedVersion: 4
@@ -148,3 +149,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-2863428868553297135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093731688987580955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7d04f836586e843b9abd966d3a0416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStat:
+    enemyId: 0
+    enemyGrade: 
+    enemyName: 
+    enemyMaxHp: 0
+    enemyDamage: 0
+    enemyMoveSpeed: 0
+    enemyAttackSpeed: 0
+    enemyExpAmount: 0
+    enemyScoreAmount: 0
+    enemyMoveAttack: 0
+    isEnemyAiming: 0
+  curEnemyId: 0
+  curHp: 0
+  enemyHpBar: {fileID: 7212795663264582726, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
+  isAttackReady: 0
+  isEnemySlow: 0
+  isEnemyDropItem: 0
+  isAttack: 0
+  isMove: 0
+  splitCount: 3
+  laserDangerZoneTime: 1
+  laserAttackTime: 3
+  defaultSpeed: 10
+  patternIndex: 0
+  curPattern: 

@@ -4,6 +4,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 
 
 [System.Serializable]
@@ -158,14 +159,14 @@ public class SpawnManager : MonoBehaviour
         CheckPossiblePattern();
 
         maxSpawnDelay = 8f;
-        curSpawnDelay = maxSpawnDelay;
+        curSpawnDelay = 4f;
     }
 
     private void CheckPossiblePattern()
     {
         foreach(SpawnPattern pattern in spawnPatterns)
         {
-            if (StageManager.stageInstance.useEnemyid.Contains(pattern.enemyId))
+            if (StageManager.stageInstance.useingEnemyId.Contains(pattern.enemyId))
             {
                 canSpawnList.Add(pattern);
             }
@@ -174,20 +175,17 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator SpawnCheckCoroutine()
     {
+        PoolManager.poolInstance.GetEnemy(31, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
         while (true)
         {
             yield return new WaitForSeconds(maxSpawnDelay);
-            SetSpawnType();
+            SpawnEnemy();
         }
-    }
-
-    private void SetSpawnType()
-    {
-        SpawnEnemy();
     }
 
     private void SpawnEnemy() //스폰 요소 고치기
     {
+        
         if (StageManager.stageInstance.stage == 0)
         {
             PoolManager.poolInstance.GetEnemy(0, new Vector3(-2f, 2, 0),Quaternion.identity);

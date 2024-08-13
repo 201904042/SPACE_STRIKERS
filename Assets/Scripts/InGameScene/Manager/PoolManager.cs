@@ -187,11 +187,11 @@ public class PoolManager : MonoBehaviour
                 else if (enemyType == EnemyType.Common)
                 {
                     obj.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
-                }
-                else if (enemyType == EnemyType.Common)
-                {
-                    obj.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
                 }*/
+                else if (enemyType == EnemyType.Boss)
+                {
+                    obj.GetComponent<Enemy_Boss>().enemyStat.enemyId = enemyId;
+                }
                 //Debug.Log($"{obj} 활성화");
                 obj.SetActive(true);
                 SpawnManager.spawnInstance.activeEnemyList.Add(obj);
@@ -220,11 +220,11 @@ public class PoolManager : MonoBehaviour
                 else if (enemyType == EnemyType.Common)
                 {
                     newObject.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
-                }
-                else if (enemyType == EnemyType.Common)
-                {
-                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
                 }*/
+                else if (enemyType == EnemyType.Boss)
+                {
+                    newObject.GetComponent<Enemy_Boss>().enemyStat.enemyId = enemyId;
+                }
                 newObject.SetActive(true);
                 enemyDic[enemyType].Add(newObject);
                 //Debug.Log($"{newObject} 생성");

@@ -60,6 +60,11 @@ public class Skill_EnergyField : PlayerShoot
 
     private void Update()
     {
+        if(transform.parent != launcher)
+        {
+            transform.SetParent(launcher.transform);
+        }
+
         if(isActive&& !isDealing&&  hittedEnemy.Count > 0)
         {
             StartCoroutine(DealDamage());

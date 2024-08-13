@@ -24,7 +24,9 @@ public class EnemyObject : MonoBehaviour
     public bool isEnemySlow; //현재 감속 상태
     public bool isEnemyDropItem; //해당 적이 아이템을 드롭할지
 
+    [SerializeField]
     protected bool isAttack; //공격중
+    [SerializeField]
     protected bool isMove; //움직이는 중
 
     protected virtual void Awake()
@@ -204,7 +206,7 @@ public class EnemyObject : MonoBehaviour
     /// </summary>
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("BulletBorder"))
+        if ((enemyStat.enemyGrade == "common" || enemyStat.enemyGrade == "elite") && collision.CompareTag("BulletBorder"))
         {
             EnemyEliminate();
         }

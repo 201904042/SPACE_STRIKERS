@@ -86,7 +86,7 @@ public class Enemy_Elite : EnemyAct
     private void Attack()
     {
         Debug.Log("АјАн");
-        MultiShot(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
+        BulletAttack(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
     }
 
     private IEnumerator AttackRepeatly(float attackTime, float attackDelay)

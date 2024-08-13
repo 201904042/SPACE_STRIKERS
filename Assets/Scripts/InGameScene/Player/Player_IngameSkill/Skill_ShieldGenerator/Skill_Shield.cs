@@ -22,24 +22,23 @@ public class Skill_Shield : MonoBehaviour
     private void OnEnable()
     {
         Init();
-
     }
 
     private void Init()
     {
         isFirstSet = false;
+        shieldDamage = playerStat.damage * shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
+        curDamagerate = shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
     }
 
 
     private void Update()
     {
-        
-        if (!isFirstSet || curDamagerate != shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate)
+        if(transform.parent != shieldGenerator)
         {
-            shieldDamage = playerStat.damage * shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
-            curDamagerate = shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
-            isFirstSet = true;
+            transform.SetParent(shieldGenerator.transform);
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

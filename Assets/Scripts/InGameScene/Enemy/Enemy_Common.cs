@@ -106,7 +106,7 @@ public class Enemy_Common : EnemyAct
     private void Attack()
     {
         Debug.Log("АјАн");
-        MultiShot(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
+        BulletAttack(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class EnemyAct : EnemyObject
 {
     [Header("공통 행동")]
-    public int splitCount = 3;
-    public float laserDangerZoneTime = 1;
+    public int splitCount= 3;
+    public float laserDangerZoneTime = 3;
     public float laserAttackTime = 3;
-    public float defaultSpeed = 10;
+    public float defaultSpeed = 1;
 
     protected override void Awake()
     {
@@ -33,18 +34,36 @@ public class EnemyAct : EnemyObject
 
     public void SingleShot(Vector3 velocity, bool split = false)
     {
-        GameObject enemyProj = PoolManager.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
-        enemyProj.GetComponent<EnemyBullet>().setDamage(enemyStat.enemyDamage);
+        GameObject enemyProj;
+
+        if (split)
+        {
+            enemyProj = PoolManager.poolInstance.GetProj(ProjType.Enemy_Split, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            enemyProj = PoolManager.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
+        }
+
+        if (enemyProj == null)
+        {
+            Debug.Log("총알을 불러오지 못함");
+            return;
+        }
         
+
         Rigidbody2D rigid = enemyProj.GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.zero;
 
         if (split)
         {
             enemyProj.GetComponent<EnemySplitBullet>().splitCount = splitCount;
-            
         }
-        
+        else
+        {
+            enemyProj.GetComponent<EnemyBullet>().setDamage(enemyStat.enemyDamage);
+        }
+
         rigid.velocity = new Vector2(velocity.x, velocity.y); //fireDirection * bulletSpeed;
     }
 
@@ -66,7 +85,7 @@ public class EnemyAct : EnemyObject
     }
 
     //발사할 총알, 총알개수, 사격각도범위, 총알속도, 조준여부, 발사체의 기본 앵글, 분열총알여부
-    public void MultiShot(int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
+    public void BulletAttack(int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
     {
         //Debug.Log($"샷 진입" +
            // $"projNum {projNum} projAngle {projAngle}  bulletSpeed {bulletSpeed},  isAimToPlayer {isAimToPlayer} , projBasicAngle {projBasicAngle} , split {split}");
@@ -172,6 +191,7 @@ public class EnemyAct : EnemyObject
         }
     }
 
+
     public void EnemyMoveForward(GameObject movingObject)
     {
         Vector2 moveDirection = movingObject.transform.up;
@@ -186,6 +206,8 @@ public class EnemyAct : EnemyObject
 
         enemyRigid.velocity = Vector2.zero;
     }
+
+
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

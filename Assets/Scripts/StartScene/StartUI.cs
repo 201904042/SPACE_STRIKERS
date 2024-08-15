@@ -5,21 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class StartUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject LogInUI;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void StartBtn()
     {
-        SceneManager.LoadScene("MainMenu");
+        //SceneManager.LoadScene("MainMenu");
+        LogInUI.SetActive(true);
     }
     public void EndBtn()
     {

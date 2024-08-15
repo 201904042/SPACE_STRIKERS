@@ -23,6 +23,7 @@ public class EnemyObject : MonoBehaviour
     public bool isAttackReady; //공격할 준비 완료
     public bool isEnemySlow; //현재 감속 상태
     public bool isEnemyDropItem; //해당 적이 아이템을 드롭할지
+    public bool isEliminatable;
 
     [SerializeField]
     protected bool isAttack; //공격중
@@ -34,6 +35,13 @@ public class EnemyObject : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         enemyData = DataManager.dataInstance.gameObject.GetComponent<EnemyJsonReader>();
     }
+
+    private IEnumerator SetEliminate()
+    {
+        yield return new WaitForSeconds(1f);
+        isEliminatable = true;
+    }
+
     protected virtual void Start()
     {
         HpBarSet();
@@ -43,6 +51,7 @@ public class EnemyObject : MonoBehaviour
     protected virtual void OnEnable()
     {
         SetStat();
+        StartCoroutine(SetEliminate());
     }
 
     protected virtual void Update()
@@ -94,6 +103,7 @@ public class EnemyObject : MonoBehaviour
 
         isAttackReady = true;
         isEnemySlow = false;
+        isEliminatable = false;
         SetEnemySprite();
     }
 
@@ -136,7 +146,7 @@ public class EnemyObject : MonoBehaviour
     /// <summary>
     /// 적 사망시 exp 생성
     /// </summary>
-    private void EnemyExpInstatiate()
+    private void DropExp()
     {
         for (int i = 0; i < enemyStat.enemyExpAmount; i++)
         {
@@ -158,7 +168,12 @@ public class EnemyObject : MonoBehaviour
     /// </summary>
     public void EnemyDeath() //적 사망시. 적 처치 보상 있음
     {
-        EnemyExpInstatiate();
+        if(enemyStat.enemyGrade == "Boss")
+        {
+            SpawnManager.spawnInstance.isBossDown = true;
+            SpawnManager.spawnInstance.isBossSpawned = false;
+        }
+        DropExp();
         AddEnemyScoreToStageScore();
         if(isEnemyDropItem)
         {
@@ -206,9 +221,15 @@ public class EnemyObject : MonoBehaviour
     /// </summary>
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((enemyStat.enemyGrade == "common" || enemyStat.enemyGrade == "elite") && collision.CompareTag("BulletBorder"))
+        if (collision.CompareTag("BulletBorder")  )
         {
-            EnemyEliminate();
+            if(isEliminatable == true)
+            {
+                if (enemyStat.enemyGrade == "common" || enemyStat.enemyGrade == "elite")
+                {
+                    EnemyEliminate();
+                }
+            }
         }
     }
 }

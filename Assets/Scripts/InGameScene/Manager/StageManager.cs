@@ -11,7 +11,7 @@ public class StageManager : MonoBehaviour
     [Header("스테이지 관련")]
     private StageJsonReader stageData;
 
-    public StageEnemy[] curStageEnemy;
+    public int[] curStageEnemyId;
     public Item[] curStagefirstGain;
     public Item[] curStageDefaultGain;
     public Item[] curDefaultFullGain;
@@ -21,10 +21,14 @@ public class StageManager : MonoBehaviour
     public int stage = 1;
     public int openStage = 5; //현재 열린 스테이지
 
-    public float stageMaxTime = 15;
     public float stageTime;
     public float minutes;
     public float seconds;
+
+    public float timeForReduceSpawnDelay;
+
+    public bool isBossStage;
+    public int stageBossId;
 
     private void Awake()
     {
@@ -45,12 +49,18 @@ public class StageManager : MonoBehaviour
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         stage = PlayerPrefs.GetInt("ChosenStage");
         stageData = DataManager.dataInstance.GetComponent<StageJsonReader>();
-        useingEnemyId  = new List<int>();  
+        useingEnemyId  = new List<int>();
+        isBossStage = false;
         StageDataSet();
 
-        foreach(StageEnemy enemy in curStageEnemy)
+        foreach(int enemyId in curStageEnemyId)
         {
-            useingEnemyId.Add(enemy.enemyCode);
+            if(enemyId > 20)
+            {
+                stageBossId = enemyId;
+                isBossStage = true;
+            }
+            useingEnemyId.Add(enemyId);
         }
     }
 
@@ -67,7 +77,7 @@ public class StageManager : MonoBehaviour
         {
             if (stageData.stageCode == stageCode)
             {
-                curStageEnemy = stageData.stageEnemy;
+                curStageEnemyId = stageData.enemyCode;
                 curStagefirstGain = stageData.stageFirstGain;
                 curStageDefaultGain = stageData.stageDefaultGain;
                 curDefaultFullGain = stageData.defaultFullGain;

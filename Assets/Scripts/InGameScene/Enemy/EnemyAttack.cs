@@ -7,8 +7,7 @@ using UnityEngine.EventSystems;
 public class EnemyAct : EnemyObject
 {
     [Header("공통 행동")]
-    public int splitCount= 3;
-    public float laserDangerZoneTime = 3;
+    public float laserReadyTime = 3;
     public float laserAttackTime = 3;
     public float defaultSpeed = 1;
 
@@ -32,7 +31,7 @@ public class EnemyAct : EnemyObject
         base.Update(); 
     }
 
-    public void SingleShot(Vector3 velocity, bool split = false)
+    public void SingleShot(Vector3 velocity, bool split = false, int splitCount = 3)
     {
         GameObject enemyProj;
 
@@ -69,13 +68,13 @@ public class EnemyAct : EnemyObject
 
 
     //발사할 총알 프리팹, 분열총알이라면 true
-    public void TargetShot(bool split = false)
+    public void TargetShot(bool split = false, int splitCount = 3)
     {
         Transform player = GameManager.gameInstance.myPlayer.transform;
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if (split)
         {
-            SingleShot(dirToPlayer * defaultSpeed, true);
+            SingleShot(dirToPlayer * defaultSpeed, true, splitCount);
         }
         else
         {
@@ -85,7 +84,7 @@ public class EnemyAct : EnemyObject
     }
 
     //발사할 총알, 총알개수, 사격각도범위, 총알속도, 조준여부, 발사체의 기본 앵글, 분열총알여부
-    public void BulletAttack(int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false)
+    public void BulletAttack(int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false, int splitCount = 3)
     {
         //Debug.Log($"샷 진입" +
            // $"projNum {projNum} projAngle {projAngle}  bulletSpeed {bulletSpeed},  isAimToPlayer {isAimToPlayer} , projBasicAngle {projBasicAngle} , split {split}");
@@ -113,7 +112,7 @@ public class EnemyAct : EnemyObject
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
                 if (split)
                 {
-                    SingleShot( velocity * bulletSpeed, true);
+                    SingleShot( velocity * bulletSpeed, true, splitCount);
                 }
                 else
                 {
@@ -131,7 +130,7 @@ public class EnemyAct : EnemyObject
                 Vector3 velocity = new Vector3(projectileMoveDirection.x, projectileMoveDirection.y, 0);
                 if (split)
                 {
-                    SingleShot( velocity, true);
+                    SingleShot( velocity, true,splitCount);
                 }
                 else
                 {
@@ -159,7 +158,7 @@ public class EnemyAct : EnemyObject
         }
 
         laserObject.startPointObj = gameObject;
-        laserObject.chargingTime = laserDangerZoneTime;
+        laserObject.chargingTime = laserReadyTime;
         laserObject.laserTime = laserAttackTime;
     }
     //발사개수, 발사 최대범위, 조준여부 , 기본레이저앵글(기본 0)

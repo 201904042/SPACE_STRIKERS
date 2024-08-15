@@ -6,12 +6,7 @@ using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 
-[System.Serializable]
-public class StageEnemy
-{
-    public int enemyCode;
-    public int enemyAmount;
-}
+
 
 [System.Serializable]
 public class Item
@@ -26,7 +21,7 @@ public class Item
 public class StageData
 {
     public int stageCode;
-    public StageEnemy[] stageEnemy;
+    public int[] enemyCode;
     public Item[] stageFirstGain;
     public Item[] stageDefaultGain;
     public Item[] defaultFullGain;

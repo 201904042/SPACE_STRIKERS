@@ -34,25 +34,30 @@ public class EnemyLaser : EnemyProjectile
         dangerMark = transform.GetChild(0).GetComponent<LineRenderer>();
         coreLaser = transform.GetChild(1).GetComponent<LineRenderer>();
         outLineLaser = transform.GetChild(2).GetComponent<LineRenderer>();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Init();
+
+    }
+
+    private void Init()
+    {
         chargingTime = 1f;
         laserTime = 3f;
         chargingTimer = 0;
         laserTimer = 0;
         LaserWidthRate = 1;
         defaultLaserWidth = 0.3f;
+        damage = 30f;
+
         dangerMark.gameObject.SetActive(true);
         coreLaser.gameObject.SetActive(false);
         outLineLaser.gameObject.SetActive(false);
 
-        damage = 30f;
-
         isFirstSet = false;
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
     }
 
 
@@ -95,6 +100,7 @@ public class EnemyLaser : EnemyProjectile
             {
                 laserTimer += Time.deltaTime;
             }
+
             else
             {
                 PoolManager.poolInstance.ReleasePool(gameObject);

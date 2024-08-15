@@ -33,8 +33,6 @@ public class Enemy_Boss : EnemyAct
         isAttack = false;
         patternIndex = 0;
 
-        splitCount = 10;
-
         curPattern = string.Empty;
     }
 
@@ -99,11 +97,11 @@ public class Enemy_Boss : EnemyAct
     {
         isAttack = true;
         curPattern = "pattern2";
-        BulletAttack(1, 0, 5, false,-180,true);
+        BulletAttack(1, 0, 5, false,-180,true,10);
         yield return new WaitForSeconds(0.2f);
-        BulletAttack(1, 0, 5, false, -125, true);
+        BulletAttack(1, 0, 5, false, -125, true, 10);
         yield return new WaitForSeconds(0.2f);
-        BulletAttack(1, 0, 5, false, 125, true);
+        BulletAttack(1, 0, 5, false, 125, true, 10);
         yield return new WaitForSeconds(1f);
 
         isAttack = false;
@@ -167,6 +165,6 @@ public class Enemy_Boss : EnemyAct
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        //base.OnTriggerEnter2D(collision);
+        base.OnTriggerEnter2D(collision);
     }
 }

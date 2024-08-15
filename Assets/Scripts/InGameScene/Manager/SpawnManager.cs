@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 
 [System.Serializable]
-public class SpawnPattern
+public struct SpawnPattern
 {
     public int enemyId; // 적의 종류를 나타내는 ID
     public int amount; // 스폰할 적의 수
@@ -20,21 +16,24 @@ public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager spawnInstance;
 
-    [Header("스폰관련")]
+    [Header("커먼, 엘리트 등 스폰 관련")]
+    //스폰 위치
     public Transform mainSpawnZone;
     public Transform sideSpawnZoneL;
     public Transform sideSpawnZoneR;
-    public Transform bossSpawnZone;
-    public int stageEnemyAmount;
+   
+    //스폰할 패턴들
     public List<SpawnPattern> spawnPatterns;
+    //이 스테이지에서 생성 가능한 스폰
     public List<SpawnPattern> canSpawnList;
 
-    public int ranEnemy;
+    private int ranEnemy; //랜덤한 적
 
-    public float maxSpawnDelay;
-    public float curSpawnDelay;
+    public List<GameObject> activeEnemyList; //스폰상태인 적의 리스트
 
-    public List<GameObject> activeEnemyList;
+    public Transform bossSpawnZone;
+    public bool isBossSpawned; //보스가 생성되었는지
+    public bool isBossDown; //생성된 보스가 처치되었는지
 
     private void Awake()
     {
@@ -151,15 +150,10 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (StageEnemy enemy in StageManager.stageInstance.curStageEnemy)
-        {
-            stageEnemyAmount += enemy.enemyAmount;
-        }
-
         CheckPossiblePattern();
 
-        maxSpawnDelay = 8f;
-        curSpawnDelay = 4f;
+        isBossSpawned = false;
+        isBossDown = false;
     }
 
     private void CheckPossiblePattern()
@@ -173,13 +167,31 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnCheckCoroutine()
+    public IEnumerator SpawnEnemyTroops() //커먼이나 엘리트 적의 경우
     {
-        PoolManager.poolInstance.GetEnemy(31, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
+        float spawnTimer = 8;
+        
         while (true)
         {
-            yield return new WaitForSeconds(maxSpawnDelay);
+            if (spawnTimer == 8 && StageManager.stageInstance.minutes >= 5)
+            {
+                spawnTimer = 6;
+            }
+            else if (spawnTimer == 6 && StageManager.stageInstance.minutes >= 10)
+            {
+                spawnTimer = 4;
+            }
+            else if (spawnTimer == 4 && StageManager.stageInstance.minutes >= 15)
+            {
+                spawnTimer = 2;
+            }
+            else if (spawnTimer == 2 && StageManager.stageInstance.minutes >= 20)
+            {
+                spawnTimer = 1;
+            }
+
             SpawnEnemy();
+            yield return new WaitForSeconds(spawnTimer);
         }
     }
 
@@ -203,6 +215,15 @@ public class SpawnManager : MonoBehaviour
                 PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, pos,selectedPattern.spawnZone.rotation);
             }
         }
+    }
+
+    public void SpawnBoss(int bossId)
+    {
+        StopCoroutine(GameManager.gameInstance.SpawnCoroutine);
+
+        isBossSpawned = true;
+        isBossDown = false;
+        PoolManager.poolInstance.GetEnemy(bossId, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
     }
 
     //모든 적들을 시스템으로 사망(보상없음)

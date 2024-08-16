@@ -42,6 +42,7 @@ public class Enemy_Common : EnemyAct
         enemyAttackTime = 10;
         enemyAttackDealy = 2;
         SetAttackPref();
+
         if(enemyStat.enemyMoveAttack == true)
         {
             isAttackReady = true;

@@ -85,12 +85,6 @@ public class playerShooterUpgrade : MonoBehaviour
             case 2:
                 return "lv2";
             case 3:
-                return "lv3";
-            case 4:
-                return "lv4";
-            case 5:
-                return "lv5";
-            case 6:
                 return "lvMax";
             default:
                 return "lvMax";
@@ -144,7 +138,7 @@ public class playerShooterUpgrade : MonoBehaviour
     //debug buttons
     public void ShooterUPBtn()
     {
-        if (shooterLevel < 6)
+        if (shooterLevel < 3)
         {
             shooterLevel += 1;
         }

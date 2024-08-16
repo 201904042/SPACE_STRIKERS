@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class ExplosionSplashDamage : MonoBehaviour
+public class MissileSplash : MonoBehaviour
 {
     [Header("PlayerMissile¿« Ω∫≈›")]
     public float missileDamage;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
 
-public class PlayerHoming : PlayerShoot
+public class PlayerHoming : PlayerProjectile
 {
 
     [Header("±âº» ÃÑ¾Ë ½ºÅÝ")]
@@ -22,10 +22,7 @@ public class PlayerHoming : PlayerShoot
     protected override void Awake()
     {
         base.Awake();
-        targetSet = false;
-        playerStatDamage = playerStat.damage;
-        homingSpeed = 15;
-        homingDamage = playerStatDamage * homingDamageRate;
+        
     }
 
     protected override void OnEnable()
@@ -36,7 +33,10 @@ public class PlayerHoming : PlayerShoot
     protected override void Init()
     {
         base.Init();
-
+        targetSet = false;
+        playerStatDamage = playerStat.damage;
+        homingSpeed = 10;
+        homingDamage = playerStatDamage * homingDamageRate;
     }
 
 

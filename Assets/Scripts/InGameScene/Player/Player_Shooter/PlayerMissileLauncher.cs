@@ -17,19 +17,29 @@ public class PlayerMissileLauncher : LauncherStat
         projObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/PlayerMissile.prefab");
         basicSpeed = 3f;
         shootSpeed = basicSpeed - (playerStat.attackSpeed/100);
-        missileSpeed = 5f ;
+        missileSpeed = 5f;
     }
+
     protected override void Update()
     {
         base.Update();
-        if (LauncherShootable)
+        if (launcherCoroutine == null && LauncherShootable)
         {
-            delay += Time.deltaTime;
-            if (delay > shootSpeed)
-            {
-                Fire();
-                delay = 0;
-            }
+            launcherCoroutine = StartCoroutine(FireCoroutine());
+        }
+
+        if (launcherCoroutine != null && !LauncherShootable)
+        {
+            StopCoroutine(launcherCoroutine);
+        }
+    }
+
+    private IEnumerator FireCoroutine()
+    {
+        while (true)
+        {
+            Fire();
+            yield return new WaitForSeconds(shootSpeed);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.WSA;
 
 
-public class Skill_EnergyField : PlayerShoot
+public class Skill_EnergyField : PlayerProjectile
 {
     public float damageRate;
     public float activeTime;

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Skill_ChargeShotLauncher : Ingame_Active
 {
     [Header("차지샷 고유 스텟")]
-
     public bool isPenetrate;
     
     protected override void Awake()
@@ -105,7 +104,7 @@ public class Skill_ChargeShotLauncher : Ingame_Active
                 coolTime = 3;
                 isPenetrate = false;
                 transform.GetComponent<SkillInterface>().skillIntro =
-                    "<차지샷>\n차징샷이 적을 관통";
+                    "<차지샷>\n차지샷이 적을 관통";
                 break;
 
             case 7:

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6499e7f6b9890f4384bf9b6eb70de98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   dangerMark: {fileID: 0}
   coreLaser: {fileID: 0}
   outLineLaser: {fileID: 0}
@@ -54,10 +55,7 @@ MonoBehaviour:
   endPointObj: {fileID: 0}
   chargingTime: 0
   laserTime: 0
-  chargingTimer: 0
-  laserTimer: 0
-  LaserWidthRate: 0
-  damage: 0
+  laserWidthRate: 1
 --- !u!1 &3822931564098969746
 GameObject:
   m_ObjectHideFlags: 0

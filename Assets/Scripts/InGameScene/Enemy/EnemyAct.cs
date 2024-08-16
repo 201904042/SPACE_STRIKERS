@@ -157,10 +157,9 @@ public class EnemyAct : EnemyObject
             laserObject.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, multiAngle));
         }
 
-        laserObject.startPointObj = gameObject;
-        laserObject.chargingTime = laserReadyTime;
-        laserObject.laserTime = laserAttackTime;
+        laserObject.LaserActive(gameObject);
     }
+
     //발사개수, 발사 최대범위, 조준여부 , 기본레이저앵글(기본 0)
     public void MultiLaser(int projNum, float projAngle, bool isAimToPlayer = false, float projBasicAngle = 0)
     {

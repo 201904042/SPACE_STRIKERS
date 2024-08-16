@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_ChargeShot : PlayerShoot
+public class Skill_ChargeShot : PlayerProjectile
 {
     public float damageRate;
     public bool isPenetrate;

@@ -4,7 +4,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class skill_Missile : PlayerShoot
+public class skill_Missile : PlayerProjectile
 {
     public GameObject splashColliderObject;
     public float missileDamage;
@@ -61,7 +61,7 @@ public class skill_Missile : PlayerShoot
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
             }
 
-            ExplosionSplashDamage splashDamage = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<ExplosionSplashDamage>();
+            MissileSplash splashDamage = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<MissileSplash>();
             splashDamage.SetVariable(explosionRange, missileDamage);
             PoolManager.poolInstance.ReleasePool(gameObject);
         }

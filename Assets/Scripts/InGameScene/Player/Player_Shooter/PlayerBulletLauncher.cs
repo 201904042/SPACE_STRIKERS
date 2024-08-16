@@ -22,14 +22,22 @@ public class PlayerBulletLauncher : LauncherStat
     protected override void Update()
     {
         base.Update();
-        if (LauncherShootable)
+        if (launcherCoroutine == null && LauncherShootable) {
+            launcherCoroutine = StartCoroutine(FireCoroutine());
+        }
+        
+        if(launcherCoroutine != null && !LauncherShootable)
         {
-            delay += Time.deltaTime;
-            if (delay > shootSpeed)
-            {
-                Fire();
-                delay = 0;
-            }
+            StopCoroutine(launcherCoroutine);
+        }
+    }
+
+    private IEnumerator FireCoroutine()
+    {
+        while (true)
+        {
+            Fire();
+            yield return new WaitForSeconds(shootSpeed);
         }
     }
 

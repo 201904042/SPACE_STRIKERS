@@ -61,7 +61,7 @@ public class Enemy_Boss : EnemyAct
 
     private void SetAttackType()
     {
-        patternIndex = patternIndex == 4 ? 0 : patternIndex + 1;
+        patternIndex = 3;//patternIndex == 4 ? 0 : patternIndex + 1;
         switch (patternIndex)
         {
             case 0: StartCoroutine(Pattern1()); break;
@@ -84,7 +84,7 @@ public class Enemy_Boss : EnemyAct
         BulletAttack(4, 10, 5, true);
         yield return new WaitForSeconds(1f);
         BulletAttack(5, 10, 5, true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         isAttack = false;
     }
@@ -102,7 +102,7 @@ public class Enemy_Boss : EnemyAct
         BulletAttack(1, 0, 5, false, -125, true, 10);
         yield return new WaitForSeconds(0.2f);
         BulletAttack(1, 0, 5, false, 125, true, 10);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         isAttack = false;
     }
@@ -119,7 +119,7 @@ public class Enemy_Boss : EnemyAct
         BulletAttack(30, 355, 5, true);
         yield return new WaitForSeconds(1f);
         BulletAttack(30, 360, 5, true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         isAttack = false;
     }
@@ -158,7 +158,7 @@ public class Enemy_Boss : EnemyAct
             PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, pos, selectedPattern.spawnZone.rotation);
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         isAttack = false;
     }

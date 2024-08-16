@@ -11,23 +11,19 @@ public class EnemyLaser : EnemyProjectile
     private LineRenderer coreLaser;
     [SerializeField]
     private LineRenderer outLineLaser;
+
     public GameObject startPointObj;
     private Vector2 startPoint;
     public GameObject endPointObj;
     private Vector2 endPoint;
-    public float chargingTime;
-    public float laserTime;
-    [SerializeField]
-    private float chargingTimer;
-    [SerializeField]
-    private float laserTimer;
-    [SerializeField]
-    private float LaserWidthRate;
-    private float defaultLaserWidth;
 
+    public float chargingTime = 1f;
+    public float laserTime = 3f;
+    [SerializeField]
+    private float laserWidthRate = 1f;
+    private float defaultLaserWidth = 0.3f;
 
-    private bool isFirstSet;
-
+    private Coroutine laserCoroutine;
     protected override void Awake()
     {
         base.Awake();
@@ -39,72 +35,69 @@ public class EnemyLaser : EnemyProjectile
     protected override void OnEnable()
     {
         base.OnEnable();
-        Init();
-
-    }
-
-    private void Init()
-    {
-        chargingTime = 1f;
-        laserTime = 3f;
-        chargingTimer = 0;
-        laserTimer = 0;
-        LaserWidthRate = 1;
-        defaultLaserWidth = 0.3f;
-        damage = 30f;
 
         dangerMark.gameObject.SetActive(true);
         coreLaser.gameObject.SetActive(false);
         outLineLaser.gameObject.SetActive(false);
 
-        isFirstSet = false;
+        startPointObj = null;
+        endPointObj = null;
+        startPoint = Vector2.zero;
+        endPoint = Vector2.zero; 
     }
 
-
-    private void Update()
+    private void OnDisable()
     {
-        if(!isFirstSet)
+        if (laserCoroutine != null) 
         {
-            startPoint = startPointObj.transform.position;
-            if(endPointObj != null)
-            {
-                endPoint = endPointObj.transform.position;
-            }
-            isFirstSet = true;
+            StopCoroutine(laserCoroutine);
         }
-        else
+    }
+
+    public void LaserActive(GameObject AttackObj, float LaserTime = 3f, float ChargingTime = 1f, float LaserWidthRate = 1, GameObject EndObj = null)
+    {
+        startPointObj = AttackObj;
+        if (EndObj != null)
         {
-            LaserAttack();
+            endPointObj = EndObj;
         }
-        
+        laserTime = LaserTime;
+        chargingTime = ChargingTime;
+        laserWidthRate = LaserWidthRate;
+
+        startPoint = startPointObj.transform.position;
+        if (endPointObj != null)
+        {
+            endPoint = endPointObj.transform.position;
+        }
+
+        laserCoroutine = StartCoroutine(LaserAttackCoroutine());
     }
     
-    private void LaserAttack()
+
+    private IEnumerator LaserAttackCoroutine()
     {
-        if (chargingTimer < chargingTime)
+        float chargingTimer = 0f;
+
+        dangerMark.startWidth = defaultLaserWidth;
+
+        // Charging phase
+        while (chargingTimer < chargingTime)
         {
             chargingTimer += Time.deltaTime;
-            dangerMark.startWidth = defaultLaserWidth * LaserWidthRate * (chargingTime - chargingTimer);
-            
+            dangerMark.startWidth = defaultLaserWidth * laserWidthRate * (chargingTime - chargingTimer);
+            yield return null;
         }
-        else
-        {
-            if (dangerMark.gameObject.activeSelf)
-            {
-                dangerMark.gameObject.SetActive(false);
-                coreLaser.gameObject.SetActive(true);
-                outLineLaser.gameObject.SetActive(true);
-            }   
-            
-            if(laserTimer < laserTime)
-            {
-                laserTimer += Time.deltaTime;
-            }
 
-            else
-            {
-                PoolManager.poolInstance.ReleasePool(gameObject);
-            }
-        }
+        // Activate laser
+        dangerMark.gameObject.SetActive(false);
+        coreLaser.gameObject.SetActive(true);
+        outLineLaser.gameObject.SetActive(true);
+
+        // Laser phase
+        yield return new WaitForSeconds(laserTime);
+
+        // Release laser
+        PoolManager.poolInstance.ReleasePool(gameObject);
     }
 }

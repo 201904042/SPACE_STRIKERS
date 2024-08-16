@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TroopShooter : MonoBehaviour
 {
-    //발사체의 위치와 각도를 알기 위함
+    // 발사체의 위치와 각도를 알기 위함
     Transform shooter_Transform;
 
     public GameObject bulletobj;
@@ -18,23 +19,37 @@ public class TroopShooter : MonoBehaviour
     float basicSpeed = 1;
     PlayerStat player_stat;
 
+    private Coroutine troopCoroutine;
 
     void Awake()
     {
         player_stat = GameManager.gameInstance.myPlayer.transform.GetComponent<PlayerStat>();
-        shootSpeed =  basicSpeed * 5f;
-        bulletSpeed = basicSpeed * 10f;
         shooter_Transform = GetComponentInParent<Transform>();
     }
-    void Update()
+
+    private void OnEnable()
     {
-        if (delay > shootSpeed)
+        shootSpeed = basicSpeed * 5f;
+        bulletSpeed = basicSpeed * 10f;
+        troopCoroutine = StartCoroutine(FireCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        if (troopCoroutine != null) 
+        {
+            StopCoroutine(troopCoroutine);
+        }
+    }
+
+   // 발사 기능을 코루틴으로 구현
+   IEnumerator FireCoroutine()
+    {
+        while (true)
         {
             Fire();
-            delay = 0;
+            yield return new WaitForSeconds(1f);
         }
-        delay += 0.1f;
-
     }
 
     void Fire()
@@ -44,5 +59,4 @@ public class TroopShooter : MonoBehaviour
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.velocity = fire_direction * bulletSpeed;
     }
-
 }

@@ -5,11 +5,10 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     public float damage;
-    protected PlayerStat playerStat;
 
     protected virtual void Awake()
     {
-        playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+        
     }
 
     public void setDamage(float e_damage)
@@ -31,7 +30,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            playerStat.PlayerDamaged(damage, gameObject);
+            GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>().PlayerDamaged(damage, gameObject);
             PoolManager.poolInstance.ReleasePool(gameObject);
         }
         if (collision.transform.tag == "BulletBorder")

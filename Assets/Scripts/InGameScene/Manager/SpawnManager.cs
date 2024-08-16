@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 
 [System.Serializable]
@@ -210,10 +211,19 @@ public class SpawnManager : MonoBehaviour
             int patternIndex = Random.Range(0, canSpawnList.Count); // 랜덤으로 패턴 선택
             SpawnPattern selectedPattern = canSpawnList[patternIndex];
 
-            foreach (Vector2 pos in selectedPattern.positions)
+            int itemEnemyRandomRate = Random.Range(0, 100);
+            bool isItemEnemySpawn = itemEnemyRandomRate < 20 ? true : false; //20% 확률로 해당 패턴에서 아이템을 생성하는 적 생성
+
+            for(int i =0; i< selectedPattern.amount; i++)
             {
-                PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, pos,selectedPattern.spawnZone.rotation);
+                GameObject enemy = PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, selectedPattern.positions[i], selectedPattern.spawnZone.rotation);
+                if(i == selectedPattern.amount - 1)
+                {
+                    enemy.GetComponent<EnemyObject>().MakeEnemyDropItem = true;
+                }
             }
+
+            
         }
     }
 

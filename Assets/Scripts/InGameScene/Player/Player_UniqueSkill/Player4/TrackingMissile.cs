@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 using static UnityEngine.GraphicsBuffer;
 
-public class TrackingMissile : PlayerShoot
+public class TrackingMissile : PlayerProjectile
 {
     private PlayerSpecialSkill speicalScript;
     private float damage;

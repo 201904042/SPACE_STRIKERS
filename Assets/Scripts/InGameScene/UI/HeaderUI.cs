@@ -20,6 +20,7 @@ public class HeaderUI : MonoBehaviour
     void Update()
     {
         timeText.text = StageManager.stageInstance.minutes.ToString()+" : "+ StageManager.stageInstance.seconds.ToString();
+
         if (GameManager.gameInstance.score != saveScore)
         {
             ScoreText.text = GameManager.gameInstance.score.ToString();

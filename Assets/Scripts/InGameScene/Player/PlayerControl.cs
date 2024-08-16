@@ -77,6 +77,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         MakePlayerTranslucent();
+        KeepPlayerInViewport();
     }
 
     private void PlayerMove()
@@ -105,6 +106,30 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void KeepPlayerInViewport()
+    {
+        // 플레이어의 현재 월드 좌표를 가져옵니다.
+        Vector3 playerPos = transform.position;
+
+        // 현재 플레이어의 월드 좌표를 뷰포트 좌표로 변환합니다.
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(playerPos);
+
+        // UI가 차지하는 뷰포트 영역을 고려하여 제한을 설정합니다.
+        float uiPaddingX = 0.0f; // UI에 가로 패딩이 없으면 0
+        float uiPaddingY = 0.0f; // 세로 패딩, 이 예제에서는 사용하지 않음
+        float headerViewportHeight = 50f / Screen.height; // 헤더 UI의 뷰포트 높이
+        float footerViewportHeight = 75f / Screen.height; // 푸터 UI의 뷰포트 높이
+
+        // 뷰포트 좌표를 제한
+        viewportPos.x = Mathf.Clamp(viewportPos.x, uiPaddingX, 1 - uiPaddingX);
+        viewportPos.y = Mathf.Clamp(viewportPos.y, footerViewportHeight, 1 - headerViewportHeight);
+
+        // 제한된 뷰포트 좌표를 다시 월드 좌표로 변환합니다.
+        playerPos = Camera.main.ViewportToWorldPoint(viewportPos);
+
+        // 변환된 월드 좌표를 플레이어의 위치로 설정합니다.
+        transform.position = playerPos;
+    }
     public void PlayerDamagedAction(GameObject attack_obj)
     {
         if (isInvincibleState == true) { return; }

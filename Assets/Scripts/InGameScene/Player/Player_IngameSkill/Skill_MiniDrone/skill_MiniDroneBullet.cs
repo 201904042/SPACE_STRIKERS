@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class skill_MiniDroneBullet : PlayerShoot
+public class skill_MiniDroneBullet : PlayerProjectile
 {
     private bool hashit = false;
 

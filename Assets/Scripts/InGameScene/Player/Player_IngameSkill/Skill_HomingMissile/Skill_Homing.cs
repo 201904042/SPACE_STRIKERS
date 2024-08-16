@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
 
-public class Skill_Homing : PlayerShoot
+public class Skill_Homing : PlayerProjectile
 {
     GameObject target;
     GameObject[] enemies;

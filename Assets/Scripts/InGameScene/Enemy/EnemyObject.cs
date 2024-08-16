@@ -21,14 +21,50 @@ public class EnemyObject : MonoBehaviour
     protected Slider hpSlider;
 
     public bool isAttackReady; //공격할 준비 완료
-    public bool isEnemySlow; //현재 감속 상태
-    public bool isEnemyDropItem; //해당 적이 아이템을 드롭할지
+    private bool isEnemySlow; //현재 감속 상태
+
     public bool isEliminatable;
 
     [SerializeField]
     protected bool isAttack; //공격중
     [SerializeField]
     protected bool isMove; //움직이는 중
+
+    private bool isEnemyDropItem; //해당 적이 아이템을 드롭할지
+    public bool MakeEnemyDropItem
+    {
+        get => isEnemyDropItem;
+        set
+        {
+            isEnemyDropItem = value;
+            if (isEnemyDropItem)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+        }
+    }
+    public bool MakeEnemyShocked
+    {
+        get => isEnemySlow;
+        set 
+        {
+            isEnemySlow = value;
+            isAttackReady = !value;
+            if (isEnemySlow)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+        }
+    }
+
 
     protected virtual void Awake()
     {
@@ -104,6 +140,7 @@ public class EnemyObject : MonoBehaviour
         isAttackReady = true;
         isEnemySlow = false;
         isEliminatable = false;
+
         SetEnemySprite();
     }
 
@@ -114,11 +151,7 @@ public class EnemyObject : MonoBehaviour
     {
         //스프라이트 지정
 
-        //아이템 드롭 여부에 따른 색 지정
-        if (isEnemyDropItem)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-        }
+        
 
     }
 
@@ -175,6 +208,7 @@ public class EnemyObject : MonoBehaviour
         }
         DropExp();
         AddEnemyScoreToStageScore();
+
         if(isEnemyDropItem)
         {
             DropItem();
@@ -185,7 +219,7 @@ public class EnemyObject : MonoBehaviour
 
     private void DropItem()
     {
-        if (GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 6)
+        if (GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3)
         {
             PoolManager.poolInstance.GetProj(ProjType.Item_ShooterUP,transform.position, transform.rotation);
         }

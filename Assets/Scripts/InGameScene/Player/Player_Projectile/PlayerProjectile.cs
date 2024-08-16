@@ -4,7 +4,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerProjectile : MonoBehaviour
 {
     //플레이어가 발사하는 모든 발사체의 스크립트
     public  PlayerStat playerStat;
@@ -20,6 +20,11 @@ public class PlayerShoot : MonoBehaviour
     protected virtual void OnEnable()
     {
 
+    }
+
+    protected virtual void OnDisable()
+    {
+         
     }
 
     protected virtual void Init()

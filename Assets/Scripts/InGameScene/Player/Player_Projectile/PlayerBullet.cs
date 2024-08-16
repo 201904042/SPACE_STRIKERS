@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
-public class PlayerBullet : PlayerShoot
+public class PlayerBullet : PlayerProjectile
 {
     [Header("±âº» ÃÑ¾Ë ½ºÅÝ")]
     [SerializeField]

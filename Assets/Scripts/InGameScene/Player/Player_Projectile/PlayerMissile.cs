@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMissile : PlayerShoot
+public class PlayerMissile : PlayerProjectile
 {
     public GameObject splashColliderObject;
 
@@ -57,7 +57,7 @@ public class PlayerMissile : PlayerShoot
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
             }
             
-            ExplosionSplashDamage splashDamage = PoolManager.poolInstance.GetProj(ProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<ExplosionSplashDamage>();
+            MissileSplash splashDamage = PoolManager.poolInstance.GetProj(ProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<MissileSplash>();
             splashDamage.explosionRange = explosionRange;
             splashDamage.missileDamage = missileDamage;
             PoolManager.poolInstance.ReleasePool(gameObject);

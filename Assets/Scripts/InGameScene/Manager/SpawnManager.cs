@@ -36,6 +36,9 @@ public class SpawnManager : MonoBehaviour
     public bool isBossSpawned; //보스가 생성되었는지
     public bool isBossDown; //생성된 보스가 처치되었는지
 
+
+    private int stopIndex = 1; // 패턴 간 번갈아 가는 stopCount 값을 저장하는 변수
+
     private void Awake()
     {
         if (spawnInstance == null)
@@ -47,6 +50,7 @@ public class SpawnManager : MonoBehaviour
             Destroy(gameObject);
         }
         SpawnPatternSet();
+
     }
 
     private void SpawnPatternSet()
@@ -155,6 +159,7 @@ public class SpawnManager : MonoBehaviour
 
         isBossSpawned = false;
         isBossDown = false;
+        stopIndex = 1;
     }
 
     private void CheckPossiblePattern()
@@ -167,13 +172,16 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-
-    public IEnumerator SpawnEnemyTroops() //커먼이나 엘리트 적의 경우
+    public IEnumerator SpawnEnemyTroops()
     {
         float spawnTimer = 8;
-        
         while (true)
         {
+            if (isBossSpawned)
+            {
+                break;
+            }
+            Debug.Log("Current spawnTimer: " + spawnTimer);
             if (spawnTimer == 8 && StageManager.stageInstance.minutes >= 5)
             {
                 spawnTimer = 6;
@@ -196,40 +204,68 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy() //스폰 요소 고치기
+
+    private void SpawnEnemy()
     {
-        
         if (StageManager.stageInstance.stage == 0)
         {
-            PoolManager.poolInstance.GetEnemy(0, new Vector3(-2f, 2, 0),Quaternion.identity);
-            PoolManager.poolInstance.GetEnemy(0, new Vector3(0f, 2, 0), Quaternion.identity);
-            PoolManager.poolInstance.GetEnemy(0, new Vector3(2f, 2, 0), Quaternion.identity);
-        }
+            // 기본 스폰 로직
+            Vector3[] positions = new Vector3[]
+            {
+            new Vector3(-2f, 2, 0),
+            new Vector3(0f, 2, 0),
+            new Vector3(2f, 2, 0)
+            };
 
+            foreach (var position in positions)
+            {
+                PoolManager.poolInstance.GetEnemy(0, position, Quaternion.identity);
+            }
+        }
         else if (StageManager.stageInstance.stage >= 1)
         {
-            int patternIndex = Random.Range(0, canSpawnList.Count); // 랜덤으로 패턴 선택
+            // 패턴에 기반한 스폰 로직
+            int patternIndex = Random.Range(0, canSpawnList.Count);
             SpawnPattern selectedPattern = canSpawnList[patternIndex];
 
-            int itemEnemyRandomRate = Random.Range(0, 100);
-            bool isItemEnemySpawn = itemEnemyRandomRate < 20 ? true : false; //20% 확률로 해당 패턴에서 아이템을 생성하는 적 생성
+            bool isItemEnemySpawn = Random.Range(0, 100) < 20; // 20% 확률로 아이템 생성 적 생성
 
-            for(int i =0; i< selectedPattern.amount; i++)
+            // 현재 패턴에 대해 stopCount 값을 설정
+            int stopCountToUse = stopIndex;
+
+            for (int i = 0; i < selectedPattern.amount; i++)
             {
                 GameObject enemy = PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, selectedPattern.positions[i], selectedPattern.spawnZone.rotation);
-                if(i == selectedPattern.amount - 1)
+                EnemyObject enemyObj = enemy.GetComponent<EnemyObject>();
+
+                // 패턴 내의 모든 적들에게 동일한 stopCount 값 할당
+                enemyObj.stopCount = stopCountToUse;
+                
+                if (isItemEnemySpawn && i == selectedPattern.amount - 1)
                 {
-                    enemy.GetComponent<EnemyObject>().MakeEnemyDropItem = true;
+                    enemyObj.MakeEnemyDropItem = true;
                 }
+               
             }
 
-            
+            stopIndex++;
+            if (stopIndex > 3)
+            {
+                stopIndex = 1;
+            }
         }
     }
 
+
+
     public void SpawnBoss(int bossId)
     {
-        StopCoroutine(GameManager.gameInstance.SpawnCoroutine);
+        
+        if (GameManager.gameInstance.SpawnCoroutine != null)
+        {
+            StopCoroutine(GameManager.gameInstance.SpawnCoroutine);
+            GameManager.gameInstance.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
+        }
 
         isBossSpawned = true;
         isBossDown = false;

@@ -12,11 +12,6 @@ public class ShooterUp : ItemBasic
         playerShooter = GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
     }
     
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

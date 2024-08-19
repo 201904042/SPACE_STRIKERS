@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public bool isGameClear; //클리어 조건을 만족하였는가
     public bool isPerfectClear; //플레이어가 데미지를 입지 않았나
 
-    public Coroutine SpawnCoroutine;
+    public Coroutine SpawnCoroutine = null;
     public bool isBattleOn
     {
         get => isBattleStart;
@@ -30,16 +30,20 @@ public class GameManager : MonoBehaviour
             isBattleStart = value;
             if (isBattleStart)
             {
+                if (SpawnCoroutine != null)
+                {
+                    StopCoroutine(SpawnCoroutine);
+                }
                 SpawnCoroutine = StartCoroutine(SpawnManager.spawnInstance.SpawnEnemyTroops());
-                SpawnManager.spawnInstance.SpawnBoss(31); //임시로 시작하자마자 보스 스폰
+                
             }
             else
             {
-                if(SpawnCoroutine == null)
+                if (SpawnCoroutine != null)
                 {
-                    return;
+                    StopCoroutine(SpawnCoroutine);
+                    SpawnCoroutine = null;
                 }
-                StopCoroutine(SpawnCoroutine);
             }
         }
     }
@@ -61,8 +65,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         score = 0;
-        isBattleOn = true;
+        isBattleOn = false;
         isGameClear = false;
+    }
+
+    [ContextMenu("BattleStart")]
+    public void BattleStart()
+    {
+        isBattleOn = true;
     }
 
     private void Update()
@@ -104,5 +114,11 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    public void SpawnBossBtn()
+    {
+        SpawnManager.spawnInstance.SpawnBoss(31);
     }
 }

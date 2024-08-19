@@ -31,7 +31,6 @@ public class SkillBtn : MonoBehaviour
         LvText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         explainText = transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
         isButtonSelected = false;
-        Debug.Log("awake");
     }
 
     private void FindSkillInPlayerSkill()

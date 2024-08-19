@@ -10,7 +10,7 @@ public class Enemy_Common : EnemyAct
     private float curProjAngle; //현재 발사체의 각도
 
     private int stopTrigCount; //몇번 스탑라인을 통과해야 멈출지
-    private int stopCount; //스탑라인을 통과한 수
+    
     private float enemyAttackTime; //적이 공격하는 시간
     private float enemyAttackDealy; //공격과 공격 사이의 딜레이
 
@@ -38,7 +38,6 @@ public class Enemy_Common : EnemyAct
     {
         isMove = true;
         stopTrigCount = 0;
-        stopCount = Random.Range(1, 3);
         enemyAttackTime = 10;
         enemyAttackDealy = 2;
         SetAttackPref();
@@ -106,7 +105,7 @@ public class Enemy_Common : EnemyAct
 
     private void Attack()
     {
-        Debug.Log("공격");
+
         BulletAttack(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
     }
 

@@ -7,28 +7,48 @@ public class ItemBasic : MonoBehaviour
     public PlayerStat playerStat;
 
     private Rigidbody2D itemRigid;
-    public float liveTime;
+    public float liveTime = 10f; // Default liveTime value
+
+    private Coroutine liveTimeCoroutine;
 
     protected virtual void Awake()
     {
         playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
-
         itemRigid = GetComponent<Rigidbody2D>();
         liveTime = 10f;
-        ApplyRandomForce();
     }
 
-    protected virtual void Update()
+    private void OnEnable()
     {
-        liveTime -= Time.deltaTime;
-        if (liveTime < 0)
+        ApplyRandomForce();
+        // Start the coroutine to handle liveTime
+        if (liveTimeCoroutine != null)
         {
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            StopCoroutine(liveTimeCoroutine);
+        }
+        liveTimeCoroutine = StartCoroutine(LiveTimeCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        // Ensure coroutine is stopped if the object is disabled before liveTime expires
+        if (liveTimeCoroutine != null)
+        {
+            StopCoroutine(liveTimeCoroutine);
         }
     }
-    void ApplyRandomForce()
+
+    private IEnumerator LiveTimeCoroutine()
     {
-        Vector2 randomDirection = Random.insideUnitCircle.normalized; //·£´ýÇÑ ¹æÇâ
+
+        yield return new WaitForSeconds(liveTime);
+        Debug.Log("return item");
+        PoolManager.poolInstance.ReleasePool(gameObject);
+    }
+
+    private void ApplyRandomForce()
+    {
+        Vector2 randomDirection = Random.insideUnitCircle.normalized; // Random direction
         float force = 5f;
         itemRigid.AddForce(randomDirection * force, ForceMode2D.Impulse);
     }
@@ -41,7 +61,7 @@ public class ItemBasic : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Border"))
         {
-            if(collision.gameObject.name=="Top"|| collision.gameObject.name == "Bottom")
+            if (collision.gameObject.name == "Top" || collision.gameObject.name == "Bottom")
             {
                 itemRigid.velocity = new Vector2(itemRigid.velocity.x, -itemRigid.velocity.y);
             }
@@ -51,5 +71,4 @@ public class ItemBasic : MonoBehaviour
             }
         }
     }
-    
 }

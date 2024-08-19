@@ -11,6 +11,7 @@ public class EnemyAct : EnemyObject
     public float laserAttackTime = 3;
     public float defaultSpeed = 1;
 
+    
     protected override void Awake()
     {
         base.Awake();
@@ -24,6 +25,10 @@ public class EnemyAct : EnemyObject
     protected override void OnEnable()
     {
         base.OnEnable();
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
     }
 
     protected override void Update()

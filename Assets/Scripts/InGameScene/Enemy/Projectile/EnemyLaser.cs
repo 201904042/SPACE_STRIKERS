@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyLaser : EnemyProjectile
@@ -24,6 +22,8 @@ public class EnemyLaser : EnemyProjectile
     private float defaultLaserWidth = 0.3f;
 
     private Coroutine laserCoroutine;
+    private bool isLaserCoroutineRunning = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -36,6 +36,7 @@ public class EnemyLaser : EnemyProjectile
     {
         base.OnEnable();
 
+        // 초기화
         dangerMark.gameObject.SetActive(true);
         coreLaser.gameObject.SetActive(false);
         outLineLaser.gameObject.SetActive(false);
@@ -43,19 +44,36 @@ public class EnemyLaser : EnemyProjectile
         startPointObj = null;
         endPointObj = null;
         startPoint = Vector2.zero;
-        endPoint = Vector2.zero; 
+        endPoint = Vector2.zero;
+        laserCoroutine = null;
+        isLaserCoroutineRunning = false;
     }
 
     private void OnDisable()
     {
-        if (laserCoroutine != null) 
+        if (laserCoroutine != null)
         {
             StopCoroutine(laserCoroutine);
+            isLaserCoroutineRunning = false;
         }
     }
 
     public void LaserActive(GameObject AttackObj, float LaserTime = 3f, float ChargingTime = 1f, float LaserWidthRate = 1, GameObject EndObj = null)
     {
+        if (AttackObj == null)
+        {
+            Debug.LogError("LaserActive: AttackObj is null.");
+            return;
+        }
+
+        // 이미 코루틴이 실행 중이면 중단
+        if (laserCoroutine != null && isLaserCoroutineRunning)
+        {
+            StopCoroutine(laserCoroutine);
+            isLaserCoroutineRunning = false;
+        }
+
+        // 초기화
         startPointObj = AttackObj;
         if (EndObj != null)
         {
@@ -71,12 +89,14 @@ public class EnemyLaser : EnemyProjectile
             endPoint = endPointObj.transform.position;
         }
 
+        // 새로운 코루틴 시작
         laserCoroutine = StartCoroutine(LaserAttackCoroutine());
     }
-    
 
     private IEnumerator LaserAttackCoroutine()
     {
+        isLaserCoroutineRunning = true;
+
         float chargingTimer = 0f;
 
         dangerMark.startWidth = defaultLaserWidth;
@@ -96,8 +116,13 @@ public class EnemyLaser : EnemyProjectile
 
         // Laser phase
         yield return new WaitForSeconds(laserTime);
-
+        isLaserCoroutineRunning = false;
         // Release laser
         PoolManager.poolInstance.ReleasePool(gameObject);
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        
     }
 }

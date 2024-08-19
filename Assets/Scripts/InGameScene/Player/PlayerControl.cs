@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -20,29 +19,31 @@ public class PlayerControl : MonoBehaviour
 
     private float basicSpeed = 3f;
 
-    public bool isAbleToMove; //움직이기가 가능한상태
-    public bool isInvincibleState; //무적상태
-    public bool isShootable; //발사가 가능한 상태
-    public bool isHitted; //데미지를 받은 상태
-
+    public bool isAbleToMove; // 움직이기가 가능한 상태
+    public bool isInvincibleState; // 무적 상태
+    public bool isShootable; // 발사가 가능한 상태
+    public bool isHitted; // 데미지를 받은 상태
+    private bool isKnockbackRun;
     private float invincibleDuration = 3f;
 
     private void Awake()
     {
-        playerStat = transform.GetComponent<PlayerStat>();
-        playerSprite = transform.GetComponent<SpriteRenderer>();
+        playerStat = GetComponent<PlayerStat>();
+        playerSprite = GetComponent<SpriteRenderer>();
 
-        playerObjSpeed = basicSpeed + (playerStat.moveSpeed/5);
+        playerObjSpeed = basicSpeed + (playerStat.moveSpeed / 5);
 
         isShootable = true;
         isHitted = false;
         isInvincibleState = false;
         isAbleToMove = true;
+        isKnockbackRun = false;
+        // PlayerInput 인스턴스는 Awake에서 한 번만 생성
+        playerInput = new PlayerInput();
     }
 
     private void OnEnable()
     {
-        playerInput = new PlayerInput();
         playerInput.Player.Enable();
         playerInput.Player.Move.performed += OnPlayerMove;
         playerInput.Player.Skill.performed += OnPlayerSkill;
@@ -50,7 +51,6 @@ public class PlayerControl : MonoBehaviour
 
     private void OnDisable()
     {
-        playerInput = new PlayerInput();
         playerInput.Player.Move.performed -= OnPlayerMove;
         playerInput.Player.Skill.performed -= OnPlayerSkill;
         playerInput.Player.Disable();
@@ -65,7 +65,6 @@ public class PlayerControl : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
     }
-
 
     private void Update()
     {
@@ -83,57 +82,42 @@ public class PlayerControl : MonoBehaviour
     private void PlayerMove()
     {
         float h = moveInput.x;
-        if ((isRightCollide && h == 1) || (isLeftCollide && h == -1)) h = 0;
-
         float v = moveInput.y;
-        if ((isTopCollide && v == 1) || (isBottomCollide && v == -1)) v = 0;
 
-        Vector3 curPos = transform.position;
-        Vector3 nextPos = new Vector3(h, v, 0) * playerObjSpeed * Time.deltaTime;
+        // 충돌에 따른 이동 제한 처리
+        if ((isRightCollide && h > 0) || (isLeftCollide && h < 0)) h = 0;
+        if ((isTopCollide && v > 0) || (isBottomCollide && v < 0)) v = 0;
 
-        transform.position = curPos + nextPos;
+        Vector3 moveDirection = new Vector3(h, v, 0) * playerObjSpeed * Time.deltaTime;
+        transform.position += moveDirection;
     }
 
     private void MakePlayerTranslucent()
     {
-        if (isInvincibleState)
-        {
-            playerSprite.color = new Color(1, 1, 1, 0.5f);
-        }
-        else
-        {
-            playerSprite.color = new Color(1, 1, 1, 1);
-        }
+        playerSprite.color = isInvincibleState
+            ? new Color(1, 1, 1, 0.5f)
+            : new Color(1, 1, 1, 1f);
     }
 
     private void KeepPlayerInViewport()
     {
-        // 플레이어의 현재 월드 좌표를 가져옵니다.
         Vector3 playerPos = transform.position;
-
-        // 현재 플레이어의 월드 좌표를 뷰포트 좌표로 변환합니다.
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(playerPos);
 
-        // UI가 차지하는 뷰포트 영역을 고려하여 제한을 설정합니다.
-        float uiPaddingX = 0.0f; // UI에 가로 패딩이 없으면 0
-        float uiPaddingY = 0.0f; // 세로 패딩, 이 예제에서는 사용하지 않음
-        float headerViewportHeight = 50f / Screen.height; // 헤더 UI의 뷰포트 높이
-        float footerViewportHeight = 75f / Screen.height; // 푸터 UI의 뷰포트 높이
+        float uiPaddingX = 0.0f;
+        float headerViewportHeight = 50f / Screen.height;
+        float footerViewportHeight = 75f / Screen.height;
 
-        // 뷰포트 좌표를 제한
         viewportPos.x = Mathf.Clamp(viewportPos.x, uiPaddingX, 1 - uiPaddingX);
         viewportPos.y = Mathf.Clamp(viewportPos.y, footerViewportHeight, 1 - headerViewportHeight);
 
-        // 제한된 뷰포트 좌표를 다시 월드 좌표로 변환합니다.
-        playerPos = Camera.main.ViewportToWorldPoint(viewportPos);
-
-        // 변환된 월드 좌표를 플레이어의 위치로 설정합니다.
-        transform.position = playerPos;
+        transform.position = Camera.main.ViewportToWorldPoint(viewportPos);
     }
+
     public void PlayerDamagedAction(GameObject attack_obj)
     {
-        if (isInvincibleState == true) { return; }
-        
+        if (isInvincibleState) return;
+
         Collider2D attackingCollider = attack_obj.GetComponent<Collider2D>();
         if (attackingCollider != null)
         {
@@ -142,16 +126,21 @@ public class PlayerControl : MonoBehaviour
             PlayerKnockBack(attackingCollider);
         }
     }
-    
+
     public void PlayerKnockBack(Collider2D collision)
     {
         Vector2 curPosition = transform.position;
         Vector2 targetPosition = CalculateTargetPos(curPosition, collision);
 
-        StartCoroutine(PushbackLerp(curPosition, targetPosition));
+        // 코루틴이 실행 중이 아니면 실행
+        if (!isKnockbackRun)
+        {
+            StartCoroutine(PushbackLerp(curPosition, targetPosition));
+        }
     }
 
-    private Vector2 CalculateTargetPos(Vector3 curpos,Collider2D col) //뒤로 밀리는 값계산
+
+    private Vector2 CalculateTargetPos(Vector3 curpos, Collider2D col)
     {
         Vector2 pushDirection = (curpos - col.transform.position).normalized;
         return curpos - new Vector3(-pushDirection.x, -pushDirection.y, 0) * 2;
@@ -159,39 +148,40 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator PushbackLerp(Vector3 startPos, Vector3 endPos)
     {
+        isKnockbackRun = true; // 코루틴 실행 상태 설정
         float startTime = Time.time;
         float elapseTime = 0f;
 
-        while(elapseTime < 0.1f)
+        while (elapseTime < 0.1f)
         {
+            // 충돌 상태를 확인
             if (isTopCollide || isBottomCollide || isLeftCollide || isRightCollide)
             {
                 break;
             }
-            float t = Mathf.Clamp01(elapseTime / 0.1f); // 시간의 경과 비율
-            transform.position = Vector3.Lerp(startPos, endPos, t); // 선형 보간을 사용하여 플레이어 위치 업데이트
+
+            float t = Mathf.Clamp01(elapseTime / 0.1f);
+            transform.position = Vector3.Lerp(startPos, endPos, t);
             elapseTime = Time.time - startTime;
+
             yield return null;
         }
+
+        isKnockbackRun = false; // 코루틴 종료 상태 설정
     }
 
-    /// <summary>
-    /// 플레이어의 무적시간 코루틴
-    /// </summary>
     private IEnumerator invinciblePlayer(float invincible_time)
     {
         isInvincibleState = true;
-
         yield return new WaitForSeconds(invincible_time);
-        
         isInvincibleState = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Border") 
+        if (collision.CompareTag("Border"))
         {
-            switch (collision.gameObject.name)
+            switch (collision.name)
             {
                 case "Top":
                     isTopCollide = true; break;
@@ -200,15 +190,14 @@ public class PlayerControl : MonoBehaviour
                 case "Right":
                     isRightCollide = true; break;
                 case "Left":
-                    isLeftCollide = true; break;
+                    isLeftCollide = false; break;
             }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //적이나 적 발사체에 계속 닿고 있다
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.CompareTag("Enemy"))
         {
             playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.enemyDamage / 2, collision.gameObject);
         }
@@ -216,9 +205,9 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Border")
+        if (collision.CompareTag("Border"))
         {
-            switch (collision.gameObject.name)
+            switch (collision.name)
             {
                 case "Top":
                     isTopCollide = false; break;

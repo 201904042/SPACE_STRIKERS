@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyLaser_Core : MonoBehaviour
 {
     private float damage;
-    private void Awake()
+    private void OnEnable()
     {
         damage = GetComponentInParent<EnemyLaser>().damage;
     }

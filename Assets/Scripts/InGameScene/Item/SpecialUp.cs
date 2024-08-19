@@ -11,11 +11,6 @@ public class SpecialUp : ItemBasic
         playerSpecial = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);

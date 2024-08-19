@@ -11,11 +11,6 @@ public class PowUp : ItemBasic
         PlayerSkill = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

@@ -7,7 +7,6 @@ public class Enemy_Elite : EnemyAct
     [SerializeField] private int curProjNum;
     [SerializeField] private float curProjAngle;
     private int stopTrigCount;
-    private int stopCount;
     private float enemyAttackTime;
     private float enemyAttackDealy;
 

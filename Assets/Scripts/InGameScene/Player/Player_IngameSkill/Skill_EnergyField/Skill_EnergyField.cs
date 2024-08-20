@@ -36,10 +36,11 @@ public class Skill_EnergyField : PlayerProjectile
         StartCoroutine(ActiveTimer(activeTime));
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         StopCoroutine(ActiveTimer(activeTime));
         StopCoroutine(DealDamage());
+        base.OnDisable();
     }
 
     protected override void Init()

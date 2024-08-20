@@ -5,12 +5,29 @@ using UnityEngine;
 public class Skill_ShieldGenerator : Ingame_Active
 {
     [Header("쉴드 고유 스텟")]
-    public bool isPenetrate;
-    public bool isShieldOn;
+    private bool isShieldOn;
+
+    public bool ShieldOn
+    {
+        get => isShieldOn;
+        set
+        {
+            isShieldOn = value;
+
+            if (!value && coolTimerCoroutine == null)
+            {
+                coolTimerCoroutine = StartCoroutine(StartCoolTime(coolTime));
+            }
+            
+        }
+    }
+
+    private Coroutine coolTimerCoroutine;
+
     protected override void Awake()
     {
         base.Awake();
-       
+        
     }
 
     protected override void OnEnable()
@@ -23,41 +40,40 @@ public class Skill_ShieldGenerator : Ingame_Active
     protected override void Init()
     {
         base.Init();
+        coolTimerCoroutine = null;
         isLevelUp = false;
     }
 
     protected override void Update()
     {
         base.Update();
-        if (isLevelUp)
+        if (isLevelUp) //레벨업을 할경우 쉴드 해제
         {
-            if (transform.GetChild(0).gameObject == null && transform.GetChild(0).gameObject.activeSelf == true)
+            if (transform.GetChild(0).gameObject != null && transform.GetChild(0).gameObject.activeSelf == true)
             {
+                //레벨업을 했는데 쉴드가 작동중이라면 쉴드를 해제
                 transform.GetChild(0).gameObject.SetActive(false);
-                isShieldOn = false;
+                ShieldOn = false;
             }
             LevelSet(level);
             isLevelUp = false;
         }
-
-        if (!activated && !isShieldOn)
-        {
-            StartCoroutine(ActiveSkillInDelay(coolTime));
-        }
     }
 
-    private IEnumerator ActiveSkillInDelay(float coolTime)
+    private IEnumerator StartCoolTime(float coolTime)
     {
-        activated = true;
+        Debug.Log("쉴드 쿨타임 시작");
+
         yield return new WaitForSeconds(coolTime);
-        activated = false;
         GenerateShield();
+
+        coolTimerCoroutine = null;
     }
 
     private void GenerateShield()
     {
         PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Shield, transform.position, transform.rotation);
-        isShieldOn = true;
+        ShieldOn = true;
     }
 
 

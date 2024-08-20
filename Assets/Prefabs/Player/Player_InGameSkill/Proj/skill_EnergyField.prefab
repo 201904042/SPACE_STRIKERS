@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
   m_Color: {r: 0.68939924, g: 0, b: 1, a: 0.5019608}
   m_FlipX: 0
@@ -99,7 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7af19c7e1df8e48846b82f332859b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   playerStat: {fileID: 0}
   launcher: {fileID: 0}
   hasHit: 0
@@ -108,6 +107,7 @@ MonoBehaviour:
   isShootable: 0
   enemyDamage: 0
   skillRange: 0
+  hittedEnemy: []
 --- !u!50 &-4317685774816624596
 Rigidbody2D:
   serializedVersion: 4

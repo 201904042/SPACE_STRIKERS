@@ -60,12 +60,12 @@ public class EnemyObject : MonoBehaviour
     protected virtual void Start()
     {
         HpBarSet();
-        SetStat();
+        initStat();
     }
 
     protected virtual void OnEnable()
     {
-        SetStat();
+        initStat();
         StartCoroutine(SetEliminate());
 
         isEnemyDropItem = false;
@@ -87,7 +87,7 @@ public class EnemyObject : MonoBehaviour
     {
         if (enemyStat.enemyId != curEnemyId)
         {
-            SetStat();
+            initStat();
         }
 
         if (curHp <= 0)
@@ -104,7 +104,7 @@ public class EnemyObject : MonoBehaviour
         HpBarUpdate();
     }
 
-    private void SetStat()
+    private void initStat()
     {
         foreach (var enemy in enemyData.EnemyList.enemy)
         {
@@ -118,7 +118,8 @@ public class EnemyObject : MonoBehaviour
         isAttackReady = true;
         isEnemySlow = false;
         isEliminatable = false;
-
+        isEnemyDropItem=false;
+        UpdateSpriteColor();
     }
 
     private void UpdateEnemyStat(Enemy enemy)

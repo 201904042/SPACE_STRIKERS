@@ -33,7 +33,6 @@ public class Enemy_Elite : EnemyAct
     {
         isMove = true;
         stopTrigCount = 0;
-        stopCount = Random.Range(1, 3);
         enemyAttackTime = 10;
         enemyAttackDealy = 2;
         SetAttackPref();

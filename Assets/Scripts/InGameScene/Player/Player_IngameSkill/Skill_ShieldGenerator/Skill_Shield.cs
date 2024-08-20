@@ -9,7 +9,6 @@ public class Skill_Shield : MonoBehaviour
     private GameObject shieldGenerator;
     private float shieldDamage;
     public float curDamagerate;
-    private bool isFirstSet;
 
     private void Awake()
     {
@@ -26,7 +25,6 @@ public class Skill_Shield : MonoBehaviour
 
     private void Init()
     {
-        isFirstSet = false;
         shieldDamage = playerStat.damage * shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
         curDamagerate = shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
     }
@@ -51,7 +49,7 @@ public class Skill_Shield : MonoBehaviour
             }
 
             playerControl.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
-            shieldGenerator.GetComponent<Skill_ShieldGenerator>().isShieldOn = false;
+            shieldGenerator.GetComponent<Skill_ShieldGenerator>().ShieldOn = false;
             PoolManager.poolInstance.ReleasePool(gameObject);
         }   
     }

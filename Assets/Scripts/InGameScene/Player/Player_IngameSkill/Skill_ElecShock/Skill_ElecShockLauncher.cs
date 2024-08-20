@@ -42,7 +42,7 @@ public class SkillElecShockLauncher : Ingame_Active
             LevelSet(level);
         }
 
-        if (!activated && SpawnManager.spawnInstance.activeEnemyList.Count != 0)
+        if (!activated)
         {
             StartCoroutine(ActiveSkillInDelay(coolTime));
         }

@@ -11,6 +11,8 @@ public class Skill_EnergyFieldGenerator : Ingame_Active
     public bool isShootable;
     private GameObject activeField;
 
+    private Coroutine cooltimeCoroutine;
+
     protected override void Awake()
     {
         base.Awake();
@@ -28,6 +30,7 @@ public class Skill_EnergyFieldGenerator : Ingame_Active
     {
         base.Init();
         level = transform.GetComponent<SkillInterface>().level;
+        cooltimeCoroutine = null;
     }
 
     protected override void Update()
@@ -35,31 +38,35 @@ public class Skill_EnergyFieldGenerator : Ingame_Active
         base.Update();
         if (isLevelUp)
         {
-            activated = false;
+            if(cooltimeCoroutine != null)
+            {
+                StopCoroutine(cooltimeCoroutine);
+                cooltimeCoroutine = null;
+            }
             if (activeField != null)
             {
                 PoolManager.poolInstance.ReleasePool(activeField.gameObject);
             }
             LevelSet(level);
+            activated = false;
         }
 
-        if (!activated)
+        if (!activated && cooltimeCoroutine == null)
         {
-            StartCoroutine(ActiveSkillInDelay(coolTime));
+            cooltimeCoroutine = StartCoroutine(ActiveSkillInDelay(coolTime));
         }
     }
 
     private IEnumerator ActiveSkillInDelay(float coolTime)
     {
-        Debug.Log("액티브");
         activated = true;
-
+        Debug.Log("액티브 에너지 필드 딜레이");
         Skill_EnergyField energyField = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_EnergyField,
                 transform.position, transform.rotation).GetComponent<Skill_EnergyField>();
         activeField = energyField.gameObject;
 
         yield return new WaitForSeconds(coolTime);
-
+        cooltimeCoroutine = null;
         activated = false;
     }
 

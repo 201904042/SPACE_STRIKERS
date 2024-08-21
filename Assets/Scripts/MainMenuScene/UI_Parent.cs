@@ -23,7 +23,7 @@ public class UI_Parent : MonoBehaviour
     protected virtual void Awake()
     {
         UIs = GameObject.Find("UIs").transform;
-        data = GameObject.Find("UI_Manager").GetComponent<AccountData>();
+        data = GameObject.Find("UIManager").GetComponent<AccountData>();
         Main = UIs.GetChild(0).gameObject;
         Planet = UIs.GetChild(1).gameObject;
         Stage = UIs.GetChild(2).gameObject;

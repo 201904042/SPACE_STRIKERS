@@ -11,7 +11,7 @@ public class invenScroll : MonoBehaviour
     public GameObject consContent;
 
     public GameObject UIManager;
-    private AccountData accountData;
+    private AccountJsonReader accountData;
     public GameObject partsInven;
     public GameObject ingredInven;
     public GameObject consInven;
@@ -21,7 +21,7 @@ public class invenScroll : MonoBehaviour
     private void Awake()
     {
         invenScrollRect = gameObject.GetComponent<ScrollRect>();
-        accountData = UIManager.GetComponent<AccountData>();
+        accountData = UIManager.GetComponent<AccountJsonReader>();
         
     }
 

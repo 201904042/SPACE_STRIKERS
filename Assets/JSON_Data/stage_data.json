@@ -35,7 +35,7 @@
       },
       {
          "stageCode": 3,
-         "stageEnemy": [1,2,11,12],
+         "enemyCode": [1,2,11,12],
          "stageFirstGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
@@ -51,7 +51,7 @@
       },
       {
          "stageCode": 4,
-         "stageEnemy": [1,2,11,12],
+         "enemyCode": [1,2,11,12],
          "stageFirstGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},
@@ -67,7 +67,7 @@
       },
       {
          "stageCode": 5,
-         "stageEnemy": [1,2,11,12,31],
+         "enemyCode": [1,2,11,12,31],
          "stageFirstGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},

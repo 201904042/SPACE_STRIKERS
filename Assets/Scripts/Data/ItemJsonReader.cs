@@ -44,7 +44,7 @@ public class ItemConsList
     public ItemCons[] consumables;
 }
 
-public class ItemsData : MonoBehaviour
+public class ItemJsonReader : MonoBehaviour
 {
     private string itemDataPath = "Assets/JSON_Data/item_data.json";
 

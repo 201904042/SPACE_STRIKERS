@@ -1,10 +1,7 @@
 using UnityEngine;
 using System.IO;
 
-
-
-
-public class AccountData : MonoBehaviour
+public class AccountJsonReader : MonoBehaviour
 {
     private string filePath = "Assets/JSON_Data/account_data.json";
 

@@ -71,7 +71,7 @@ public class PlayerAccount
 }
 
 
-[System.Serializable] //AccountData
+[System.Serializable] //AccountJsonReader
 public class Parts
 {
     public int PartsId;

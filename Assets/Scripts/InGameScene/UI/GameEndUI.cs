@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-    public class GameEndUI : ItemsData
+    public class GameEndUI : ItemJsonReader
 {
     public TextAsset accountData;
 

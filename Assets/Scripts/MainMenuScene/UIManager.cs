@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     //Interface
     public GameObject OptionInterface;
+    public GameObject StageInterface;
 
     private void Awake()
     {
@@ -52,13 +53,15 @@ public class UIManager : MonoBehaviour
         LoadingUI = FindObjectOfType<LoadingUI>().gameObject;
 
         OptionInterface = FindObjectOfType<OptionPanel>().gameObject;
+        StageInterface = FindObjectOfType<StageInterface>().gameObject;
 
-        
+
     }
 
     private void UIInit()
     {
         HeaderUIObj.SetActive(true);
+
         MainUIObj.SetActive(true);
         PlanetUIObj.SetActive(false);
         StageUIObj.SetActive(false);
@@ -66,7 +69,10 @@ public class UIManager : MonoBehaviour
         StoreUIObj.SetActive(false);
         InventoryUIObj.SetActive(false);
         LabotoryUIObj.SetActive(false);
+
         LoadingUI.SetActive(false);
         OptionInterface.SetActive(false);
+        StageInterface.SetActive(false);
+
     }
 }

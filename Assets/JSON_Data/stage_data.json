@@ -2,7 +2,7 @@
    "stage": [
       {
          "stageCode": 1,
-         "stageEnemy": [1,2],
+         "enemyCode": [1,2],
          "stageFirstGain": [
             {"itemName": "미네랄","itemType":"money", "itemCode":0, "itemAmount": 500},
             {"itemName": "랜덤재료1","itemType":"randomIngred", "itemCode":1, "itemAmount": 3},

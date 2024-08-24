@@ -4,158 +4,151 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageUI : UI_Parent
+public class StageUI : MainUIs
 {
-    public PlanetUI planetUI;
+    public int clearedStageNum;
+    public int curStage;
+    public int curPlanet;
 
-    private int maxStage;
-    private int curStage;
-    private int curPlanet;
+    private Transform Stages;
 
-    private GameObject[] planets = new GameObject[4];
-    private Transform stagesPnt;
 
-    protected override void Awake()
+
+    protected override void OnEnable()
     {
-        base.Awake();
-        stagesPnt = transform.GetChild(0).GetChild(0).GetChild(0);
-        maxStage = 0;
+        base.OnEnable();
+
         curStage = 0;
-        curPlanet = 0;
-        PlanetSetting();
+        curPlanet = PlayerPrefs.GetInt("ChosenPlanet");
+        PlanetsUISet();
+        Stages = transform.GetChild(0).GetChild(curPlanet - 1).GetChild(0);
+        FindMaxStageInData();
+        StageBtnSet();
+        SetListener();
     }
 
-    private void PlanetSetting() {
-        for (int i = 0; i < planets.Length; i++) {
-            planets[i] = transform.GetChild(0).GetChild(i).gameObject;
-        }
-    }
-    
-
-    void Update()
+    private void PlanetsUISet()
     {
-        if(gameObject.activeSelf & curPlanet == 0)
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
-            curPlanet = planetUI.planetId;
-            for (int i = 1; i < planets.Length+1; i++)
+            if (i == curPlanet - 1)
             {
-                planets[i-1].SetActive(false);
+                transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
             }
-            planets[curPlanet-1].SetActive(true);
-            StageSetting();
+            else
+            {
+                transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
-    private void StageSetting()
+
+    private void FindMaxStageInData()
     {
         if (curPlanet == 1)
         {
-            maxStage = data.playerAccountList.Account[0].clearedPlanet1Stage;
+            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet1Stage;
         }
         else if (curPlanet == 2)
         {
-            maxStage = data.playerAccountList.Account[0].clearedPlanet2Stage;
+            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet2Stage;
         }
         else if (curPlanet == 3)
         {
-            maxStage = data.playerAccountList.Account[0].clearedPlanet3Stage;
+            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet3Stage;
         }
         else if (curPlanet == 4)
         {
-            maxStage = data.playerAccountList.Account[0].clearedPlanet4Stage;
+            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet4Stage;
         }
-
-        stageColorSet();
     }
 
-    private void stageColorSet() {
-        for (int i = 0; i < maxStage; i++)
+    private void SetListener()
+    {
+        for (int i = 0; i < Stages.childCount; i++)
         {
-            stagesPnt.GetChild(i).GetComponent<Button>().interactable = true;
+            int stageNumber = i + 1; // 스테이지 번호 설정 (1부터 시작)
+            Button stageButton = Stages.GetChild(i).GetComponentInChildren<Button>();
 
-            stagesPnt.GetChild(i).GetChild(0).GetComponentInChildren<Image>().color = Color.green;
-            if (i == maxStage - 1)
+            if (stageButton != null)
             {
-                stagesPnt.GetChild(i).GetChild(0).GetComponentInChildren<Image>().color = Color.white;
-                if ((i + 1) % 5 == 0)
+                // AddListener를 사용하여 OnStageButtonClicked 메서드에 현재 스테이지 번호를 전달
+                stageButton.onClick.AddListener(() => OnStageButtonClicked(stageNumber));
+            }
+        }
+
+        Transform Buttons = transform.GetChild(1);
+        Buttons.GetChild(0).GetComponent<Button>().onClick.AddListener(GotoPlanet);
+    }
+
+    //클리어한 스테이지 초록
+    //잠겨있는 스테이지 하얀색 언인터랙트
+    //목표 스테이지 하얀색
+    //선택 스테이지 노란색
+    private void StageBtnSet()
+    {
+        for (int i = 0; i < Stages.childCount; i++)
+        {
+            int stageNum = i + 1;
+            if (stageNum <= clearedStageNum) // clearedStageNum 이전의 스테이지들은 녹색
+            {
+                Stages.GetChild(i).GetComponent<Button>().interactable = true;
+                Stages.GetChild(i).GetChild(0).GetComponentInChildren<Image>().color = Color.green;
+            }
+            else
+            {
+                // clearedStageNum 이후의 스테이지들에 대한 처리
+                
+
+                // 첫 번째 잠금 해제되지 않은 스테이지는 활성화
+                if (stageNum == clearedStageNum+1)
                 {
-                    stagesPnt.GetChild(i).GetChild(0).GetComponentInChildren<Image>().color = Color.red;
+                    Stages.GetChild(i).GetComponent<Button>().interactable = true;
+                    if (stageNum % 5 == 0)
+                    {
+                        Stages.GetChild(i).GetChild(0).GetComponentInChildren<Image>().color = Color.red; // 5의 배수면 빨간색
+                    }
+                    else
+                    {
+                        Stages.GetChild(i).GetChild(0).GetComponentInChildren<Image>().color = Color.white; // 그 외에는 흰색
+                    }
+                }
+                else
+                {
+                    Stages.GetChild(i).GetComponent<Button>().interactable = false; // 나머지 스테이지들은 비활성화
                 }
             }
         }
     }
 
-    public void BackBtn()
+
+    public void GotoPlanet()
     {
-        gameObject.SetActive(false);
-        Planet.SetActive(true);
         curPlanet = 0;
         curStage = 0;
+        ChangeUI(UIManager.UIInstance.PlanetUIObj);
     }
-    public void NextBtn()
+    private void OpenStageInterface()
     {
-        PlayerPrefs.SetInt("ChosenStage",curStage);
-        gameObject.SetActive(false);
-        Ready.SetActive(true);
+        PlayerPrefs.SetInt("ChosenStage", curStage);
+        OpenInterface(UIManager.UIInstance.StageInterface);
     }
 
-    public void stage1Btn() {
-        curStage = 1;
-        stageColorSet();
-        stagesPnt.GetChild(curStage-1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage2Btn()
+    public void CloseStageInterace()
     {
-        curStage = 2;
-        stageColorSet();
-        stagesPnt.GetChild(curStage-1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
+        CloseInterface(UIManager.UIInstance.StageInterface);
     }
-    public void stage3Btn()
+
+    public void GotoReady()
     {
-        curStage = 3;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
+        ChangeUI(UIManager.UIInstance.ReadyUIObj);
     }
-    public void stage4Btn()
+
+    private void OnStageButtonClicked(int stageNumber)
     {
-        curStage = 4;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage5Btn()
-    {
-        curStage = 5;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage6Btn()
-    {
-        curStage = 6;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage7Btn()
-    {
-        curStage = 7;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage8Btn()
-    {
-        curStage = 8;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage9Btn()
-    {
-        curStage = 9;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-    }
-    public void stage10Btn()
-    {
-        curStage = 10;
-        stageColorSet();
-        stagesPnt.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
+        curStage = stageNumber;
+        StageBtnSet(); 
+        Stages.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
+        OpenStageInterface();
     }
 
 }

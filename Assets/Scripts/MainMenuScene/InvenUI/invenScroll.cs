@@ -10,7 +10,6 @@ public class invenScroll : MonoBehaviour
     public GameObject ingredContent;
     public GameObject consContent;
 
-    public GameObject UIManager;
     private AccountJsonReader accountData;
     public GameObject partsInven;
     public GameObject ingredInven;
@@ -21,8 +20,7 @@ public class invenScroll : MonoBehaviour
     private void Awake()
     {
         invenScrollRect = gameObject.GetComponent<ScrollRect>();
-        accountData = UIManager.GetComponent<AccountJsonReader>();
-        
+        accountData = DataManager.dataInstance.accountData;
     }
 
     private void OnEnable()

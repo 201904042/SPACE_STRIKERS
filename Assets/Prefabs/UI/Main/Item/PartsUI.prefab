@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8003491222312906678}
   - component: {fileID: 5896683092742466212}
   m_Layer: 5
-  m_Name: partsInven
+  m_Name: PartsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,13 +29,12 @@ RectTransform:
   m_GameObject: {fileID: 1165857465332584291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.62877, y: 0.62877005, z: 0.62877}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8931748094654989586}
   - {fileID: 1528476381494865098}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -154,11 +153,18 @@ MonoBehaviour:
   PartsType: 
   PartsLevel: 0
   PartsRank: 
+  mainAmount: 0
   Partsability1: 
+  abilityAmount1: 0
   Partsability2: 
+  abilityAmount2: 0
   Partsability3: 
+  abilityAmount3: 0
   Partsability4: 
+  abilityAmount4: 0
   Partsability5: 
+  abilityAmount5: 0
+  PartsMainAbility: 
   itemImage: {fileID: 375528172511077287}
   rankAuraImage: {fileID: 3302221212707272166}
   partsSprite1: {fileID: -952267637, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
@@ -166,8 +172,8 @@ MonoBehaviour:
   partsSprite3: {fileID: -1218052023, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
   partsSprite4: {fileID: -766215909, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
   partsSprite5: {fileID: 404316041, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}
-  partsInformPage: {fileID: 0}
   inventoryScroll: {fileID: 0}
+  partsInformPage: {fileID: 0}
 --- !u!1 &7033409101436831552
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +186,7 @@ GameObject:
   - component: {fileID: 5445931765585299168}
   - component: {fileID: 375528172511077287}
   m_Layer: 5
-  m_Name: itmeImage
+  m_Name: PartsImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,16 +201,15 @@ RectTransform:
   m_GameObject: {fileID: 7033409101436831552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.32489833, y: 0.32489833, z: 0.32489833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8273515999170872420}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000038146973, y: -0.000005722046}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5445931765585299168
 CanvasRenderer:
@@ -227,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.41960785}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -256,7 +261,7 @@ GameObject:
   - component: {fileID: 3477790433348765091}
   - component: {fileID: 3302221212707272166}
   m_Layer: 5
-  m_Name: rankAura
+  m_Name: RankColor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,16 +276,15 @@ RectTransform:
   m_GameObject: {fileID: 7379135471762228250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4078, y: 0.4078, z: 0.4078}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8273515999170872420}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0, y: -0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3477790433348765091
 CanvasRenderer:

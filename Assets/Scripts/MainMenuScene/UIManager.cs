@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     //Interface
     public GameObject OptionInterface;
     public GameObject StageInterface;
+    public GameObject SelectCharInterface;
+    public GameObject SelectPartsInterface;
 
     private void Awake()
     {
@@ -54,7 +56,8 @@ public class UIManager : MonoBehaviour
 
         OptionInterface = FindObjectOfType<OptionPanel>().gameObject;
         StageInterface = FindObjectOfType<StageInterface>().gameObject;
-
+        SelectCharInterface = FindObjectOfType<SelectCharInterface>().gameObject;
+        SelectPartsInterface = FindObjectOfType<SelectPartsInterface>().gameObject;
 
     }
 
@@ -73,6 +76,8 @@ public class UIManager : MonoBehaviour
         LoadingUI.SetActive(false);
         OptionInterface.SetActive(false);
         StageInterface.SetActive(false);
+        SelectCharInterface.SetActive(false);
+        SelectPartsInterface.SetActive(false);
 
     }
 }

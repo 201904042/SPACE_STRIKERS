@@ -39,6 +39,7 @@ public class PlanetUI : MainUIs
             planetList.Add(planetButton);
 
             int planetIndex = i + 1;
+            planetButton.onClick.RemoveAllListeners();
             planetButton.onClick.AddListener(() => OnPlanetSelected(planetIndex));
         }
 
@@ -47,8 +48,11 @@ public class PlanetUI : MainUIs
         nextBtn = buttons.GetChild(0).GetComponent<Button>();
         prevBtn = buttons.GetChild(1).GetComponent<Button>();
 
+        nextBtn.onClick.RemoveAllListeners();
         nextBtn.onClick.AddListener(GotoStage);
         nextBtn.interactable = false;
+
+        prevBtn.onClick.RemoveAllListeners();
         prevBtn.onClick.AddListener(GotoMain);
     }
 

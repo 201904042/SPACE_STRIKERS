@@ -32,55 +32,8 @@ public class InvenUI : UI_Parent
         base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (curPlayer==0||curPlayer != ChosingCharPageObj.GetComponent<SelectCharPage>().curPlayer)
-        {
-            if (curPlayer==0)
-            {
-                curPlayer = 1;
-            }
-            else
-            {
-                curPlayer = ChosingCharPageObj.GetComponent<SelectCharPage>().curPlayer;
-            }
 
-            switch (curPlayer)
-            {
-                case 1: playerImage.GetComponent<Image>().sprite = playerImage1; break;
-                case 2: playerImage.GetComponent<Image>().sprite = playerImage2; break;
-                case 3: playerImage.GetComponent<Image>().sprite = playerImage3; break;
-                case 4: playerImage.GetComponent<Image>().sprite = playerImage4; break;
-            }
-            playerInformationSet();
-        }
-    }
-
-    private void playerStat() {
-        foreach (var player in playerstat.PlayerList.player)
-        {
-            if (player.id == curPlayer)
-            {
-                playerLv = player.level;
-                playerHp = player.hp;
-                playerDmg = player.damage;
-                playerDef = player.defence;
-                playerMSpd = player.move_speed;
-                playerASpd = player.attack_speed;
-            }
-        }
-    }
-    private void playerInformationSet() {
-        playerStat();
-        playerInformText.text =
-            "Lv : " + playerLv + "\n" +
-            "Hp : " + playerHp + "\n" +
-            "Dmg : " + playerDmg + "\n" +
-            "Def : " + playerDef + "\n" +
-            "MoveSpeed : " + playerMSpd + "\n" +
-            "AtkSpeed : " + playerASpd + "\n";
-    }
+    
 
     public void BackBtn()
     {

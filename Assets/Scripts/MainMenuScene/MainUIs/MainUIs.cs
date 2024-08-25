@@ -19,13 +19,6 @@ public class MainUIs : MonoBehaviour
     {
         Debug.Log($"{nameof(gameObject)} 초기화 완료");
     }
-
-    public void ChangeUI(GameObject targetUI)
-    {
-        targetUI.SetActive(true);
-        gameObject.SetActive(false);
-    }
-
     public void OpenInterface(GameObject targetInterface)
     {
         targetInterface.SetActive(true);
@@ -36,4 +29,9 @@ public class MainUIs : MonoBehaviour
         targetInterface.SetActive(false);
     }
 
+    public void ChangeUI(GameObject targetUI)
+    {
+        targetUI.SetActive(true);
+        gameObject.SetActive(false);
+    }
 }

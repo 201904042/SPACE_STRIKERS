@@ -13,15 +13,14 @@ public class StageUI : MainUIs
     private Transform Stages;
 
 
-
     protected override void OnEnable()
     {
         base.OnEnable();
 
         curStage = 0;
         curPlanet = PlayerPrefs.GetInt("ChosenPlanet");
-        PlanetsUISet();
         Stages = transform.GetChild(0).GetChild(curPlanet - 1).GetChild(0);
+        PlanetsUISet();
         FindMaxStageInData();
         StageBtnSet();
         SetListener();
@@ -72,18 +71,19 @@ public class StageUI : MainUIs
             if (stageButton != null)
             {
                 // AddListener를 사용하여 OnStageButtonClicked 메서드에 현재 스테이지 번호를 전달
+                stageButton.onClick.RemoveAllListeners();
                 stageButton.onClick.AddListener(() => OnStageButtonClicked(stageNumber));
             }
         }
 
         Transform Buttons = transform.GetChild(1);
+        Buttons.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
         Buttons.GetChild(0).GetComponent<Button>().onClick.AddListener(GotoPlanet);
     }
 
-    //클리어한 스테이지 초록
-    //잠겨있는 스테이지 하얀색 언인터랙트
-    //목표 스테이지 하얀색
-    //선택 스테이지 노란색
+    /// <summary>
+    /// stage의 버튼 셋
+    /// </summary>
     private void StageBtnSet()
     {
         for (int i = 0; i < Stages.childCount; i++)
@@ -119,6 +119,9 @@ public class StageUI : MainUIs
             }
         }
     }
+
+
+
 
 
     public void GotoPlanet()

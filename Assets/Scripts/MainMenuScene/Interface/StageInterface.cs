@@ -48,6 +48,10 @@ public class StageInterface : MonoBehaviour
 
         //등장 적과 획득 가능재화는 나중에 가능해지면 text 대신 이미지들로 처리할것
 
+        if(curStageData == null)
+        {
+            return;
+        }
         EnemyListPanel.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"등장 적\n{string.Join(", ", curStageData.enemyCode)}";
 
         bool isFirstClear = CheckIfFirstClear(); // 이 함수는 첫 클리어 여부를 반환하는 함수입니다.

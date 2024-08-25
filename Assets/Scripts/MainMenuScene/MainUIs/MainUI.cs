@@ -28,16 +28,19 @@ public class MainUI : MainUIs
 
         if (planetButton != null)
         {
+            planetButton.onClick.RemoveAllListeners();
             planetButton.onClick.AddListener(GotoPlanetBtn);
         }
 
         if (storeButton != null)
         {
+            storeButton.onClick.RemoveAllListeners();
             storeButton.onClick.AddListener(GotoStoreBtn);
         }
 
         if (invenButton != null)
         {
+            invenButton.onClick.RemoveAllListeners();
             invenButton.onClick.AddListener(GotoInvenBtn);
         }
 

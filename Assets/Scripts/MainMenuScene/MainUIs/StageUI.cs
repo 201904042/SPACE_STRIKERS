@@ -143,6 +143,7 @@ public class StageUI : MainUIs
 
     public void GotoReady()
     {
+        CloseStageInterace();
         ChangeUI(UIManager.UIInstance.ReadyUIObj);
     }
 

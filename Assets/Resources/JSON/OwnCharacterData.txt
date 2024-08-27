@@ -1,0 +1,14 @@
+{
+    "characterStat": [
+        {
+            "invenCode": 0,
+            "masterCode": 101,
+            "level": 1
+        },
+        {
+            "invenCode": 1,
+            "masterCode": 102,
+            "level": 1
+        }
+    ]
+}

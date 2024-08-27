@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -134,7 +136,8 @@ public class ReadyUI : MainUIs
 
     private void ItemBtnChange(Button item, bool value)
     {
-        item.GetComponent<Image>().color = value ? Color.yellow : Color.white;
+        item.transform.GetChild(0).GetComponent<Image>().color = value ? Color.yellow : Color.white;
+        //item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount - 1; //인벤토리의 해당 아이템의 코드를 검색하여 가지고 있는 양  도출
     }
 
 
@@ -188,6 +191,8 @@ public class ReadyUI : MainUIs
         IsItem3On = false;
         IsItem4On = false;
 
+        //아이템의 갯수 데이터베이스 검색 및 0이라면 interactive false
+
         stageText.text = $"목표 : {PlayerPrefs.GetInt("ChosenPlanet")}-{PlayerPrefs.GetInt("ChosenStage")}";
 
         SetBtnListener();
@@ -203,14 +208,16 @@ public class ReadyUI : MainUIs
             /*
              * todo 나중에 계정 레벨에 따른 파츠칸의 제한 적용
              */
-            partsZone.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-            partsZone.GetChild(0).GetComponent<Button>().onClick.AddListener(() => PartsInterfaceOn(i));
+            int index = i + 1;
+            partsZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+            partsZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => PartsInterfaceOn(index));
         }
         for (int i = 0; i < itemZone.childCount; i++)
         {
             //todo 해당 아이템이 존재하면 interactive를 true로 나머지는 false
-            itemZone.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-            itemZone.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ItemOn(i));
+            int index = i;
+            itemZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+            itemZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => ItemOn(index));
         }
 
 
@@ -259,11 +266,19 @@ public class ReadyUI : MainUIs
     public void PartsInterfaceOn(int partsIndex) //몇번째 파츠 칸인지
     {
         OpenInterface(UIManager.UIInstance.SelectPartsInterface);
+        Debug.Log(partsIndex);
+        UIManager.UIInstance.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
     }
 
-    public void PartsInterfaceOff() //몇번째 파츠 칸인지
+    public void PartsInterfaceOff(int partsIndex = 0, Parts selectedparts = null) //몇번째 파츠 칸인지
     {
         CloseInterface(UIManager.UIInstance.SelectPartsInterface);
+        if (partsIndex == 0) {
+            return;
+        }
+
+        //todo : 이아래는 받아온 파츠의 데이터를 적용하는 코드 작성
+
     }
 
     public void SelectCharInterfaceOn()

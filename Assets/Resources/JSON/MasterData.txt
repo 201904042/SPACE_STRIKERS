@@ -1,0 +1,154 @@
+{
+  "masterItems": [
+    {
+      "itemId": 0,
+      "name": "미네랄",
+      "type": 0,
+      "description": "미네랄 설명"
+    },
+    {
+      "itemId": 1,
+      "name": "크립트",
+      "type": 0,
+      "description": "크립트 설명"
+    },
+    {
+      "itemId": 2,
+      "name": "하급뽑기권",
+      "type": 0,
+      "description": "미네랄 설명"
+    },
+    {
+      "itemId": 3,
+      "name": "중급뽑기권",
+      "type": 0,
+      "description": "크립트 설명"
+    },
+    {
+      "itemId": 4,
+      "name": "고급뽑기권",
+      "type": 0,
+      "description": "미네랄 설명"
+    },
+    {
+      "itemId": 5,
+      "name": "계정 경험치",
+      "type": 0,
+      "description": ""
+    },
+    {
+      "itemId": 101,
+      "name": "캐릭터1",
+      "type": 1,
+      "description": "캐릭터1 설명"
+    },
+    {
+      "itemId": 102,
+      "name": "캐릭터2",
+      "type": 1,
+      "description": "캐릭터2 설명"
+    },
+    {
+      "itemId": 103,
+      "name": "캐릭터3",
+      "type": 1,
+      "description": "캐릭터3 설명"
+    },
+    {
+      "itemId": 104,
+      "name": "캐릭터4",
+      "type": 1,
+      "description": "캐릭터4 설명"
+    },
+    {
+      "itemId": 201,
+      "name": "증폭기",
+      "type": 2,
+      "description": "증폭기설명"
+    },
+    {
+      "itemId": 202,
+      "name": "추진체",
+      "type": 2,
+      "description": "추진체설명"
+    },
+    {
+      "itemId": 203,
+      "name": "냉각기",
+      "type": 2,
+      "description": "냉각기설명"
+    },
+    {
+      "itemId": 204,
+      "name": "전투AI",
+      "type": 2,
+      "description": "전투ai설명"
+    },
+    {
+      "itemId": 205,
+      "name": "적재창고",
+      "type": 2,
+      "description": "적재창고 설명"
+    },
+    {
+      "itemId": 206,
+      "name": "베리어 배터리",
+      "type": 2,
+      "description": "배리어 배터리설명"
+    },
+    {
+      "itemId": 301,
+      "name": "강철파편",
+      "type": 3,
+      "description": "강철파편 설명"
+    },
+    {
+      "itemId": 302,
+      "name": "전선",
+      "type": 3,
+      "description": "전선 설명"
+    },
+    {
+      "itemId": 303,
+      "name": "기어",
+      "type": 3,
+      "description": "기어 설명"
+    },
+    {
+      "itemId": 304,
+      "name": "칩셋",
+      "type": 3,
+      "description": "칩셋 설명"
+    },
+    {
+      "itemId": 305,
+      "name": "디스플레이",
+      "type": 3,
+      "description": "디스플레이 설명"
+    },
+    {
+      "itemId": 306,
+      "name": "코일",
+      "type": 3,
+      "description": "코일 설명"
+    },
+    {
+      "itemId": 401,
+      "name": "학습ai",
+      "type": 4,
+      "description": "학습ai 설명"
+    },
+    {
+      "itemId": 402,
+      "name": "자기장코어",
+      "type": 4,
+      "description": "자기장코어 설명"
+    },
+    {
+      "itemId": 403,
+      "name": "BST-01",
+      "type": 4,
+      "description": "BST-01 설명"
+    }
+  ]
+}

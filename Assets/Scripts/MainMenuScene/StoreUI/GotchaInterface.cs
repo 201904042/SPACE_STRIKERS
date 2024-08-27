@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GotchaPage : MonoBehaviour
+public class GotchaInterface : MonoBehaviour
 {
     private int gotchaGrade = 0; // 1하급 2중급 3상급
     public GameObject gotchaInterfaceObj;

@@ -37,7 +37,8 @@ public class invenScroll : MonoBehaviour
             {
                 if (!isPartsAlreadyInstatiate(parts.PartsId))
                 {
-                    PartsInvenPref partsInvenSrt = Instantiate(partsInven, partsContent.transform).GetComponent<PartsInvenPref>();
+                    PartsUIPref partsInvenSrt = Instantiate(partsInven, partsContent.transform).GetComponent<PartsUIPref>();
+                    /* 파츠 데이터베이스 재작업
                     partsInvenSrt.PartsId = parts.PartsId;
                     partsInvenSrt.PartsCode = parts.PartsCode;
                     partsInvenSrt.PartsName = parts.PartsName;
@@ -54,7 +55,7 @@ public class invenScroll : MonoBehaviour
                     partsInvenSrt.Partsability4 = parts.Partsability4;
                     partsInvenSrt.abilityAmount4 = parts.abilityAmount4;
                     partsInvenSrt.Partsability5 = parts.Partsability5;
-                    partsInvenSrt.abilityAmount5 = parts.abilityAmount5;
+                    partsInvenSrt.abilityAmount5 = parts.abilityAmount5;*/
                 }
             }
         }
@@ -92,11 +93,12 @@ public class invenScroll : MonoBehaviour
         if (partsContent.activeSelf) {
             foreach (Transform child in partsContent.transform)
             {
-                PartsInvenPref partsInvenSrt = child.GetComponent<PartsInvenPref>();
+                PartsUIPref partsInvenSrt = child.GetComponent<PartsUIPref>();
+                /*
                 if (partsInvenSrt != null && partsInvenSrt.PartsId == itemId)
                 {
                     return true;
-                }
+                }*/
             }
         }
         else if(ingredContent.activeSelf)

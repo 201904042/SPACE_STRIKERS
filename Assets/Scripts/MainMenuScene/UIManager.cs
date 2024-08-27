@@ -17,7 +17,6 @@ public class UIManager : MonoBehaviour
     public GameObject InventoryUIObj;
     public GameObject LabotoryUIObj;
 
-    public GameObject LoadingUI;
 
     //Interface
     public GameObject OptionInterface;
@@ -52,7 +51,7 @@ public class UIManager : MonoBehaviour
         InventoryUIObj = FindObjectOfType<InvenUI>().gameObject;
         LabotoryUIObj = FindObjectOfType<LabotoryUI>().gameObject;
 
-        LoadingUI = FindObjectOfType<LoadingUI>().gameObject;
+
 
         OptionInterface = FindObjectOfType<OptionPanel>().gameObject;
         StageInterface = FindObjectOfType<StageInterface>().gameObject;
@@ -73,7 +72,6 @@ public class UIManager : MonoBehaviour
         InventoryUIObj.SetActive(false);
         LabotoryUIObj.SetActive(false);
 
-        LoadingUI.SetActive(false);
         OptionInterface.SetActive(false);
         StageInterface.SetActive(false);
         SelectCharInterface.SetActive(false);

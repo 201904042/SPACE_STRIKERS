@@ -9,6 +9,7 @@ public class DataManager : MonoBehaviour
     public static DataManager dataInstance;
 
     public AccountJsonReader accountData;
+    public MasterDataReader masterData;
     public ItemJsonReader itemData;
     public PlayerJsonReader playerData;
     public EnemyJsonReader enemyData;
@@ -32,11 +33,12 @@ public class DataManager : MonoBehaviour
     private void SetComponent()
     {
         accountData = GetComponent<AccountJsonReader>();
+        masterData = GetComponent<MasterDataReader>();
         itemData = GetComponent<ItemJsonReader>();
         playerData = GetComponent<PlayerJsonReader>();
         enemyData = GetComponent<EnemyJsonReader>();
         stageData = GetComponent<StageJsonReader>();
-       
+        
     }
     
 }

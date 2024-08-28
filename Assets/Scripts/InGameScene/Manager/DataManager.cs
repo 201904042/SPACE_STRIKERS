@@ -8,12 +8,15 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager dataInstance;
 
-    public AccountJsonReader accountData;
-    public MasterDataReader masterData;
-    public ItemJsonReader itemData;
-    public PlayerJsonReader playerData;
     public EnemyJsonReader enemyData;
     public StageJsonReader stageData;
+
+    public static AccountJsonReader accountData = new AccountJsonReader();
+    public static MasterDataReader masterData = new MasterDataReader();
+    public static InventoryDataReader inventoryData = new InventoryDataReader();
+    public static CharacterDataReader characterData = new CharacterDataReader();
+    public static PartsDataReader partsData = new PartsDataReader();
+    public static AbilityDataReader abilityData = new AbilityDataReader();
 
     private void Awake()
     {
@@ -32,13 +35,15 @@ public class DataManager : MonoBehaviour
 
     private void SetComponent()
     {
-        accountData = GetComponent<AccountJsonReader>();
-        masterData = GetComponent<MasterDataReader>();
-        itemData = GetComponent<ItemJsonReader>();
-        playerData = GetComponent<PlayerJsonReader>();
         enemyData = GetComponent<EnemyJsonReader>();
         stageData = GetComponent<StageJsonReader>();
-        
+
+        accountData.LoadData();
+        masterData.LoadData();
+        inventoryData.LoadData();
+        characterData.LoadData();
+        partsData.LoadData();
+        abilityData.LoadData();
     }
     
 }

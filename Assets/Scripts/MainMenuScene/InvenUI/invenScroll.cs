@@ -20,7 +20,7 @@ public class invenScroll : MonoBehaviour
     private void Awake()
     {
         invenScrollRect = gameObject.GetComponent<ScrollRect>();
-        accountData = DataManager.dataInstance.accountData;
+       // accountData = DataManager.dataInstance.accountData;
     }
 
     private void OnEnable()
@@ -30,63 +30,9 @@ public class invenScroll : MonoBehaviour
     }
 
 
-    public void invenLoad() {
-        if (partsContent.activeSelf)
-        {
-            foreach (var parts in accountData.playerPartsList.parts)
-            {
-                if (!isPartsAlreadyInstatiate(parts.PartsId))
-                {
-                    PartsUIPref partsInvenSrt = Instantiate(partsInven, partsContent.transform).GetComponent<PartsUIPref>();
-                    /* 파츠 데이터베이스 재작업
-                    partsInvenSrt.PartsId = parts.PartsId;
-                    partsInvenSrt.PartsCode = parts.PartsCode;
-                    partsInvenSrt.PartsName = parts.PartsName;
-                    partsInvenSrt.PartsType = parts.PartsType;
-                    partsInvenSrt.PartsLevel = parts.PartsLevel;
-                    partsInvenSrt.PartsRank = parts.PartsRank;
-                    partsInvenSrt.mainAmount = parts.mainAmount;
-                    partsInvenSrt.Partsability1 = parts.Partsability1;
-                    partsInvenSrt.abilityAmount1 = parts.abilityAmount1;
-                    partsInvenSrt.Partsability2 = parts.Partsability2;
-                    partsInvenSrt.abilityAmount2 = parts.abilityAmount2;
-                    partsInvenSrt.Partsability3 = parts.Partsability3;
-                    partsInvenSrt.abilityAmount3 = parts.abilityAmount3;
-                    partsInvenSrt.Partsability4 = parts.Partsability4;
-                    partsInvenSrt.abilityAmount4 = parts.abilityAmount4;
-                    partsInvenSrt.Partsability5 = parts.Partsability5;
-                    partsInvenSrt.abilityAmount5 = parts.abilityAmount5;*/
-                }
-            }
-        }
-        else if (ingredContent.activeSelf)
-        {
-            foreach (var ingred in accountData.playerIngredList.ingredients)
-            {
-                if (!isPartsAlreadyInstatiate(ingred.ingredId))
-                {
-                    IngredInvenPref ingredInvenSrt = Instantiate(ingredInven, ingredContent.transform).GetComponent<IngredInvenPref>();
-                    ingredInvenSrt.ingredId = ingred.ingredId;
-                    ingredInvenSrt.ingredName = ingred.ingredName;
-                    ingredInvenSrt.ingredAmount = ingred.ingredAmount;
-                    
-                }
-            }
-        }
-        else if (consContent.activeSelf)
-        {
-            foreach (var cons in accountData.playerConsList.consumables)
-            {
-                if (!isPartsAlreadyInstatiate(cons.consId))
-                {
-                    ConsInvenPref consInvenSrt = Instantiate(consInven, consContent.transform).GetComponent<ConsInvenPref>();
-                    consInvenSrt.consId = cons.consId;
-                    consInvenSrt.consName = cons.consName;
-                    consInvenSrt.consAmount = cons.consAmount;
-
-                }
-            }
-        }
+    public void invenLoad() 
+    {
+        //인벤토리 내용 다시 해야함
     }
     bool isPartsAlreadyInstatiate(int itemId)
     {

@@ -18,7 +18,6 @@ public class InvenUI : UI_Parent
     public Sprite playerImage4;
     public GameObject playerImage;
 
-    public PlayerJsonReader playerstat;
     public TextMeshProUGUI playerInformText;
     public int playerLv;
     private float playerHp;

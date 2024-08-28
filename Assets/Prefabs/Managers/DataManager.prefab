@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5370079646823784025}
   - component: {fileID: 3583673666755247302}
-  - component: {fileID: 141820212050198666}
-  - component: {fileID: 3372324137958430716}
-  - component: {fileID: 1869540889173794668}
   - component: {fileID: 6482905368089593824}
   - component: {fileID: 1125856990247884951}
   m_Layer: 0
@@ -49,62 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9270530e3074c4ca260e5edef58e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &141820212050198666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2175656968150147972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4bab5f2b075de4f9578f37a0fe4c90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAccountList:
-    Account: []
-  playerPartsList:
-    parts: []
-  playerIngredList:
-    ingredients: []
-  playerConsList:
-    consumables: []
-  is_Planet1Clear: 0
-  is_Planet2Clear: 0
-  is_Planet3Clear: 0
-  is_Planet4Clear: 0
---- !u!114 &3372324137958430716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2175656968150147972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196f8c7e14021e644a6b0f53c13b900f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partsList:
-    parts: []
-  ingredList:
-    ingredients: []
-  consList:
-    consumables: []
---- !u!114 &1869540889173794668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2175656968150147972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47295c9f2b55caa499127046c66eb9c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerList:
-    player: []
+  enemyData: {fileID: 0}
+  stageData: {fileID: 0}
 --- !u!114 &6482905368089593824
 MonoBehaviour:
   m_ObjectHideFlags: 0

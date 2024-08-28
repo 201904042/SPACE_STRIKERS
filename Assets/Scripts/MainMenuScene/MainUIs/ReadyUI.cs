@@ -270,7 +270,7 @@ public class ReadyUI : MainUIs
         UIManager.UIInstance.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
     }
 
-    public void PartsInterfaceOff(int partsIndex = 0, Parts selectedparts = null) //¸î¹øÂ° ÆÄÃ÷ Ä­ÀÎÁö
+    public void PartsInterfaceOff(int partsIndex = 0, OwnPartsData selectedparts = null) //¸î¹øÂ° ÆÄÃ÷ Ä­ÀÎÁö
     {
         CloseInterface(UIManager.UIInstance.SelectPartsInterface);
         if (partsIndex == 0) {

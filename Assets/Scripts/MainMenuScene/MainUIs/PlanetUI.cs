@@ -59,6 +59,8 @@ public class PlanetUI : MainUIs
     private void PlanetInteractableCheck()
     {
         ClearColor();
+
+        /* todo : 수정 예정 인벤데이터 -> 아이템 타입을 1로 검색하여 
         planetList[0].interactable = true;
         if (DataManager.dataInstance.accountData.is_Planet1Clear)
         {
@@ -71,7 +73,7 @@ public class PlanetUI : MainUIs
         if (DataManager.dataInstance.accountData.is_Planet3Clear)
         {
             planetList[3].interactable = true;
-        }
+        }*/
     }
 
     public void GotoStage()

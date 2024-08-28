@@ -43,6 +43,7 @@ public class StageUI : MainUIs
 
     private void FindMaxStageInData()
     {
+        /* todo : 데이터 변경 수정
         if (curPlanet == 1)
         {
             clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet1Stage;
@@ -58,7 +59,7 @@ public class StageUI : MainUIs
         else if (curPlanet == 4)
         {
             clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet4Stage;
-        }
+        }*/
     }
 
     private void SetListener()

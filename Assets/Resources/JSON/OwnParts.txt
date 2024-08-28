@@ -1,12 +1,12 @@
 {
-    "OwnParts": [
+    "ownParts": [
         {
             "inventoryCode": 0,
             "masterCode": 201,
             "grade": "C",
             "mainAbility": 1,
-            "ability1": "1,10",
-            "ability2": "2,12",
+            "ability1": { "key": 1, "value": 10 },
+            "ability2": { "key": 2, "value": 12 },
             "ability3": null,
             "ability4": null,
             "ability5": null
@@ -16,10 +16,10 @@
             "masterCode": 202,
             "grade": "A",
             "mainAbility": 3,
-            "ability1":  "3,15",
-            "ability2":  "301,1",
-            "ability3": "202,1",
-            "ability4":  "3,12",
+            "ability1": { "key": 3, "value": 15 },
+            "ability2": { "key": 301, "value": 1 },
+            "ability3": { "key": 202, "value": 1 },
+            "ability4": { "key": 3, "value": 12 },
             "ability5": null
         }
     ]

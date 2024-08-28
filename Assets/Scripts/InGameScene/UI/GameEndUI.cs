@@ -3,8 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-    public class GameEndUI : ItemJsonReader
+    public class GameEndUI : MonoBehaviour
 {
+    /* todo -> 데이터베이스 업데이트 이후 새로 만들것
     public TextAsset accountData;
 
     public TextMeshProUGUI ClearText;
@@ -14,21 +15,12 @@ using UnityEngine.SceneManagement;
     public Item[] rewardItems;
     public Item[] randomItems;
 
-    public invenAccountData invenData;
 
     private string accountFilePath = "Assets/JSON_Data/account_data.json";
     private string modifiedJson;
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         rewardInit(5);
-        modifiedJson = "";
-        
-        if (accountData != null)
-        {
-            string json = accountData.text;
-            invenData = JsonUtility.FromJson<invenAccountData>(json);
-        }
     }
 
     private void OnEnable()
@@ -232,5 +224,5 @@ using UnityEngine.SceneManagement;
 
         SceneManager.LoadScene("MainMenu");
     }
-
+    */
 }

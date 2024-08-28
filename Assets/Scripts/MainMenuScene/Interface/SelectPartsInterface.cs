@@ -24,7 +24,7 @@ public class SelectPartsInterface : MonoBehaviour
     public int curPageIndex;
     public int maxPageIndex;
 
-    public Parts SelectedParts{
+    public OwnPartsData SelectedParts{
         get => selectedParts;
         set
         {
@@ -32,9 +32,9 @@ public class SelectPartsInterface : MonoBehaviour
             selectBtn.interactable = SelectedParts == null ? false : true;
         }
     } //인터페이스에서 선택된 파츠
-    private Parts selectedParts;
+    private OwnPartsData selectedParts;
 
-    public List<Parts> invenPartsList;
+    public List<OwnPartsData> invenPartsList;
 
     private void Awake()
     {
@@ -99,7 +99,7 @@ public class SelectPartsInterface : MonoBehaviour
         }
 
         //데이터로부터 인벤토리에 있는 파츠들의 데이터들을 가져옴
-        invenPartsList = new List<Parts>();
+        invenPartsList = new List<OwnPartsData>();
 
         //인벤토리 데이터에서 최소한 파츠의 랭크와 종류를 알아내기
 
@@ -135,7 +135,7 @@ public class SelectPartsInterface : MonoBehaviour
         ParentUI.PartsInterfaceOff();
     }
 
-    public void SelectPartsCloseInterface(int partsIndex, Parts selectedParts)
+    public void SelectPartsCloseInterface(int partsIndex, OwnPartsData selectedParts)
     {
         if(partsIndex == 0 || selectedParts == null)
         {

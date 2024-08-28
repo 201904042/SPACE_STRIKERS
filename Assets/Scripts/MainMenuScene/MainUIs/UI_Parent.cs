@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_Parent : MonoBehaviour
 {
-    public AccountJsonReader data;
+
     [HideInInspector]
     public Transform UIs;
     [HideInInspector]
@@ -23,7 +23,7 @@ public class UI_Parent : MonoBehaviour
     protected virtual void Awake()
     {
         UIs = GameObject.Find("UIs").transform;
-        data = GameObject.Find("UIManager").GetComponent<AccountJsonReader>();
+        //=data = GameObject.Find("UIManager").GetComponent<AccountJsonReader>();
         Main = UIs.GetChild(0).gameObject;
         Planet = UIs.GetChild(1).gameObject;
         Stage = UIs.GetChild(2).gameObject;

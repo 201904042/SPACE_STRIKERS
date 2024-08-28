@@ -66,11 +66,12 @@ public class SelectCharInterface : MonoBehaviour
     /// </summary>
     private void CharDataSet()
     {
+        /* todo : 데이터 변경 수정
         var playerAccounts = DataManager.dataInstance.accountData.playerAccountList.Account[0];
         char1Btn.interactable = true;
         char2Btn.interactable = playerAccounts.is_player2Open ? true : false;
         char3Btn.interactable = playerAccounts.is_player3Open ? true : false;
-        char4Btn.interactable = playerAccounts.is_player4Open ? true : false;
+        char4Btn.interactable = playerAccounts.is_player4Open ? true : false;*/
     }
 
     private void BtnListenerSet()

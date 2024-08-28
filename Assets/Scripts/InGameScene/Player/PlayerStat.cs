@@ -4,9 +4,7 @@ using System.IO;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
-{
-    private PlayerJsonReader playerData;
-
+{ 
     [Header("기본 정보")]
     public int curPlayerID;
     public int level;
@@ -41,7 +39,7 @@ public class PlayerStat : MonoBehaviour
     private void Awake()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerControl>();
-        playerData = GameObject.Find("DataManager").GetComponent<PlayerJsonReader>();
+
         Init();
     }
 
@@ -75,7 +73,8 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void PlayerSet(int id)
     {
-        foreach (var player in playerData.PlayerList.player)
+        /* 캐릭터 데이터베이스로 적용할것
+        foreach (var player in DataManager.characterData.characterDic.)
         {
             if (player.id == id)
             {
@@ -87,6 +86,7 @@ public class PlayerStat : MonoBehaviour
                 initHp = player.hp;
             }
         }
+        */
     }
 
     /// <summary>

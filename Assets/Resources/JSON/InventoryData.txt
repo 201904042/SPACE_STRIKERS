@@ -3,119 +3,119 @@
     {
       "storageId": 0,
       "itemType": 0,
-      "itemCode": 0,
+      "masterId": 0,
       "name": "미네랄",
       "amount": 1000
     },
     {
       "storageId": 1,
       "itemType": 0,
-      "itemCode": 1,
+      "masterId": 1,
       "name": "크립트",
       "amount": 100
     },
     {
       "storageId": 2,
       "itemType": 0,
-      "itemCode": 2,
+      "masterId": 2,
       "name": "하급뽑기권",
       "amount": 1
     },
     {
       "storageId": 3,
       "itemType": 0,
-      "itemCode": 3,
+      "masterId": 3,
       "name": "중급뽑기권",
       "amount": 1
     },
     {
       "storageId": 4,
       "itemType": 0,
-      "itemCode": 4,
+      "masterId": 4,
       "name": "고급뽑기권",
       "amount": 1
     },
     {
       "storageId": 5,
       "itemType": 1,
-      "itemCode": 0,
+      "masterId": 101,
       "name": "캐릭터1",
       "amount": 1
     },
     {
       "storageId": 6,
       "itemType": 1,
-      "itemCode": 1,
+      "masterId": 102,
       "name": "캐릭터2",
       "amount": 1
     },
     {
       "storageId": 7,
       "itemType": 2,
-      "itemCode": 0,
+      "masterId": 0,
       "name": "증폭기",
       "amount": 1
     },
     {
       "storageId": 8,
       "itemType": 2,
-      "itemCode": 1,
+      "masterId": 1,
       "name": "추진체",
       "amount": 1
     },
     {
       "storageId": 9,
       "itemType": 3,
-      "itemCode": 301,
+      "masterId": 301,
       "name": "강철파편",
       "amount": 2
     },
     {
       "storageId": 10,
       "itemType": 3,
-      "itemCode": 302,
+      "masterId": 302,
       "name": "전선",
       "amount": 1
     },
     {
       "storageId": 11,
       "itemType": 3,
-      "itemCode": 303,
+      "masterId": 303,
       "name": "기어",
       "amount": 5
     },
     {
       "storageId": 12,
       "itemType": 3,
-      "itemCode": 304,
+      "masterId": 304,
       "name": "칩셋",
       "amount": 3
     },
     {
       "storageId": 13,
       "itemType": 3,
-      "itemCode": 305,
+      "masterId": 305,
       "name": "디스플레이",
       "amount": 1
     },
     {
       "storageId": 14,
       "itemType": 4,
-      "itemCode": 401,
+      "masterId": 401,
       "name": "학습ai",
       "amount": 1
     },
     {
       "storageId": 15,
       "itemType": 4,
-      "itemCode": 402,
+      "masterId": 402,
       "name": "자기장코어",
       "amount": 1
     },
     {
       "storageId": 16,
       "itemType": 4,
-      "itemCode": 403,
+      "masterId": 403,
       "name": "BST-01",
       "amount": 1
     }

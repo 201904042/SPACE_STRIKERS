@@ -19,6 +19,7 @@ public class AccountDataList
 public class AccountJsonReader 
 {
     public TextAsset jsonTextAsset; // Drag and drop the JSON file here in the Inspector
+    public AccountData account;
 
     public void LoadData()
     {
@@ -30,13 +31,14 @@ public class AccountJsonReader
         }
 
         AccountDataList dataInstance = JsonUtility.FromJson<AccountDataList>(json.text);
+        account = dataInstance.accountData;
         if (dataInstance != null)
         {
-            Debug.Log($"Account ID: {dataInstance.accountData.accountId}");
-            Debug.Log($"Account Name: {dataInstance.accountData.accountName}");
-            Debug.Log($"Account Level: {dataInstance.accountData.accountLevel}");
-            Debug.Log($"Current Experience: {dataInstance.accountData.currentExperience}");
-            Debug.Log($"Stage Progress: {dataInstance.accountData.stageProgress}");
+            Debug.Log($"Account ID: {account.accountId}");
+            Debug.Log($"Account Name: {account.accountName}");
+            Debug.Log($"Account Level: {account.accountLevel}");
+            Debug.Log($"Current Experience: {account.currentExperience}");
+            Debug.Log($"Stage Progress: {account.stageProgress}");
         }
         else
         {

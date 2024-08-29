@@ -2,6 +2,7 @@
   "characters": [
     {
       "masterCode": 101,
+      "own" : true,
       "name": "캐릭터1",
       "level": 1,
       "damage": 10,
@@ -24,6 +25,7 @@
     },
     {
       "masterCode": 102,
+      "own" : true,
       "name": "캐릭터2",
       "level": 1,
       "damage": 15,
@@ -46,6 +48,7 @@
     },
     {
       "masterCode": 103,
+      "own" : false,
       "name": "캐릭터3",
       "level": 0,
       "damage": 10,
@@ -68,6 +71,7 @@
     },
     {
       "masterCode": 104,
+      "own" : false,
       "name": "캐릭터4",
       "level": 0,
       "damage": 10,

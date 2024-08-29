@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class MainUIs : MonoBehaviour
 {
-    
+
     protected virtual void OnEnable()
     {
         //UI를 열때 초기화

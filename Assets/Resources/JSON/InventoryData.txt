@@ -52,14 +52,14 @@
     {
       "storageId": 7,
       "itemType": 2,
-      "masterId": 0,
+      "masterId": 201,
       "name": "증폭기",
       "amount": 1
     },
     {
       "storageId": 8,
       "itemType": 2,
-      "masterId": 1,
+      "masterId": 202,
       "name": "추진체",
       "amount": 1
     },

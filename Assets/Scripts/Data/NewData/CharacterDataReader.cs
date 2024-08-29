@@ -5,6 +5,7 @@ using UnityEngine;
 public struct Character
 {
     public int masterCode;
+    public bool own;
     public string name;
     public int level;
     public float damage; //기본 능력치

@@ -20,7 +20,7 @@ public class invenScroll : MonoBehaviour
     private void Awake()
     {
         invenScrollRect = gameObject.GetComponent<ScrollRect>();
-       // accountData = DataManager.dataInstance.accountData;
+       // account = DataManager.dataInstance.account;
     }
 
     private void OnEnable()

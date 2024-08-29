@@ -43,23 +43,27 @@ public class StageUI : MainUIs
 
     private void FindMaxStageInData()
     {
-        /* todo : 데이터 변경 수정
-        if (curPlanet == 1)
+        int accountLastStage = DataManager.accountData.account.stageProgress;
+
+        int lastPlanet = (accountLastStage / 10) +1;  //0부터가 아닌 1부터 시작
+        int lastStage = (accountLastStage % 10) +1 ;
+
+        if(curPlanet > lastPlanet)
         {
-            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet1Stage;
+            Debug.Log("비정상적인 접근");
+            GotoPlanet();
+            return;
         }
-        else if (curPlanet == 2)
+
+        if(curPlanet < lastPlanet)
         {
-            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet2Stage;
+            clearedStageNum = 10;
         }
-        else if (curPlanet == 3)
+        else
         {
-            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet3Stage;
+            clearedStageNum = lastStage;
         }
-        else if (curPlanet == 4)
-        {
-            clearedStageNum = DataManager.dataInstance.accountData.playerAccountList.Account[0].clearedPlanet4Stage;
-        }*/
+
     }
 
     private void SetListener()

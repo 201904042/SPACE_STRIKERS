@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class SelectPartsInterface : MonoBehaviour
 {
-    public GameObject partsUI;
+    public GameObject partsUI; //파츠 버튼의 UI
     public int curPartsIndex; //현재 적용될 파츠의 칸
 
     public ReadyUI ParentUI;
@@ -24,7 +24,7 @@ public class SelectPartsInterface : MonoBehaviour
     public int curPageIndex;
     public int maxPageIndex;
 
-    public OwnPartsData SelectedParts{
+    public OwnPartsData SelectedParts {
         get => selectedParts;
         set
         {
@@ -32,7 +32,7 @@ public class SelectPartsInterface : MonoBehaviour
             selectBtn.interactable = SelectedParts == null ? false : true;
         }
     } //인터페이스에서 선택된 파츠
-    private OwnPartsData selectedParts;
+    [SerializeField] private OwnPartsData selectedParts;
 
     public List<OwnPartsData> invenPartsList;
 
@@ -63,6 +63,12 @@ public class SelectPartsInterface : MonoBehaviour
         SetButtonListener();
         SetPartsContainer();
 
+        invenPartsList = new List<OwnPartsData>();
+        foreach (OwnPartsData parts in DataManager.partsData.ownPartsDic.Values)
+        {
+            invenPartsList.Add(parts);
+        }
+
         curPageIndex = 1;
         maxPageIndex = (invenPartsList.Count / 16) + 1;
         PageTextSet();
@@ -92,19 +98,61 @@ public class SelectPartsInterface : MonoBehaviour
 
     private void SetPartsContainer()
     {
-   
-        foreach (Transform child in partsContainer.transform)
+        if (partsContainer.childCount > 0) //이전에 연적이 있을 경우 컨테이너를 비우고 새로 장착
         {
-            Destroy(child.gameObject);  //이전에 연적이 있을경우 컨테이너를 비우고 새로 장착
+            foreach (Transform child in partsContainer.transform)
+            {
+                Destroy(child.gameObject);  
+            }
         }
+        
 
         //데이터로부터 인벤토리에 있는 파츠들의 데이터들을 가져옴
-        invenPartsList = new List<OwnPartsData>();
+        List<OwnPartsData> isOnPartsList = new List<OwnPartsData>();
+        List<OwnPartsData> isOffPartsList = new List<OwnPartsData>();
 
-        //인벤토리 데이터에서 최소한 파츠의 랭크와 종류를 알아내기
+        foreach (OwnPartsData parts in invenPartsList)
+        {
+            if (parts.isOn)
+            {
+                isOnPartsList.Add(parts);
+            }
+            else 
+            {
+                isOffPartsList.Add(parts);
+            }
+        }
 
+        isOnPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
+        isOffPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
 
-        //새로운 파츠UI를 만들고 인벤토리에서 보유한 파츠의 데이터를 삽입
+        //빈 파츠 생성
+        OwnPartsData emptyParts = new OwnPartsData();
+        emptyParts.inventoryCode = -1;
+        PartsUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<PartsUIPref>();
+        emptyPartsPrefab.SetParts(emptyParts);
+        emptyPartsPrefab.GetComponent<Button>().onClick.RemoveAllListeners();
+        emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
+
+        foreach (OwnPartsData parts in isOnPartsList)
+        {
+            PartsUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<PartsUIPref>();
+            prefab.SetParts(parts);
+            prefab.GetComponent<Button>().onClick.RemoveAllListeners();
+            prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
+        }
+        foreach (OwnPartsData parts in isOffPartsList)
+        {
+            PartsUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<PartsUIPref>();
+            prefab.SetParts(parts);
+            prefab.GetComponent<Button>().onClick.RemoveAllListeners();
+            prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
+        }
+    }
+
+    public void PartsButtonEvent(PartsUIPref partsBtn)
+    {
+        SelectedParts = partsBtn.partsData;
     }
 
     public void PrevPage()
@@ -141,8 +189,9 @@ public class SelectPartsInterface : MonoBehaviour
         {
             return;
         }
-        //지정된 파츠를 readyUI에 적용
-        ParentUI.PartsInterfaceOff(partsIndex, this.selectedParts);
+
+        ParentUI.GetPartsData(partsIndex, selectedParts);
+        ParentUI.PartsInterfaceOff();
     }
 
     

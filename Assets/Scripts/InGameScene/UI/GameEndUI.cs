@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
     public class GameEndUI : MonoBehaviour
 {
     /* todo -> 데이터베이스 업데이트 이후 새로 만들것
-    public TextAsset accountData;
+    public TextAsset account;
 
     public TextMeshProUGUI ClearText;
     public TextMeshProUGUI StageNameText;

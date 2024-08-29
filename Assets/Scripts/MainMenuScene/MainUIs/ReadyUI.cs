@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,10 +18,10 @@ public class ReadyUI : MainUIs
     public TextMeshProUGUI charInformText;
 
     public Transform partsZone;
-    public Button parts1;
-    public Button parts2;
-    public Button parts3;
-    public Button parts4;
+    public Button parts1Btn;
+    public Button parts2Btn;
+    public Button parts3Btn;
+    public Button parts4Btn;
 
     public Transform itemZone;
     public Button item1;
@@ -33,7 +34,6 @@ public class ReadyUI : MainUIs
     public Button backBtn;
     public Button gotoIngameBtn;
 
-
     private int curPlayerCode; //현재 플레이어의 코드 1~4
     public int CurPlayerCode
     {
@@ -41,54 +41,81 @@ public class ReadyUI : MainUIs
         set
         {
             curPlayerCode = value;
-
+            PlayerPrefs.SetInt("curCharacterCode", value);
             PlayerChange();
         }
     }
 
-    private int curParts1Code; //이 칸에 있는 파츠의 코드 0이면 빈칸 
-    private int curParts2Code;
-    private int curParts3Code;
-    private int curParts4Code;
-
-    public int CurParts1Code
+    public OwnPartsData SetPartsSlot1
     {
-        get => curParts1Code;
+        get => parts1Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            curParts1Code = value;
-            
-            PartsChange();
+            if (value != null) {
+                CheckDuplicateParts(value.inventoryCode);
+                parts1Btn.GetComponent<PartsUIPref>().SetParts(value);
+                PlayerPrefs.SetInt("partsSlot1", value.inventoryCode);
+            }
+            else
+            {
+                parts1Btn.GetComponent<PartsUIPref>().ResetData();
+                PlayerPrefs.SetInt("partsSlot1", -1);
+            }
         }
     }
-    public int CurParts2Code
+
+    public OwnPartsData SetPartsSlot2
     {
-        get => curParts2Code;
+        get => parts2Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            curParts2Code = value;
-
-            PartsChange();
+            if (value != null)
+            {
+                CheckDuplicateParts(value.inventoryCode);
+                parts2Btn.GetComponent<PartsUIPref>().SetParts(value);
+                PlayerPrefs.SetInt("partsSlot2", value.inventoryCode);
+            }
+            else
+            {
+                parts2Btn.GetComponent<PartsUIPref>().ResetData();
+                PlayerPrefs.SetInt("partsSlot2", -1);
+            }
         }
     }
-    public int CurParts3Code
+    public OwnPartsData SetPartsSlot3
     {
-        get => curParts3Code;
+        get => parts3Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            curParts3Code = value;
-
-            PartsChange();
+            if (value != null)
+            {
+                CheckDuplicateParts(value.inventoryCode);
+                parts3Btn.GetComponent<PartsUIPref>().SetParts(value);
+                PlayerPrefs.SetInt("partsSlot3", value.inventoryCode);
+            }
+            else
+            {
+                parts3Btn.GetComponent<PartsUIPref>().ResetData();
+                PlayerPrefs.SetInt("partsSlot3", -1);
+            }
         }
     }
-    public int CurParts4Code
+    public OwnPartsData SetPartsSlot4
     {
-        get => curParts4Code;
+        get => parts4Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            curParts4Code = value;
-
-            PartsChange();
+            if (value != null)
+            {
+                CheckDuplicateParts(value.inventoryCode);
+                parts4Btn.GetComponent<PartsUIPref>().SetParts(value);
+                PlayerPrefs.SetInt("partsSlot4", value.inventoryCode);
+            }
+            else
+            {
+                parts4Btn.GetComponent<PartsUIPref>().ResetData();
+                PlayerPrefs.SetInt("partsSlot4", -1);
+            }
         }
     }
 
@@ -149,10 +176,10 @@ public class ReadyUI : MainUIs
         curPlayerImage = playerBtn.transform.GetChild(0).GetComponent<Image>();
         charInformText = charZone.GetChild(1).GetComponent<TextMeshProUGUI>();
         partsZone = transform.GetChild(1);
-        parts1 = partsZone.GetChild(0).GetComponent<Button>();
-        parts2 = partsZone.GetChild(1).GetComponent<Button>();
-        parts3 = partsZone.GetChild(2).GetComponent<Button>();
-        parts4 = partsZone.GetChild(3).GetComponent<Button>();
+        parts1Btn = partsZone.GetChild(0).GetComponent<Button>();
+        parts2Btn = partsZone.GetChild(1).GetComponent<Button>();
+        parts3Btn = partsZone.GetChild(2).GetComponent<Button>();
+        parts4Btn = partsZone.GetChild(3).GetComponent<Button>();
         itemZone = transform.GetChild(2).GetChild(1);
         item1 = itemZone.GetChild(0).GetComponent<Button>();
         item2 = itemZone.GetChild(1).GetComponent<Button>();
@@ -178,25 +205,57 @@ public class ReadyUI : MainUIs
          * 아이템은 항상 비사용 상태로
          * PlayerPrefs.GetInt("curCharacter");를 사용하여 현재 프리셋 저장
          */
+        Debug.Log(PlayerPrefs.GetInt("curCharacterCode"));
         CurPlayerCode = PlayerPrefs.GetInt("curCharacterCode");
+        
 
+        SetPartsSlot1 = GetOwnPartsDataFromSlot("partsSlot1");
+        SetPartsSlot2 = GetOwnPartsDataFromSlot("partsSlot2");
+        SetPartsSlot3 = GetOwnPartsDataFromSlot("partsSlot3");
+        SetPartsSlot4 = GetOwnPartsDataFromSlot("partsSlot4");
 
-        CurParts1Code = PlayerPrefs.GetInt("curParts1Code");
-        CurParts2Code = PlayerPrefs.GetInt("curParts2Code");
-        CurParts3Code = PlayerPrefs.GetInt("curParts3Code");
-        CurParts4Code = PlayerPrefs.GetInt("curParts4Code");
 
         IsItem1On = false;
         IsItem2On = false;
         IsItem3On = false;
         IsItem4On = false;
-
         //아이템의 갯수 데이터베이스 검색 및 0이라면 interactive false
 
         stageText.text = $"목표 : {PlayerPrefs.GetInt("ChosenPlanet")}-{PlayerPrefs.GetInt("ChosenStage")}";
 
         SetBtnListener();
 
+    }
+
+    private OwnPartsData GetOwnPartsDataFromSlot(string invenKey)
+    {
+        // PlayerPrefs에서 슬롯 번호 가져오기
+        int invenId = PlayerPrefs.GetInt(invenKey, -1);
+
+        if (invenId == -1)
+        {
+            // 슬롯 값이 존재하지 않을 경우
+            return null;
+        }
+
+        InventoryItem invenData;
+        if (DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData))
+        {
+            OwnPartsData data;
+            if (DataManager.partsData.ownPartsDic.TryGetValue(invenData.masterId, out data))
+            {
+                return data;
+            }
+            else
+            {
+                Debug.LogWarning($"MasterId '{invenData.masterId}'에 해당하는 OwnPartsData가 없음 .");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Slot value '{invenId}'에 해당하는 InventoryItem이 없음.");
+        }
+        return null;
     }
 
     private void SetBtnListener()
@@ -241,18 +300,41 @@ public class ReadyUI : MainUIs
 
     private void PlayerChange()
     {
-        //이미지 변경및 스텟 변경
-    }
+        int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
 
+        MasterItem masterChar = new MasterItem();
+        DataManager.masterData.masterItemDic.TryGetValue(playerMasterCode, out masterChar);
+        
+        Character selectedChar = new Character();
+        DataManager.characterData.characterDic.TryGetValue(playerMasterCode,out selectedChar);
+        curPlayerImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(masterChar.spritePath);
 
-    private void PartsChange()
-    {
-        /*
-         *  //파츠코드가 0이면 이미지를 x 이미지로 있다면 데이터베이스 검색하여 해당 파츠의 이미지를 불러오고 랭크에 따라 배경색 변경
-         */
+        //플레이어 스텟창 변경 -> 어빌리티 능력치까지 포함된 걸로 -> 아이템버튼 작성
+
     }
 
     
+
+    private void CheckDuplicateParts(int partsInvenCode)
+    {
+        if (parts1Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot1 = null;
+        }
+        if (parts2Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot2 = null;
+        }
+        if (parts3Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot3 = null;
+        }
+        if (parts4Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot4 = null;
+        }
+    }
+
 
     public void GotoStage()
     {
@@ -270,15 +352,20 @@ public class ReadyUI : MainUIs
         UIManager.UIInstance.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
     }
 
-    public void PartsInterfaceOff(int partsIndex = 0, OwnPartsData selectedparts = null) //몇번째 파츠 칸인지
+    public void PartsInterfaceOff()
     {
         CloseInterface(UIManager.UIInstance.SelectPartsInterface);
-        if (partsIndex == 0) {
-            return;
+    }
+
+    public void GetPartsData(int slotCode, OwnPartsData parts)
+    {
+        switch (slotCode)
+        {
+            case 1: SetPartsSlot1 = parts.inventoryCode != -1 ? parts: null; break;
+            case 2: SetPartsSlot2 = parts.inventoryCode != -1 ? parts : null; ; break;
+            case 3: SetPartsSlot3 = parts.inventoryCode != -1 ? parts : null; ; break;
+            case 4: SetPartsSlot4 = parts.inventoryCode != -1 ? parts : null; ; break;
         }
-
-        //todo : 이아래는 받아온 파츠의 데이터를 적용하는 코드 작성
-
     }
 
     public void SelectCharInterfaceOn()

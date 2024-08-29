@@ -66,25 +66,30 @@ public class SelectCharInterface : MonoBehaviour
     /// </summary>
     private void CharDataSet()
     {
-        /* todo : 데이터 변경 수정
-        var playerAccounts = DataManager.dataInstance.accountData.playerAccountList.Account[0];
         char1Btn.interactable = true;
-        char2Btn.interactable = playerAccounts.is_player2Open ? true : false;
-        char3Btn.interactable = playerAccounts.is_player3Open ? true : false;
-        char4Btn.interactable = playerAccounts.is_player4Open ? true : false;*/
+
+        Character player = new Character();
+        DataManager.characterData.characterDic.TryGetValue(102, out player);
+        char2Btn.interactable = player.own ? true : false;
+
+        DataManager.characterData.characterDic.TryGetValue(103, out player);
+        char3Btn.interactable = player.own ? true : false;
+
+        DataManager.characterData.characterDic.TryGetValue(104, out player);
+        char4Btn.interactable = player.own ? true : false;
     }
 
     private void BtnListenerSet()
     {
         for (int i = 0; i < charactersTransform.childCount; i++)
         {
-            int code = i + 1; // Character index starting from 1
+            int code = i + 1; 
             Button characterBtn = charactersTransform.GetChild(i).GetComponent<Button>();
 
             if (characterBtn != null)
             {
                 bool isCurrentPlayer = OwnerUI.CurPlayerCode == code;
-                characterBtn.transform.GetChild(1).gameObject.SetActive(isCurrentPlayer); //selected 텍스트를 액티브/언액티브
+                characterBtn.transform.GetChild(1).gameObject.SetActive(isCurrentPlayer); 
 
                 characterBtn.onClick.RemoveAllListeners();
                 characterBtn.onClick.AddListener(() => SelectCharacterButton(characterBtn, code));

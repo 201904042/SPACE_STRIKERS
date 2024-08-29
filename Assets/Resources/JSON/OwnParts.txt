@@ -1,9 +1,10 @@
 {
     "ownParts": [
         {
-            "inventoryCode": 0,
+            "inventoryCode": 7,
             "masterCode": 201,
-            "grade": "C",
+            "isOn" : false,
+            "grade": 2,
             "mainAbility": 1,
             "ability1": { "key": 1, "value": 10 },
             "ability2": { "key": 2, "value": 12 },
@@ -12,9 +13,10 @@
             "ability5": null
         },
         {
-            "inventoryCode": 1,
+            "inventoryCode": 8,
             "masterCode": 202,
-            "grade": "A",
+            "isOn" : false,
+            "grade": 4,
             "mainAbility": 3,
             "ability1": { "key": 3, "value": 15 },
             "ability2": { "key": 301, "value": 1 },

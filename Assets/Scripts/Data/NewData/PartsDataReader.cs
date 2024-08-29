@@ -15,7 +15,8 @@ public class OwnPartsData
 {
     public int inventoryCode;
     public int masterCode;
-    public string grade;
+    public bool isOn;
+    public int grade;
     public int mainAbility;
     public Ability ability1;
     public Ability ability2;

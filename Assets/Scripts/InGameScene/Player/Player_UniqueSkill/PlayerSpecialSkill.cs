@@ -118,13 +118,13 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         switch (playerId) //플레이어의 아이디에 따라 플레이어 별 스페셜스킬 활성
         {
-            case 1:
+            case 101:
                 BalanceSpecial(); break;
-            case 2:
+            case 102:
                 BomberSpecial(); break;
-            case 3:
+            case 103:
                 TankerSpecial(); break;
-            case 4:
+            case 104:
                 SplashSpecial(); break;
             default:
                 Debug.Log("can't find id"); break;

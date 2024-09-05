@@ -45,12 +45,9 @@ public class PartsUIPref : MonoBehaviour
 
     private void SetData()
     {
-        if(partsData.inventoryCode == -1)
-        {
-            bgImage.color = Color.white;
-            partsImage.sprite = null ;
-            selectText.SetActive(false);
-        }
+        bgImage.color = Color.white;
+        partsImage.sprite = null;
+        selectText.SetActive(false);
 
         switch (partsData.grade)
         {
@@ -78,6 +75,7 @@ public class PartsUIPref : MonoBehaviour
 
     public void ResetData()
     {
+        partsData = null;
         bgImage.color = Color.white;
         partsImage.sprite = null;
         selectText.SetActive(false);

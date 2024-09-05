@@ -47,7 +47,7 @@ public class PlayerStat : MonoBehaviour
     {
         isFirstSetDone = false;
         
-        curPlayerID = 1;
+        curPlayerID = PlayerPrefs.GetInt("curCharacterCode") + 100;
         SetStat(curPlayerID);
     }
 
@@ -73,24 +73,25 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void PlayerSet(int id)
     {
-        /* 캐릭터 데이터베이스로 적용할것
-        foreach (var player in DataManager.characterData.characterDic.)
+        Character curPlayerChar = new Character();
+        bool isSuccess = DataManager.characterData.characterDic.TryGetValue(curPlayerID,out curPlayerChar);
+
+        if (!isSuccess)
         {
-            if (player.id == id)
-            {
-                level = player.level;
-                initDamage = player.damage;
-                initDefence = player.defence;
-                initMoveSpeed = player.move_speed;
-                initAttackSpeed = player.attack_speed;
-                initHp = player.hp;
-            }
+            Debug.Log($"해당 아이디 {curPlayerID} 로 캐릭터를 찾지 못함");
+            return;
         }
-        */
+        //아웃게임에서 받아온 캐릭터의 스텟
+        level = curPlayerChar.level;
+        initDamage = curPlayerChar.damage;
+        initDefence = curPlayerChar.defense;
+        initMoveSpeed = curPlayerChar.movementSpeed;
+        initAttackSpeed = curPlayerChar.attackSpeed;
+        initHp = curPlayerChar.maxHealth;
     }
 
     /// <summary>
-    /// 초기스텟에 증가율을 곱하여 다른 클래스에 공유될 변수 저장.
+    /// 패시브를 통해 강화된 스텟
     /// </summary>
     public void ApplyStat()
     {

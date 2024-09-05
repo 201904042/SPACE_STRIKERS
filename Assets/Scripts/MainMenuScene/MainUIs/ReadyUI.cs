@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using TMPro;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEditor.Search;
@@ -13,7 +14,7 @@ using static UnityEditor.Progress;
 public class ReadyUI : MainUIs
 {
     public Transform charZone;
-    public Button playerBtn;
+    public Button charBtn;
     public Image curPlayerImage;
     public TextMeshProUGUI charInformText;
 
@@ -34,7 +35,7 @@ public class ReadyUI : MainUIs
     public Button backBtn;
     public Button gotoIngameBtn;
 
-    private int curPlayerCode; //ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ ÄÚµå 1~4
+    private int curPlayerCode; 
     public int CurPlayerCode
     {
         get => curPlayerCode;
@@ -46,21 +47,15 @@ public class ReadyUI : MainUIs
         }
     }
 
+    private List<OwnPartsData> equippedPartsList = new List<OwnPartsData>();
+    public List<OwnPartsData> EquippedPartsList => equippedPartsList;
+
     public OwnPartsData SetPartsSlot1
     {
         get => parts1Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            if (value != null) {
-                CheckDuplicateParts(value.inventoryCode);
-                parts1Btn.GetComponent<PartsUIPref>().SetParts(value);
-                PlayerPrefs.SetInt("partsSlot1", value.inventoryCode);
-            }
-            else
-            {
-                parts1Btn.GetComponent<PartsUIPref>().ResetData();
-                PlayerPrefs.SetInt("partsSlot1", -1);
-            }
+            UpdatePartsSlot(parts1Btn, value, "partsSlot1");
         }
     }
 
@@ -69,58 +64,30 @@ public class ReadyUI : MainUIs
         get => parts2Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            if (value != null)
-            {
-                CheckDuplicateParts(value.inventoryCode);
-                parts2Btn.GetComponent<PartsUIPref>().SetParts(value);
-                PlayerPrefs.SetInt("partsSlot2", value.inventoryCode);
-            }
-            else
-            {
-                parts2Btn.GetComponent<PartsUIPref>().ResetData();
-                PlayerPrefs.SetInt("partsSlot2", -1);
-            }
+            UpdatePartsSlot(parts2Btn, value, "partsSlot2");
         }
     }
+
     public OwnPartsData SetPartsSlot3
     {
         get => parts3Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            if (value != null)
-            {
-                CheckDuplicateParts(value.inventoryCode);
-                parts3Btn.GetComponent<PartsUIPref>().SetParts(value);
-                PlayerPrefs.SetInt("partsSlot3", value.inventoryCode);
-            }
-            else
-            {
-                parts3Btn.GetComponent<PartsUIPref>().ResetData();
-                PlayerPrefs.SetInt("partsSlot3", -1);
-            }
+            UpdatePartsSlot(parts3Btn, value, "partsSlot3");
         }
     }
+
     public OwnPartsData SetPartsSlot4
     {
         get => parts4Btn.GetComponent<PartsUIPref>().partsData;
         set
         {
-            if (value != null)
-            {
-                CheckDuplicateParts(value.inventoryCode);
-                parts4Btn.GetComponent<PartsUIPref>().SetParts(value);
-                PlayerPrefs.SetInt("partsSlot4", value.inventoryCode);
-            }
-            else
-            {
-                parts4Btn.GetComponent<PartsUIPref>().ResetData();
-                PlayerPrefs.SetInt("partsSlot4", -1);
-            }
+            UpdatePartsSlot(parts4Btn, value, "partsSlot4");
         }
     }
 
 
-    private bool isItem1On; //ÇØ´ç ¾ÆÀÌÅÛÀÌ È°¼ºÈ­ µÇ¾î ÀÎ°ÔÀÓ¿¡ Àû¿ëµÉ ¿¹Á¤ÀÎ°¡?
+    private bool isItem1On;
     private bool isItem2On;
     private bool isItem3On;
     private bool isItem4On;
@@ -161,20 +128,14 @@ public class ReadyUI : MainUIs
         }
     }
 
-    private void ItemBtnChange(Button item, bool value)
-    {
-        item.transform.GetChild(0).GetComponent<Image>().color = value ? Color.yellow : Color.white;
-        //item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount - 1; //ÀÎº¥Åä¸®ÀÇ ÇØ´ç ¾ÆÀÌÅÛÀÇ ÄÚµå¸¦ °Ë»öÇÏ¿© °¡Áö°í ÀÖ´Â ¾ç  µµÃâ
-    }
-
-
+    
 
     private void Awake()
     {
         charZone = transform.GetChild(0);
-        playerBtn = charZone.GetChild(0).GetComponent<Button>();
-        curPlayerImage = playerBtn.transform.GetChild(0).GetComponent<Image>();
-        charInformText = charZone.GetChild(1).GetComponent<TextMeshProUGUI>();
+        charBtn = charZone.GetChild(0).GetComponent<Button>();
+        curPlayerImage = charBtn.transform.GetChild(0).GetComponent<Image>();
+        charInformText = charZone.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         partsZone = transform.GetChild(1);
         parts1Btn = partsZone.GetChild(0).GetComponent<Button>();
         parts2Btn = partsZone.GetChild(1).GetComponent<Button>();
@@ -199,15 +160,7 @@ public class ReadyUI : MainUIs
 
     private void SetInit()
     {
-        /* 
-         * ¿­¶§¸¶´Ù Ç×»ó °°Àº ÇüÅÂ·Î º¸ÀÌµµ·Ï ÃÊ±âÈ­
-         * Ä³¸¯ÅÍ¿Í ÆÄÃ÷´Â ÀÌÀü¿¡ ÁöÁ¤ÇØ µĞ´ë·Î
-         * ¾ÆÀÌÅÛÀº Ç×»ó ºñ»ç¿ë »óÅÂ·Î
-         * PlayerPrefs.GetInt("curCharacter");¸¦ »ç¿ëÇÏ¿© ÇöÀç ÇÁ¸®¼Â ÀúÀå
-         */
-        Debug.Log(PlayerPrefs.GetInt("curCharacterCode"));
         CurPlayerCode = PlayerPrefs.GetInt("curCharacterCode");
-        
 
         SetPartsSlot1 = GetOwnPartsDataFromSlot("partsSlot1");
         SetPartsSlot2 = GetOwnPartsDataFromSlot("partsSlot2");
@@ -219,61 +172,24 @@ public class ReadyUI : MainUIs
         IsItem2On = false;
         IsItem3On = false;
         IsItem4On = false;
-        //¾ÆÀÌÅÛÀÇ °¹¼ö µ¥ÀÌÅÍº£ÀÌ½º °Ë»ö ¹× 0ÀÌ¶ó¸é interactive false
 
-        stageText.text = $"¸ñÇ¥ : {PlayerPrefs.GetInt("ChosenPlanet")}-{PlayerPrefs.GetInt("ChosenStage")}";
+        stageText.text = $"ìŠ¤í…Œì´ì§€ : {PlayerPrefs.GetInt("ChosenPlanet")}-{PlayerPrefs.GetInt("ChosenStage")}";
 
         SetBtnListener();
-
-    }
-
-    private OwnPartsData GetOwnPartsDataFromSlot(string invenKey)
-    {
-        // PlayerPrefs¿¡¼­ ½½·Ô ¹øÈ£ °¡Á®¿À±â
-        int invenId = PlayerPrefs.GetInt(invenKey, -1);
-
-        if (invenId == -1)
-        {
-            // ½½·Ô °ªÀÌ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì
-            return null;
-        }
-
-        InventoryItem invenData;
-        if (DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData))
-        {
-            OwnPartsData data;
-            if (DataManager.partsData.ownPartsDic.TryGetValue(invenData.masterId, out data))
-            {
-                return data;
-            }
-            else
-            {
-                Debug.LogWarning($"MasterId '{invenData.masterId}'¿¡ ÇØ´çÇÏ´Â OwnPartsData°¡ ¾øÀ½ .");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"Slot value '{invenId}'¿¡ ÇØ´çÇÏ´Â InventoryItemÀÌ ¾øÀ½.");
-        }
-        return null;
     }
 
     private void SetBtnListener()
     {
-        playerBtn.onClick.RemoveAllListeners();
-        playerBtn.onClick.AddListener(SelectCharInterfaceOn);
+        charBtn.onClick.RemoveAllListeners();
+        charBtn.onClick.AddListener(SelectCharInterfaceOn);
         for (int i = 0; i < partsZone.childCount; i++)
         {
-            /*
-             * todo ³ªÁß¿¡ °èÁ¤ ·¹º§¿¡ µû¸¥ ÆÄÃ÷Ä­ÀÇ Á¦ÇÑ Àû¿ë
-             */
             int index = i + 1;
             partsZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             partsZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => PartsInterfaceOn(index));
         }
         for (int i = 0; i < itemZone.childCount; i++)
         {
-            //todo ÇØ´ç ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÏ¸é interactive¸¦ true·Î ³ª¸ÓÁö´Â false
             int index = i;
             itemZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             itemZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => ItemOn(index));
@@ -287,6 +203,162 @@ public class ReadyUI : MainUIs
 
     }
 
+    private void PlayerChange()
+    {
+        int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
+
+        MasterItem masterChar = new MasterItem();
+        DataManager.masterData.masterItemDic.TryGetValue(playerMasterCode, out masterChar);
+
+        Character selectedChar = new Character();
+        DataManager.characterData.characterDic.TryGetValue(playerMasterCode, out selectedChar);
+        curPlayerImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(masterChar.spritePath);
+
+        PlayerStatTextSet();
+    }
+
+    private void PlayerStatTextSet()
+    {
+        int masterId = PlayerPrefs.GetInt("curCharacterCode") + 100;
+        Character targetBasicData = new Character();
+        bool success = DataManager.characterData.characterDic.TryGetValue(masterId, out targetBasicData);
+        if (!success)
+        {
+            charInformText.text = "error";
+            return;
+        }
+
+        Character changedData = CalculateStat(targetBasicData);
+        StringBuilder sb = new StringBuilder();
+
+        sb.AppendLine($"{changedData.name}");
+        sb.AppendLine($"LEVEL : {changedData.level}");
+
+        sb.AppendLine($"DMG: {changedData.damage}");
+        sb.AppendLine($"DEF: {changedData.defense}");
+        sb.AppendLine($"ASPD: {changedData.attackSpeed}");
+        sb.AppendLine($"MSPD: {changedData.movementSpeed}");
+        sb.AppendLine($"HP: {changedData.maxHealth}");
+
+        if (changedData.hpRegen != 0) sb.AppendLine($"ì´ˆë‹¹íšŒë³µ : {changedData.hpRegen}");
+        if (changedData.troopsDamageUp != 0) sb.AppendLine($"ì¡ëª¹ ë€ì¦: {changedData.troopsDamageUp}");
+        if (changedData.bossDamageUp != 0) sb.AppendLine($"ë³´ìŠ¤ ë€ì¦: {changedData.bossDamageUp}");
+        if (changedData.stageExpRateUp != 0) sb.AppendLine($"ìŠ¤í…Œì´ì§€ ê²½í—˜ì¹˜ ì¦ê°€: {changedData.stageExpRateUp}");
+        if (changedData.stageItemDropRateUp != 0) sb.AppendLine($"ìŠ¤í…Œì´ì§€ ì•„ì´í…œ ì¦ê°€: {changedData.stageItemDropRateUp}");
+        if (changedData.powRegenRateUp != 0) sb.AppendLine($"íŒŒì›Œ ë¦¬ì   ì¦ê°€: {changedData.powRegenRateUp}");
+        if (changedData.powAmountUp != 0) sb.AppendLine($"íŒŒì›Œ ê°œìˆ˜ ì¦ê°€ : {changedData.powAmountUp}");
+        if (changedData.accountExpUp != 0) sb.AppendLine($"ê³„ì • ê²½í—˜ì¹˜ ì¦ê°€: {changedData.accountExpUp}");
+        if (changedData.accountMoneyUp != 0) sb.AppendLine($"ê³„ì • íšë“ì¬í™” ì¦ê°€: {changedData.accountMoneyUp}");
+        if (changedData.startLevelUp != 0) sb.AppendLine($"ì‹œì‘ ë ˆë²¨ ì¦ê°€: {changedData.startLevelUp}");
+        if (changedData.revival != 0) sb.AppendLine($"ë¶€í™œ íšŸìˆ˜ : {changedData.revival}");
+        if (targetBasicData.startWeaponUp != 0) sb.AppendLine($"ì‹œì‘ ë¬´ê¸°ë ˆë²¨ ì¦ê°€: {targetBasicData.startWeaponUp}");
+
+        charInformText.text = sb.ToString();
+    }
+
+    private Character CalculateStat(Character targetBasicData)
+    {
+        Character result = targetBasicData;
+
+        //todo -> ì—¬ê¸°ì„œ íŒŒì¸ ì˜ ë‚´ìš©ì„ ì ìš©ì‹œí‚¤ì§€ ëª»í•˜ëŠ” ë¬¸ì œ ë°œìƒ
+        foreach (var part in EquippedPartsList)
+        {
+            if (!part.isOn) continue;
+
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability1);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability2);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability3);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability4);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability5);
+        }
+
+        return result;
+    }
+    
+    private OwnPartsData GetOwnPartsDataFromSlot(string invenKey)
+    {
+        int invenId = PlayerPrefs.GetInt(invenKey, -1);
+
+        if (invenId == -1)
+        {
+            return null;
+        }
+
+        InventoryItem invenData;
+        if (DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData))
+        {
+            OwnPartsData data;
+            if (DataManager.partsData.ownPartsDic.TryGetValue(invenData.masterId, out data))
+            {
+                return data;
+            }
+            else
+            {
+                Debug.LogWarning($"MasterId '{invenData.masterId}'ì˜ íŒŒì¸ ë¥¼ ì°¾ì§€ëª»í•¨ .");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Slot value '{invenId}'ì˜ ì¸ë²¤í† ë¦¬ë¥¼ ì°¾ì§€ ëª»í•¨.");
+        }
+        return null;
+    }
+
+    private void CheckDuplicateParts(int partsInvenCode)
+    {
+        if (parts1Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot1 = null;
+        }
+        if (parts2Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot2 = null;
+        }
+        if (parts3Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot3 = null;
+        }
+        if (parts4Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        {
+            SetPartsSlot4 = null;
+        }
+    }
+
+    private void UpdatePartsSlot(Button partsButton, OwnPartsData value, string slotKey)
+    {
+        var partsUIPref = partsButton.GetComponent<PartsUIPref>();
+        var currentParts = partsUIPref.partsData;
+
+        if (value != null)
+        {
+            CheckDuplicateParts(value.inventoryCode);
+            partsUIPref.SetParts(value);
+            PlayerPrefs.SetInt(slotKey, value.inventoryCode);
+
+            if (!equippedPartsList.Contains(value))
+            {
+                equippedPartsList.Add(value);
+            }
+        }
+        else
+        {
+            if (currentParts != null && equippedPartsList.Contains(currentParts))
+            {
+                equippedPartsList.Remove(currentParts);
+            }
+
+            partsUIPref.ResetData();
+            PlayerPrefs.SetInt(slotKey, -1);
+        }
+    }
+
+
+    private void ItemBtnChange(Button item, bool value)
+    {
+        item.transform.GetChild(0).GetComponent<Image>().color = value ? Color.yellow : Color.white;
+        //item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount - 1;
+    }
+
     private void ItemOn(int i)
     {
         switch (i)
@@ -298,44 +370,6 @@ public class ReadyUI : MainUIs
         }
     }
 
-    private void PlayerChange()
-    {
-        int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
-
-        MasterItem masterChar = new MasterItem();
-        DataManager.masterData.masterItemDic.TryGetValue(playerMasterCode, out masterChar);
-        
-        Character selectedChar = new Character();
-        DataManager.characterData.characterDic.TryGetValue(playerMasterCode,out selectedChar);
-        curPlayerImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(masterChar.spritePath);
-
-        //ÇÃ·¹ÀÌ¾î ½ºÅİÃ¢ º¯°æ -> ¾îºô¸®Æ¼ ´É·ÂÄ¡±îÁö Æ÷ÇÔµÈ °É·Î -> ¾ÆÀÌÅÛ¹öÆ° ÀÛ¼º
-
-    }
-
-    
-
-    private void CheckDuplicateParts(int partsInvenCode)
-    {
-        if (parts1Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
-        {
-            SetPartsSlot1 = null;
-        }
-        if (parts2Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
-        {
-            SetPartsSlot2 = null;
-        }
-        if (parts3Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
-        {
-            SetPartsSlot3 = null;
-        }
-        if (parts4Btn.GetComponent<PartsUIPref>().partsData.inventoryCode == partsInvenCode)
-        {
-            SetPartsSlot4 = null;
-        }
-    }
-
-
     public void GotoStage()
     {
         ChangeUI(UIManager.UIInstance.StageUIObj);
@@ -345,7 +379,7 @@ public class ReadyUI : MainUIs
         SceneManager.LoadScene("InGameTest");
     }
 
-    public void PartsInterfaceOn(int partsIndex) //¸î¹øÂ° ÆÄÃ÷ Ä­ÀÎÁö
+    public void PartsInterfaceOn(int partsIndex)
     {
         OpenInterface(UIManager.UIInstance.SelectPartsInterface);
         Debug.Log(partsIndex);
@@ -366,6 +400,7 @@ public class ReadyUI : MainUIs
             case 3: SetPartsSlot3 = parts.inventoryCode != -1 ? parts : null; ; break;
             case 4: SetPartsSlot4 = parts.inventoryCode != -1 ? parts : null; ; break;
         }
+        PlayerStatTextSet();
     }
 
     public void SelectCharInterfaceOn()

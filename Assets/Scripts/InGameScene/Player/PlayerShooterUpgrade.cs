@@ -135,7 +135,7 @@ public class playerShooterUpgrade : MonoBehaviour
         player_sprite.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
     }
 
-    //debug buttons
+    //debug StoreBtns
     public void ShooterUPBtn()
     {
         if (shooterLevel < 3)

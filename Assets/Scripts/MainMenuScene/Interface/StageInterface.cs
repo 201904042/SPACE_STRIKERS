@@ -20,12 +20,11 @@ public class StageInterface : MonoBehaviour
     {
         Init();
         SetInterface();
-        
     }
 
     private void Init()
     {
-        parentUI = transform.parent.parent.GetComponent<StageUI>();
+        parentUI = FindObjectOfType<StageUI>();
         StageNamePanel = transform.GetChild(1);
         EnemyListPanel = transform.GetChild(2);
         ContentPanel = transform.GetChild(3);

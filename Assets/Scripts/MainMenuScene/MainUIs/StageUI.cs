@@ -138,12 +138,12 @@ public class StageUI : MainUIs
     private void OpenStageInterface()
     {
         PlayerPrefs.SetInt("ChosenStage", curStage);
-        OpenInterface(UIManager.UIInstance.StageInterface);
+        OpenInterface(UIManager.StageInterface);
     }
 
     public void CloseStageInterace()
     {
-        CloseInterface(UIManager.UIInstance.StageInterface);
+        CloseInterface(UIManager.StageInterface);
     }
 
     public void GotoReady()

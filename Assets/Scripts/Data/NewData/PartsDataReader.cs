@@ -23,6 +23,7 @@ public class OwnPartsData
     public Ability ability3;
     public Ability ability4;
     public Ability ability5;
+
 }
 
 [System.Serializable]

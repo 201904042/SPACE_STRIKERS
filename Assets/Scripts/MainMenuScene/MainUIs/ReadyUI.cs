@@ -86,12 +86,13 @@ public class ReadyUI : MainUIs
         }
     }
 
-
+    //아이템 파트는 아직 미구현
     private bool isItem1On;
     private bool isItem2On;
     private bool isItem3On;
     private bool isItem4On;
 
+    
     public bool IsItem1On{
         get => isItem1On;
         set
@@ -167,6 +168,7 @@ public class ReadyUI : MainUIs
         SetPartsSlot3 = GetOwnPartsDataFromSlot("partsSlot3");
         SetPartsSlot4 = GetOwnPartsDataFromSlot("partsSlot4");
 
+        PlayerStatTextSet();
 
         IsItem1On = false;
         IsItem2On = false;
@@ -240,22 +242,27 @@ public class ReadyUI : MainUIs
         sb.AppendLine($"MSPD: {changedData.movementSpeed}");
         sb.AppendLine($"HP: {changedData.maxHealth}");
 
-        if (changedData.hpRegen != 0) sb.AppendLine($"초당회복 : {changedData.hpRegen}");
-        if (changedData.troopsDamageUp != 0) sb.AppendLine($"잡몹 뎀증: {changedData.troopsDamageUp}");
-        if (changedData.bossDamageUp != 0) sb.AppendLine($"보스 뎀증: {changedData.bossDamageUp}");
-        if (changedData.stageExpRateUp != 0) sb.AppendLine($"스테이지 경험치 증가: {changedData.stageExpRateUp}");
-        if (changedData.stageItemDropRateUp != 0) sb.AppendLine($"스테이지 아이템 증가: {changedData.stageItemDropRateUp}");
-        if (changedData.powRegenRateUp != 0) sb.AppendLine($"파워 리젠 증가: {changedData.powRegenRateUp}");
-        if (changedData.powAmountUp != 0) sb.AppendLine($"파워 개수 증가 : {changedData.powAmountUp}");
-        if (changedData.accountExpUp != 0) sb.AppendLine($"계정 경험치 증가: {changedData.accountExpUp}");
-        if (changedData.accountMoneyUp != 0) sb.AppendLine($"계정 획득재화 증가: {changedData.accountMoneyUp}");
-        if (changedData.startLevelUp != 0) sb.AppendLine($"시작 레벨 증가: {changedData.startLevelUp}");
-        if (changedData.revival != 0) sb.AppendLine($"부활 횟수 : {changedData.revival}");
-        if (targetBasicData.startWeaponUp != 0) sb.AppendLine($"시작 무기레벨 증가: {targetBasicData.startWeaponUp}");
+        if (changedData.hpRegen != 0) sb.AppendLine($"regenHP : {changedData.hpRegen}");
+        if (changedData.troopsDamageUp != 0) sb.AppendLine($"TroopsDmgUp: {changedData.troopsDamageUp}");
+        if (changedData.bossDamageUp != 0) sb.AppendLine($"BossDmgUp: {changedData.bossDamageUp}");
+        if (changedData.stageExpRateUp != 0) sb.AppendLine($"StageExpUp: {changedData.stageExpRateUp}");
+        if (changedData.stageItemDropRateUp != 0) sb.AppendLine($"ItemRegenUp: {changedData.stageItemDropRateUp}");
+        if (changedData.powRegenRateUp != 0) sb.AppendLine($"PowRegenUp: {changedData.powRegenRateUp}");
+        if (changedData.powAmountUp != 0) sb.AppendLine($"PowAmountUp : {changedData.powAmountUp}");
+        if (changedData.accountExpUp != 0) sb.AppendLine($"AccountExpUp: {changedData.accountExpUp}");
+        if (changedData.accountMoneyUp != 0) sb.AppendLine($"AccountMoneyUp: {changedData.accountMoneyUp}");
+        if (changedData.startLevelUp != 0) sb.AppendLine($"StartLevelUp: {changedData.startLevelUp}");
+        if (changedData.revival != 0) sb.AppendLine($"Revive : {changedData.revival}");
+        if (targetBasicData.startWeaponUp != 0) sb.AppendLine($"StartWeaponUp: {targetBasicData.startWeaponUp}");
 
         charInformText.text = sb.ToString();
     }
 
+    /// <summary>
+    /// 현재 플레이어가 장착한 파츠들로 스텟 증감
+    /// </summary>
+    /// <param name="targetBasicData"></param>
+    /// <returns></returns>
     private Character CalculateStat(Character targetBasicData)
     {
         Character result = targetBasicData;
@@ -271,7 +278,6 @@ public class ReadyUI : MainUIs
             PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability4);
             PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability5);
         }
-
         return result;
     }
     
@@ -324,26 +330,32 @@ public class ReadyUI : MainUIs
         }
     }
 
+    /// <summary>
+    /// 장착 슬롯에 해당 파츠를 등록 혹은 해제
+    /// </summary>
+    /// <param name="partsButton"></param>
+    /// <param name="value"></param>
+    /// <param name="slotKey"></param>
     private void UpdatePartsSlot(Button partsButton, OwnPartsData value, string slotKey)
     {
         var partsUIPref = partsButton.GetComponent<PartsUIPref>();
         var currentParts = partsUIPref.partsData;
-
-        if (value != null)
+        if (value != null) //해당 파츠 슬롯을 주어진 value값으로 채움
         {
-            CheckDuplicateParts(value.inventoryCode);
+            CheckDuplicateParts(value.inventoryCode); //다른 슬롯에 해당 파츠가 설정되어 잇는지 체크. 만약 다른 슬롯에 있다면 그 슬롯의 파츠 해제
             partsUIPref.SetParts(value);
             PlayerPrefs.SetInt(slotKey, value.inventoryCode);
-
+            value.isOn = true;
             if (!equippedPartsList.Contains(value))
             {
                 equippedPartsList.Add(value);
             }
         }
         else
-        {
+        { //파츠데이터가 널일경우 -> 그 파츠슬롯을 빈상태로 만듬
             if (currentParts != null && equippedPartsList.Contains(currentParts))
             {
+                currentParts.isOn = false;
                 equippedPartsList.Remove(currentParts);
             }
 
@@ -381,18 +393,19 @@ public class ReadyUI : MainUIs
 
     public void PartsInterfaceOn(int partsIndex)
     {
-        OpenInterface(UIManager.UIInstance.SelectPartsInterface);
+        OpenInterface(UIManager.SelectPartsInterface);
         Debug.Log(partsIndex);
-        UIManager.UIInstance.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
+        UIManager.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
     }
 
     public void PartsInterfaceOff()
     {
-        CloseInterface(UIManager.UIInstance.SelectPartsInterface);
+        CloseInterface(UIManager.SelectPartsInterface);
     }
 
     public void GetPartsData(int slotCode, OwnPartsData parts)
     {
+        //메인 파츠 버튼에 해당 파츠를 등록하고 적용된 스텟 업데이트
         switch (slotCode)
         {
             case 1: SetPartsSlot1 = parts.inventoryCode != -1 ? parts: null; break;
@@ -400,16 +413,17 @@ public class ReadyUI : MainUIs
             case 3: SetPartsSlot3 = parts.inventoryCode != -1 ? parts : null; ; break;
             case 4: SetPartsSlot4 = parts.inventoryCode != -1 ? parts : null; ; break;
         }
+
         PlayerStatTextSet();
     }
 
     public void SelectCharInterfaceOn()
     {
-        OpenInterface(UIManager.UIInstance.SelectCharInterface);
+        OpenInterface(UIManager.SelectCharInterface);
     }
 
     public void SelectCharInterfaceOff()
     {
-        CloseInterface(UIManager.UIInstance.SelectCharInterface);
+        CloseInterface(UIManager.SelectCharInterface);
     }
 }

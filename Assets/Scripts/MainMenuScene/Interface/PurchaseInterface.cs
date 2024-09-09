@@ -1,18 +1,88 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PurchaseInterface : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform Content;
+    public Image itemImage;
+    public TextMeshProUGUI itemText;
+    public Transform Btns;
+    public Button cancelBtn;
+    public Button purchaseBtn;
+
+    public MasterItem itemData;
+
+    public void Awake()
     {
-        
+        Content = transform.GetChild(2);
+        itemImage = Content.GetChild(0).GetComponent<Image>();
+        itemText = Content.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        Btns = transform.GetChild(3);
+        cancelBtn = Btns.GetChild(0).GetComponent<Button>();
+        purchaseBtn = Btns.GetChild(1).GetComponent<Button>();
+
+        itemData = new MasterItem();
+        SetButtons();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetButtons()
     {
-        
+        cancelBtn.onClick.RemoveAllListeners();
+        cancelBtn.onClick.AddListener(CloseBtn);
+        purchaseBtn.onClick.RemoveAllListeners();
+        purchaseBtn.onClick.AddListener(PurchaseBtn);
     }
+
+    public bool SetPurchaseInterface(int itemMasterCode)
+    {
+        bool success = DataManager.masterData.masterItemDic.TryGetValue(itemMasterCode, out itemData);
+        if (!success) 
+        {
+            Debug.Log($"해당 코드를 검색하지 못함 {itemMasterCode}");
+            return false;
+        }
+
+        itemImage.sprite = Resources.Load<Sprite>(itemData.spritePath);
+        itemText.text = itemData.description;
+        purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"구 매\n{itemData.buyPrice}";
+
+        UIManager.PurchaseInterface.SetActive(true);
+        return true;
+    }
+
+
+    public void CloseBtn()
+    {
+        gameObject.SetActive(false);
+    }
+
+
+    public void PurchaseBtn()
+    {
+        //구매의 조건에 부합하는지 체크
+        if(itemData.buyPrice > DataManager.inventoryData.InvenItemDic[0].amount)
+        {
+            //구매 불가 할경우. 알림 인터페이스 오픈
+            UIManager.AlertInterface.GetComponent<AlertInterface>().SetAlert("구매 불가/n미네랄이 부족합니다");
+            return;
+        }
+
+        InventoryItem ownMineral = DataManager.inventoryData.FindByMasterId(0).Value ;
+
+        //구매 인벤토리의 미네랄을 감소시키고 
+        DataManager.inventoryData.ModifyItem(ownMineral.storageId, ownMineral.amount - itemData.buyPrice);
+
+        //해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
+        DataManager.inventoryData.AddNewItem(itemData.type, itemData.masterId, itemData.name, 1); //일단은 한번에 한개만 증가
+
+        //구매 성공시 알림 인터페이스 오픈
+        UIManager.AlertInterface.GetComponent<AlertInterface>().SetAlert("아이템을 구매하였습니다");
+
+    }
+
 }

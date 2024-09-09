@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionPanel : MonoBehaviour
+public class OptionInterface : MonoBehaviour
 {
     public bool is_optionOn;
     public Slider BgmSlider;

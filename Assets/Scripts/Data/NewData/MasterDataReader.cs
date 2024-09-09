@@ -11,6 +11,8 @@ public struct MasterItem //�ʵ尪
     public int type;
     public string description;
     public string spritePath;
+    public int buyPrice;
+    public int sellPrice;
 }
 
 [System.Serializable]

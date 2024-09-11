@@ -68,7 +68,7 @@ public class SelectCharInterface : MonoBehaviour
     {
         char1Btn.interactable = true;
 
-        Character player = new Character();
+        CharData player = new CharData();
         DataManager.characterData.characterDic.TryGetValue(102, out player);
         char2Btn.interactable = player.own ? true : false;
 

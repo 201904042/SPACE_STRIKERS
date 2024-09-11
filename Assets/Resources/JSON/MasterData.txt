@@ -22,7 +22,7 @@
       "masterId": 2,
       "name": "하급뽑기권",
       "type": 0,
-      "description": "미네랄 설명",
+      "description": "하급뽑기권 설명",
       "spritePath": "",
       "buyPrice": 1000,
       "sellPrice": 500
@@ -31,7 +31,7 @@
       "masterId": 3,
       "name": "중급뽑기권",
       "type": 0,
-      "description": "크립트 설명",
+      "description": "중급뽑기권 설명",
       "spritePath": "",
       "buyPrice": 10000,
       "sellPrice": 5000
@@ -40,7 +40,7 @@
       "masterId": 4,
       "name": "고급뽑기권",
       "type": 0,
-      "description": "미네랄 설명",
+      "description": "고급뽑기권 설명",
       "spritePath": "",
       "buyPrice": 100000,
       "sellPrice": 50000

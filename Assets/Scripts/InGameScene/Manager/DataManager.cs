@@ -17,6 +17,7 @@ public class DataManager : MonoBehaviour
     public static CharacterDataReader characterData = new CharacterDataReader();
     public static PartsDataReader partsData = new PartsDataReader();
     public static AbilityDataReader abilityData = new AbilityDataReader();
+    public static StoreItemReader storeData = new StoreItemReader();
 
     private void Awake()
     {
@@ -30,20 +31,56 @@ public class DataManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        SetComponent();
+        LoadAllData();
     }
 
-    private void SetComponent()
+    private void LoadAllData()
     {
         enemyData = GetComponent<EnemyJsonReader>();
         stageData = GetComponent<StageJsonReader>();
 
         accountData.LoadData();
         masterData.LoadData();
-        inventoryData.LoadData();
         characterData.LoadData();
+        inventoryData.LoadData();
         partsData.LoadData();
         abilityData.LoadData();
+        storeData.LoadData();
+
+        
     }
-    
+
+    public static T LoadJsonData<T>(string path) where T : class
+    {
+        TextAsset json = Resources.Load<TextAsset>(path);
+        if (json == null)
+        {
+            Debug.LogError($"{path}: JSON 파일이 로드되지 않음");
+            return null;
+        }
+
+        T dataInstance = JsonUtility.FromJson<T>(json.text);
+        if (dataInstance == null)
+        {
+            Debug.LogError($"{path}: 파싱이 제대로 이루어지지 않음");
+            return null;
+        }
+
+        Debug.Log($"{path}: 데이터가 성공적으로 로드됨");
+        return dataInstance;
+    }
+
+    public static Dictionary<int, T> SetDictionary<T, TList>(string path, Func<TList, IEnumerable<T>> itemSelector, Func<T, int> keySelector) where TList : class
+    {
+        TList dataInstance = LoadJsonData<TList>(path);
+        Dictionary<int, T> dictionary = new Dictionary<int, T>();
+
+        foreach (T item in itemSelector(dataInstance))
+        {
+            dictionary.Add(keySelector(item), item);
+        }
+
+        Debug.Log($"{typeof(T).Name} : {dictionary.Count}개의 아이템이 로드됨");
+        return dictionary;
+    }
 }

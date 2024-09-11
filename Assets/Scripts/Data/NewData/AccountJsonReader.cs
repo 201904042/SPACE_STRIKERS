@@ -2,19 +2,6 @@ using UnityEngine;
 using System.IO;
 using System;
 
-[Serializable]
-public class AccountData
-{
-    public int accountId;
-    public string accountName;
-    public int accountLevel;
-    public int currentExperience;
-    public int stageProgress;
-}
-public class AccountDataList
-{
-    public AccountData accountData;
-}
 
 public class AccountJsonReader 
 {
@@ -23,14 +10,7 @@ public class AccountJsonReader
 
     public void LoadData()
     {
-        TextAsset json = Resources.Load<TextAsset>("JSON/AccountData");
-        if (json == null)
-        {
-            Debug.LogError("AccountData: JSON이 로드되지 않음");
-            return;
-        }
-
-        AccountDataList dataInstance = JsonUtility.FromJson<AccountDataList>(json.text);
+        AccountDatas dataInstance = DataManager.LoadJsonData<AccountDatas>("JSON/AccountData");
         account = dataInstance.accountData;
         if (dataInstance != null)
         {

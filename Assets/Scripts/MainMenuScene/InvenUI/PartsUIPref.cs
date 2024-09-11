@@ -59,7 +59,7 @@ public class PartsUIPref : MonoBehaviour
             default:bgImage.color = Color.black; break;
         }
 
-        MasterItem master = new MasterItem();
+        MasterItemData master = new MasterItemData();
         DataManager.masterData.masterItemDic.TryGetValue(partsData.masterCode, out master);
 
         Sprite image = Resources.Load<Sprite>(master.spritePath);

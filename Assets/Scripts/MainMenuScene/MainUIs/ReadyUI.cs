@@ -209,10 +209,10 @@ public class ReadyUI : MainUIs
     {
         int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
 
-        MasterItem masterChar = new MasterItem();
+        MasterItemData masterChar = new MasterItemData();
         DataManager.masterData.masterItemDic.TryGetValue(playerMasterCode, out masterChar);
 
-        Character selectedChar = new Character();
+        CharData selectedChar = new CharData();
         DataManager.characterData.characterDic.TryGetValue(playerMasterCode, out selectedChar);
         curPlayerImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(masterChar.spritePath);
 
@@ -222,7 +222,7 @@ public class ReadyUI : MainUIs
     private void PlayerStatTextSet()
     {
         int masterId = PlayerPrefs.GetInt("curCharacterCode") + 100;
-        Character targetBasicData = new Character();
+        CharData targetBasicData = new CharData();
         bool success = DataManager.characterData.characterDic.TryGetValue(masterId, out targetBasicData);
         if (!success)
         {
@@ -230,7 +230,7 @@ public class ReadyUI : MainUIs
             return;
         }
 
-        Character changedData = CalculateStat(targetBasicData);
+        CharData changedData = CalculateStat(targetBasicData);
         StringBuilder sb = new StringBuilder();
 
         sb.AppendLine($"{changedData.name}");
@@ -263,9 +263,9 @@ public class ReadyUI : MainUIs
     /// </summary>
     /// <param name="targetBasicData"></param>
     /// <returns></returns>
-    private Character CalculateStat(Character targetBasicData)
+    private CharData CalculateStat(CharData targetBasicData)
     {
-        Character result = targetBasicData;
+        CharData result = targetBasicData;
 
         //todo -> 여기서 파츠의 내용을 적용시키지 못하는 문제 발생
         foreach (var part in EquippedPartsList)
@@ -290,7 +290,7 @@ public class ReadyUI : MainUIs
             return null;
         }
 
-        InventoryItem invenData;
+        InvenItemData invenData;
         if (DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData))
         {
             OwnPartsData data;

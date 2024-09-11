@@ -73,7 +73,7 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void PlayerSet(int id)
     {
-        Character curPlayerChar = new Character();
+        CharData curPlayerChar = new CharData();
         bool isSuccess = DataManager.characterData.characterDic.TryGetValue(curPlayerID,out curPlayerChar);
 
         if (!isSuccess)

@@ -2,27 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO; // 파일 쓰기 작업에 필요
-using System.Text; // 텍스트 인코딩에 필요
+using System.Text;
+using System.Linq; // 텍스트 인코딩에 필요
 
-[System.Serializable]
-public struct InventoryItem //필드값
-{
-    public int storageId;
-    public int itemType;
-    public int masterId;
-    public string name;
-    public int amount;
-}
-
-[System.Serializable]
-public class InventoryList //리스트
-{
-    public List<InventoryItem> storageItems;
-}
 
 public class InventoryDataReader : MonoBehaviour
 {
-    public Dictionary<int, InventoryItem> InvenItemDic; //코드를 통해 검색용
+    public Dictionary<int, InvenItemData> InvenItemDic; //코드를 통해 검색용
 
     private void Awake()
     {
@@ -31,36 +17,20 @@ public class InventoryDataReader : MonoBehaviour
 
     public void LoadData()
     {
-        TextAsset json = Resources.Load<TextAsset>("JSON/InventoryData");
-        if (json == null)
-        {
-            Debug.Log("InvenData : json이 로드되지 않음");
-            return;
-        }
+        InvenItemDic = DataManager.SetDictionary<InvenItemData, InvenItemDatas>("JSON/InventoryData",
+            data => data.storageItems,
+            item => item.storageId
+            );
 
-        InventoryList dataInstance = JsonUtility.FromJson<InventoryList>(json.text);
-        if (dataInstance == null)
-        {
-            Debug.Log("InvenData : 파싱이 제대로 이루어지지 않음");
-            return;
-        }
-
-        InvenItemDic = new Dictionary<int, InventoryItem>();
-        foreach (InventoryItem item in dataInstance.storageItems)
-        {
-            InvenItemDic.Add(item.storageId, item);
-        }
-
-        Debug.Log($"InvenData : {InvenItemDic.Count}개의 아이템이 로드됨");
     }
 
     // 데이터를 수정하고 JSON 파일을 저장하는 메서드
     public void SaveData()
     {
-        // InventoryList 객체 생성
-        InventoryList dataInstance = new InventoryList
+        // InvenItemDatas 객체 생성
+        InvenItemDatas dataInstance = new InvenItemDatas
         {
-            storageItems = new List<InventoryItem>(InvenItemDic.Values)
+            storageItems = InvenItemDic.Values.ToArray()
         };
 
         // 데이터를 JSON 문자열로 변환
@@ -80,7 +50,7 @@ public class InventoryDataReader : MonoBehaviour
     /// </summary>
     public void AddNewItem(int itemType, int masterId, string name, int amount)
     {
-        InventoryItem? findItem = FindByMasterId(masterId);
+        InvenItemData? findItem = FindByMasterId(masterId);
         if (findItem != null)  //더하려는 아이템이 이미 존재한다면 
         {
             ModifyItem(findItem.Value.storageId, findItem.Value.amount + amount);
@@ -95,7 +65,7 @@ public class InventoryDataReader : MonoBehaviour
         }
 
 
-        InventoryItem newItem = new InventoryItem();
+        InvenItemData newItem = new InvenItemData();
         newItem.storageId = newStorageId;
         newItem.itemType = itemType;
         newItem.masterId = masterId;
@@ -111,7 +81,7 @@ public class InventoryDataReader : MonoBehaviour
     {
         if (InvenItemDic.ContainsKey(storageId))
         {
-            InventoryItem item = InvenItemDic[storageId];
+            InvenItemData item = InvenItemDic[storageId];
             item.amount = newAmount; // 아이템의 수량을 변경
             InvenItemDic[storageId] = item;
             Debug.Log($"InvenData : 아이템 {item.name}의 수량이 {newAmount}로 수정됨");
@@ -122,9 +92,11 @@ public class InventoryDataReader : MonoBehaviour
         }
     }
 
-    public InventoryItem? FindByMasterId(int masterId)
+    // todo -> 아이템을 삭제하는 코드 추가할것. storageId에 빈공간이 생길시 그 뒤에 요소들을 땡겨서 빈공간 제거
+
+    public InvenItemData? FindByMasterId(int masterId)
     {
-        foreach (KeyValuePair<int, InventoryItem> pair in InvenItemDic)
+        foreach (KeyValuePair<int, InvenItemData> pair in InvenItemDic)
         {
             if (pair.Value.masterId == masterId)
             {

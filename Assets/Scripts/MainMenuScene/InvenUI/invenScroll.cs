@@ -17,6 +17,7 @@ public class invenScroll : MonoBehaviour
 
     public int selectedInvenCode;
 
+    /*
     private void Awake()
     {
         invenScrollRect = gameObject.GetComponent<ScrollRect>();
@@ -39,12 +40,12 @@ public class invenScroll : MonoBehaviour
         if (partsContent.activeSelf) {
             foreach (Transform child in partsContent.transform)
             {
-                PartsUIPref partsInvenSrt = child.GetComponent<PartsUIPref>();
-                /*
+                ItemUIPref partsInvenSrt = child.GetComponent<ItemUIPref>();
+                
                 if (partsInvenSrt != null && partsInvenSrt.PartsId == itemId)
                 {
                     return true;
-                }*/
+                }
             }
         }
         else if(ingredContent.activeSelf)
@@ -98,5 +99,5 @@ public class invenScroll : MonoBehaviour
         consContent.SetActive(true);
         invenLoad();
 
-    }
+    }*/
 }

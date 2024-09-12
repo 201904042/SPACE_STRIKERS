@@ -15,8 +15,13 @@ public struct GradeColor
     public static Color D_Color = new Color(1, 1, 1, 1);
 }
 
-public class PartsUIPref : MonoBehaviour
+public class ItemUIPref : MonoBehaviour
 {
+    //todo -> 현재 파츠만 해당되게 만들어져 있는데. 모든 아이템을 넣을 수 있도록 수정할것
+
+    //해당 UI에 파츠 혹은 아이템(재료, 소모품) 할당
+    //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
+
     public OwnPartsData partsData;
     [SerializeField] private Image bgImage;
     [SerializeField] private Image partsImage;

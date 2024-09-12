@@ -52,7 +52,7 @@ public class ReadyUI : MainUIs
 
     public OwnPartsData SetPartsSlot1
     {
-        get => parts1Btn.GetComponent<PartsUIPref>().partsData;
+        get => parts1Btn.GetComponent<ItemUIPref>().partsData;
         set
         {
             UpdatePartsSlot(parts1Btn, value, "partsSlot1");
@@ -61,7 +61,7 @@ public class ReadyUI : MainUIs
 
     public OwnPartsData SetPartsSlot2
     {
-        get => parts2Btn.GetComponent<PartsUIPref>().partsData;
+        get => parts2Btn.GetComponent<ItemUIPref>().partsData;
         set
         {
             UpdatePartsSlot(parts2Btn, value, "partsSlot2");
@@ -70,7 +70,7 @@ public class ReadyUI : MainUIs
 
     public OwnPartsData SetPartsSlot3
     {
-        get => parts3Btn.GetComponent<PartsUIPref>().partsData;
+        get => parts3Btn.GetComponent<ItemUIPref>().partsData;
         set
         {
             UpdatePartsSlot(parts3Btn, value, "partsSlot3");
@@ -79,7 +79,7 @@ public class ReadyUI : MainUIs
 
     public OwnPartsData SetPartsSlot4
     {
-        get => parts4Btn.GetComponent<PartsUIPref>().partsData;
+        get => parts4Btn.GetComponent<ItemUIPref>().partsData;
         set
         {
             UpdatePartsSlot(parts4Btn, value, "partsSlot4");
@@ -312,19 +312,19 @@ public class ReadyUI : MainUIs
 
     private void CheckDuplicateParts(int partsInvenCode)
     {
-        if (parts1Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        if (parts1Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
         {
             SetPartsSlot1 = null;
         }
-        if (parts2Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        if (parts2Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
         {
             SetPartsSlot2 = null;
         }
-        if (parts3Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        if (parts3Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
         {
             SetPartsSlot3 = null;
         }
-        if (parts4Btn.GetComponent<PartsUIPref>().partsData?.inventoryCode == partsInvenCode)
+        if (parts4Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
         {
             SetPartsSlot4 = null;
         }
@@ -338,7 +338,7 @@ public class ReadyUI : MainUIs
     /// <param name="slotKey"></param>
     private void UpdatePartsSlot(Button partsButton, OwnPartsData value, string slotKey)
     {
-        var partsUIPref = partsButton.GetComponent<PartsUIPref>();
+        var partsUIPref = partsButton.GetComponent<PartsSlot>();
         var currentParts = partsUIPref.partsData;
         if (value != null) //해당 파츠 슬롯을 주어진 value값으로 채움
         {
@@ -396,11 +396,6 @@ public class ReadyUI : MainUIs
         OpenInterface(UIManager.SelectPartsInterface);
         Debug.Log(partsIndex);
         UIManager.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
-    }
-
-    public void PartsInterfaceOff()
-    {
-        CloseInterface(UIManager.SelectPartsInterface);
     }
 
     public void GetPartsData(int slotCode, OwnPartsData parts)

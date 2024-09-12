@@ -10,7 +10,6 @@ public class SelectPartsInterface : MonoBehaviour
     public GameObject partsUI; //파츠 버튼의 UI
     public int curPartsIndex; //현재 적용될 파츠의 칸
 
-    public ReadyUI ParentUI;
     public Transform partsContainer;
     public Transform buttons;
 
@@ -38,9 +37,7 @@ public class SelectPartsInterface : MonoBehaviour
 
     private void Awake()
     {
-        //해당 인터페이스의 컴포넌트 추가
-        ParentUI = transform.parent.parent.GetComponent<ReadyUI>();
-
+       
         partsContainer = transform.GetChild(1);
         buttons = transform.GetChild(2);
 
@@ -129,28 +126,28 @@ public class SelectPartsInterface : MonoBehaviour
         //빈 파츠 생성
         OwnPartsData emptyParts = new OwnPartsData();
         emptyParts.inventoryCode = -1;
-        PartsUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<PartsUIPref>();
+        ItemUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
         emptyPartsPrefab.SetParts(emptyParts);
         emptyPartsPrefab.GetComponent<Button>().onClick.RemoveAllListeners();
         emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
 
         foreach (OwnPartsData parts in isOnPartsList)
         {
-            PartsUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<PartsUIPref>();
+            ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
             prefab.SetParts(parts);
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }
         foreach (OwnPartsData parts in isOffPartsList)
         {
-            PartsUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<PartsUIPref>();
+            ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
             prefab.SetParts(parts);
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }
     }
 
-    public void PartsButtonEvent(PartsUIPref partsBtn)
+    public void PartsButtonEvent(ItemUIPref partsBtn)
     {
         SelectedParts = partsBtn.partsData;
     }
@@ -180,7 +177,7 @@ public class SelectPartsInterface : MonoBehaviour
     public void CloseInterface()
     {
         //해당 인터페이스 닫기
-        ParentUI.PartsInterfaceOff();
+        gameObject.SetActive(false);
     }
 
     public void SelectPartsCloseInterface(int partsIndex, OwnPartsData selectedParts)
@@ -190,8 +187,8 @@ public class SelectPartsInterface : MonoBehaviour
             return;
         }
 
-        ParentUI.GetPartsData(partsIndex, selectedParts);
-        ParentUI.PartsInterfaceOff();
+        UIManager.UIInstance.ReadyUIObj.GetComponent<ReadyUI>().GetPartsData(partsIndex, selectedParts);
+        gameObject.SetActive(false);
     }
 
     

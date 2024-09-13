@@ -9,7 +9,7 @@ public class StoreItemData
 [System.Serializable]
 public class StoreItemDatas
 {
-    public StoreItemData[] storeItem;
+    public StoreItemData[] DailyShopList;
 }
 
 [System.Serializable]

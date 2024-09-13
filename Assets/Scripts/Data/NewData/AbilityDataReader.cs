@@ -9,7 +9,7 @@ public class AbilityDataReader
 
     public void LoadData()
     {
-        abilityDic = DataManager.SetDictionary<AbilityData, AbilityDatas>("JSON/AbilityData",
+        abilityDic = DataManager.SetDictionary<AbilityData, AbilityDatas>("JSON/ReadOnly/AbilityData",
             data => data.abilityData,
             item => item.abilityCode
             );

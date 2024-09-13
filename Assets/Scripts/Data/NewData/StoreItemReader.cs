@@ -9,8 +9,8 @@ public class StoreItemReader : MonoBehaviour
 
     public void LoadData()
     {
-        storeItemDic = DataManager.SetDictionary<StoreItemData, StoreItemDatas>("JSON/StoreItemData",
-            data => data.storeItem,
+        storeItemDic = DataManager.SetDictionary<StoreItemData, StoreItemDatas>("JSON/ReadOnly/DailyShopList",
+            data => data.DailyShopList,
             item => item.storeItemId
             );
     }

@@ -10,7 +10,7 @@ public class AccountJsonReader
 
     public void LoadData()
     {
-        AccountDatas dataInstance = DataManager.LoadJsonData<AccountDatas>("JSON/AccountData");
+        AccountDatas dataInstance = DataManager.LoadJsonData<AccountDatas>("JSON/Writable/AccountData");
         account = dataInstance.accountData;
         if (dataInstance != null)
         {

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "737994722545",
+    "firebase_url": "https://spacestrikers-f12ac-default-rtdb.firebaseio.com",
+    "project_id": "spacestrikers-f12ac",
+    "storage_bucket": "spacestrikers-f12ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737994722545:android:e7a820f4379d89c0192d50",
+        "android_client_info": {
+          "package_name": "com.KangnamUniv.PIXEL_SPACE_STRIKERS"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8B9_a_VxpvR5RNrTPl88_yNQsLGgCRJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737994722545:android:6461802035fb9252192d50",
+        "android_client_info": {
+          "package_name": "com.company.pixel_space_strikers"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8B9_a_VxpvR5RNrTPl88_yNQsLGgCRJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

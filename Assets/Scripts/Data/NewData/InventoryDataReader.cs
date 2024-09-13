@@ -17,7 +17,7 @@ public class InventoryDataReader : MonoBehaviour
 
     public void LoadData()
     {
-        InvenItemDic = DataManager.SetDictionary<InvenItemData, InvenItemDatas>("JSON/InventoryData",
+        InvenItemDic = DataManager.SetDictionary<InvenItemData, InvenItemDatas>("JSON/Writable/InventoryData",
             data => data.storageItems,
             item => item.storageId
             );

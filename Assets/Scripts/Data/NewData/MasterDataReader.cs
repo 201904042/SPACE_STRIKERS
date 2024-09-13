@@ -9,7 +9,7 @@ public class MasterDataReader
 
     public void LoadData()
     {
-        masterItemDic = DataManager.SetDictionary<MasterItemData, MasterItemDatas>("JSON/MasterData",
+        masterItemDic = DataManager.SetDictionary<MasterItemData, MasterItemDatas>("JSON/ReadOnly/masterItems",
             data => data.masterItems,
             item => item.masterId
             );

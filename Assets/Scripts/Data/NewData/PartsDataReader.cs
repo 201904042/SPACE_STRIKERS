@@ -10,7 +10,7 @@ public class PartsDataReader
 
     public void LoadData()
     {
-        ownPartsDic = DataManager.SetDictionary<OwnPartsData, OwnPartDatas>("JSON/OwnParts",
+        ownPartsDic = DataManager.SetDictionary<OwnPartsData, OwnPartDatas>("JSON/Writable/OwnParts",
             data => data.ownParts,
             item => item.masterCode
             );

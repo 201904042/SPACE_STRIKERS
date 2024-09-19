@@ -20,13 +20,16 @@ public class UIManager : MonoBehaviour
 
     //Interface
     public static GameObject AlertInterface;
+    public static GameObject TFInterface;
+
     public static GameObject OptionInterface;
     public static GameObject StageInterface;
     public static GameObject SelectCharInterface;
     public static GameObject SelectPartsInterface;
     public static GameObject GotchaInterface;
     public static GameObject PurchaseInterface;
-
+    public static GameObject IteminformInterface;
+    
     private void Awake()
     {
         if (UIInstance == null)
@@ -55,12 +58,14 @@ public class UIManager : MonoBehaviour
         LabotoryUIObj = FindObjectOfType<LabotoryUI>().gameObject;
 
         AlertInterface = FindObjectOfType<AlertInterface>().gameObject;
+        TFInterface = FindObjectOfType<TFInterface>().gameObject;
         OptionInterface = FindObjectOfType<OptionInterface>().gameObject;
         StageInterface = FindObjectOfType<StageInterface>().gameObject;
         SelectCharInterface = FindObjectOfType<SelectCharInterface>().gameObject;
         SelectPartsInterface = FindObjectOfType<SelectPartsInterface>().gameObject;
         GotchaInterface = FindObjectOfType<GotchaInterface>().gameObject;
         PurchaseInterface = FindObjectOfType<PurchaseInterface>().gameObject; 
+        IteminformInterface = FindObjectOfType<ItemInformInterface>().gameObject;
     }
 
     private void UIInit()
@@ -76,11 +81,13 @@ public class UIManager : MonoBehaviour
         LabotoryUIObj.SetActive(false);
 
         AlertInterface.SetActive(false);
+        TFInterface.SetActive(false);
         OptionInterface.SetActive(false);
         StageInterface.SetActive(false);
         SelectCharInterface.SetActive(false);
         SelectPartsInterface.SetActive(false);
         GotchaInterface.SetActive(false);
         PurchaseInterface.SetActive(false);
+        IteminformInterface.SetActive(false);
     }
 }

@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public struct GradeColor
@@ -22,67 +19,132 @@ public class ItemUIPref : MonoBehaviour
     //해당 UI에 파츠 혹은 아이템(재료, 소모품) 할당
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
-    public OwnPartsData partsData;
+    public InvenItemData invenData;
+    public OwnPartsData partsData; //소유한 파츠의 데이터
+    public MasterItemData itemData; //소유한 파츠 이외의 아이템이나 소유하지 않은 모든 아이템의 데이터
+
     [SerializeField] private Image bgImage;
-    [SerializeField] private Image partsImage;
+    [SerializeField] private Image itemImage;
     [SerializeField] private GameObject selectText;
+    [SerializeField] private GameObject amountText;
 
     public Sprite defaultImage;
+
+    public int curItemType; //2면 파츠, 나머지면 다른 아이템
 
     private void Awake()
     {
         bgImage = transform.GetChild(0).GetComponent<Image>();
-        partsImage = transform.GetChild(1).GetComponent<Image>();
+        itemImage = transform.GetChild(1).GetComponent<Image>();
         selectText = transform.GetChild(2).gameObject;
-
-        //초기화
-        bgImage.color = Color.white;
-        partsImage.sprite = null;
+        amountText = transform.GetChild(3).gameObject;
         selectText.SetActive(false);
+        amountText.SetActive(false);
     }
 
-    public void SetParts(OwnPartsData parts)
+    /// <summary>
+    /// 상점 등 소유하지 않은 아이템을 로드할 경우
+    /// </summary>
+    public void SetByMasterId(int masterId)
     {
-        partsData = parts;
+        ResetData();
+        bool isSuccess = DataManager.masterData.masterItemDic.TryGetValue(masterId, out itemData);
+        if (!isSuccess)
+        {
+            Debug.Log("마스터 데이터를 찾지 못함");
+        }
+        curItemType = itemData.type;
+        SetData();
+    }
 
+    /// <summary>
+    /// 플레이어가 소유한 아이템을 로드 할 경우
+    /// </summary>
+    public void SetByInvenId(int invenId)
+    {
+        ResetData();
+        if (invenId == -1)
+        {
+            partsData.inventoryCode = -1;
+            curItemType = 2;
+            return;
+        }
+
+        bool isSuccess = DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData);
+        if (!isSuccess)
+        {
+            Debug.Log("아이템 검색 실패");
+        }
+
+        if(invenData.itemType == 2) //파츠일경우
+        {
+            isSuccess = DataManager.partsData.ownPartsDic.TryGetValue(invenData.storageId, out partsData);
+            if (!isSuccess)
+            {
+                Debug.Log("파츠 데이터를 찾지 못함");
+            }
+        }
+        else
+        {
+            isSuccess = DataManager.masterData.masterItemDic.TryGetValue(invenData.masterId, out itemData);
+            if (!isSuccess)
+            {
+                Debug.Log("마스터 데이터를 찾지 못함");
+            }
+        }
+
+        curItemType = invenData.itemType;
         SetData();
     }
 
     private void SetData()
     {
-        bgImage.color = Color.white;
-        partsImage.sprite = null;
-        selectText.SetActive(false);
-
-        switch (partsData.grade)
+        if (curItemType == 2)
         {
-            case 5: bgImage.color = GradeColor.S_Color; break;
-            case 4: bgImage.color = GradeColor.A_Color; break;
-            case 3: bgImage.color = GradeColor.B_Color; break;
-            case 2: bgImage.color = GradeColor.C_Color; break;
-            case 1: bgImage.color = GradeColor.D_Color; break;
-            default:bgImage.color = Color.black; break;
+            switch (partsData.grade)
+            {
+                case 5: bgImage.color = GradeColor.S_Color; break;
+                case 4: bgImage.color = GradeColor.A_Color; break;
+                case 3: bgImage.color = GradeColor.B_Color; break;
+                case 2: bgImage.color = GradeColor.C_Color; break;
+                case 1: bgImage.color = GradeColor.D_Color; break;
+                default: bgImage.color = Color.black; break;
+            }
+
+            MasterItemData master = new MasterItemData();
+            DataManager.masterData.masterItemDic.TryGetValue(partsData.masterCode, out master);
+
+            Sprite image = Resources.Load<Sprite>(master.spritePath);
+            if (image == null)
+            {
+                image = defaultImage;
+            }
+
+            itemImage.sprite = image;
+            selectText.SetActive(partsData.isOn == true ? true : false);
         }
-
-        MasterItemData master = new MasterItemData();
-        DataManager.masterData.masterItemDic.TryGetValue(partsData.masterCode, out master);
-
-        Sprite image = Resources.Load<Sprite>(master.spritePath);
-        if(image == null)
+        else
         {
-            image = defaultImage;
+            Sprite image = Resources.Load<Sprite>(itemData.spritePath);
+            if (image == null)
+            {
+                image = defaultImage;
+            }
+
+            itemImage.sprite = image;
+            amountText.SetActive(true);
+            amountText.GetComponentInChildren<TextMeshProUGUI>().text = invenData.amount.ToString();
         }
-
-        partsImage.sprite = image;
-
-        selectText.SetActive(partsData.isOn == true ? true : false);
     }
 
     public void ResetData()
     {
-        partsData = null;
+        invenData = new InvenItemData();
+        itemData = new MasterItemData();
+        partsData = new OwnPartsData();
+
         bgImage.color = Color.white;
-        partsImage.sprite = null;
+        itemImage.sprite = null;
         selectText.SetActive(false);
     }
 }

@@ -124,24 +124,22 @@ public class SelectPartsInterface : MonoBehaviour
         isOffPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
 
         //后 颇明 积己
-        OwnPartsData emptyParts = new OwnPartsData();
-        emptyParts.inventoryCode = -1;
         ItemUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-        emptyPartsPrefab.SetParts(emptyParts);
+        emptyPartsPrefab.SetByInvenId(-1);
         emptyPartsPrefab.GetComponent<Button>().onClick.RemoveAllListeners();
         emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
 
         foreach (OwnPartsData parts in isOnPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-            prefab.SetParts(parts);
+            prefab.SetByInvenId(parts.inventoryCode);
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }
         foreach (OwnPartsData parts in isOffPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-            prefab.SetParts(parts);
+            prefab.SetByInvenId(parts.inventoryCode);
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }

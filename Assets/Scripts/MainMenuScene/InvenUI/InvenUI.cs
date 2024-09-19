@@ -1,46 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class InvenUI : UI_Parent
+
+public class InvenUI : MainUIs
 {
-    
-    public GameObject ChosingCharPageObj;
-    public int curPlayer=0;
+    /*
+     * 목적
+     * 인벤토리의 아이템을 ItemUIPref로 로드
+     * ItemUiPref클릭시 아이템정보 인터페이스 액티브
+     */
+    public ItemUIPref itemUIPref;
 
-    public Sprite playerImage1;
-    public Sprite playerImage2;
-    public Sprite playerImage3;
-    public Sprite playerImage4;
-    public GameObject playerImage;
 
-    public TextMeshProUGUI playerInformText;
-    public int playerLv;
-    private float playerHp;
-    private float playerDmg;
-    private float playerDef;
-    private float playerMSpd;
-    private float playerASpd;
 
-    protected override void Awake()
+    public void GotoMain()
     {
-        base.Awake();
+        ChangeUI(UIManager.UIInstance.MainUIObj);
     }
 
-
-    
-
-    public void BackBtn()
+    public void GotoLabotory()
     {
-        gameObject.SetActive(false);
-        Main.SetActive(true);
-    }
-
-    public void Player_Btn() {
-        ChosingCharPageObj.SetActive(true);
+        //연구소 UI로
+        //ChangeUI(UIManager.UIInstance.MainUIObj);
     }
 }

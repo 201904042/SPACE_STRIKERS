@@ -17,7 +17,7 @@ public class ConsumeStore : MonoBehaviour
 
         foreach (MasterItemData item in DataManager.masterData.masterItemDic.Values)
         {
-            if (item.type == 4)
+            if (item.type == ItemType.Consume)
             {
                 consumeList.Add(item); //소모품만 리스트에 등록
             }

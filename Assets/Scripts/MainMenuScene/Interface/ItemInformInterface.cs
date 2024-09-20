@@ -36,17 +36,28 @@ public class ItemInformInterface : MonoBehaviour
         sellBtn = Buttons.GetChild(1).GetComponentInChildren<Button>();
     }
 
+    private void OnEnable()
+    {
+        SetButtons();
+    }
+
     /// <summary>
     /// 인벤토리 ItemUIpref버튼에서 불러오기
     /// </summary>
-    /// <param name="invenItemId"></param>
-    public void SetInterface(int invenItemId)
+
+    public void SetInterface(int targetInvenId)
     {
+        invenItemId = targetInvenId;
+
 
     }
 
     public void SetButtons()
     {
+        cancelBtn.onClick.RemoveAllListeners();
+        cancelBtn.onClick.AddListener(() => CancelBtnHandler());
+        sellBtn.onClick.RemoveAllListeners();
+        sellBtn.onClick.AddListener(() => SellBtnHandler());
 
     }
 
@@ -83,6 +94,11 @@ public class ItemInformInterface : MonoBehaviour
          * todo -> 아이템 판매 로직
          * 데이터베이스에서 해당 아이템 삭제 및 미네랄 추가
         */
+
+        //해당 아이템 1 감소
+        //해당 아이템의 sell가격 만큼 미네랄 증가
+        //데이터베이스 전송
+
 
         Debug.Log($"아이템 {invenItemId}이(가) 판매되었습니다.");
     }

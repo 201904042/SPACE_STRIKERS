@@ -393,7 +393,7 @@ public class ReadyUI : MainUIs
 
     public void PartsInterfaceOn(int partsIndex)
     {
-        OpenInterface(UIManager.SelectPartsInterface);
+        OpenInterface(UIManager.SelectPartsInterface.gameObject);
         Debug.Log(partsIndex);
         UIManager.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
     }
@@ -414,11 +414,11 @@ public class ReadyUI : MainUIs
 
     public void SelectCharInterfaceOn()
     {
-        OpenInterface(UIManager.SelectCharInterface);
+        OpenInterface(UIManager.SelectCharInterface.gameObject);
     }
 
     public void SelectCharInterfaceOff()
     {
-        CloseInterface(UIManager.SelectCharInterface);
+        CloseInterface(UIManager.SelectCharInterface.gameObject);
     }
 }

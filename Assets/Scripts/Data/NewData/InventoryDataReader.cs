@@ -48,7 +48,7 @@ public class InventoryDataReader : MonoBehaviour
     /// <summary>
     /// 해당 아이템이 인벤토리에 존재하면 개수 업데이트, 없으면 인벤 데이터 추가
     /// </summary>
-    public void AddNewItem(int itemType, int masterId, string name, int amount)
+    public void AddNewItem(ItemType itemType, int masterId, string name, int amount)
     {
         InvenItemData? findItem = FindByMasterId(masterId);
         if (findItem != null)  //더하려는 아이템이 이미 존재한다면 

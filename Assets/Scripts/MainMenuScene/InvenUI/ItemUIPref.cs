@@ -30,7 +30,7 @@ public class ItemUIPref : MonoBehaviour
 
     public Sprite defaultImage;
 
-    public int curItemType; //2면 파츠, 나머지면 다른 아이템
+    public ItemType curItemType; //2면 파츠, 나머지면 다른 아이템
 
     private void Awake()
     {
@@ -66,7 +66,7 @@ public class ItemUIPref : MonoBehaviour
         if (invenId == -1)
         {
             partsData.inventoryCode = -1;
-            curItemType = 2;
+            curItemType = (ItemType)2;
             return;
         }
 
@@ -76,7 +76,7 @@ public class ItemUIPref : MonoBehaviour
             Debug.Log("아이템 검색 실패");
         }
 
-        if(invenData.itemType == 2) //파츠일경우
+        if(invenData.itemType == (ItemType)2) //파츠일경우
         {
             isSuccess = DataManager.partsData.ownPartsDic.TryGetValue(invenData.storageId, out partsData);
             if (!isSuccess)
@@ -99,7 +99,7 @@ public class ItemUIPref : MonoBehaviour
 
     private void SetData()
     {
-        if (curItemType == 2)
+        if (curItemType == (ItemType)2)
         {
             switch (partsData.grade)
             {

@@ -17,7 +17,7 @@ public struct MasterItemData //필드값
 {
     public int masterId;
     public string name;
-    public int type;
+    public ItemType type;
     public string description;
     public string spritePath;
     public int buyPrice;
@@ -141,7 +141,7 @@ public class CharDatas
 public struct InvenItemData //필드값
 {
     public int storageId;
-    public int itemType;
+    public ItemType itemType;
     public int masterId;
     public string name;
     public int amount;
@@ -151,4 +151,13 @@ public struct InvenItemData //필드값
 public class InvenItemDatas //리스트
 {
     public InvenItemData[] storageItems;
+}
+
+public enum ItemType
+{
+    Money,
+    Character,
+    Parts,
+    Ingredient,
+    Consume
 }

@@ -57,7 +57,7 @@ public class PurchaseInterface : MonoBehaviour
         this.itemAmount  = itemAmount;
         purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"±¸ ¸Å\n{this.resultPrice}";
 
-        UIManager.PurchaseInterface.SetActive(true);
+        UIManager.PurchaseInterface.gameObject.SetActive(true);
         return true;
     }
 

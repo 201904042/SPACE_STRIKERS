@@ -21,7 +21,6 @@ public class CharacterUI : MonoBehaviour
     {
         MasterItemData masterChar = new MasterItemData();
         DataManager.masterData.masterItemDic.TryGetValue(masterId, out masterChar);
-
         charImage.sprite = Resources.Load<Sprite>(masterChar.spritePath);
     }
 }

@@ -17,5 +17,13 @@ public class MasterDataReader
             );
     }
 
-    
+    public MasterItemData? GetData(int targetId)
+    {
+        if (!masterItemDic.ContainsKey(targetId))
+        {
+            Debug.Log($"해당 아이디 없음");
+            return null;
+        }
+        return masterItemDic[targetId];
+    }
 }

@@ -14,4 +14,14 @@ public class StoreItemReader
             item => item.storeItemId
             );
     }
+
+    public StoreItemData? GetData(int targetId)
+    {
+        if (!storeItemDic.ContainsKey(targetId))
+        {
+            Debug.Log($"해당 아이디 없음");
+            return null;
+        }
+        return storeItemDic[targetId];
+    }
 }

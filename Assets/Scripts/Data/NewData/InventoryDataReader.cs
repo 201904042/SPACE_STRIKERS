@@ -24,6 +24,16 @@ public class InventoryDataReader
 
     }
 
+    public InvenItemData? GetData(int targetId)
+    {
+        if (!InvenItemDic.ContainsKey(targetId))
+        {
+            Debug.Log($"해당 아이디 없음");
+            return null;
+        }
+        return InvenItemDic[targetId];
+    }
+
     // 데이터를 수정하고 JSON 파일을 저장하는 메서드
     public void SaveData()
     {

@@ -14,4 +14,14 @@ public class AbilityDataReader
             item => item.abilityCode
             );
     }
+
+    public AbilityData? GetData(int targetId)
+    {
+        if (!abilityDic.ContainsKey(targetId))
+        {
+            Debug.Log($"해당 아이디 없음");
+            return null;
+        }
+        return abilityDic[targetId];
+    }
 }

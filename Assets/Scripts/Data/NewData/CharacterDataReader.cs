@@ -12,4 +12,13 @@ public class CharacterDataReader
             item => item.masterCode
         );
     }
+    public CharData? GetData(int targetId)
+    {
+        if (!characterDic.ContainsKey(targetId))
+        {
+            Debug.Log($"해당 아이디 없음");
+            return null;
+        }
+        return characterDic[targetId];
+    }
 }

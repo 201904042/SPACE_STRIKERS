@@ -38,8 +38,9 @@ public class InvenUI : MainUIs
         laboBtn = Buttons.GetChild(1).GetComponent<Button>();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         SetButtons();
     }
 
@@ -77,6 +78,6 @@ public class InvenUI : MainUIs
     public void GotoLabotory()
     {
         //연구소 UI로 바꾸기
-        //ChangeUI(UIManager.UIInstance.MainUIObj);
+        ChangeUI(UIManager.UIInstance.LabotoryUIObj);
     }
 }

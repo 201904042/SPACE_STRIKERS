@@ -51,6 +51,7 @@ public class ItemAmountPref : MonoBehaviour
             Debug.Log("아이디가 마스터 데이터에 없음");
             return;
         }
+
         itemImage.sprite = Resources.Load<Sprite>(masterData.spritePath);
 
         needAmountText.text = $"{needAmount}";

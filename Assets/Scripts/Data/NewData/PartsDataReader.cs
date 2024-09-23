@@ -16,6 +16,16 @@ public class PartsDataReader
             );
     }
 
+    public OwnPartsData? GetData(int targetId)
+    {
+        if (!ownPartsDic.ContainsKey(targetId))
+        {
+            Debug.Log($"해당 아이디 없음");
+            return null;
+        }
+        return ownPartsDic[targetId];
+    }
+
     public static void ApplyAbilityToCharacter(ref CharData result, Ability ability)
     {
         if (ability == null) return; // 능력이 null이면 무시

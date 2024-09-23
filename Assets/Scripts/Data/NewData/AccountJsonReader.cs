@@ -3,9 +3,8 @@ using System.IO;
 using System;
 
 
-public class AccountJsonReader 
+public class AccountJsonReader
 {
-    public TextAsset jsonTextAsset; // Drag and drop the JSON file here in the Inspector
     public AccountData account;
 
     public void LoadData()

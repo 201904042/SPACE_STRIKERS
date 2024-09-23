@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class StoreItemReader : MonoBehaviour
+public class StoreItemReader
 {
     public Dictionary<int, StoreItemData> storeItemDic;
 

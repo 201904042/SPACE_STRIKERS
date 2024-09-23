@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
-public class MasterDataReader
-{
+public class MasterDataReader 
+{ 
     public Dictionary<int, MasterItemData> masterItemDic;
 
     public void LoadData()
@@ -14,4 +16,6 @@ public class MasterDataReader
             item => item.masterId
             );
     }
+
+    
 }

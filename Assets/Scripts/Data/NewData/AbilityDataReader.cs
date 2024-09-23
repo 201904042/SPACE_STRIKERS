@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityDataReader
+public class AbilityDataReader 
 {
     public Dictionary<int, AbilityData> abilityDic;
 

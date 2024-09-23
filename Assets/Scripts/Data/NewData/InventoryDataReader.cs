@@ -6,7 +6,7 @@ using System.Text;
 using System.Linq; // 텍스트 인코딩에 필요
 
 
-public class InventoryDataReader : MonoBehaviour
+public class InventoryDataReader
 {
     public Dictionary<int, InvenItemData> InvenItemDic; //코드를 통해 검색용
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDataReader 
+public class CharacterDataReader
 {
     public Dictionary<int, CharData> characterDic;
 

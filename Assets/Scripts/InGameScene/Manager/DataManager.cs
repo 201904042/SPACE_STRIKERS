@@ -46,8 +46,6 @@ public class DataManager : MonoBehaviour
         partsData.LoadData();
         abilityData.LoadData();
         storeData.LoadData();
-
-        
     }
 
     public static T LoadJsonData<T>(string path) where T : class
@@ -83,4 +81,5 @@ public class DataManager : MonoBehaviour
         Debug.Log($"{typeof(T).Name} : {dictionary.Count}개의 아이템이 로드됨");
         return dictionary;
     }
+
 }

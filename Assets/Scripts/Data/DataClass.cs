@@ -111,6 +111,7 @@ public struct CharData
     public bool own;
     public string name;
     public int level;
+
     public float damage; //기본 능력치
     public float defense;
     public float attackSpeed;

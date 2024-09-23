@@ -208,13 +208,7 @@ public class ReadyUI : MainUIs
     private void PlayerChange()
     {
         int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
-
-        MasterItemData masterChar = new MasterItemData();
-        DataManager.masterData.masterItemDic.TryGetValue(playerMasterCode, out masterChar);
-
-        CharData selectedChar = new CharData();
-        DataManager.characterData.characterDic.TryGetValue(playerMasterCode, out selectedChar);
-        curPlayerImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(masterChar.spritePath);
+        curPlayerImage.GetComponent<CharacterUI>().SetImageByMasterCode(playerMasterCode);
 
         PlayerStatTextSet();
     }

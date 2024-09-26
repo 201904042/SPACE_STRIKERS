@@ -63,13 +63,13 @@ public class playerShooterUpgrade : MonoBehaviour
     {
         switch (BS_num)
         {
-            case 1:
+            case 101:
                 return "Basic_Shooter/basic_";
-            case 2:
+            case 102:
                 return "Bomber_Shooter/bomber_";
-            case 3:
+            case 103:
                 return "Tanker_Shooter/tanker_";
-            case 4:
+            case 104:
                 return "Splash_Shooter/splash_";
             default:
                 return "Basic_Shooter/basic_";
@@ -119,16 +119,16 @@ public class playerShooterUpgrade : MonoBehaviour
         SpriteRenderer player_sprite = transform.GetComponentInParent<SpriteRenderer>();
         switch (number)
         {
-            case 1:
+            case 101:
                 spritePath = "Assets/Sprites/Player/Basic.png";
                 break;
-            case 2:
+            case 102:
                 spritePath = "Assets/Sprites/Player/Bomber.png";
                 break;
-            case 3:
+            case 103:
                 spritePath = "Assets/Sprites/Player/Tanker.png";
                 break;
-            case 4:
+            case 104:
                 spritePath = "Assets/Sprites/Player/Splash.png";
                 break;
         }
@@ -158,26 +158,26 @@ public class playerShooterUpgrade : MonoBehaviour
 
     public void NextBtn()
     {
-        if (characterNumber < 4)
+        if (characterNumber < 104)
         {
             characterNumber += 1;
         }
         else
         {
-            characterNumber = 1;
+            characterNumber = 101;
         }
         UpdatePlayerId();
         ChangeCharacter();
     }
     public void PrevBtn()
     {
-        if (characterNumber > 1)
+        if (characterNumber > 101)
         {
             characterNumber -= 1;
         }
         else
         {
-            characterNumber = 4;
+            characterNumber = 104;
         }
         UpdatePlayerId();
         ChangeCharacter();

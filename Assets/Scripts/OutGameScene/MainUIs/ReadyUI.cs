@@ -1,21 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 using TMPro;
-using Unity.PlasticSCM.Editor.WebApi;
-using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+
 
 public class ReadyUI : MainUIs
 {
     public Transform charZone;
-    public Button charBtn;
-    public Image curPlayerImage;
+    public Button charSlotBtn;
+    public CharacterUI charSlotUI;
     public TextMeshProUGUI charInformText;
 
     public Transform partsZone;
@@ -35,8 +33,8 @@ public class ReadyUI : MainUIs
     public Button backBtn;
     public Button gotoIngameBtn;
 
-    private int curPlayerCode; 
-    public int CurPlayerCode
+    [SerializeField]private int curPlayerCode; 
+    public int SetPlayerCode
     {
         get => curPlayerCode;
         set
@@ -129,13 +127,17 @@ public class ReadyUI : MainUIs
         }
     }
 
-    
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         charZone = transform.GetChild(0);
-        charBtn = charZone.GetChild(0).GetComponent<Button>();
-        curPlayerImage = charBtn.transform.GetChild(0).GetComponent<Image>();
+        charSlotBtn = charZone.GetChild(0).GetComponent<Button>();
+        charSlotUI = charSlotBtn.GetComponent<CharacterUI>();
         charInformText = charZone.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         partsZone = transform.GetChild(1);
         parts1Btn = partsZone.GetChild(0).GetComponent<Button>();
@@ -161,7 +163,7 @@ public class ReadyUI : MainUIs
 
     private void SetInit()
     {
-        CurPlayerCode = PlayerPrefs.GetInt("curCharacterCode");
+        SetPlayerCode = PlayerPrefs.GetInt("curCharacterCode");
 
         SetPartsSlot1 = GetOwnPartsDataFromSlot("partsSlot1");
         SetPartsSlot2 = GetOwnPartsDataFromSlot("partsSlot2");
@@ -182,13 +184,13 @@ public class ReadyUI : MainUIs
 
     private void SetBtnListener()
     {
-        charBtn.onClick.RemoveAllListeners();
-        charBtn.onClick.AddListener(SelectCharInterfaceOn);
+        charSlotBtn.onClick.RemoveAllListeners();
+        charSlotBtn.onClick.AddListener(GetCharacterId);
         for (int i = 0; i < partsZone.childCount; i++)
         {
             int index = i + 1;
             partsZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-            partsZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => PartsInterfaceOn(index));
+            partsZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => GetPartsId(index));
         }
         for (int i = 0; i < itemZone.childCount; i++)
         {
@@ -208,7 +210,7 @@ public class ReadyUI : MainUIs
     private void PlayerChange()
     {
         int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
-        curPlayerImage.GetComponent<CharacterUI>().SetImageByMasterCode(playerMasterCode);
+        charSlotUI.SetImageByMasterCode(playerMasterCode);
 
         PlayerStatTextSet();
     }
@@ -255,8 +257,6 @@ public class ReadyUI : MainUIs
     /// <summary>
     /// 현재 플레이어가 장착한 파츠들로 스텟 증감
     /// </summary>
-    /// <param name="targetBasicData"></param>
-    /// <returns></returns>
     private CharData CalculateStat(CharData targetBasicData)
     {
         CharData result = targetBasicData;
@@ -275,6 +275,7 @@ public class ReadyUI : MainUIs
         return result;
     }
     
+    //todo -> OwnPartsData Reader에서 static변수로 만들기
     private OwnPartsData GetOwnPartsDataFromSlot(string invenKey)
     {
         int invenId = PlayerPrefs.GetInt(invenKey, -1);
@@ -327,9 +328,6 @@ public class ReadyUI : MainUIs
     /// <summary>
     /// 장착 슬롯에 해당 파츠를 등록 혹은 해제
     /// </summary>
-    /// <param name="partsButton"></param>
-    /// <param name="value"></param>
-    /// <param name="slotKey"></param>
     private void UpdatePartsSlot(Button partsButton, OwnPartsData value, string slotKey)
     {
         var partsUIPref = partsButton.GetComponent<PartsSlot>();
@@ -378,41 +376,48 @@ public class ReadyUI : MainUIs
 
     public void GotoStage()
     {
-        ChangeUI(UIManager.UIInstance.StageUIObj);
+        ChangeUI(UIManager.UIInstance.stageUI);
     }
     public void GameStart()
     {
         SceneManager.LoadScene("InGameTest");
     }
-
-    public void PartsInterfaceOn(int partsIndex)
+    private void GetCharacterId()
     {
-        OpenInterface(UIManager.SelectPartsInterface.gameObject);
-        Debug.Log(partsIndex);
-        UIManager.SelectPartsInterface.GetComponent<SelectPartsInterface>().curPartsIndex = partsIndex;
+        StartCoroutine(GetCharacterIdCoroutine());
     }
 
-    public void GetPartsData(int slotCode, OwnPartsData parts)
+    private IEnumerator GetCharacterIdCoroutine()
     {
-        //메인 파츠 버튼에 해당 파츠를 등록하고 적용된 스텟 업데이트
-        switch (slotCode)
+        SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
+        // TF 인터페이스에서 결과를 기다림
+        yield return StartCoroutine(selecteCharInterface.GetValue());
+        Debug.Log(selecteCharInterface.SelectedCode);
+        SetPlayerCode = selecteCharInterface.SelectedCode;
+    }
+
+    private void GetPartsId(int partsSlotIndex)
+    {
+        StartCoroutine(GetPartsIdCoroutine(partsSlotIndex));
+    }
+
+    private IEnumerator GetPartsIdCoroutine(int partsSlotIndex)
+    {
+        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface;
+
+        yield return StartCoroutine(selectPartsInterface.GetValue());
+
+        OwnPartsData parts = selectPartsInterface.SelectedParts;
+
+        switch (partsSlotIndex)
         {
-            case 1: SetPartsSlot1 = parts.inventoryCode != -1 ? parts: null; break;
+            case 1: SetPartsSlot1 = parts.inventoryCode != -1 ? parts : null; break;
             case 2: SetPartsSlot2 = parts.inventoryCode != -1 ? parts : null; ; break;
             case 3: SetPartsSlot3 = parts.inventoryCode != -1 ? parts : null; ; break;
             case 4: SetPartsSlot4 = parts.inventoryCode != -1 ? parts : null; ; break;
         }
 
         PlayerStatTextSet();
-    }
 
-    public void SelectCharInterfaceOn()
-    {
-        OpenInterface(UIManager.SelectCharInterface.gameObject);
-    }
-
-    public void SelectCharInterfaceOff()
-    {
-        CloseInterface(UIManager.SelectCharInterface.gameObject);
     }
 }

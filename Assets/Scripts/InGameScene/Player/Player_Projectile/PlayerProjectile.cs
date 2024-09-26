@@ -36,6 +36,7 @@ public class PlayerProjectile : MonoBehaviour
     {
         if (collision.gameObject.tag == "BulletBorder")
         {
+            //Destroy(gameObject);
             PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }

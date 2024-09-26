@@ -8,6 +8,15 @@ using UnityEngine.UI;
 
 public class MainUIs : MonoBehaviour
 {
+    public bool isComponentSet = false;
+    protected virtual void Awake()
+    {
+        if(!isComponentSet)
+        { 
+            SetComponent();
+            isComponentSet = true;  
+        }
+    }
 
     protected virtual void OnEnable()
     {
@@ -15,23 +24,14 @@ public class MainUIs : MonoBehaviour
        
     }
 
-    protected virtual void UIInit()
+    public virtual void SetComponent()
     {
-        Debug.Log($"{nameof(gameObject)} 초기화 완료");
-    }
-    public void OpenInterface(GameObject targetInterface)
-    {
-        targetInterface.SetActive(true);
+        Debug.Log($"{gameObject.name} 초기화 완료");
     }
 
-    public void CloseInterface(GameObject targetInterface)
+    public void ChangeUI(MainUIs targetUI)
     {
-        targetInterface.SetActive(false);
-    }
-
-    public void ChangeUI(GameObject targetUI)
-    {
-        targetUI.SetActive(true);
-        gameObject.SetActive(false);
+        targetUI.gameObject.SetActive(true);
+        gameObject.gameObject.SetActive(false);
     }
 }

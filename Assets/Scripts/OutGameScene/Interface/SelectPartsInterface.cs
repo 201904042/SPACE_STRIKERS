@@ -5,10 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectPartsInterface : MonoBehaviour
+public class SelectPartsInterface : UIInterface
 {
     public GameObject partsUI; //파츠 버튼의 UI
-    public int curPartsIndex; //현재 적용될 파츠의 칸
 
     public Transform partsContainer;
     public Transform buttons;
@@ -32,12 +31,13 @@ public class SelectPartsInterface : MonoBehaviour
         }
     } //인터페이스에서 선택된 파츠
     [SerializeField] private OwnPartsData selectedParts;
-
-    public List<OwnPartsData> invenPartsList;
-
-    private void Awake()
+    protected override void Awake()
     {
-       
+        base.Awake();
+    }
+    public override void SetComponent()
+    {
+        base.SetComponent();
         partsContainer = transform.GetChild(1);
         buttons = transform.GetChild(2);
 
@@ -47,30 +47,38 @@ public class SelectPartsInterface : MonoBehaviour
 
         backBtn = buttons.GetChild(1).GetChild(0).GetComponent<Button>();
         selectBtn = buttons.GetChild(1).GetChild(1).GetComponent<Button>();
-        curPartsIndex = 0;
+        
     }
 
-    private void OnEnable()
+    public override IEnumerator GetValue()
     {
-        Init();
+        yield return base.GetValue();
+
+        resetAll(); //초기화 및 버튼 셋팅
+
+        selectBtn.onClick.RemoveAllListeners();
+        backBtn.onClick.RemoveAllListeners();
+        selectBtn.onClick.AddListener(() => OnConfirm(true));
+        backBtn.onClick.AddListener(() => OnConfirm(false));
+
+        // 사용자가 버튼을 누를 때까지 대기
+        yield return new WaitUntil(() => result.HasValue);
+
+        CloseInterface(); // 인터페이스 숨기기
+
+        yield return selectedParts;
     }
 
-    private void Init()
+    private void resetAll()
     {
-        SetButtonListener();
+        SetBtnsListener();
         SetPartsContainer();
 
-        invenPartsList = new List<OwnPartsData>();
-        foreach (OwnPartsData parts in DataManager.partsData.ownPartsDic.Values)
-        {
-            invenPartsList.Add(parts);
-        }
-
-        curPageIndex = 1;
-        maxPageIndex = (invenPartsList.Count / 16) + 1;
+        
         PageTextSet();
         SelectedParts = null;
     }
+
 
     private void PageTextSet()
     {
@@ -79,56 +87,55 @@ public class SelectPartsInterface : MonoBehaviour
         pageText.text = $"{curPageIndex} / {maxPageIndex}";
     }
 
-    private void SetButtonListener()
+    private void SetBtnsListener()
     {
         //버튼에 리스터 부착
         prevPageBtn.onClick.RemoveAllListeners();
-        nextPageBtn.onClick.RemoveAllListeners();
-        backBtn.onClick.RemoveAllListeners();
-        selectBtn.onClick.RemoveAllListeners();
+        nextPageBtn.onClick.RemoveAllListeners(); 
 
         prevPageBtn.onClick.AddListener(PrevPage);
         nextPageBtn.onClick.AddListener(NextPage);
-        backBtn.onClick.AddListener(CloseInterface);
-        selectBtn.onClick.AddListener(()=> SelectPartsCloseInterface(curPartsIndex, SelectedParts));
     }
 
     private void SetPartsContainer()
     {
-        if (partsContainer.childCount > 0) //이전에 연적이 있을 경우 컨테이너를 비우고 새로 장착
+        if (partsContainer.childCount > 0) //컨테이너를 초기화
         {
             foreach (Transform child in partsContainer.transform)
             {
                 Destroy(child.gameObject);  
             }
         }
-        
 
-        //데이터로부터 인벤토리에 있는 파츠들의 데이터들을 가져옴
+        //파츠db에서 불러오기
         List<OwnPartsData> isOnPartsList = new List<OwnPartsData>();
         List<OwnPartsData> isOffPartsList = new List<OwnPartsData>();
-
-        foreach (OwnPartsData parts in invenPartsList)
+        foreach (OwnPartsData parts in DataManager.partsData.ownPartsDic.Values)
         {
             if (parts.isOn)
             {
                 isOnPartsList.Add(parts);
             }
-            else 
+            else
             {
                 isOffPartsList.Add(parts);
             }
         }
 
+        curPageIndex = 1;
+        maxPageIndex = ((isOnPartsList.Count+ isOffPartsList.Count) / 16) + 1;
+
+
         isOnPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
         isOffPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
 
-        //빈 파츠 생성
+        //빈 파츠를 담을 프리팹
         ItemUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
         emptyPartsPrefab.SetByInvenId(-1);
         emptyPartsPrefab.GetComponent<Button>().onClick.RemoveAllListeners();
         emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
 
+        //장착되어 있는 파츠들 먼저 나열
         foreach (OwnPartsData parts in isOnPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
@@ -136,6 +143,8 @@ public class SelectPartsInterface : MonoBehaviour
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }
+
+        //나머지 파츠들 나열
         foreach (OwnPartsData parts in isOffPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
@@ -171,23 +180,4 @@ public class SelectPartsInterface : MonoBehaviour
         curPageIndex = curPageIndex + 1;
         PageTextSet();
     }
-
-    public void CloseInterface()
-    {
-        //해당 인터페이스 닫기
-        gameObject.SetActive(false);
-    }
-
-    public void SelectPartsCloseInterface(int partsIndex, OwnPartsData selectedParts)
-    {
-        if(partsIndex == 0 || selectedParts == null)
-        {
-            return;
-        }
-
-        UIManager.UIInstance.ReadyUIObj.GetComponent<ReadyUI>().GetPartsData(partsIndex, selectedParts);
-        gameObject.SetActive(false);
-    }
-
-    
 }

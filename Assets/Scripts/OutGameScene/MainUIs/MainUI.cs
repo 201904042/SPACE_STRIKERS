@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,20 +13,31 @@ public class MainUI : MainUIs
 
     //public GameObject EventBannerZone; º¸·ù
 
-    protected override void OnEnable()
+    protected override void Awake()
     {
-        base.OnEnable();
-        UIInit();
+        base.Awake();
     }
 
-    protected override void UIInit()
+    public override void SetComponent()
     {
+        base.SetComponent();
+
         Transform buttons = transform.GetChild(0);
 
         planetButton = buttons.GetChild(0).GetComponent<Button>();
         storeButton = buttons.GetChild(1).GetComponent<Button>();
         invenButton = buttons.GetChild(2).GetComponent<Button>();
+    }
 
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Init();
+    }
+
+    private void Init()
+    {
         if (planetButton != null)
         {
             planetButton.onClick.RemoveAllListeners();
@@ -43,21 +55,22 @@ public class MainUI : MainUIs
             invenButton.onClick.RemoveAllListeners();
             invenButton.onClick.AddListener(GotoInvenBtn);
         }
-
     }
+
+    
 
     public void GotoPlanetBtn()
     {
-        ChangeUI(UIManager.UIInstance.PlanetUIObj);
+        ChangeUI(UIManager.UIInstance.planetUI);
     }
 
     public void GotoStoreBtn()
     {
-        ChangeUI(UIManager.UIInstance.StoreUIObj);
+        ChangeUI(UIManager.UIInstance.storeUI);
 
     }
     public void GotoInvenBtn()
     {
-        ChangeUI(UIManager.UIInstance.InventoryUIObj);
+        ChangeUI(UIManager.UIInstance.invenUI);
     }
 }

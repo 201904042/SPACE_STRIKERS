@@ -20,10 +20,16 @@ public class StoreUI : MainUIs
     public Button backBtn;
 
     public GameObject[] StorePanels; 
-    public Button[] StoreBtns; 
+    public Button[] StoreBtns;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         PageBtns = transform.GetChild(0).GetChild(0);
         Stores = transform.GetChild(0).GetChild(1);
         StorePanels = new GameObject[4];
@@ -104,7 +110,7 @@ public class StoreUI : MainUIs
 
     public void GotoMain()
     {
-        ChangeUI(UIManager.UIInstance.MainUIObj);
+        ChangeUI(UIManager.UIInstance.mainUI);
     }
 
     public void GotoWebStore()

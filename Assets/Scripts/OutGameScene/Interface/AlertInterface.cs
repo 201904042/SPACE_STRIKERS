@@ -5,14 +5,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AlertInterface : MonoBehaviour
+public class AlertInterface : UIInterface
 {
     public TextMeshProUGUI alertText;
     public Button cancelBtn;
 
-
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         alertText = transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
         cancelBtn = transform.GetChild(3).GetComponent<Button>();
         alertText.text = "알림입니다";

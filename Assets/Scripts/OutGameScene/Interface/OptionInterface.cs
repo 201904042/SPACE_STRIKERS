@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionInterface : MonoBehaviour
+public class OptionInterface : UIInterface
 {
     public bool is_optionOn;
     public Slider BgmSlider;
@@ -17,8 +17,14 @@ public class OptionInterface : MonoBehaviour
     private float cur_BgmSliderValue;
     private float cur_SeSliderValue;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         is_optionOn = false;
         max_BGMSound = 100;
         cur_BgmSound = max_BGMSound;

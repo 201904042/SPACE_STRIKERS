@@ -23,8 +23,15 @@ public class InvenUI : MainUIs
     public Button backBtn;
     public Button laboBtn;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
+
         invenScroll = transform.GetChild(0).GetComponent<ScrollRect>();
         partsContent = invenScroll.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
         ingredContent = invenScroll.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
@@ -72,12 +79,12 @@ public class InvenUI : MainUIs
 
     public void GotoMain()
     {
-        ChangeUI(UIManager.UIInstance.MainUIObj);
+        ChangeUI(UIManager.UIInstance.mainUI);
     }
 
     public void GotoLabotory()
     {
         //연구소 UI로 바꾸기
-        ChangeUI(UIManager.UIInstance.LabotoryUIObj);
+        ChangeUI(UIManager.UIInstance.labotoryUI);
     }
 }

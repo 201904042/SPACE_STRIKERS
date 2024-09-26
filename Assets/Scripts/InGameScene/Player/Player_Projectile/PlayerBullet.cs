@@ -46,6 +46,7 @@ public class PlayerBullet : PlayerProjectile
             }
 
             hasHit = true;
+            //Destroy(gameObject);
             PoolManager.poolInstance.ReleasePool(gameObject);
         }
     }

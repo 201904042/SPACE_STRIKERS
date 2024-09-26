@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageInterface : MonoBehaviour
+public class StageInterface : UIInterface
 {
     public StageUI parentUI;
     public Transform StageNamePanel;
@@ -21,24 +21,32 @@ public class StageInterface : MonoBehaviour
         Init();
         SetInterface();
     }
-
-    private void Init()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+    public override void SetComponent()
+    {
+        base.SetComponent();
         parentUI = FindObjectOfType<StageUI>();
         StageNamePanel = transform.GetChild(1);
         EnemyListPanel = transform.GetChild(2);
         ContentPanel = transform.GetChild(3);
         Buttons = transform.GetChild(4);
+    }
 
-        curStageCode = (parentUI.curPlanet-1) * 10 + parentUI.curStage;
+    private void Init()
+    {
+        curStageCode = (parentUI.curPlanet - 1) * 10 + parentUI.curStage;
         foreach (StageData data in DataManager.dataInstance.stageData.stageList.stage)
         {
-            if(data.stageCode == curStageCode)
+            if (data.stageCode == curStageCode)
             {
                 curStageData = data;
                 break;
             }
         }
+
     }
 
     public void SetInterface()

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
-public class GotchaInterface : MonoBehaviour
+public class GotchaInterface : UIInterface
 {
     public TextMeshProUGUI gotchaContentText;
 
@@ -21,9 +21,14 @@ public class GotchaInterface : MonoBehaviour
 
     private int gotchaGrade = 0; // 1하급 2중급 3상급
 
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         gotchaContentText = transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
         Btns = transform.GetChild(3);
         closeBtn = Btns.GetChild(0).GetComponent<Button>();

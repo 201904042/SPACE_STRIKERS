@@ -2,34 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager UIInstance;
 
     //UIs
+    private Transform mainUIs;
     public GameObject HeaderUIObj;
 
-    public GameObject MainUIObj;
-    public GameObject PlanetUIObj;
-    public GameObject StageUIObj;
-    public GameObject ReadyUIObj;
-    public GameObject StoreUIObj;
-    public GameObject InventoryUIObj;
-    public GameObject LabotoryUIObj;
+    public MainUI mainUI;
+    public PlanetUI planetUI;
+    public StageUI stageUI;
+    public ReadyUI readyUI;
+    public StoreUI storeUI;
+    public InvenUI invenUI;
+    public LabotoryUI labotoryUI;
 
 
     //Interface
-    public static AlertInterface AlertInterface;
-    public static TFInterface TFInterface;
+    private Transform interfaceUIs;
+    public static AlertInterface alterInterface;
+    public static TFInterface tfInterface;
 
-    public static OptionInterface OptionInterface;
-    public static StageInterface StageInterface;
-    public static SelectCharInterface SelectCharInterface;
-    public static SelectPartsInterface SelectPartsInterface;
-    public static GotchaInterface GotchaInterface;
-    public static PurchaseInterface PurchaseInterface;
-    public static ItemInformInterface IteminformInterface;
+    public static OptionInterface optionInteface;
+    public static StageInterface stageInteface;
+    public static SelectCharInterface selectCharInterface;
+    public static SelectPartsInterface selectPartsInterface;
+    public static GotchaInterface gotchaInterface;
+    public static PurchaseInterface purchaseInterface;
+    public static ItemInformInterface iteminformInterface;
     
     private void Awake()
     {
@@ -41,7 +44,6 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         UISetting();
         UIInit();
     }
@@ -50,45 +52,50 @@ public class UIManager : MonoBehaviour
     {
         HeaderUIObj = FindObjectOfType<MainHeaderUI>().gameObject;
 
-        MainUIObj = FindObjectOfType<MainUI>().gameObject;
-        PlanetUIObj = FindObjectOfType<PlanetUI>().gameObject;
-        StageUIObj = FindObjectOfType<StageUI>().gameObject;
-        ReadyUIObj = FindObjectOfType<ReadyUI>().gameObject;
-        StoreUIObj = FindObjectOfType<StoreUI>().gameObject;
-        InventoryUIObj = FindObjectOfType<InvenUI>().gameObject;
-        LabotoryUIObj = FindObjectOfType<LabotoryUI>().gameObject;
+        mainUIs = GameObject.Find("MainUIs").transform;
+        mainUI = mainUIs.GetComponentInChildren<MainUI>();
+        planetUI = mainUIs.GetComponentInChildren<PlanetUI>();
+        stageUI = mainUIs.GetComponentInChildren<StageUI>();
+        readyUI = mainUIs.GetComponentInChildren<ReadyUI>();
+        storeUI = mainUIs.GetComponentInChildren<StoreUI>();
+        invenUI = mainUIs.GetComponentInChildren<InvenUI>();
+        labotoryUI = mainUIs.GetComponentInChildren<LabotoryUI>();
 
-        AlertInterface = FindObjectOfType<AlertInterface>();
-        TFInterface = FindObjectOfType<TFInterface>();
-        OptionInterface = FindObjectOfType<OptionInterface>();
-        StageInterface = FindObjectOfType<StageInterface>();
-        SelectCharInterface = FindObjectOfType<SelectCharInterface>();
-        SelectPartsInterface = FindObjectOfType<SelectPartsInterface>();
-        GotchaInterface = FindObjectOfType<GotchaInterface>();
-        PurchaseInterface = FindObjectOfType<PurchaseInterface>(); 
-        IteminformInterface = FindObjectOfType<ItemInformInterface>();
+        interfaceUIs = GameObject.Find("InterfaceUIs").transform;
+        alterInterface = interfaceUIs.GetComponentInChildren<AlertInterface>();
+        tfInterface = interfaceUIs.GetComponentInChildren<TFInterface>();
+        optionInteface = interfaceUIs.GetComponentInChildren<OptionInterface>();
+        stageInteface = interfaceUIs.GetComponentInChildren<StageInterface>();
+        selectCharInterface = interfaceUIs.GetComponentInChildren<SelectCharInterface>();
+        selectPartsInterface = interfaceUIs.GetComponentInChildren<SelectPartsInterface>();
+        gotchaInterface = interfaceUIs.GetComponentInChildren<GotchaInterface>();
+        purchaseInterface = interfaceUIs.GetComponentInChildren<PurchaseInterface>();
+        iteminformInterface = interfaceUIs.GetComponentInChildren<ItemInformInterface>();
     }
 
     private void UIInit()
     {
         HeaderUIObj.SetActive(true);
 
-        MainUIObj.SetActive(true);
-        PlanetUIObj.SetActive(false);
-        StageUIObj.SetActive(false);
-        ReadyUIObj.SetActive(false);
-        StoreUIObj.SetActive(false);
-        InventoryUIObj.SetActive(false);
-        LabotoryUIObj.SetActive(false);
-
-        AlertInterface.gameObject.SetActive(false);
-        TFInterface.gameObject.SetActive(false);
-        OptionInterface.gameObject.SetActive(false);
-        StageInterface.gameObject.SetActive(false);
-        SelectCharInterface.gameObject.SetActive(false);
-        SelectPartsInterface.gameObject.SetActive(false);
-        GotchaInterface.gameObject.SetActive(false);
-        PurchaseInterface.gameObject.SetActive(false);
-        IteminformInterface.gameObject.SetActive(false);
+        for (int i = 0; i < mainUIs.childCount; i++)
+        {
+            GameObject targetUI = mainUIs.GetChild(i).gameObject;
+            if (!targetUI.GetComponent<MainUIs>().isComponentSet)
+            {
+                targetUI.GetComponent<MainUIs>().SetComponent();
+            }
+            targetUI.SetActive(false);
+        }
+        mainUI.gameObject.SetActive(true);
+        
+        for (int i = 0; i < interfaceUIs.childCount; i++) {
+            GameObject targetInterface = interfaceUIs.GetChild(i).gameObject;
+            if (!targetInterface.GetComponent<UIInterface>().isComponentSet)
+            {
+                targetInterface.GetComponent<UIInterface>().SetComponent();
+            }
+            
+            targetInterface.SetActive(false);
+        }
     }
 }

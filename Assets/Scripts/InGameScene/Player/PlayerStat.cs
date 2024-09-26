@@ -46,8 +46,9 @@ public class PlayerStat : MonoBehaviour
     private void Init()
     {
         isFirstSetDone = false;
-        
-        curPlayerID = PlayerPrefs.GetInt("curCharacterCode") + 100;
+        int savedPlayerId = PlayerPrefs.GetInt("curCharacterCode");
+        Debug.Log(savedPlayerId);
+        curPlayerID = savedPlayerId + 100;
         SetStat(curPlayerID);
     }
 
@@ -74,7 +75,7 @@ public class PlayerStat : MonoBehaviour
     public void PlayerSet(int id)
     {
         CharData curPlayerChar = new CharData();
-        bool isSuccess = DataManager.characterData.characterDic.TryGetValue(curPlayerID,out curPlayerChar);
+        bool isSuccess = DataManager.characterData.characterDic.TryGetValue(id, out curPlayerChar);
 
         if (!isSuccess)
         {

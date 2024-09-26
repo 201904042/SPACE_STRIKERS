@@ -7,7 +7,7 @@ public class CharacterDataReader
 
     public void LoadData()
     {
-        characterDic = DataManager.SetDictionary<CharData, CharDatas>("JSON/ReadOnly/CharacterData",
+        characterDic = DataManager.SetDictionary<CharData, CharDatas>("JSON/Writable/CharacterData",
             data => data.characters,
             item => item.masterCode
         );

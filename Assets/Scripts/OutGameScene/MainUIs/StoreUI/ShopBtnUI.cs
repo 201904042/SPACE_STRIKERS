@@ -41,6 +41,6 @@ public class ShopBtnUI : MonoBehaviour
 
     public void ShowPurchaseInterface()
     {
-        UIManager.PurchaseInterface.GetComponent<PurchaseInterface>().SetPurchaseInterface(targetItemId, itemPrice);
+        UIManager.purchaseInterface.GetComponent<PurchaseInterface>().SetPurchaseInterface(targetItemId, itemPrice);
     }
 }

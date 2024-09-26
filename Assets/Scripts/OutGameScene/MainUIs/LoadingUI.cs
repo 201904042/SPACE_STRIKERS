@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoadingUI : MonoBehaviour
+public class LoadingUI : MainUIs
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        
+        base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void SetComponent()
     {
-        
+        base.SetComponent();
+
+        Transform buttons = transform.GetChild(0);
     }
 }

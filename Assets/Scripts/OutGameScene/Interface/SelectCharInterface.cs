@@ -1,24 +1,12 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectCharInterface : MonoBehaviour
+public class SelectCharInterface : UIInterface
 {
-    public ReadyUI OwnerUI;
-    private int selectedCode;
-    public int SelectedCode
-    {
-        get => selectedCode;
-        set
-        {
-            selectedCode = value;
-            selectBtn.interactable = true;
-        }
-    }
-    
-
     public Transform charactersTransform;
     public Button char1Btn;
     public Button char2Btn;
@@ -31,9 +19,24 @@ public class SelectCharInterface : MonoBehaviour
 
     public ScrollRect scroll;
 
-    private void Awake()
+
+    private int selectedCode;
+    public int SelectedCode
     {
-        OwnerUI = UIManager.UIInstance.ReadyUIObj.GetComponent<ReadyUI>();
+        get => selectedCode;
+        set
+        {
+            selectedCode = value;
+            selectBtn.interactable = true;
+        }
+    }
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+    public override void SetComponent()
+    {
+        base.SetComponent();
         charactersTransform = transform.GetChild(1).GetChild(0).GetChild(1);
         char1Btn = charactersTransform.GetChild(0).GetComponent<Button>();
         char2Btn = charactersTransform.GetChild(1).GetComponent<Button>();
@@ -46,25 +49,42 @@ public class SelectCharInterface : MonoBehaviour
         scroll = charactersTransform.parent.parent.GetComponent<ScrollRect>();
     }
 
-    private void OnEnable()
-    {
-        Init();
-    }
-
     private void Init()
     {
         selectedCode = 0;
         selectBtn.interactable = false;
         scroll.horizontalNormalizedPosition = 0;
-        CharDataSet();
+        result = null;
+
         BtnListenerSet();
-        CharBtnSet();
+        CharBtnInteractableSet();
+        ResetCharBtn();
+    }
+
+    public override IEnumerator GetValue()
+    {
+        yield return base.GetValue();
+
+        //변수 초기화
+        Init();
+
+        selectBtn.onClick.RemoveAllListeners();
+        backBtn.onClick.RemoveAllListeners();
+        selectBtn.onClick.AddListener(() => OnConfirm(true));
+        backBtn.onClick.AddListener(() => OnConfirm(false));
+
+        // 사용자가 버튼을 누를 때까지 대기
+        yield return new WaitUntil(() => result.HasValue);
+
+        CloseInterface(); // 인터페이스 숨기기
+        Debug.Log($"리턴값 = {SelectedCode}");
+        yield return SelectedCode;
     }
 
     /// <summary>
     /// 데이터를 검색하여 캐릭터를 선택가능하도록 interactable 지정
     /// </summary>
-    private void CharDataSet()
+    private void CharBtnInteractableSet()
     {
         char1Btn.interactable = true;
 
@@ -81,34 +101,25 @@ public class SelectCharInterface : MonoBehaviour
 
     private void BtnListenerSet()
     {
-        for (int i = 0; i < charactersTransform.childCount; i++)
-        {
-            int code = i + 1; 
-            Button characterBtn = charactersTransform.GetChild(i).GetComponent<Button>();
+        char1Btn.onClick.RemoveAllListeners();
+        char1Btn.onClick.AddListener(() => SelectedCode = 1); // 캐릭터 코드 101
 
-            if (characterBtn != null)
-            {
-                bool isCurrentPlayer = OwnerUI.CurPlayerCode == code;
-                characterBtn.transform.GetChild(1).gameObject.SetActive(isCurrentPlayer); 
+        char2Btn.onClick.RemoveAllListeners();
+        char2Btn.onClick.AddListener(() => SelectedCode = 2); // 캐릭터 코드 102
 
-                characterBtn.onClick.RemoveAllListeners();
-                characterBtn.onClick.AddListener(() => SelectCharacterButton(characterBtn, code));
-            }
-        }
+        char3Btn.onClick.RemoveAllListeners();
+        char3Btn.onClick.AddListener(() => SelectedCode = 3); // 캐릭터 코드 103
 
-        backBtn.onClick.RemoveAllListeners();
-        backBtn.onClick.AddListener(CancelBtn);
-        selectBtn.onClick.RemoveAllListeners();
-        selectBtn.onClick.AddListener(SelectBtn);
-
-        
+        char4Btn.onClick.RemoveAllListeners();
+        char4Btn.onClick.AddListener(() => SelectedCode = 4); // 캐릭터 코드 104
     }
+
 
 
     private void SelectCharacterButton(Button charBtn,int CharacterCode)
     {
         SelectedCode = CharacterCode;
-        CharBtnSet();
+        ResetCharBtn();
 
         charBtn.GetComponent<Image>().color = Color.yellow;
         charBtn.transform.GetChild(1).gameObject.SetActive(true);
@@ -117,7 +128,7 @@ public class SelectCharInterface : MonoBehaviour
     /// <summary>
     /// 모든 캐릭터 버튼의 색과 텍스트를 초기화
     /// </summary>
-    private void CharBtnSet()
+    private void ResetCharBtn()
     {
         for (int i = 0; i < charactersTransform.childCount; i++)
         {
@@ -129,16 +140,4 @@ public class SelectCharInterface : MonoBehaviour
             charactersTransform.GetChild(i).GetChild(1).gameObject.SetActive(false);
         } 
     }
-
-    private void CancelBtn()
-    {
-        OwnerUI.SelectCharInterfaceOff();
-    }
-
-    private void SelectBtn()
-    {
-        OwnerUI.CurPlayerCode = SelectedCode;
-        OwnerUI.SelectCharInterfaceOff();
-    }
-
 }

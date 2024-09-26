@@ -19,6 +19,23 @@ public class PlanetUI : MainUIs
 
     public List<Button> planetList = new List<Button>();
 
+   
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
+        
+
+        Transform buttons = transform.GetChild(1);
+        nextBtn = buttons.GetChild(0).GetComponent<Button>();
+        prevBtn = buttons.GetChild(1).GetComponent<Button>();
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -28,8 +45,6 @@ public class PlanetUI : MainUIs
     private void PlanetInit()
     {
         Transform planets = transform.GetChild(0).GetChild(0).GetChild(0);
-        Transform buttons = transform.GetChild(1);
-
         planets.GetComponent<RectTransform>().localPosition = Vector2.zero;
         planetList.Clear();
 
@@ -44,9 +59,6 @@ public class PlanetUI : MainUIs
         }
 
         PlanetInteractableCheck();
-
-        nextBtn = buttons.GetChild(0).GetComponent<Button>();
-        prevBtn = buttons.GetChild(1).GetComponent<Button>();
 
         nextBtn.onClick.RemoveAllListeners();
         nextBtn.onClick.AddListener(GotoStage);
@@ -79,12 +91,12 @@ public class PlanetUI : MainUIs
     public void GotoStage()
     {
         PlayerPrefs.SetInt("ChosenPlanet", planetId);
-        ChangeUI(UIManager.UIInstance.StageUIObj);
+        ChangeUI(UIManager.UIInstance.stageUI);
     }
 
     public void GotoMain()
     {
-        ChangeUI(UIManager.UIInstance.MainUIObj);
+        ChangeUI(UIManager.UIInstance.mainUI);
     }
 
 

@@ -12,7 +12,6 @@ public class PlayerSpecialSkill : MonoBehaviour
     private PlayerStat playerStat;
     private float curStatDamage;
     private float curDamageRate;
-    private float curPlayerId;
 
     [Header("파워관련")]
     public  int powerLevel; //스페셜을 쓴 시간을 기준으로 파워증가(무차별적인 스페셜 난사 방지)
@@ -55,7 +54,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         if (gameManager.isBattleStart)
         {
             if (!firstSet || (curStatDamage != playerStat.damage)
-            || (curDamageRate != damageIncreaseRate) || curPlayerId != playerId)
+            || (curDamageRate != damageIncreaseRate) || playerId != playerStat.curPlayerID)
             {
                 playerId = playerStat.curPlayerID;
                 specialDamage = playerStat.damage * damageIncreaseRate;
@@ -90,7 +89,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         if (specialCount > 0 && !specialActive && powerLevel != 0)
         {
             specialCount--;
-            SpecialFire();
+            SpecialFire(playerId);
         }
         else
         {
@@ -114,9 +113,10 @@ public class PlayerSpecialSkill : MonoBehaviour
         }
     }
 
-    private void SpecialFire()
+    private void SpecialFire(int id )
     {
-        switch (playerId) //플레이어의 아이디에 따라 플레이어 별 스페셜스킬 활성
+        Debug.Log($"{id}의 스페셜 스킬");
+        switch (id) //플레이어의 아이디에 따라 플레이어 별 스페셜스킬 활성
         {
             case 101:
                 BalanceSpecial(); break;
@@ -270,19 +270,19 @@ public class PlayerSpecialSkill : MonoBehaviour
     public void btn1()
     {
         powerLevel = 1;
-        SpecialFire();
+        SpecialFire(playerStat.curPlayerID);
     }
 
     public void btn2()
     {
         powerLevel = 2;
-        SpecialFire();
+        SpecialFire(playerStat.curPlayerID);
     }
 
     public void btn3()
     {
         powerLevel = 3;
-        SpecialFire();
+        SpecialFire(playerStat.curPlayerID);
     }
 
 }

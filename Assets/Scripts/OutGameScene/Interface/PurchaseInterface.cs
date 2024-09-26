@@ -7,7 +7,7 @@ using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PurchaseInterface : MonoBehaviour
+public class PurchaseInterface : UIInterface
 {
     public Transform Content;
     public Image itemImage;
@@ -19,10 +19,14 @@ public class PurchaseInterface : MonoBehaviour
     public MasterItemData itemData;
     public int resultPrice;
     public int itemAmount;
-
-
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         Content = transform.GetChild(2);
         itemImage = Content.GetChild(0).GetComponent<Image>();
         itemText = Content.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
@@ -57,7 +61,7 @@ public class PurchaseInterface : MonoBehaviour
         this.itemAmount  = itemAmount;
         purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"구 매\n{this.resultPrice}";
 
-        UIManager.PurchaseInterface.gameObject.SetActive(true);
+        UIManager.purchaseInterface.gameObject.SetActive(true);
         return true;
     }
 
@@ -74,7 +78,7 @@ public class PurchaseInterface : MonoBehaviour
         if(resultPrice > DataManager.inventoryData.InvenItemDic[0].amount)
         {
             //구매 불가 할경우. 알림 인터페이스 오픈
-            UIManager.AlertInterface.GetComponent<AlertInterface>().SetAlert("구매 불가/n미네랄이 부족합니다");
+            UIManager.alterInterface.GetComponent<AlertInterface>().SetAlert("구매 불가/n미네랄이 부족합니다");
             return;
         }
 
@@ -87,7 +91,7 @@ public class PurchaseInterface : MonoBehaviour
         DataManager.inventoryData.AddNewItem(itemData.type, itemData.masterId, itemData.name, itemAmount); //일단은 한번에 한개만 증가
 
         //구매 성공시 알림 인터페이스 오픈
-        UIManager.AlertInterface.GetComponent<AlertInterface>().SetAlert("아이템을 구매하였습니다");
+        UIManager.alterInterface.GetComponent<AlertInterface>().SetAlert("아이템을 구매하였습니다");
 
     }
 

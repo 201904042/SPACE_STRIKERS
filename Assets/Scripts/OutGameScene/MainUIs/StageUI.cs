@@ -12,6 +12,16 @@ public class StageUI : MainUIs
 
     private Transform Stages;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
+
+    }
 
     protected override void OnEnable()
     {
@@ -133,23 +143,23 @@ public class StageUI : MainUIs
     {
         curPlanet = 0;
         curStage = 0;
-        ChangeUI(UIManager.UIInstance.PlanetUIObj);
+        ChangeUI(UIManager.UIInstance.planetUI);
     }
     private void OpenStageInterface()
     {
         PlayerPrefs.SetInt("ChosenStage", curStage);
-        OpenInterface(UIManager.StageInterface.gameObject);
+        UIManager.stageInteface.OpenInterface();
     }
 
     public void CloseStageInterace()
     {
-        CloseInterface(UIManager.StageInterface.gameObject);
+        UIManager.stageInteface.CloseInterface();
     }
 
     public void GotoReady()
     {
         CloseStageInterace();
-        ChangeUI(UIManager.UIInstance.ReadyUIObj);
+        ChangeUI(UIManager.UIInstance.readyUI);
     }
 
     private void OnStageButtonClicked(int stageNumber)

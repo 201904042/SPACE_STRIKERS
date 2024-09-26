@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class ItemInformInterface : MonoBehaviour
+public class ItemInformInterface : UIInterface
 {
     
     public TextMeshProUGUI nameText;
@@ -21,8 +21,14 @@ public class ItemInformInterface : MonoBehaviour
     public int invenItemId; //인벤토리에서 검색할 아이디
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+    }
+
+    public override void SetComponent()
+    {
+        base.SetComponent();
         Images = transform.GetChild(2);
         Buttons = transform.GetChild(4);
 
@@ -73,9 +79,9 @@ public class ItemInformInterface : MonoBehaviour
 
     private IEnumerator ConfirmSell()
     {
-        TFInterface tfInterface = UIManager.TFInterface.GetComponent<TFInterface>();
+        TFInterface tfInterface = UIManager.tfInterface.GetComponent<TFInterface>();
         // TF 인터페이스에서 결과를 기다림
-        yield return StartCoroutine(tfInterface.ShowConfirmation());
+        yield return StartCoroutine(tfInterface.GetValue());
 
         // 결과에 따라 아이템 판매 처리
         if ((bool)tfInterface.result)

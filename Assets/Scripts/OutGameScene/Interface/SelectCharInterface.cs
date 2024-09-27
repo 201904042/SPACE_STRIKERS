@@ -61,6 +61,9 @@ public class SelectCharInterface : UIInterface
         ResetCharBtn();
     }
 
+    /// <summary>
+    /// 확인을 누르면 인터페이스 종료 및 캐릭터 코드를 반환
+    /// </summary>
     public override IEnumerator GetValue()
     {
         yield return base.GetValue();
@@ -113,8 +116,6 @@ public class SelectCharInterface : UIInterface
         char4Btn.onClick.RemoveAllListeners();
         char4Btn.onClick.AddListener(() => SelectedCode = 4); // 캐릭터 코드 104
     }
-
-
 
     private void SelectCharacterButton(Button charBtn,int CharacterCode)
     {

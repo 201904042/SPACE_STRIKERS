@@ -37,6 +37,6 @@ public class GotchaStore : MonoBehaviour
     {
         UIManager.gotchaInterface.gameObject.SetActive(true);
         Debug.Log($"tier : {tier}");
-        UIManager.gotchaInterface.GetComponent<GotchaInterface>().SetGotchaInterface(tier);
+        UIManager.gotchaInterface.SetGotchaInterface(tier);
     }
 }

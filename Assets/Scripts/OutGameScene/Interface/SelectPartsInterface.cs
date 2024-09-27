@@ -23,14 +23,14 @@ public class SelectPartsInterface : UIInterface
     public int maxPageIndex;
 
     public OwnPartsData SelectedParts {
-        get => selectedParts;
+        get => clickedParts;
         set
         {
-            selectedParts = value;
+            clickedParts = value;
             selectBtn.interactable = SelectedParts == null ? false : true;
         }
     } //인터페이스에서 선택된 파츠
-    [SerializeField] private OwnPartsData selectedParts;
+    [SerializeField] private OwnPartsData clickedParts;
     protected override void Awake()
     {
         base.Awake();
@@ -66,7 +66,7 @@ public class SelectPartsInterface : UIInterface
 
         CloseInterface(); // 인터페이스 숨기기
 
-        yield return selectedParts;
+        yield return SelectedParts;
     }
 
     private void resetAll()

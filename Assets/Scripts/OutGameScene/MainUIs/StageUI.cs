@@ -96,9 +96,6 @@ public class StageUI : MainUIs
         Buttons.GetChild(0).GetComponent<Button>().onClick.AddListener(GotoPlanet);
     }
 
-    /// <summary>
-    /// stage의 버튼 셋
-    /// </summary>
     private void StageBtnSet()
     {
         for (int i = 0; i < Stages.childCount; i++)
@@ -136,29 +133,15 @@ public class StageUI : MainUIs
     }
 
 
-
-
-
     public void GotoPlanet()
     {
         curPlanet = 0;
         curStage = 0;
         ChangeUI(UIManager.UIInstance.planetUI);
     }
-    private void OpenStageInterface()
-    {
-        PlayerPrefs.SetInt("ChosenStage", curStage);
-        UIManager.stageInteface.OpenInterface();
-    }
-
-    public void CloseStageInterace()
-    {
-        UIManager.stageInteface.CloseInterface();
-    }
 
     public void GotoReady()
     {
-        CloseStageInterace();
         ChangeUI(UIManager.UIInstance.readyUI);
     }
 
@@ -167,7 +150,30 @@ public class StageUI : MainUIs
         curStage = stageNumber;
         StageBtnSet(); 
         Stages.GetChild(curStage - 1).GetChild(0).GetComponentInChildren<Image>().color = Color.yellow;
-        OpenStageInterface();
+        StageBtnHandler();
+    }
+
+    public void StageBtnHandler()
+    {
+        StartCoroutine(OpenStargeInterface());
+        UIManager.stageInteface.SetInterface((curPlanet-1)*10 + curStage);
+    }
+
+    private IEnumerator OpenStargeInterface()
+    {
+        StageInterface stageInterface = UIManager.stageInteface;
+
+        yield return StartCoroutine(stageInterface.GetValue());
+
+        if ((bool)stageInterface.result)
+        {
+            PlayerPrefs.SetInt("ChosenStage", curStage);
+            GotoReady();
+        }
+        else
+        {
+            Debug.Log("스테이지 취소");
+        }
     }
 
 }

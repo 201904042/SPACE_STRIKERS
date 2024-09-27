@@ -44,7 +44,7 @@ public class UIInterface : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    protected void OnConfirm(bool isConfirmed)
+    protected virtual void OnConfirm(bool isConfirmed)
     {
         result = isConfirmed;
     }

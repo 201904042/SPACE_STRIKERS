@@ -38,6 +38,14 @@ public class GotchaInterface : UIInterface
         acceptByCouponText = acceptByCoupon.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
+
+    //필요없음
+    //public override IEnumerator GetValue()
+    //{
+    //    yield return base.GetValue();
+    //    yield return result.Value;
+    //}
+
     public void SetGotchaInterface(int tier)
     {
         gotchaGrade = tier;
@@ -73,7 +81,6 @@ public class GotchaInterface : UIInterface
 
     private void BtnSet()
     {
-
         closeBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.AddListener(CloseBtn);
         acceptByMoney.onClick.RemoveAllListeners();
@@ -88,6 +95,7 @@ public class GotchaInterface : UIInterface
     }
     public void GotchaByMoney()
     {
+        //todo -> tfInterface를 생성하여 정말 진행할지 체크할것
         //플레이어가 가챠에 필요한 돈이 충분한지 체크
 
 

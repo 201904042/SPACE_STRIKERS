@@ -24,4 +24,6 @@ public class StoreItemReader
         }
         return storeItemDic[targetId];
     }
+
+
 }

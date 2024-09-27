@@ -26,10 +26,11 @@ public class AlertInterface : UIInterface
         cancelBtn.onClick.AddListener(CloseInterface);
     }
 
-    private void CloseInterface()
-    {
-        gameObject.SetActive(false);
-    }
+    //¾ê´Â µüÈ÷ ÇÊ¿ä¾øÀ»µí
+    //public override IEnumerator GetValue()
+    //{
+    //    return base.GetValue();
+    //}
 
     public void SetAlert(string alertContent)
     {

@@ -6,24 +6,25 @@ using UnityEngine;
 
 public class PartsDataReader
 {
-    public Dictionary<int, OwnPartsData> ownPartsDic;
+    public Dictionary<int, InvenPartsData> invenPartsDic;
 
     public void LoadData()
     {
-        ownPartsDic = DataManager.SetDictionary<OwnPartsData, OwnPartDatas>("JSON/Writable/OwnParts",
-            data => data.ownParts,
-            item => item.inventoryCode
+        invenPartsDic = DataManager.SetDictionary<InvenPartsData, InvenPartsDatas>("JSON/Writable/InvenPartsData" +
+            "",
+            data => data.InvenPartsData,
+            item => item.invenId
             );
     }
 
-    public OwnPartsData? GetData(int targetId)
+    public InvenPartsData? GetData(int targetId)
     {
-        if (!ownPartsDic.ContainsKey(targetId))
+        if (!invenPartsDic.ContainsKey(targetId))
         {
             Debug.Log($"해당 아이디 없음");
             return null;
         }
-        return ownPartsDic[targetId];
+        return invenPartsDic[targetId];
     }
 
     public static void ApplyAbilityToCharacter(ref CharData result, Ability ability)
@@ -45,11 +46,11 @@ public class PartsDataReader
             case "attackSpeed":
                 result.attackSpeed += ability.value;
                 break;
-            case "movementSpeed":
-                result.movementSpeed += ability.value;
+            case "moveSpeed":
+                result.moveSpeed += ability.value;
                 break;
-            case "maxHealth":
-                result.maxHealth += ability.value;
+            case "hp":
+                result.hp += ability.value;
                 break;
             case "hpRegen":
                 result.hpRegen += ability.value;

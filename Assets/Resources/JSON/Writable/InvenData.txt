@@ -1,0 +1,107 @@
+{
+  "InvenData": [
+    {
+        "id": 1,
+        "masterId": 1,
+        "name": "미네랄",
+        "quantity": 1000
+    },
+    {
+        "id": 2,
+        "masterId": 2,
+        "name": "크립트",
+        "quantity": 100
+    },
+    {
+        "id": 3,
+        "masterId": 4,
+        "name": "하급뽑기권",
+        "quantity": 1
+    },
+    {
+        "id": 4,
+        "masterId": 3,
+        "name": "중급뽑기권",
+        "quantity": 1
+    },
+    {
+        "id": 5,
+        "masterId": 4,
+        "name": "고급뽑기권",
+        "quantity": 1
+    },
+    {
+        "id": 6,
+        "masterId": 101,
+        "name": "캐릭터1",
+        "quantity": 1
+    },
+    {
+        "id": 7,
+        "masterId": 102,
+        "name": "캐릭터2",
+        "quantity": 1
+    },
+    {
+        "id": 8,
+        "masterId": 201,
+        "name": "증폭기",
+        "quantity": 1
+    },
+    {
+        "id": 9,
+        "masterId": 202,
+        "name": "추진체",
+        "quantity": 1
+    },
+    {
+        "id": 10,
+        "masterId": 301,
+        "name": "강철파편",
+        "quantity": 2
+    },
+    {
+        "id": 11,
+        "masterId": 302,
+        "name": "전선",
+        "quantity": 1
+    },
+    {
+        "id": 12,
+        "masterId": 303,
+        "name": "기어",
+        "quantity": 5
+    },
+    {
+        "id": 13,
+        "masterId": 304,
+        "name": "칩셋",
+        "quantity": 3
+    },
+    {
+        "id": 14,
+        "masterId": 305,
+        "name": "디스플레이",
+        "quantity": 1
+    },
+    {
+        "id": 15,
+        "masterId": 401,
+        "name": "학습ai",
+        "quantity": 1
+    },
+    {
+        "id": 16,
+        "masterId": 402,
+        "name": "자기장코어",
+        "quantity": 1
+    },
+    {
+        "id": 17,
+        "masterId": 403,
+        "name": "BST-01",
+        "quantity": 1
+    }
+]
+
+}

@@ -22,7 +22,7 @@ public class SelectPartsInterface : UIInterface
     public int curPageIndex;
     public int maxPageIndex;
 
-    public OwnPartsData SelectedParts {
+    public InvenPartsData SelectedParts {
         get => clickedParts;
         set
         {
@@ -30,7 +30,7 @@ public class SelectPartsInterface : UIInterface
             selectBtn.interactable = SelectedParts == null ? false : true;
         }
     } //인터페이스에서 선택된 파츠
-    [SerializeField] private OwnPartsData clickedParts;
+    [SerializeField] private InvenPartsData clickedParts;
     protected override void Awake()
     {
         base.Awake();
@@ -108,11 +108,11 @@ public class SelectPartsInterface : UIInterface
         }
 
         //파츠db에서 불러오기
-        List<OwnPartsData> isOnPartsList = new List<OwnPartsData>();
-        List<OwnPartsData> isOffPartsList = new List<OwnPartsData>();
-        foreach (OwnPartsData parts in DataManager.partsData.ownPartsDic.Values)
+        List<InvenPartsData> isOnPartsList = new List<InvenPartsData>();
+        List<InvenPartsData> isOffPartsList = new List<InvenPartsData>();
+        foreach (InvenPartsData parts in DataManager.partsData.invenPartsDic.Values)
         {
-            if (parts.isOn)
+            if (parts.isActive)
             {
                 isOnPartsList.Add(parts);
             }
@@ -126,8 +126,8 @@ public class SelectPartsInterface : UIInterface
         maxPageIndex = ((isOnPartsList.Count+ isOffPartsList.Count) / 16) + 1;
 
 
-        isOnPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
-        isOffPartsList.Sort((part1, part2) => part2.grade.CompareTo(part1.grade));
+        isOnPartsList.Sort((part1, part2) => part2.rank.CompareTo(part1.rank));
+        isOffPartsList.Sort((part1, part2) => part2.rank.CompareTo(part1.rank));
 
         //빈 파츠를 담을 프리팹
         ItemUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
@@ -136,19 +136,19 @@ public class SelectPartsInterface : UIInterface
         emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
 
         //장착되어 있는 파츠들 먼저 나열
-        foreach (OwnPartsData parts in isOnPartsList)
+        foreach (InvenPartsData parts in isOnPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-            prefab.SetByInvenId(parts.inventoryCode);
+            prefab.SetByInvenId(parts.invenId);
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }
 
         //나머지 파츠들 나열
-        foreach (OwnPartsData parts in isOffPartsList)
+        foreach (InvenPartsData parts in isOffPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-            prefab.SetByInvenId(parts.inventoryCode);
+            prefab.SetByInvenId(parts.invenId);
             prefab.GetComponent<Button>().onClick.RemoveAllListeners();
             prefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(prefab));
         }

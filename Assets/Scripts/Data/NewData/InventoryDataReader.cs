@@ -8,7 +8,7 @@ using System.Linq; // 텍스트 인코딩에 필요
 
 public class InventoryDataReader
 {
-    public Dictionary<int, InvenItemData> InvenItemDic; //코드를 통해 검색용
+    public Dictionary<int, InvenData> InvenItemDic; //코드를 통해 검색용
 
     private void Awake()
     {
@@ -17,14 +17,14 @@ public class InventoryDataReader
 
     public void LoadData()
     {
-        InvenItemDic = DataManager.SetDictionary<InvenItemData, InvenItemDatas>("JSON/Writable/InventoryData",
-            data => data.storageItems,
-            item => item.storageId
+        InvenItemDic = DataManager.SetDictionary<InvenData, InvenDatas>("JSON/Writable/InvenData",
+            data => data.InvenData,
+            item => item.id
             );
 
     }
 
-    public InvenItemData? GetData(int targetId)
+    public InvenData? GetData(int targetId)
     {
         if (!InvenItemDic.ContainsKey(targetId))
         {
@@ -37,10 +37,10 @@ public class InventoryDataReader
     // 데이터를 수정하고 JSON 파일을 저장하는 메서드
     public void SaveData()
     {
-        // InvenItemDatas 객체 생성
-        InvenItemDatas dataInstance = new InvenItemDatas
+        // InvenDatas 객체 생성
+        InvenDatas dataInstance = new InvenDatas
         {
-            storageItems = InvenItemDic.Values.ToArray()
+            InvenData = InvenItemDic.Values.ToArray()
         };
 
         // 데이터를 JSON 문자열로 변환
@@ -60,10 +60,10 @@ public class InventoryDataReader
     /// </summary>
     public void AddNewItem(ItemType itemType, int masterId, string name, int amount)
     {
-        InvenItemData? findItem = FindByMasterId(masterId);
+        InvenData? findItem = FindByMasterId(masterId);
         if (findItem != null)  //더하려는 아이템이 이미 존재한다면 
         {
-            ModifyItem(findItem.Value.storageId, findItem.Value.amount + amount);
+            ModifyItem(findItem.Value.id, findItem.Value.quantity + amount);
             return;
         }
 
@@ -71,16 +71,15 @@ public class InventoryDataReader
         int newStorageId = 0; // 기본값
         if (InvenItemDic.Count > 0)
         {
-            newStorageId = InvenItemDic[InvenItemDic.Count - 1].storageId + 1;
+            newStorageId = InvenItemDic[InvenItemDic.Count - 1].id + 1;
         }
 
 
-        InvenItemData newItem = new InvenItemData();
-        newItem.storageId = newStorageId;
-        newItem.itemType = itemType;
+        InvenData newItem = new InvenData();
+        newItem.id = newStorageId;
         newItem.masterId = masterId;
         newItem.name = name;
-        newItem.amount = amount;
+        newItem.quantity = amount;
         
 
         InvenItemDic.Add(newStorageId, newItem);
@@ -91,8 +90,8 @@ public class InventoryDataReader
     {
         if (InvenItemDic.ContainsKey(storageId))
         {
-            InvenItemData item = InvenItemDic[storageId];
-            item.amount = newAmount; // 아이템의 수량을 변경
+            InvenData item = InvenItemDic[storageId];
+            item.quantity = newAmount; // 아이템의 수량을 변경
             InvenItemDic[storageId] = item;
             Debug.Log($"InvenData : 아이템 {item.name}의 수량이 {newAmount}로 수정됨");
         }
@@ -104,9 +103,9 @@ public class InventoryDataReader
 
     // todo -> 아이템을 삭제하는 코드 추가할것. storageId에 빈공간이 생길시 그 뒤에 요소들을 땡겨서 빈공간 제거
 
-    public InvenItemData? FindByMasterId(int masterId)
+    public InvenData? FindByMasterId(int masterId)
     {
-        foreach (KeyValuePair<int, InvenItemData> pair in InvenItemDic)
+        foreach (KeyValuePair<int, InvenData> pair in InvenItemDic)
         {
             if (pair.Value.masterId == masterId)
             {

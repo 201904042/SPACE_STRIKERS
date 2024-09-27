@@ -45,10 +45,10 @@ public class ReadyUI : MainUIs
         }
     }
 
-    private List<OwnPartsData> equippedPartsList = new List<OwnPartsData>();
-    public List<OwnPartsData> EquippedPartsList => equippedPartsList;
+    private List<InvenPartsData> equippedPartsList = new List<InvenPartsData>();
+    public List<InvenPartsData> EquippedPartsList => equippedPartsList;
 
-    public OwnPartsData SetPartsSlot1
+    public InvenPartsData SetPartsSlot1
     {
         get => parts1Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -57,7 +57,7 @@ public class ReadyUI : MainUIs
         }
     }
 
-    public OwnPartsData SetPartsSlot2
+    public InvenPartsData SetPartsSlot2
     {
         get => parts2Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -66,7 +66,7 @@ public class ReadyUI : MainUIs
         }
     }
 
-    public OwnPartsData SetPartsSlot3
+    public InvenPartsData SetPartsSlot3
     {
         get => parts3Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -75,7 +75,7 @@ public class ReadyUI : MainUIs
         }
     }
 
-    public OwnPartsData SetPartsSlot4
+    public InvenPartsData SetPartsSlot4
     {
         get => parts4Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -219,7 +219,7 @@ public class ReadyUI : MainUIs
     {
         int masterId = PlayerPrefs.GetInt("curCharacterCode") + 100;
         CharData targetBasicData = new CharData();
-        bool success = DataManager.characterData.characterDic.TryGetValue(masterId, out targetBasicData);
+        bool success = DataManager.characterData.charDic.TryGetValue(masterId, out targetBasicData);
         if (!success)
         {
             charInformText.text = "error";
@@ -235,8 +235,8 @@ public class ReadyUI : MainUIs
         sb.AppendLine($"DMG: {changedData.damage}");
         sb.AppendLine($"DEF: {changedData.defense}");
         sb.AppendLine($"ASPD: {changedData.attackSpeed}");
-        sb.AppendLine($"MSPD: {changedData.movementSpeed}");
-        sb.AppendLine($"HP: {changedData.maxHealth}");
+        sb.AppendLine($"MSPD: {changedData.moveSpeed}");
+        sb.AppendLine($"HP: {changedData.hp}");
 
         if (changedData.hpRegen != 0) sb.AppendLine($"regenHP : {changedData.hpRegen}");
         if (changedData.troopsDamageUp != 0) sb.AppendLine($"TroopsDmgUp: {changedData.troopsDamageUp}");
@@ -264,19 +264,19 @@ public class ReadyUI : MainUIs
         //todo -> 여기서 파츠의 내용을 적용시키지 못하는 문제 발생
         foreach (var part in EquippedPartsList)
         {
-            if (!part.isOn) continue;
+            if (!part.isActive) continue;
 
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability1);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability2);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability3);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability4);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.ability5);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility1);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility2);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility3);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility4);
+            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility5);
         }
         return result;
     }
     
-    //todo -> OwnPartsData Reader에서 static변수로 만들기
-    private OwnPartsData GetOwnPartsDataFromSlot(string invenKey)
+    //todo -> InvenPartsData Reader에서 static변수로 만들기
+    private InvenPartsData GetOwnPartsDataFromSlot(string invenKey)
     {
         int invenId = PlayerPrefs.GetInt(invenKey, -1);
 
@@ -285,11 +285,11 @@ public class ReadyUI : MainUIs
             return null;
         }
 
-        InvenItemData invenData;
+        InvenData invenData;
         if (DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData))
         {
-            OwnPartsData data;
-            if (DataManager.partsData.ownPartsDic.TryGetValue(invenData.masterId, out data))
+            InvenPartsData data;
+            if (DataManager.partsData.invenPartsDic.TryGetValue(invenData.masterId, out data))
             {
                 return data;
             }
@@ -307,19 +307,19 @@ public class ReadyUI : MainUIs
 
     private void CheckDuplicateParts(int partsInvenCode)
     {
-        if (parts1Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
+        if (parts1Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
         {
             SetPartsSlot1 = null;
         }
-        if (parts2Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
+        if (parts2Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
         {
             SetPartsSlot2 = null;
         }
-        if (parts3Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
+        if (parts3Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
         {
             SetPartsSlot3 = null;
         }
-        if (parts4Btn.GetComponent<PartsSlot>().partsData?.inventoryCode == partsInvenCode)
+        if (parts4Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
         {
             SetPartsSlot4 = null;
         }
@@ -328,16 +328,16 @@ public class ReadyUI : MainUIs
     /// <summary>
     /// 장착 슬롯에 해당 파츠를 등록 혹은 해제
     /// </summary>
-    private void UpdatePartsSlot(Button partsButton, OwnPartsData value, string slotKey)
+    private void UpdatePartsSlot(Button partsButton, InvenPartsData value, string slotKey)
     {
         var partsUIPref = partsButton.GetComponent<PartsSlot>();
         var currentParts = partsUIPref.partsData;
         if (value != null) //해당 파츠 슬롯을 주어진 value값으로 채움
         {
-            CheckDuplicateParts(value.inventoryCode); //다른 슬롯에 해당 파츠가 설정되어 잇는지 체크. 만약 다른 슬롯에 있다면 그 슬롯의 파츠 해제
+            CheckDuplicateParts(value.invenId); //다른 슬롯에 해당 파츠가 설정되어 잇는지 체크. 만약 다른 슬롯에 있다면 그 슬롯의 파츠 해제
             partsUIPref.SetParts(value);
-            PlayerPrefs.SetInt(slotKey, value.inventoryCode);
-            value.isOn = true;
+            PlayerPrefs.SetInt(slotKey, value.invenId);
+            value.isActive = true;
             if (!equippedPartsList.Contains(value))
             {
                 equippedPartsList.Add(value);
@@ -347,7 +347,7 @@ public class ReadyUI : MainUIs
         { //파츠데이터가 널일경우 -> 그 파츠슬롯을 빈상태로 만듬
             if (currentParts != null && equippedPartsList.Contains(currentParts))
             {
-                currentParts.isOn = false;
+                currentParts.isActive = false;
                 equippedPartsList.Remove(currentParts);
             }
 
@@ -360,7 +360,7 @@ public class ReadyUI : MainUIs
     private void ItemBtnChange(Button item, bool value)
     {
         item.transform.GetChild(0).GetComponent<Image>().color = value ? Color.yellow : Color.white;
-        //item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = amount - 1;
+        //item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = quantity - 1;
     }
 
     private void ItemOn(int i)
@@ -408,14 +408,14 @@ public class ReadyUI : MainUIs
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
 
-        OwnPartsData parts = selectPartsInterface.SelectedParts;
+        InvenPartsData parts = selectPartsInterface.SelectedParts;
 
         switch (partsSlotIndex)
         {
-            case 1: SetPartsSlot1 = parts.inventoryCode != -1 ? parts : null; break;
-            case 2: SetPartsSlot2 = parts.inventoryCode != -1 ? parts : null; ; break;
-            case 3: SetPartsSlot3 = parts.inventoryCode != -1 ? parts : null; ; break;
-            case 4: SetPartsSlot4 = parts.inventoryCode != -1 ? parts : null; ; break;
+            case 1: SetPartsSlot1 = parts.invenId != -1 ? parts : null; break;
+            case 2: SetPartsSlot2 = parts.invenId != -1 ? parts : null; ; break;
+            case 3: SetPartsSlot3 = parts.invenId != -1 ? parts : null; ; break;
+            case 4: SetPartsSlot4 = parts.invenId != -1 ? parts : null; ; break;
         }
 
         PlayerStatTextSet();

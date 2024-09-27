@@ -16,7 +16,7 @@ public class PurchaseInterface : UIInterface
     public Button cancelBtn;
     public Button purchaseBtn;
 
-    public MasterItemData itemData;
+    public MasterData itemData;
     public int resultPrice;
     public int itemAmount;
     protected override void Awake()
@@ -34,7 +34,7 @@ public class PurchaseInterface : UIInterface
         cancelBtn = Btns.GetChild(0).GetComponent<Button>();
         purchaseBtn = Btns.GetChild(1).GetComponent<Button>();
 
-        itemData = new MasterItemData();
+        itemData = new MasterData();
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class PurchaseInterface : UIInterface
     /// </summary>
     public bool SetPurchaseInterface(int itemMasterCode, int itemPrice, int itemAmount = 1)
     {
-        bool success = DataManager.masterData.masterItemDic.TryGetValue(itemMasterCode, out itemData);
+        bool success = DataManager.masterData.masterDic.TryGetValue(itemMasterCode, out itemData);
         if (!success) 
         {
             Debug.Log($"해당 코드를 검색하지 못함 {itemMasterCode}");

@@ -1,0 +1,96 @@
+{
+  "StageData": [
+    {
+      "stageCode": 1,
+      "stageType": "일반",
+      "stageEnemy": [
+        {"enemyId": 1, "quantity": 50},
+        {"enemyId": 2, "quantity": 50}
+      ],
+      "firstReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 5},
+        {"itemId": 4, "quantity": 1}
+      ],
+      "defaultReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 3}
+      ]
+    },
+    {
+      "stageCode": 2,
+      "stageType": "일반",
+      "stageEnemy": [
+        {"enemyId": 1, "quantity": 50},
+        {"enemyId": 2, "quantity": 50}
+      ],
+      "firstReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 5},
+        {"itemId": 4, "quantity": 1}
+      ],
+      "defaultReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 3}
+      ]
+    },
+    {
+      "stageCode": 3,
+      "stageType": "일반",
+      "stageEnemy": [
+        {"enemyId": 1, "quantity": 50},
+        {"enemyId": 2, "quantity": 50},
+        {"enemyId": 11, "quantity": 50},
+        {"enemyId": 12, "quantity": 50}
+      ],
+      "firstReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 5},
+        {"itemId": 4, "quantity": 1}
+      ],
+      "defaultReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 3}
+      ]
+    },
+    {
+      "stageCode": 4,
+      "stageType": "일반",
+      "stageEnemy": [
+        {"enemyId": 1, "quantity": 50},
+        {"enemyId": 2, "quantity": 50},
+        {"enemyId": 11, "quantity": 50},
+        {"enemyId": 12, "quantity": 50}
+      ],
+      "firstReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 5},
+        {"itemId": 4, "quantity": 1}
+      ],
+      "defaultReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 3}
+      ]
+    },
+    {
+      "stageCode": 5,
+      "stageType": "보스",
+      "stageEnemy": [
+        {"enemyId": 1, "quantity": 50},
+        {"enemyId": 2, "quantity": 50},
+        {"enemyId": 11, "quantity": 50},
+        {"enemyId": 12, "quantity": 50},
+        {"enemyId": 31, "quantity": 1}
+      ],
+      "firstReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 5},
+        {"itemId": 4, "quantity": 1}
+      ],
+      "defaultReward": [
+        {"itemId": 1, "quantity": 500},
+        {"itemId": 7, "quantity": 3}
+      ]
+    }
+  ]
+}

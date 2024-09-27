@@ -10,13 +10,13 @@ public class AccountJsonReader
     public void LoadData()
     {
         AccountDatas dataInstance = DataManager.LoadJsonData<AccountDatas>("JSON/Writable/AccountData");
-        account = dataInstance.accountData;
+        account = dataInstance.AccountData;
         if (dataInstance != null)
         {
-            Debug.Log($"Account ID: {account.accountId}");
-            Debug.Log($"Account Name: {account.accountName}");
-            Debug.Log($"Account Level: {account.accountLevel}");
-            Debug.Log($"Current Experience: {account.currentExperience}");
+            Debug.Log($"Account ID: {account.id}");
+            Debug.Log($"Account Name: {account.name}");
+            Debug.Log($"Account Level: {account.level}");
+            Debug.Log($"Current Experience: {account.exp}");
             Debug.Log($"Stage Progress: {account.stageProgress}");
         }
         else

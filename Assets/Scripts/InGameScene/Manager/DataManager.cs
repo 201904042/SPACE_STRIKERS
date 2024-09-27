@@ -9,7 +9,6 @@ public class DataManager : MonoBehaviour
     public static DataManager dataInstance;
 
     public EnemyJsonReader enemyData;
-    public StageJsonReader stageData;
 
     public static AccountJsonReader accountData = new AccountJsonReader();
     public static MasterDataReader masterData = new MasterDataReader();
@@ -18,6 +17,7 @@ public class DataManager : MonoBehaviour
     public static PartsDataReader partsData = new PartsDataReader();
     public static AbilityDataReader abilityData = new AbilityDataReader();
     public static StoreItemReader storeData = new StoreItemReader();
+    public static StageDataReader stageData = new StageDataReader();
 
     private void Awake()
     {
@@ -37,7 +37,6 @@ public class DataManager : MonoBehaviour
     private void LoadAllData()
     {
         enemyData = GetComponent<EnemyJsonReader>();
-        stageData = GetComponent<StageJsonReader>();
 
         accountData.LoadData();
         masterData.LoadData();
@@ -46,6 +45,7 @@ public class DataManager : MonoBehaviour
         partsData.LoadData();
         abilityData.LoadData();
         storeData.LoadData();
+        stageData.LoadData();
     }
 
     public static T LoadJsonData<T>(string path) where T : class

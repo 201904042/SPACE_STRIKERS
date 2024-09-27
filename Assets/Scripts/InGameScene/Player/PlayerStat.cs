@@ -75,7 +75,7 @@ public class PlayerStat : MonoBehaviour
     public void PlayerSet(int id)
     {
         CharData curPlayerChar = new CharData();
-        bool isSuccess = DataManager.characterData.characterDic.TryGetValue(id, out curPlayerChar);
+        bool isSuccess = DataManager.characterData.charDic.TryGetValue(id, out curPlayerChar);
 
         if (!isSuccess)
         {
@@ -86,9 +86,9 @@ public class PlayerStat : MonoBehaviour
         level = curPlayerChar.level;
         initDamage = curPlayerChar.damage;
         initDefence = curPlayerChar.defense;
-        initMoveSpeed = curPlayerChar.movementSpeed;
+        initMoveSpeed = curPlayerChar.moveSpeed;
         initAttackSpeed = curPlayerChar.attackSpeed;
-        initHp = curPlayerChar.maxHealth;
+        initHp = curPlayerChar.hp;
     }
 
     /// <summary>

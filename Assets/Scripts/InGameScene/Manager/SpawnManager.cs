@@ -166,7 +166,7 @@ public class SpawnManager : MonoBehaviour
     {
         foreach(SpawnPattern pattern in spawnPatterns)
         {
-            if (StageManager.stageInstance.useingEnemyId.Contains(pattern.enemyId))
+            if (StageManager.stageInstance.stageEnemyIdList.Contains(pattern.enemyId))
             {
                 canSpawnList.Add(pattern);
             }

@@ -9,17 +9,12 @@ public class StageManager : MonoBehaviour
     public static StageManager stageInstance;
 
     [Header("스테이지 관련")]
-    private StageJsonReader stageData;
-
-    public int[] curStageEnemyId;
-    public Item[] curStagefirstGain;
-    public Item[] curStageDefaultGain;
-    public Item[] curDefaultFullGain;
-    public List<int> useingEnemyId;
-
+    StageData stageData;
+    public List<StageEnemyData> stageEnemyList;
+    public List<int> stageEnemyIdList;
     public int planet = 1;
     public int stage = 1;
-    public int openStage = 5; //현재 열린 스테이지
+
 
     public float stageTime;
     public float minutes;
@@ -48,19 +43,22 @@ public class StageManager : MonoBehaviour
     {
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         stage = PlayerPrefs.GetInt("ChosenStage");
-        stageData = DataManager.dataInstance.GetComponent<StageJsonReader>();
-        useingEnemyId  = new List<int>();
+        int StageCode = (planet + 1) * 10 + stage;
+        stageEnemyList  = new List<StageEnemyData>();
+        stageEnemyIdList = new List<int>();   
         isBossStage = false;
         StageDataSet();
+        stageData = DataManager.stageData.GetData(StageCode);
 
-        foreach(int enemyId in curStageEnemyId)
+        foreach(StageEnemyData enemyInfo in stageData.stageEnemy)
         {
-            if(enemyId > 20)
+            if(enemyInfo.enemyId > 20)
             {
-                stageBossId = enemyId;
+                stageBossId = enemyInfo.enemyId;
                 isBossStage = true;
             }
-            useingEnemyId.Add(enemyId);
+            stageEnemyIdList.Add(enemyInfo.enemyId);
+            stageEnemyList.Add(enemyInfo);
         }
     }
 
@@ -72,17 +70,17 @@ public class StageManager : MonoBehaviour
     //현재 스테이지의 정보를 데이터에서 가져와 현재 변수에 세팅
     private void StageDataSet()
     {
-        int stageCode = ((planet - 1) * 10) + stage;
-        foreach (StageData stageData in stageData.stageList.stage)
-        {
-            if (stageData.stageCode == stageCode)
-            {
-                curStageEnemyId = stageData.enemyCode;
-                curStagefirstGain = stageData.stageFirstGain;
-                curStageDefaultGain = stageData.stageDefaultGain;
-                curDefaultFullGain = stageData.defaultFullGain;
-            }
-        }
+
+        //foreach (StageData stageData in stageData.stageList.stage)
+        //{
+        //    if (stageData.stageCode == stageCode)
+        //    {
+        //        curStageEnemyId = stageData.enemyCode;
+        //        curStagefirstGain = stageData.stageFirstGain;
+        //        curStageDefaultGain = stageData.stageDefaultGain;
+        //        curDefaultFullGain = stageData.defaultFullGain;
+        //    }
+        //}
     }
 
     public void StageTimer()

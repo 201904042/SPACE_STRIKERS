@@ -12,8 +12,8 @@ public enum EnemyType
     Boss
 }
 
-[CreateAssetMenu(fileName = "New EnemyData", menuName = "DataAsset/EnemyData")]
-public class EnemyData : ScriptableObject
+[CreateAssetMenu(fileName = "New EnemyInfo", menuName = "DataAsset/EnemyInfo")]
+public class EnemyInfo : ScriptableObject
 {
     public GameObject prefab;
     public EnemyType enemyType = EnemyType.None;

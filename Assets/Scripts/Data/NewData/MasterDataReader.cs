@@ -7,23 +7,23 @@ using static UnityEditor.Progress;
 
 public class MasterDataReader 
 { 
-    public Dictionary<int, MasterItemData> masterItemDic;
+    public Dictionary<int, MasterData> masterDic;
 
     public void LoadData()
     {
-        masterItemDic = DataManager.SetDictionary<MasterItemData, MasterItemDatas>("JSON/ReadOnly/masterItems",
-            data => data.masterItems,
-            item => item.masterId
+        masterDic = DataManager.SetDictionary<MasterData, MasterDatas>("JSON/ReadOnly/MasterData",
+            data => data.MasterData,
+            item => item.id
             );
     }
 
-    public MasterItemData? GetData(int targetId)
+    public MasterData? GetData(int targetId)
     {
-        if (!masterItemDic.ContainsKey(targetId))
+        if (!masterDic.ContainsKey(targetId))
         {
             Debug.Log($"해당 아이디 없음");
             return null;
         }
-        return masterItemDic[targetId];
+        return masterDic[targetId];
     }
 }

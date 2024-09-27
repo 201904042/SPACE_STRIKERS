@@ -1,0 +1,27 @@
+{
+  "MasterData":[
+    {"id": 1, "name": "미네랄", "type": 0, "description": "기본 재화", "spritePath": "default"},
+    {"id": 2, "name": "크립트", "type": 0, "description": "유료 재화", "spritePath": "default"},
+    {"id": 3, "name": "계정 경험치", "type": 0, "description": "계정 경험치", "spritePath": "default"},
+    {"id": 4, "name": "하급뽑기권", "type": 0, "description": "하급뽑기를 1회 할수 있는 특별한 쿠폰", "spritePath": "default"},
+    {"id": 5, "name": "중급뽑기권", "type": 0, "description": "중급뽑기를 1회 할수 있는 특별한 쿠폰", "spritePath": "default"},
+    {"id": 6, "name": "고급뽑기권", "type": 0, "description": "고급뽑기를 1회 할수 있는 특별한 쿠폰", "spritePath": "default"},
+    {"id": 7, "name": "랜덤재료1", "type": 0, "description": "랜덤한 재료를 얻을수 있다", "spritePath": "default"},
+    {"id": 101, "name": "캐릭터1", "type": 1, "description": "캐릭터1 설명", "spritePath": "Player/Basic"},
+    {"id": 102, "name": "캐릭터2", "type": 1, "description": "캐릭터2 설명", "spritePath": "Player/Bomber"},
+    {"id": 103, "name": "캐릭터3", "type": 1, "description": "캐릭터3 설명", "spritePath": "Player/Splash"},
+    {"id": 104, "name": "캐릭터4", "type": 1, "description": "캐릭터4 설명", "spritePath": "Player/Tanker"},
+    {"id": 201, "name": "증폭기", "type": 2, "description": "증폭기설명", "spritePath": "default"},
+    {"id": 202, "name": "추진체", "type": 2, "description": "추진체설명", "spritePath": "default"},
+    {"id": 203, "name": "냉각기", "type": 2, "description": "냉각기설명", "spritePath": "default"},
+    {"id": 204, "name": "전투AI", "type": 2, "description": "전투ai설명", "spritePath": "default"},
+    {"id": 205, "name": "적재창고", "type": 2, "description": "적재창고 설명", "spritePath": "default"},
+    {"id": 206, "name": "베리어 배터리", "type": 2, "description": "배리어 배터리설명", "spritePath": "default"},
+    {"id": 301, "name": "강철파편", "type": 3, "description": "강철파편 설명", "spritePath": "default"},
+    {"id": 302, "name": "전선", "type": 3, "description": "전선 설명", "spritePath": "default"},
+    {"id": 303, "name": "기어", "type": 3, "description": "기어 설명", "spritePath": "default"},
+    {"id": 304, "name": "칩셋", "type": 3, "description": "칩셋 설명", "spritePath": "default"},
+    {"id": 305, "name": "디스플레이", "type": 3, "description": "디스플레이 설명", "spritePath": "default"},
+    {"id": 306, "name": "코일", "type": 3, "description": "코일 설명", "spritePath": "default"}
+    ]
+}

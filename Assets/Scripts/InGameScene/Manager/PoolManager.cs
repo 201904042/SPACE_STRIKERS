@@ -9,7 +9,7 @@ using static UnityEditor.MaterialProperty;
 public class PoolManager : MonoBehaviour
 {
     public static PoolManager poolInstance;
-    public List<EnemyData> enemyDataList;
+    public List<EnemyInfo> enemyDataList;
     public List<SkillProjData> SkillDataList;
     public List<ProjData> ProjDataList;
 
@@ -200,7 +200,7 @@ public class PoolManager : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach (EnemyData enemyData in enemyDataList)
+        foreach (EnemyInfo enemyData in enemyDataList)
         {
             if (enemyType == enemyData.enemyType)
             {

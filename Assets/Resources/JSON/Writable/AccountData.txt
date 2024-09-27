@@ -1,10 +1,10 @@
 {
-  "accountData": 
+  "AccountData": 
   {
-    "accountId": 1,
-    "accountName": "master",
-    "accountLevel": 1,
-    "currentExperience": 0,
+    "id": 1,
+    "name": "master",
+    "level": 1,
+    "exp": 0,
     "stageProgress": 5
   }
 }

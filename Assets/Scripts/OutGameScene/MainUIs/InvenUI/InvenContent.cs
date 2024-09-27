@@ -27,15 +27,15 @@ public class InvenContent : MonoBehaviour
 
     public void SearchInDatabase(ItemType targetType)
     {
-        foreach (InvenItemData item in DataManager.inventoryData.InvenItemDic.Values)
+        foreach (InvenData item in DataManager.inventoryData.InvenItemDic.Values)
         {
-            if (item.itemType == targetType) 
+            if (DataManager.masterData.GetData(item.masterId).Value.type == targetType) 
             {
                 ItemUIPref itemUI = Instantiate(itemUIPref, transform).GetComponent<ItemUIPref>();
-                itemUI.SetByInvenId(item.storageId);
+                itemUI.SetByInvenId(item.id);
                 Button btn = itemUI.GetComponent<Button>();
                 btn.onClick.RemoveAllListeners();
-                btn.onClick.AddListener(() => UIBtnClickEvent(item.storageId));
+                btn.onClick.AddListener(() => UIBtnClickEvent(item.id));
             }
         }
     }

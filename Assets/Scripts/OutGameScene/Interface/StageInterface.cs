@@ -2,14 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StageInterface : UIInterface
 {
     public Transform StageNamePanel;
+
     public Transform EnemyListPanel;
+    public Transform enemyScrollContent;
+    public GameObject enemyUIPref; //todo-> 나중에 동적으로 경로를 통해 프리팹을 찾도록
+
     public Transform ContentPanel;
+    
     public Transform Buttons;
     public Button closeBtn;
     public Button acceptBtn;
@@ -30,6 +36,7 @@ public class StageInterface : UIInterface
         base.SetComponent();
         StageNamePanel = transform.GetChild(1);
         EnemyListPanel = transform.GetChild(2);
+        enemyScrollContent = EnemyListPanel.GetComponent<ScrollRect>().content;
         ContentPanel = transform.GetChild(3);
         Buttons = transform.GetChild(4);
         closeBtn = Buttons.GetChild(0).GetComponent<Button>();
@@ -58,18 +65,15 @@ public class StageInterface : UIInterface
         yield return result.Value;
     }
 
+    /// <summary>
+    /// 해당 인터페이스 초기화
+    /// </summary>
     public void SetInterface(int stageCode)
     {
         //curStageCode = (parentUI.curPlanet - 1) * 10 + parentUI.curStage;
         Debug.Log(stageCode);
-        foreach (StageData data in DataManager.dataInstance.stageData.stageList.stage)
-        {
-            if (data.stageCode == stageCode)
-            {
-                curStageData = data;
-                break;
-            }
-        }
+        curStageData = DataManager.stageData.GetData(stageCode);
+        
         curPlanet = (stageCode / 10) + 1;
         curStage = stageCode % 10;
 
@@ -85,18 +89,21 @@ public class StageInterface : UIInterface
         bool isFirstClear = CheckIfFirstClear(); // 이 함수는 첫 클리어 여부를 반환하는 함수입니다.
 
         string rewardText = "획득 가능 재화\n";
+        MasterData item = new MasterData();
         if (isFirstClear)
         {
-            foreach (var reward in curStageData.stageFirstGain)
+            foreach (StageItemReward reward in curStageData.firstReward)
             {
-                rewardText += $"{reward.itemName} x {reward.itemAmount}\n";
+                DataManager.masterData.masterDic.TryGetValue(reward.itemId,out item);
+                rewardText += $"{item.name} x {reward.quantity}\n";
             }
         }
         else
         {
-            foreach (var reward in curStageData.stageDefaultGain)
+            foreach (StageItemReward reward in curStageData.defaultReward)
             {
-                rewardText += $"{reward.itemName} x {reward.itemAmount}\n";
+                DataManager.masterData.masterDic.TryGetValue(reward.itemId, out item);
+                rewardText += $"{item.name} x {reward.quantity}\n";
             }
         }
 
@@ -110,7 +117,22 @@ public class StageInterface : UIInterface
         {
             return;
         }
-        EnemyListPanel.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"등장 적\n{string.Join(", ", curStageData.enemyCode)}";
+
+        //기존에 남아있는 프리팹들삭제
+        for (int i = enemyScrollContent.childCount - 1; i >= 0; i--)
+        {
+            Destroy(enemyScrollContent.GetChild(i).gameObject);
+        }
+
+
+        foreach (StageEnemyData enemyData in curStageData.stageEnemy)
+        {
+            EnemyUI enemyUI = Instantiate(enemyUIPref, enemyScrollContent).GetComponent<EnemyUI>();
+            enemyUI.SetEnemyUI(enemyData.enemyId, enemyData.quantity);
+        }
+
+
+        //EnemyListPanel.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"등장 적\n{string.Join(", ", curStageData.enemyCode)}";
     }
 
     private bool CheckIfFirstClear()

@@ -35,17 +35,17 @@ public class ItemAmountPref : MonoBehaviour
 
     public void SetAmountUI(int masterId, int needAmount)
     {
-        MasterItemData masterData = new MasterItemData();
+        MasterData masterData = new MasterData();
 
-        InvenItemData invenData = new InvenItemData();
+        InvenData invenData = new InvenData();
         bool success = DataManager.inventoryData.InvenItemDic.TryGetValue(masterId, out invenData);
         if (!success)
         {
             ownAmountText.text = $"0";
         }
-        ownAmountText.text = $"{invenData.amount}";
+        ownAmountText.text = $"{invenData.quantity}";
 
-        success = DataManager.masterData.masterItemDic.TryGetValue(masterId, out masterData);
+        success = DataManager.masterData.masterDic.TryGetValue(masterId, out masterData);
         if (!success)
         {
             Debug.Log("아이디가 마스터 데이터에 없음");
@@ -56,7 +56,7 @@ public class ItemAmountPref : MonoBehaviour
 
         needAmountText.text = $"{needAmount}";
 
-        if(needAmount > invenData.amount)
+        if(needAmount > invenData.quantity)
         {
             ownAmountText.color = Color.red;
         }

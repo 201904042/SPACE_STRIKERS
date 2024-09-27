@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class CharacterDataReader
 {
-    public Dictionary<int, CharData> characterDic;
+    public Dictionary<int, CharData> charDic;
 
     public void LoadData()
     {
-        characterDic = DataManager.SetDictionary<CharData, CharDatas>("JSON/Writable/CharacterData",
+        charDic = DataManager.SetDictionary<CharData, CharDatas>("JSON/Writable/CharacterData",
             data => data.characters,
-            item => item.masterCode
+            item => item.id
         );
     }
     public CharData? GetData(int targetId)
     {
-        if (!characterDic.ContainsKey(targetId))
+        if (!charDic.ContainsKey(targetId))
         {
             Debug.Log($"해당 아이디 없음");
             return null;
         }
-        return characterDic[targetId];
+        return charDic[targetId];
     }
 }

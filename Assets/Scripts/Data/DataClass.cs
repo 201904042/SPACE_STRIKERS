@@ -1,3 +1,5 @@
+using System;
+
 [System.Serializable]
 public class StoreItemData
 {
@@ -13,21 +15,19 @@ public class StoreItemDatas
 }
 
 [System.Serializable]
-public struct MasterItemData //필드값
+public struct MasterData //필드값
 {
-    public int masterId;
+    public int id;
     public string name;
     public ItemType type;
     public string description;
     public string spritePath;
-    public int buyPrice;
-    public int sellPrice;
 }
 
 [System.Serializable]
-public class MasterItemDatas //리스트
+public class MasterDatas //리스트
 {
-    public MasterItemData[] masterItems; // JSON에서의 루트 필드와 매칭
+    public MasterData[] MasterData; // JSON에서의 루트 필드와 매칭
 }
 
 [System.Serializable]
@@ -38,24 +38,23 @@ public class Ability
 }
 
 [System.Serializable]
-public class OwnPartsData
+public class InvenPartsData
 {
-    public int inventoryCode;
-    public int masterCode;
-    public bool isOn;
-    public int grade;
+    public int invenId;
+    public bool isActive;
+    public int rank;
     public int mainAbility;
-    public Ability ability1;
-    public Ability ability2;
-    public Ability ability3;
-    public Ability ability4;
-    public Ability ability5;
+    public Ability subAbility1;
+    public Ability subAbility2;
+    public Ability subAbility3;
+    public Ability subAbility4;
+    public Ability subAbility5;
 }
 
 [System.Serializable]
-public class OwnPartDatas
+public class InvenPartsDatas
 {
-    public OwnPartsData[] ownParts;
+    public InvenPartsData[] InvenPartsData;
 }
 
 [System.Serializable]
@@ -88,10 +87,10 @@ public class AbilityDatas
 [System.Serializable]
 public class AccountData
 {
-    public int accountId;
-    public string accountName;
-    public int accountLevel;
-    public int currentExperience;
+    public int id;
+    public string name;
+    public int level;
+    public int exp;
     public int stageProgress;
 }
 
@@ -99,7 +98,7 @@ public class AccountData
 [System.Serializable]
 public class AccountDatas
 {
-    public AccountData accountData;
+    public AccountData AccountData;
 }
 
 
@@ -107,16 +106,15 @@ public class AccountDatas
 [System.Serializable]
 public struct CharData
 {
-    public int masterCode;
-    public bool own;
+    public int id;
     public string name;
     public int level;
 
     public float damage; //기본 능력치
     public float defense;
     public float attackSpeed;
-    public float movementSpeed;
-    public float maxHealth;
+    public float moveSpeed;
+    public float hp;
 
     public float hpRegen; //특수 능력치
     public float troopsDamageUp;
@@ -139,20 +137,51 @@ public class CharDatas
 }
 
 [System.Serializable]
-public struct InvenItemData //필드값
+public struct InvenData //필드값
 {
-    public int storageId;
-    public ItemType itemType;
+    public int id;
     public int masterId;
     public string name;
-    public int amount;
+    public int quantity;
 }
 
 [System.Serializable]
-public class InvenItemDatas //리스트
+public class InvenDatas //리스트
 {
-    public InvenItemData[] storageItems;
+    public InvenData[] InvenData;
 }
+
+[System.Serializable]
+public class StageData
+{
+    public int stageCode;
+    public string stageType;
+    public StageEnemyData[] stageEnemy;
+    public StageItemReward[] firstReward;
+    public StageItemReward[] defaultReward;
+}
+
+[Serializable]
+public class StageEnemyData
+{
+    public int enemyId;
+    public int quantity;
+}
+
+[Serializable]
+public class StageItemReward
+{
+    public int itemId;
+    public int quantity;
+}
+
+[System.Serializable]
+public class StageDatas
+{
+    public StageData[] StageData;
+}
+
+
 
 public enum ItemType
 {

@@ -87,9 +87,9 @@ public class DailyStore : MonoBehaviour
             //4개의 인터페이스에 각각의 마스터 아이템 아이디를 이미지, 가격을 부여해줘야함
             //최초에는 새로운 PlayerPref를 지정하며 24시간 마다 PlayerPref가 변화
             //PlayerPref에 마스터 아이디를 저장하여 해당 마스터 아이디로 검색 및 아이템 저장
-            MasterItemData target = DataManager.masterData.masterItemDic[DataManager.storeData.storeItemDic[registStoreItem[i].storeItemId].masterId];
+            MasterData target = DataManager.masterData.masterDic[DataManager.storeData.storeItemDic[registStoreItem[i].storeItemId].masterId];
             Sprite targetImage = Resources.Load<Sprite>(target.spritePath);
-            ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetButtons(target.masterId, targetImage, target.buyPrice*3/4, true); //id, 이미지, 가격 , 구매가능여부
+            ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetUIValue(target.id, targetImage, 1000* (3/4), true); //id, 이미지, 가격 , 구매가능여부
         }
     }
 

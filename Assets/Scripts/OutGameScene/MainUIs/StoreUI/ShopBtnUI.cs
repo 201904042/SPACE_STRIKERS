@@ -22,7 +22,7 @@ public class ShopBtnUI : MonoBehaviour
 
     }
 
-    public bool SetButtons(int itemMasterId ,Sprite image ,int price, bool isActive = true)
+    public bool SetUIValue(int itemMasterId ,Sprite image ,int price= 1000, bool isActive = true)
     {
         targetItemId = itemMasterId;
         itemImage.sprite = image;

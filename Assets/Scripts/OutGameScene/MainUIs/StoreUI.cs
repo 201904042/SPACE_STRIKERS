@@ -125,27 +125,27 @@ public class StoreUI : MainUIs
     public static void ItemPurchase(int targetMasterId, int cost, int amount = 1)
     {
         //구매의 조건에 부합하는지 체크
-        if (cost > DataManager.inventoryData.InvenItemDic[0].amount)
+        if (cost > DataManager.inventoryData.InvenItemDic[0].quantity)
         {
             //구매 불가 할경우. 알림 인터페이스 오픈
             UIManager.alterInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
             return;
         }
-        MasterItemData targetData = new MasterItemData();
-        bool success = DataManager.masterData.masterItemDic.TryGetValue(targetMasterId, out targetData);
+        MasterData targetData = new MasterData();
+        bool success = DataManager.masterData.masterDic.TryGetValue(targetMasterId, out targetData);
         if (!success)
         {
             Debug.Log("마스터 데이터를 찾지못함");
             return;
         }
 
-        InvenItemData ownMineral = DataManager.inventoryData.FindByMasterId(0).Value;
+        InvenData ownMineral = DataManager.inventoryData.FindByMasterId(0).Value;
 
         //구매 인벤토리의 미네랄을 감소시키고 
-        DataManager.inventoryData.ModifyItem(ownMineral.storageId, ownMineral.amount - (cost * amount));
+        DataManager.inventoryData.ModifyItem(ownMineral.id, ownMineral.quantity - (cost * amount));
 
         //해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
-        DataManager.inventoryData.AddNewItem(targetData.type, targetData.masterId, targetData.name, amount); //일단은 한번에 한개만 증가
+        DataManager.inventoryData.AddNewItem(targetData.type, targetData.id, targetData.name, amount); //일단은 한번에 한개만 증가
 
         //구매 성공시 알림 인터페이스 오픈
         UIManager.alterInterface.SetAlert("아이템을 구매하였습니다");

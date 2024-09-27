@@ -19,9 +19,9 @@ public class ItemUIPref : MonoBehaviour
     //해당 UI에 파츠 혹은 아이템(재료, 소모품) 할당
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
-    public InvenItemData invenData;
-    public OwnPartsData partsData; //소유한 파츠의 데이터
-    public MasterItemData itemData; //소유한 파츠 이외의 아이템이나 소유하지 않은 모든 아이템의 데이터
+    public InvenData invenData;
+    public InvenPartsData partsData; //소유한 파츠의 데이터
+    public MasterData itemData; //소유한 파츠 이외의 아이템이나 소유하지 않은 모든 아이템의 데이터
 
     [SerializeField] private Image bgImage;
     [SerializeField] private Image itemImage;
@@ -48,7 +48,7 @@ public class ItemUIPref : MonoBehaviour
     public void SetByMasterId(int masterId)
     {
         ResetData();
-        bool isSuccess = DataManager.masterData.masterItemDic.TryGetValue(masterId, out itemData);
+        bool isSuccess = DataManager.masterData.masterDic.TryGetValue(masterId, out itemData);
         if (!isSuccess)
         {
             Debug.Log("마스터 데이터를 찾지 못함");
@@ -65,7 +65,7 @@ public class ItemUIPref : MonoBehaviour
         ResetData();
         if (invenId == -1)
         {
-            partsData.inventoryCode = -1;
+            partsData.invenId = -1;
             curItemType = (ItemType)2;
             return;
         }
@@ -76,9 +76,10 @@ public class ItemUIPref : MonoBehaviour
             Debug.Log("아이템 검색 실패");
         }
 
-        if(invenData.itemType == (ItemType)2) //파츠일경우
+        ItemType itemtype = DataManager.masterData.GetData(invenData.masterId).Value.type;
+        if(itemtype == (ItemType)2) //파츠일경우
         {
-            isSuccess = DataManager.partsData.ownPartsDic.TryGetValue(invenData.storageId, out partsData);
+            isSuccess = DataManager.partsData.invenPartsDic.TryGetValue(invenData.id, out partsData);
             if (!isSuccess)
             {
                 Debug.Log("파츠 데이터를 찾지 못함");
@@ -86,14 +87,14 @@ public class ItemUIPref : MonoBehaviour
         }
         else
         {
-            isSuccess = DataManager.masterData.masterItemDic.TryGetValue(invenData.masterId, out itemData);
+            isSuccess = DataManager.masterData.masterDic.TryGetValue(invenData.masterId, out itemData);
             if (!isSuccess)
             {
                 Debug.Log("마스터 데이터를 찾지 못함");
             }
         }
 
-        curItemType = invenData.itemType;
+        curItemType = itemtype;
         SetData();
     }
 
@@ -101,7 +102,7 @@ public class ItemUIPref : MonoBehaviour
     {
         if (curItemType == (ItemType)2)
         {
-            switch (partsData.grade)
+            switch (partsData.rank)
             {
                 case 5: bgImage.color = GradeColor.S_Color; break;
                 case 4: bgImage.color = GradeColor.A_Color; break;
@@ -111,8 +112,7 @@ public class ItemUIPref : MonoBehaviour
                 default: bgImage.color = Color.black; break;
             }
 
-            MasterItemData master = new MasterItemData();
-            DataManager.masterData.masterItemDic.TryGetValue(partsData.masterCode, out master);
+            MasterData master = (MasterData)DataManager.masterData.GetData(DataManager.inventoryData.GetData(partsData.invenId).Value.masterId);
 
             Sprite image = Resources.Load<Sprite>(master.spritePath);
             if (image == null)
@@ -121,7 +121,7 @@ public class ItemUIPref : MonoBehaviour
             }
 
             itemImage.sprite = image;
-            selectText.SetActive(partsData.isOn == true ? true : false);
+            selectText.SetActive(partsData.isActive == true ? true : false);
         }
         else
         {
@@ -133,15 +133,15 @@ public class ItemUIPref : MonoBehaviour
 
             itemImage.sprite = image;
             amountText.SetActive(true);
-            amountText.GetComponentInChildren<TextMeshProUGUI>().text = invenData.amount.ToString();
+            amountText.GetComponentInChildren<TextMeshProUGUI>().text = invenData.quantity.ToString();
         }
     }
 
     public void ResetData()
     {
-        invenData = new InvenItemData();
-        itemData = new MasterItemData();
-        partsData = new OwnPartsData();
+        invenData = new InvenData();
+        itemData = new MasterData();
+        partsData = new InvenPartsData();
 
         bgImage.color = Color.white;
         itemImage.sprite = null;

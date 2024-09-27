@@ -123,7 +123,7 @@ public class LabotoryUI : MainUIs
 
         yield return StartCoroutine(selecteCharInterface.GetValue());
         
-        targetInvenCode = DataManager.inventoryData.FindByMasterId(selecteCharInterface.SelectedCode + 100).Value.storageId; // 현재 인게임의 캐릭터 코드의 미수정으로 임시 +100.
+        targetInvenCode = DataManager.inventoryData.FindByMasterId(selecteCharInterface.SelectedCode + 100).Value.id; // 현재 인게임의 캐릭터 코드의 미수정으로 임시 +100.
     }
 
     private void GetPartsId()
@@ -137,7 +137,7 @@ public class LabotoryUI : MainUIs
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
 
-        targetInvenCode = selectPartsInterface.SelectedParts.inventoryCode;
+        targetInvenCode = selectPartsInterface.SelectedParts.invenId;
     }
 
     public void PartsMode()

@@ -92,14 +92,14 @@ public class SelectCharInterface : UIInterface
         char1Btn.interactable = true;
 
         CharData player = new CharData();
-        DataManager.characterData.characterDic.TryGetValue(102, out player);
-        char2Btn.interactable = player.own ? true : false;
+        DataManager.characterData.charDic.TryGetValue(102, out player);
+        char2Btn.interactable = player.level != 0 ? true : false;
 
-        DataManager.characterData.characterDic.TryGetValue(103, out player);
-        char3Btn.interactable = player.own ? true : false;
+        DataManager.characterData.charDic.TryGetValue(103, out player);
+        char3Btn.interactable = player.level != 0 ? true : false;
 
-        DataManager.characterData.characterDic.TryGetValue(104, out player);
-        char4Btn.interactable = player.own ? true : false;
+        DataManager.characterData.charDic.TryGetValue(104, out player);
+        char4Btn.interactable = player.level != 0 ? true : false;
     }
 
     private void BtnListenerSet()

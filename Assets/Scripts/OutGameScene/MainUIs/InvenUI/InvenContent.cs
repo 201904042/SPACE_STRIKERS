@@ -27,9 +27,9 @@ public class InvenContent : MonoBehaviour
 
     public void SearchInDatabase(ItemType targetType)
     {
-        foreach (InvenData item in DataManager.inventoryData.InvenItemDic.Values)
+        foreach (InvenData item in DataManager.inven.GetDictionary().Values)
         {
-            if (DataManager.masterData.GetData(item.masterId).Value.type == targetType) 
+            if (DataManager.master.GetData(item.masterId).type == targetType) 
             {
                 ItemUIPref itemUI = Instantiate(itemUIPref, transform).GetComponent<ItemUIPref>();
                 itemUI.SetByInvenId(item.id);

@@ -45,10 +45,10 @@ public class ReadyUI : MainUIs
         }
     }
 
-    private List<InvenPartsData> equippedPartsList = new List<InvenPartsData>();
-    public List<InvenPartsData> EquippedPartsList => equippedPartsList;
+    private List<PartsData> equippedPartsList = new List<PartsData>();
+    public List<PartsData> EquippedPartsList => equippedPartsList;
 
-    public InvenPartsData SetPartsSlot1
+    public PartsData SetPartsSlot1
     {
         get => parts1Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -57,7 +57,7 @@ public class ReadyUI : MainUIs
         }
     }
 
-    public InvenPartsData SetPartsSlot2
+    public PartsData SetPartsSlot2
     {
         get => parts2Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -66,7 +66,7 @@ public class ReadyUI : MainUIs
         }
     }
 
-    public InvenPartsData SetPartsSlot3
+    public PartsData SetPartsSlot3
     {
         get => parts3Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -75,7 +75,7 @@ public class ReadyUI : MainUIs
         }
     }
 
-    public InvenPartsData SetPartsSlot4
+    public PartsData SetPartsSlot4
     {
         get => parts4Btn.GetComponent<ItemUIPref>().partsData;
         set
@@ -218,13 +218,7 @@ public class ReadyUI : MainUIs
     private void PlayerStatTextSet()
     {
         int masterId = PlayerPrefs.GetInt("curCharacterCode") + 100;
-        CharData targetBasicData = new CharData();
-        bool success = DataManager.characterData.charDic.TryGetValue(masterId, out targetBasicData);
-        if (!success)
-        {
-            charInformText.text = "error";
-            return;
-        }
+        CharData targetBasicData = DataManager.character.GetData(masterId);
 
         CharData changedData = CalculateStat(targetBasicData);
         StringBuilder sb = new StringBuilder();
@@ -275,8 +269,8 @@ public class ReadyUI : MainUIs
         return result;
     }
     
-    //todo -> InvenPartsData Reader에서 static변수로 만들기
-    private InvenPartsData GetOwnPartsDataFromSlot(string invenKey)
+    //todo -> PartsData Reader에서 static변수로 만들기
+    private PartsData GetOwnPartsDataFromSlot(string invenKey)
     {
         int invenId = PlayerPrefs.GetInt(invenKey, -1);
 
@@ -285,22 +279,10 @@ public class ReadyUI : MainUIs
             return null;
         }
 
-        InvenData invenData;
-        if (DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData))
+        PartsData data = DataManager.parts.GetData(DataManager.inven.GetData(invenId).masterId);
+        if (data != null)
         {
-            InvenPartsData data;
-            if (DataManager.partsData.invenPartsDic.TryGetValue(invenData.masterId, out data))
-            {
-                return data;
-            }
-            else
-            {
-                Debug.LogWarning($"MasterId '{invenData.masterId}'의 파츠를 찾지못함 .");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"Slot value '{invenId}'의 인벤토리를 찾지 못함.");
+            return data;
         }
         return null;
     }
@@ -328,7 +310,7 @@ public class ReadyUI : MainUIs
     /// <summary>
     /// 장착 슬롯에 해당 파츠를 등록 혹은 해제
     /// </summary>
-    private void UpdatePartsSlot(Button partsButton, InvenPartsData value, string slotKey)
+    private void UpdatePartsSlot(Button partsButton, PartsData value, string slotKey)
     {
         var partsUIPref = partsButton.GetComponent<PartsSlot>();
         var currentParts = partsUIPref.partsData;
@@ -408,7 +390,7 @@ public class ReadyUI : MainUIs
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
 
-        InvenPartsData parts = selectPartsInterface.SelectedParts;
+        PartsData parts = selectPartsInterface.SelectedParts;
 
         switch (partsSlotIndex)
         {

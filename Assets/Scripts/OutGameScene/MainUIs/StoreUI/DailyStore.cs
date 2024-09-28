@@ -41,10 +41,10 @@ public class DailyStore : MonoBehaviour
             else
             {
                 //지금은 임시로 하급뽑기권만 todo -> 저장된 아이템을 불러오도록
-                registStoreItem[0] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
-                registStoreItem[1] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
-                registStoreItem[2] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
-                registStoreItem[3] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
+                registStoreItem[0] = DataManager.store.GetData(0); //하급뽑기권
+                registStoreItem[1] = DataManager.store.GetData(0); //하급뽑기권
+                registStoreItem[2] = DataManager.store.GetData(0); //하급뽑기권
+                registStoreItem[3] = DataManager.store.GetData(0); //하급뽑기권
             }
         }
         else
@@ -72,10 +72,10 @@ public class DailyStore : MonoBehaviour
         registStoreItem = new StoreItemData[4];
 
         //임시로 하급뽑기권만 todo-> 랜덤한 아이템을 불러오도록
-        registStoreItem[0] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
-        registStoreItem[1] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
-        registStoreItem[2] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
-        registStoreItem[3] = DataManager.storeData.storeItemDic[0]; //하급뽑기권
+        registStoreItem[0] = DataManager.store.GetData(0); //하급뽑기권
+        registStoreItem[1] = DataManager.store.GetData(0); //하급뽑기권
+        registStoreItem[2] = DataManager.store.GetData(0); //하급뽑기권
+        registStoreItem[3] = DataManager.store.GetData(0); //하급뽑기권
 
         PlayerPrefs.SetString("DateIndex", DateTime.Now.ToString("yyyy-MM-dd"));
     }
@@ -87,7 +87,7 @@ public class DailyStore : MonoBehaviour
             //4개의 인터페이스에 각각의 마스터 아이템 아이디를 이미지, 가격을 부여해줘야함
             //최초에는 새로운 PlayerPref를 지정하며 24시간 마다 PlayerPref가 변화
             //PlayerPref에 마스터 아이디를 저장하여 해당 마스터 아이디로 검색 및 아이템 저장
-            MasterData target = DataManager.masterData.masterDic[DataManager.storeData.storeItemDic[registStoreItem[i].storeItemId].masterId];
+            MasterData target = DataManager.master.GetData(DataManager.store.GetData(registStoreItem[i].storeItemId).masterId);
             Sprite targetImage = Resources.Load<Sprite>(target.spritePath);
             ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetUIValue(target.id, targetImage, 1000* (3/4), true); //id, 이미지, 가격 , 구매가능여부
         }

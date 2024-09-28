@@ -48,7 +48,7 @@ public class StageManager : MonoBehaviour
         stageEnemyIdList = new List<int>();   
         isBossStage = false;
         StageDataSet();
-        stageData = DataManager.stageData.GetData(StageCode);
+        stageData = DataManager.stage.GetData(StageCode);
 
         foreach(StageEnemyData enemyInfo in stageData.stageEnemy)
         {
@@ -71,14 +71,14 @@ public class StageManager : MonoBehaviour
     private void StageDataSet()
     {
 
-        //foreach (StageData stageData in stageData.stageList.stage)
+        //foreach (StageData stage in stage.stageList.stage)
         //{
-        //    if (stageData.stageCode == stageCode)
+        //    if (stage.stageCode == stageCode)
         //    {
-        //        curStageEnemyId = stageData.enemyCode;
-        //        curStagefirstGain = stageData.stageFirstGain;
-        //        curStageDefaultGain = stageData.stageDefaultGain;
-        //        curDefaultFullGain = stageData.defaultFullGain;
+        //        curStageEnemyId = stage.enemyCode;
+        //        curStagefirstGain = stage.stageFirstGain;
+        //        curStageDefaultGain = stage.stageDefaultGain;
+        //        curDefaultFullGain = stage.defaultFullGain;
         //    }
         //}
     }

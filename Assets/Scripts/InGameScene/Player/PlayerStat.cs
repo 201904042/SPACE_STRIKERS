@@ -74,14 +74,8 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void PlayerSet(int id)
     {
-        CharData curPlayerChar = new CharData();
-        bool isSuccess = DataManager.characterData.charDic.TryGetValue(id, out curPlayerChar);
+        CharData curPlayerChar = DataManager.character.GetData(id);
 
-        if (!isSuccess)
-        {
-            Debug.Log($"해당 아이디 {curPlayerID} 로 캐릭터를 찾지 못함");
-            return;
-        }
         //아웃게임에서 받아온 캐릭터의 스텟
         level = curPlayerChar.level;
         initDamage = curPlayerChar.damage;

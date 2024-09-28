@@ -20,7 +20,7 @@ public class ItemUIPref : MonoBehaviour
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
     public InvenData invenData;
-    public InvenPartsData partsData; //소유한 파츠의 데이터
+    public PartsData partsData; //소유한 파츠의 데이터
     public MasterData itemData; //소유한 파츠 이외의 아이템이나 소유하지 않은 모든 아이템의 데이터
 
     [SerializeField] private Image bgImage;
@@ -48,11 +48,8 @@ public class ItemUIPref : MonoBehaviour
     public void SetByMasterId(int masterId)
     {
         ResetData();
-        bool isSuccess = DataManager.masterData.masterDic.TryGetValue(masterId, out itemData);
-        if (!isSuccess)
-        {
-            Debug.Log("마스터 데이터를 찾지 못함");
-        }
+        itemData = DataManager.master.GetData(masterId);
+        
         curItemType = itemData.type;
         SetData();
     }
@@ -69,29 +66,16 @@ public class ItemUIPref : MonoBehaviour
             curItemType = (ItemType)2;
             return;
         }
+        invenData = DataManager.inven.GetData(invenId);
 
-        bool isSuccess = DataManager.inventoryData.InvenItemDic.TryGetValue(invenId, out invenData);
-        if (!isSuccess)
-        {
-            Debug.Log("아이템 검색 실패");
-        }
-
-        ItemType itemtype = DataManager.masterData.GetData(invenData.masterId).Value.type;
+        ItemType itemtype = DataManager.master.GetData(invenData.masterId).type;
         if(itemtype == (ItemType)2) //파츠일경우
         {
-            isSuccess = DataManager.partsData.invenPartsDic.TryGetValue(invenData.id, out partsData);
-            if (!isSuccess)
-            {
-                Debug.Log("파츠 데이터를 찾지 못함");
-            }
+            partsData = DataManager.parts.GetData(invenData.id);
         }
         else
         {
-            isSuccess = DataManager.masterData.masterDic.TryGetValue(invenData.masterId, out itemData);
-            if (!isSuccess)
-            {
-                Debug.Log("마스터 데이터를 찾지 못함");
-            }
+            itemData = DataManager.master.GetData(invenData.masterId);
         }
 
         curItemType = itemtype;
@@ -112,7 +96,7 @@ public class ItemUIPref : MonoBehaviour
                 default: bgImage.color = Color.black; break;
             }
 
-            MasterData master = (MasterData)DataManager.masterData.GetData(DataManager.inventoryData.GetData(partsData.invenId).Value.masterId);
+            MasterData master = DataManager.master.GetData(DataManager.inven.GetData(partsData.invenId).masterId);
 
             Sprite image = Resources.Load<Sprite>(master.spritePath);
             if (image == null)
@@ -141,7 +125,7 @@ public class ItemUIPref : MonoBehaviour
     {
         invenData = new InvenData();
         itemData = new MasterData();
-        partsData = new InvenPartsData();
+        partsData = new PartsData();
 
         bgImage.color = Color.white;
         itemImage.sprite = null;

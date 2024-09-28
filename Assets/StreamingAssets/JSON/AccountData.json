@@ -1,5 +1,5 @@
 {
-  "AccountData": 
+  "AccountData": [
   {
     "id": 1,
     "name": "master",
@@ -7,4 +7,5 @@
     "exp": 0,
     "stageProgress": 5
   }
+]
 }

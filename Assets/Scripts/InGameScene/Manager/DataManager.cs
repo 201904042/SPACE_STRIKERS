@@ -10,14 +10,14 @@ public class DataManager : MonoBehaviour
 
     public EnemyJsonReader enemyData;
 
-    public static AccountJsonReader accountData = new AccountJsonReader();
-    public static MasterDataReader masterData = new MasterDataReader();
-    public static InventoryDataReader inventoryData = new InventoryDataReader();
-    public static CharacterDataReader characterData = new CharacterDataReader();
-    public static PartsDataReader partsData = new PartsDataReader();
-    public static AbilityDataReader abilityData = new AbilityDataReader();
-    public static StoreItemReader storeData = new StoreItemReader();
-    public static StageDataReader stageData = new StageDataReader();
+    public static AccountJsonReader account = new AccountJsonReader();
+    public static MasterDataReader master = new MasterDataReader();
+    public static InventoryDataReader inven = new InventoryDataReader();
+    public static CharacterDataReader character = new CharacterDataReader();
+    public static PartsDataReader parts = new PartsDataReader();
+    public static AbilityDataReader ability = new AbilityDataReader();
+    public static StoreItemReader store = new StoreItemReader();
+    public static StageDataReader stage = new StageDataReader();
 
     private void Awake()
     {
@@ -38,49 +38,17 @@ public class DataManager : MonoBehaviour
     {
         enemyData = GetComponent<EnemyJsonReader>();
 
-        accountData.LoadData();
-        masterData.LoadData();
-        characterData.LoadData();
-        inventoryData.LoadData();
-        partsData.LoadData();
-        abilityData.LoadData();
-        storeData.LoadData();
-        stageData.LoadData();
+        master.LoadData("Assets/StreamingAssets/JSON/MasterData.json");
+        ability.LoadData("Assets/StreamingAssets/JSON/AbilityData.json");
+        store.LoadData("Assets/StreamingAssets/JSON/StoreData.json");
+        stage.LoadData("Assets/StreamingAssets/JSON/StageData.json");
+
+        account.LoadData("Assets/StreamingAssets/JSON/AccountData.json");
+        character.LoadData("Assets/StreamingAssets/JSON/CharacterData.json");
+        inven.LoadData("Assets/StreamingAssets/JSON/InvenData.json");
+        parts.LoadData("Assets/StreamingAssets/JSON/PartsData.json");
+
+        
     }
 
-    public static T LoadJsonData<T>(string path) where T : class
-    {
-        TextAsset json = Resources.Load<TextAsset>(path);
-        if (json == null)
-        {
-            Debug.LogError($"{path}: JSON 파일이 로드되지 않음");
-            return null;
-        }
-
-        T dataInstance = JsonUtility.FromJson<T>(json.text);
-        if (dataInstance == null)
-        {
-            Debug.LogError($"{path}: 파싱이 제대로 이루어지지 않음");
-            return null;
-        }
-
-        Debug.Log($"{path}: 데이터가 성공적으로 로드됨");
-        return dataInstance;
-    }
-
-    public static Dictionary<int, T> SetDictionary<T, TList>(string path, Func<TList, IEnumerable<T>> itemSelector, Func<T, int> keySelector) where TList : class
-    {
-        TList dataInstance = LoadJsonData<TList>(path);
-        Dictionary<int, T> dictionary = new Dictionary<int, T>();
-
-        foreach (T item in itemSelector(dataInstance))
-        {
-            dictionary.Add(keySelector(item), item);
-        }
-
-        Debug.Log($"{typeof(T).Name} : {dictionary.Count}개의 아이템이 로드됨");
-        return dictionary;
-    }
-
-    
 }

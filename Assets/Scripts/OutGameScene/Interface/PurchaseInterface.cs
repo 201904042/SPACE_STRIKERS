@@ -67,12 +67,7 @@ public class PurchaseInterface : UIInterface
     /// </summary>
     public bool SetPurchaseInterface(int itemMasterCode, int itemPrice, int itemAmount = 1)
     {
-        bool success = DataManager.masterData.masterDic.TryGetValue(itemMasterCode, out itemData);
-        if (!success) 
-        {
-            Debug.Log($"해당 코드를 검색하지 못함 {itemMasterCode}");
-            return false;
-        }
+        itemData = DataManager.master.GetData(itemMasterCode);
 
         itemImage.sprite = Resources.Load<Sprite>(itemData.spritePath);
         itemText.text = itemData.description;

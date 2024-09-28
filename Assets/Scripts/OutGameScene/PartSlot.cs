@@ -13,7 +13,7 @@ public class PartsSlot : MonoBehaviour
     //해당 UI에 파츠 혹은 아이템(재료, 소모품) 할당
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
-    public InvenPartsData partsData;
+    public PartsData partsData;
     [SerializeField] private Image bgImage;
     [SerializeField] private Image partsImage;
 
@@ -30,7 +30,7 @@ public class PartsSlot : MonoBehaviour
 
     }
 
-    public void SetParts(InvenPartsData parts)
+    public void SetParts(PartsData parts)
     {
         partsData = parts;
 
@@ -52,7 +52,7 @@ public class PartsSlot : MonoBehaviour
             default:bgImage.color = Color.black; break;
         }
 
-        MasterData master = (MasterData)DataManager.masterData.GetData(DataManager.inventoryData.GetData(partsData.invenId).Value.masterId);
+        MasterData master = DataManager.master.GetData(DataManager.inven.GetData(partsData.invenId).masterId);
         Sprite image = Resources.Load<Sprite>(master.spritePath);
         if(image == null)
         {

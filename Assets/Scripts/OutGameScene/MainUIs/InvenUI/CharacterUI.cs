@@ -19,8 +19,7 @@ public class CharacterUI : MonoBehaviour
 
     public void SetImageByMasterCode(int masterId)
     {
-        MasterData masterChar = new MasterData();
-        DataManager.masterData.masterDic.TryGetValue(masterId, out masterChar);
+        MasterData masterChar = DataManager.master.GetData(masterId);
         charImage.sprite = Resources.Load<Sprite>(masterChar.spritePath);
     }
 }

@@ -124,31 +124,32 @@ public class StoreUI : MainUIs
     /// </summary>
     public static void ItemPurchase(int targetMasterId, int cost, int amount = 1)
     {
-        //구매의 조건에 부합하는지 체크
-        if (cost > DataManager.inventoryData.InvenItemDic[0].quantity)
-        {
-            //구매 불가 할경우. 알림 인터페이스 오픈
-            UIManager.alterInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
-            return;
-        }
-        MasterData targetData = new MasterData();
-        bool success = DataManager.masterData.masterDic.TryGetValue(targetMasterId, out targetData);
-        if (!success)
-        {
-            Debug.Log("마스터 데이터를 찾지못함");
-            return;
-        }
+        //아이템 구매 시스템, 데이터변형
+        ////구매의 조건에 부합하는지 체크
+        //if (cost > DataManager.inven.InvenItemDic[0].quantity)
+        //{
+        //    //구매 불가 할경우. 알림 인터페이스 오픈
+        //    UIManager.alterInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
+        //    return;
+        //}
+        //MasterData targetData = new MasterData();
+        //bool success = DataManager.master.masterDic.TryGetValue(targetMasterId, out targetData);
+        //if (!success)
+        //{
+        //    Debug.Log("마스터 데이터를 찾지못함");
+        //    return;
+        //}
 
-        InvenData ownMineral = DataManager.inventoryData.FindByMasterId(0).Value;
+        //InvenData ownMineral = DataManager.inven.GetDataWithMasterId(0).Value;
 
-        //구매 인벤토리의 미네랄을 감소시키고 
-        DataManager.inventoryData.ModifyItem(ownMineral.id, ownMineral.quantity - (cost * amount));
+        ////구매 인벤토리의 미네랄을 감소시키고 
+        //DataManager.inven.ModifyItem(ownMineral.id, ownMineral.quantity - (cost * amount));
 
-        //해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
-        DataManager.inventoryData.AddNewItem(targetData.type, targetData.id, targetData.name, amount); //일단은 한번에 한개만 증가
+        ////해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
+        //DataManager.inven.AddNewItem(targetData.type, targetData.id, targetData.name, amount); //일단은 한번에 한개만 증가
 
-        //구매 성공시 알림 인터페이스 오픈
-        UIManager.alterInterface.SetAlert("아이템을 구매하였습니다");
+        ////구매 성공시 알림 인터페이스 오픈
+        //UIManager.alterInterface.SetAlert("아이템을 구매하였습니다");
     }
 }
  

@@ -72,7 +72,7 @@ public class PlanetUI : MainUIs
     {
         ClearColor();
 
-        int stageProgress = DataManager.accountData.account.stageProgress;
+        int stageProgress = DataManager.account.GetData(0).stageProgress;
         planetList[0].interactable = true;
         if (stageProgress > 10)
         {

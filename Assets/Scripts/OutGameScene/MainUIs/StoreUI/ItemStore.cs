@@ -15,7 +15,7 @@ public class ConsumeStore : MonoBehaviour
     {
         ItemContents = transform.GetChild(0).GetChild(0).GetChild(0);
 
-        foreach (MasterData item in DataManager.masterData.masterDic.Values)
+        foreach (MasterData item in DataManager.master.GetDictionary().Values)
         {
             if (item.type == ItemType.Consume)
             {

@@ -72,7 +72,7 @@ public class StageInterface : UIInterface
     {
         //curStageCode = (parentUI.curPlanet - 1) * 10 + parentUI.curStage;
         Debug.Log(stageCode);
-        curStageData = DataManager.stageData.GetData(stageCode);
+        curStageData = DataManager.stage.GetData(stageCode);
         
         curPlanet = (stageCode / 10) + 1;
         curStage = stageCode % 10;
@@ -94,7 +94,7 @@ public class StageInterface : UIInterface
         {
             foreach (StageItemReward reward in curStageData.firstReward)
             {
-                DataManager.masterData.masterDic.TryGetValue(reward.itemId,out item);
+                item = DataManager.master.GetData(reward.itemId);
                 rewardText += $"{item.name} x {reward.quantity}\n";
             }
         }
@@ -102,7 +102,7 @@ public class StageInterface : UIInterface
         {
             foreach (StageItemReward reward in curStageData.defaultReward)
             {
-                DataManager.masterData.masterDic.TryGetValue(reward.itemId, out item);
+                item = DataManager.master.GetData(reward.itemId);
                 rewardText += $"{item.name} x {reward.quantity}\n";
             }
         }
@@ -137,7 +137,7 @@ public class StageInterface : UIInterface
 
     private bool CheckIfFirstClear()
     {
-        if (curStage <= DataManager.accountData.account.stageProgress)
+        if (curStage <= DataManager.account.GetData(0).stageProgress)
         {
             return false;
         }

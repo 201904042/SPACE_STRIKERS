@@ -53,7 +53,7 @@ public class StageUI : MainUIs
 
     private void FindMaxStageInData()
     {
-        int accountLastStage = DataManager.accountData.account.stageProgress;
+        int accountLastStage = DataManager.account.GetData(0).stageProgress;
 
         int lastPlanet = (accountLastStage / 10) +1;  //0부터가 아닌 1부터 시작
         int lastStage = (accountLastStage % 10) +1 ;

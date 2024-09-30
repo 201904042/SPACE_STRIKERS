@@ -31,7 +31,6 @@ public class InvenUI : MainUIs
     public override void SetComponent()
     {
         base.SetComponent();
-
         invenScroll = transform.GetChild(0).GetComponent<ScrollRect>();
         partsContent = invenScroll.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
         ingredContent = invenScroll.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
@@ -49,6 +48,8 @@ public class InvenUI : MainUIs
     {
         base.OnEnable();
         SetButtons();
+
+        ChangeContent(partsContent);
     }
 
     private void SetButtons()

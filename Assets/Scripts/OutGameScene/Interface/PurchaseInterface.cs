@@ -34,7 +34,22 @@ public class PurchaseInterface : UIInterface
         cancelBtn = Btns.GetChild(0).GetComponent<Button>();
         purchaseBtn = Btns.GetChild(1).GetComponent<Button>();
 
-        itemData = new MasterData();
+    }
+
+    /// <summary>
+    /// 지정된 매개변수로 인터페이스를 구성함. 
+    /// </summary>
+    public bool SetPurchaseInterface(int itemMasterCode, int itemPrice, int itemAmount = 1)
+    {
+        itemData = DataManager.master.GetData(itemMasterCode);
+
+        itemImage.sprite = Resources.Load<Sprite>(itemData.spritePath);
+        itemText.text = itemData.description;
+        resultPrice = itemPrice * itemAmount; //todo 이것을 해결해야함. 구매 가격이 일일상점에서 더 싼 경우가 있음
+        this.itemAmount = itemAmount;
+        purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"구 매\n{resultPrice}";
+
+        return true;
     }
 
     /// <summary>
@@ -62,19 +77,5 @@ public class PurchaseInterface : UIInterface
         yield return result.Value;
     }
 
-    /// <summary>
-    /// 지정된 매개변수로 인터페이스를 구성함. 
-    /// </summary>
-    public bool SetPurchaseInterface(int itemMasterCode, int itemPrice, int itemAmount = 1)
-    {
-        itemData = DataManager.master.GetData(itemMasterCode);
-
-        itemImage.sprite = Resources.Load<Sprite>(itemData.spritePath);
-        itemText.text = itemData.description;
-        resultPrice = itemPrice* itemAmount; //todo 이것을 해결해야함. 구매 가격이 일일상점에서 더 싼 경우가 있음
-        this.itemAmount  = itemAmount;
-        purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"구 매\n{resultPrice}";
-
-        return true;
-    }
+    
 }

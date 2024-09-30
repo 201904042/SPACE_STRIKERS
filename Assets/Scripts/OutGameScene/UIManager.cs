@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     public static SelectPartsInterface selectPartsInterface;
     public static GotchaInterface gotchaInterface;
     public static PurchaseInterface purchaseInterface;
-    public static ItemInformInterface iteminformInterface;
+    public static ItemInformInterface itemInformInterface;
     
     private void Awake()
     {
@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
         selectPartsInterface = interfaceUIs.GetComponentInChildren<SelectPartsInterface>();
         gotchaInterface = interfaceUIs.GetComponentInChildren<GotchaInterface>();
         purchaseInterface = interfaceUIs.GetComponentInChildren<PurchaseInterface>();
-        iteminformInterface = interfaceUIs.GetComponentInChildren<ItemInformInterface>();
+        itemInformInterface = interfaceUIs.GetComponentInChildren<ItemInformInterface>();
     }
 
     private void UIInit()

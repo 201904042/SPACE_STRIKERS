@@ -95,8 +95,7 @@ public class DailyStore : MonoBehaviour
 
     public void ChangeDailyItem()
     {
-        //이부분은 아마 서버에서 실행해야 할듯..
-        //자정이 지나면 일일 상점 초기화
+        //todo -> 기록된 시간과 현재 시간을 비교하고 날짜가 다르면 일일상점 재구성
         
     }
 

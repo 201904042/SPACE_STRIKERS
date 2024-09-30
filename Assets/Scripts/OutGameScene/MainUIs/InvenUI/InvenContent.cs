@@ -43,7 +43,7 @@ public class InvenContent : MonoBehaviour
 
     public void UIBtnClickEvent(int invenItemId)
     {
-        UIManager.iteminformInterface.gameObject.SetActive(true);
-        UIManager.iteminformInterface.SetInterface(invenItemId);
+        UIManager.itemInformInterface.SetInterface(invenItemId);
+        UIManager.itemInformInterface.OpenInterface();
     }
 }

@@ -44,11 +44,11 @@ public class PartsSlot : MonoBehaviour
 
         switch (partsData.rank)
         {
-            case 5: bgImage.color = GradeColor.S_Color; break;
-            case 4: bgImage.color = GradeColor.A_Color; break;
-            case 3: bgImage.color = GradeColor.B_Color; break;
-            case 2: bgImage.color = GradeColor.C_Color; break;
-            case 1: bgImage.color = GradeColor.D_Color; break;
+            case 5: bgImage.color = PartsGradeColor.S_Color; break;
+            case 4: bgImage.color = PartsGradeColor.A_Color; break;
+            case 3: bgImage.color = PartsGradeColor.B_Color; break;
+            case 2: bgImage.color = PartsGradeColor.C_Color; break;
+            case 1: bgImage.color = PartsGradeColor.D_Color; break;
             default:bgImage.color = Color.black; break;
         }
 

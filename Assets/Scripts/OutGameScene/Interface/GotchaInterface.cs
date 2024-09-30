@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
@@ -19,7 +20,8 @@ public class GotchaInterface : UIInterface
     public TextMeshProUGUI acceptByMoneyText;
     public TextMeshProUGUI acceptByCouponText;
 
-    private int gotchaGrade = 0; // 1하급 2중급 3상급
+    public int gotchaTier = 0; // 1하급 2중급 3상급
+    public int paidTypeCode;
 
     protected override void Awake()
     {
@@ -39,38 +41,59 @@ public class GotchaInterface : UIInterface
     }
 
 
-    //필요없음
-    //public override IEnumerator GetValue()
-    //{
-    //    yield return base.GetValue();
-    //    yield return result.Value;
-    //}
+    public override IEnumerator GetValue()
+    {
+        yield return base.GetValue();
+
+        result = null;
+        paidTypeCode = -1;  // 미네랄1, 쿠폰4,5,6
+        TextSet(gotchaTier);
+
+        switch (gotchaTier)
+        {
+            case 1 : gotchaTier = 4; break;
+            case 2: gotchaTier = 5; break;
+            case 3: gotchaTier = 6; break;
+            default: Debug.Log($"티어가 맞지 않음 {gotchaTier}");  break;
+        }
+
+        acceptByMoney.onClick.RemoveAllListeners();
+        acceptByCoupon.onClick.RemoveAllListeners();
+        closeBtn.onClick.RemoveAllListeners();
+        acceptByMoney.onClick.AddListener(() => AcceptBtn(true, 0));
+        acceptByCoupon.onClick.AddListener(() => AcceptBtn(true, gotchaTier));
+        closeBtn.onClick.AddListener(() => OnConfirm(false));
+
+        // 사용자가 버튼을 누를 때까지 대기
+        yield return new WaitUntil(() => result.HasValue);
+
+        CloseInterface(); // 인터페이스 숨기기
+
+        yield return result;
+    }
+
 
     public void SetGotchaInterface(int tier)
     {
-        gotchaGrade = tier;
-
-        TextSet();
-        BtnSet();
+        gotchaTier = tier;
     }
 
-    private void TextSet()
+    private void TextSet(int grade)
     {
-
-        if (gotchaGrade == 1)
+        if (grade == 1)
         {
             gotchaContentText.text =  "E급 파츠 40%\r\nD급 파츠 25%\r\nC급 파츠 15%\r\nB급 파츠 10%\r\n소비 아이템 10%"; //하급
             acceptByMoneyText.text = "미네랄\n1000";
             acceptByCouponText.text = "하급뽑기권\n1";
         }
-        else if (gotchaGrade == 2)
+        else if (grade == 2)
         {
             gotchaContentText.text= " C급 파츠 35%\r\nB급 파츠 20%\r\nA급 파츠 20%\r\n소비 아이템 25%\r\n미네랄 1000~2000"; //중급
             acceptByMoneyText.text = "미네랄\n10000";
             acceptByCouponText.text = "중급뽑기권\n1";
 
         }
-        else if (gotchaGrade == 3)
+        else if (grade == 3)
         {
             gotchaContentText.text=  " B급 파츠 30%\r\nA급 파츠 30%\r\nS급 파츠 30%\r\n소비 아이템 10%\r\n미네랄 1000~5000"; //상급
             acceptByMoneyText.text = "미네랄\n100000";
@@ -78,38 +101,9 @@ public class GotchaInterface : UIInterface
         }
     }
 
-
-    private void BtnSet()
+    private void AcceptBtn(bool result, int paidType)
     {
-        closeBtn.onClick.RemoveAllListeners();
-        closeBtn.onClick.AddListener(CloseBtn);
-        acceptByMoney.onClick.RemoveAllListeners();
-        acceptByMoney.onClick.AddListener(GotchaByMoney);
-        acceptByCoupon.onClick.RemoveAllListeners();
-        acceptByCoupon.onClick.AddListener(GotchaByCoupon);
-    }
-
-    public void CloseBtn()
-    {
-        gameObject.SetActive(false);
-    }
-    public void GotchaByMoney()
-    {
-        //todo -> tfInterface를 생성하여 정말 진행할지 체크할것
-        //플레이어가 가챠에 필요한 돈이 충분한지 체크
-
-
-        //가챠진행 메서드
-        Debug.Log(gotchaGrade + "머니 가샤 진행");
-        gameObject.SetActive(false);
-    }
-
-    public void GotchaByCoupon()
-    {
-        //플레이어가 가챠에 필요한 쿠폰이 충분한지 체크
-
-        //가챠진행 메서드
-        Debug.Log(gotchaGrade + "쿠폰 가샤 진행");
-        gameObject.SetActive(false);
+        OnConfirm(result);
+        paidTypeCode = paidType;
     }
 }

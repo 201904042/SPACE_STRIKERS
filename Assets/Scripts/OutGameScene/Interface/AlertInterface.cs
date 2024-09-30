@@ -37,5 +37,7 @@ public class AlertInterface : UIInterface
         alertText.text = alertContent;
         gameObject.SetActive(true);
     }
+
+    
 }
 

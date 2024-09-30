@@ -47,18 +47,42 @@ public class ShopBtnUI : MonoBehaviour
 
     private IEnumerator ConfiremPurchase()
     {
-        TFInterface tfInterface = UIManager.tfInterface.GetComponent<TFInterface>();
-        // TF 인터페이스에서 결과를 기다림
-        yield return StartCoroutine(tfInterface.GetValue());
+        PurchaseInterface purchaseInterface = UIManager.purchaseInterface;
 
-        // 결과에 따라 아이템 판매 처리
-        if ((bool)tfInterface.result)
+        yield return StartCoroutine(purchaseInterface.GetValue());
+
+        if ((bool)purchaseInterface.result)
         {
-            StoreUI.ItemPurchase(targetItemId, itemPrice);
+            //구매전 정말 구매할지 확인 TF창 띄움
+            DoubleCheck();
         }
         else
         {
-            Debug.Log("구매가 취소되었습니다.");
+            purchaseInterface.CloseInterface();
+        }
+    }
+
+    private void DoubleCheck()
+    {
+        UIManager.tfInterface.SetTFContent("정말로 구매하시겠습니까?");
+        StartCoroutine(TFCheck());
+    }
+
+    private IEnumerator TFCheck()
+    {
+        TFInterface tFInterface = UIManager.tfInterface;
+
+        yield return StartCoroutine(tFInterface.GetValue());
+
+        if ((bool)tFInterface.result)
+        {
+            //더블체크 완료시 구매 실행
+            StoreUI.ItemPurchase(targetItemId, itemPrice);
+            UIManager.alterInterface.SetAlert($"구매가 완료되었습니다");
+        }
+        else
+        {
+            UIManager.alterInterface.SetAlert($"구매가 취소되었습니다");
         }
     }
 }

@@ -24,6 +24,11 @@ public class TFInterface : UIInterface
         AcceptBtn = Buttons.GetChild(1).GetComponent<Button>();
     }
 
+    public void SetTFContent(string text)
+    {
+        ContentText.text = text;
+    }
+
     /// <summary>
     /// 사용될 스크립트에서 사용.
     /// </summary>

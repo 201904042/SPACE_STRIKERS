@@ -13,7 +13,7 @@ public class ReadyUI : MainUIs
 {
     public Transform charZone;
     public Button charSlotBtn;
-    public CharacterUI charSlotUI;
+    public CharacterImageBtn charSlotUI;
     public TextMeshProUGUI charInformText;
 
     public Transform partsZone;
@@ -137,7 +137,7 @@ public class ReadyUI : MainUIs
         base.SetComponent();
         charZone = transform.GetChild(0);
         charSlotBtn = charZone.GetChild(0).GetComponent<Button>();
-        charSlotUI = charSlotBtn.GetComponent<CharacterUI>();
+        charSlotUI = charSlotBtn.GetComponent<CharacterImageBtn>();
         charInformText = charZone.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         partsZone = transform.GetChild(1);
         parts1Btn = partsZone.GetChild(0).GetComponent<Button>();
@@ -312,8 +312,16 @@ public class ReadyUI : MainUIs
     /// </summary>
     private void UpdatePartsSlot(Button partsButton, PartsData value, string slotKey)
     {
-        var partsUIPref = partsButton.GetComponent<PartsSlot>();
-        var currentParts = partsUIPref.partsData;
+        PartsSlot partsUIPref = partsButton.GetComponent<PartsSlot>();
+
+        //해당 장착칸에 이미 파츠가 있는 경우 해당 파츠를 제거
+        if(partsUIPref.partsData != null)
+        {
+            partsUIPref.partsData.isActive = false;
+            equippedPartsList.Remove(partsUIPref.partsData);
+        }
+
+        PartsData currentParts = partsUIPref.partsData;
         if (value != null) //해당 파츠 슬롯을 주어진 value값으로 채움
         {
             CheckDuplicateParts(value.invenId); //다른 슬롯에 해당 파츠가 설정되어 잇는지 체크. 만약 다른 슬롯에 있다면 그 슬롯의 파츠 해제
@@ -337,7 +345,6 @@ public class ReadyUI : MainUIs
             PlayerPrefs.SetInt(slotKey, -1);
         }
     }
-
 
     private void ItemBtnChange(Button item, bool value)
     {
@@ -375,9 +382,14 @@ public class ReadyUI : MainUIs
         // TF 인터페이스에서 결과를 기다림
         yield return StartCoroutine(selecteCharInterface.GetValue());
         
-        
-        SetPlayerCode = selecteCharInterface.SelectedCode;
-        Debug.Log(SetPlayerCode);
+        if(selecteCharInterface.result == true)
+        {
+            if (selecteCharInterface.SelectedCode != -1)
+            {
+                SetPlayerCode = selecteCharInterface.SelectedCode;
+                Debug.Log(SetPlayerCode);
+            }
+        }
     }
 
     private void GetPartsId(int partsSlotIndex)
@@ -391,17 +403,21 @@ public class ReadyUI : MainUIs
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
 
-        PartsData parts = selectPartsInterface.SelectedParts;
-
-        switch (partsSlotIndex)
+        if (selectPartsInterface.result == true)
         {
-            case 1: SetPartsSlot1 = parts.invenId != -1 ? parts : null; break;
-            case 2: SetPartsSlot2 = parts.invenId != -1 ? parts : null; ; break;
-            case 3: SetPartsSlot3 = parts.invenId != -1 ? parts : null; ; break;
-            case 4: SetPartsSlot4 = parts.invenId != -1 ? parts : null; ; break;
-        }
+            PartsData parts = selectPartsInterface.SelectedParts;
 
-        PlayerStatTextSet();
+            switch (partsSlotIndex)
+            {
+                case 1: SetPartsSlot1 = parts.invenId != -1 ? parts : null; break;
+                case 2: SetPartsSlot2 = parts.invenId != -1 ? parts : null; ; break;
+                case 3: SetPartsSlot3 = parts.invenId != -1 ? parts : null; ; break;
+                case 4: SetPartsSlot4 = parts.invenId != -1 ? parts : null; ; break;
+            }
+
+            PlayerStatTextSet();
+
+        }
 
     }
 }

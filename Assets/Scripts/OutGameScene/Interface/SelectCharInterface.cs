@@ -49,9 +49,9 @@ public class SelectCharInterface : UIInterface
         scroll = charactersTransform.parent.parent.GetComponent<ScrollRect>();
     }
 
-    private void Init()
+    private void Reset()
     {
-        selectedCode = 0;
+        selectedCode = -1;
         selectBtn.interactable = false;
         scroll.horizontalNormalizedPosition = 0;
         result = null;
@@ -69,7 +69,7 @@ public class SelectCharInterface : UIInterface
         yield return base.GetValue();
 
         //변수 초기화
-        Init();
+        Reset();
 
         selectBtn.onClick.RemoveAllListeners();
         backBtn.onClick.RemoveAllListeners();

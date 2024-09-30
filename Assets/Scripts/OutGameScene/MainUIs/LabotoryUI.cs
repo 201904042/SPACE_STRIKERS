@@ -122,8 +122,11 @@ public class LabotoryUI : MainUIs
         SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
 
         yield return StartCoroutine(selecteCharInterface.GetValue());
-        
-        targetInvenCode = DataManager.inven.GetDataWithMasterId(selecteCharInterface.SelectedCode + 100).Value.id; // 현재 인게임의 캐릭터 코드의 미수정으로 임시 +100.
+        if(selecteCharInterface == true)
+        {
+            targetInvenCode = DataManager.inven.GetDataWithMasterId(selecteCharInterface.SelectedCode + 100).Value.id; // 현재 인게임의 캐릭터 코드의 미수정으로 임시 +100.
+            SetUpgradeUI(targetInvenCode);
+        }
     }
 
     private void GetPartsId()
@@ -136,8 +139,17 @@ public class LabotoryUI : MainUIs
         SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface.GetComponent<SelectPartsInterface>();
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
+        if(selectPartsInterface.result == true)
+        {
+            targetInvenCode = selectPartsInterface.SelectedParts.invenId;
+            SetUpgradeUI(targetInvenCode);
+        }
+    }
 
-        targetInvenCode = selectPartsInterface.SelectedParts.invenId;
+    public void SetUpgradeUI(int targetInvenCode)
+    {
+        //todo -> 타겟의 이미지와 필요한 재료들의 모음과 현재 스텟 -> 강화될스텟으로 UI들을 변경하고 강화시작버튼을 활성화
+        
     }
 
     public void PartsMode()

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class ItemInformInterface : UIInterface
 {
-    
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descriptionText;
     public Transform Images;
@@ -55,7 +55,29 @@ public class ItemInformInterface : UIInterface
     {
         invenItemId = targetInvenId;
 
+        MasterData masterData = DataManager.master.GetData(DataManager.inven.GetData(invenItemId).masterId);
+        nameText.text = masterData.name;
+        descriptionText.text = masterData.description;
+        itemImage.sprite = Resources.Load<Sprite>(masterData.spritePath);
+        if(masterData.type == ItemType.Parts)
+        {
+            int rank = DataManager.parts.GetData(invenItemId).rank;
+            switch (rank)
+            {
+                case 5: rankImage.color = PartsGradeColor.S_Color; break;
+                case 4: rankImage.color = PartsGradeColor.A_Color; break;
+                case 3: rankImage.color = PartsGradeColor.B_Color; break;
+                case 2: rankImage.color = PartsGradeColor.C_Color; break;
+                case 1: rankImage.color = PartsGradeColor.D_Color; break;
+                default: rankImage.color = Color.white; break;
+            }
+        }
+        else
+        {
+            rankImage.color = Color.white;
+        }
 
+        sellBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"판 매\n({500})";//todo -> 아이템 판매가로 변경할것
     }
 
     public void SetButtons()
@@ -74,10 +96,11 @@ public class ItemInformInterface : UIInterface
 
     public void SellBtnHandler()
     {
-        StartCoroutine(ConfirmSell());
+        UIManager.tfInterface.SetTFContent("정말로 판매하시겠습니까?");
+        StartCoroutine(DoubleCheck());
     }
 
-    private IEnumerator ConfirmSell()
+    private IEnumerator DoubleCheck()
     {
         TFInterface tfInterface = UIManager.tfInterface.GetComponent<TFInterface>();
         // TF 인터페이스에서 결과를 기다림
@@ -90,7 +113,7 @@ public class ItemInformInterface : UIInterface
         }
         else
         {
-            Debug.Log("판매가 취소되었습니다.");
+            UIManager.alterInterface.SetAlert($"판매가 취소되었습니다");
         }
     }
 
@@ -105,7 +128,6 @@ public class ItemInformInterface : UIInterface
         //해당 아이템의 sell가격 만큼 미네랄 증가
         //데이터베이스 전송
 
-
-        Debug.Log($"아이템 {invenItemId}이(가) 판매되었습니다.");
+        UIManager.alterInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
     }
 }

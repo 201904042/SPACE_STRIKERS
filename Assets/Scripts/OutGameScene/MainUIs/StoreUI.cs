@@ -37,16 +37,28 @@ public class StoreUI : MainUIs
         Btn = transform.GetChild(1);
         webStoreBtn = Btn.GetChild(0).GetComponent<Button>();
         backBtn = Btn.GetChild(1).GetComponent<Button>();
+
+        for (int i = 0; i < PageBtns.childCount; i++)
+        {
+            StoreBtns[i] = PageBtns.GetChild(i).GetComponent<Button>();
+        }
+
+        for (int i = 0; i < Stores.childCount; i++)
+        {
+            StorePanels[i] = Stores.GetChild(i).gameObject;
+        }
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
         SetStoreBtns();
-        SetBtn();
+        SetUIBtn();
     }
 
-    private void SetBtn()
+    //StoreUI에서 인터페이스를 띄우는 객체는 ItmeBtnUI로 해당 버튼을 클릭할시 Interface GetValue를 받음
+
+    private void SetUIBtn()
     {
         webStoreBtn.onClick.RemoveAllListeners();
         webStoreBtn.onClick.AddListener(GotoWebStore);
@@ -57,21 +69,7 @@ public class StoreUI : MainUIs
 
     private void SetStoreBtns()
     {
-        for (int i = 0; i < PageBtns.childCount; i++)
-        {
-            StoreBtns[i] = PageBtns.GetChild(i).GetComponent<Button>();
-        }
-
-        for (int i = 0; i < Stores.childCount; i++)
-        {
-            StorePanels[i] = Stores.GetChild(i).gameObject;
-        }
-
-        BtnInits();
-    }
-
-    private void BtnInits()
-    {
+        //상점 버튼별로 나타낼 패널 코드 등록
         for (int i = 0; i < StoreBtns.Length; i++)
         {
             int code = i; //이거 없으면 다 똑같은 인덱스로 등록됨...
@@ -79,8 +77,9 @@ public class StoreUI : MainUIs
             StoreBtns[i].onClick.AddListener(() => ActivatePanel(code));
         }
 
-        ActivatePanel(0);
+        ActivatePanel(0); //첫 화면은 가챠 페이지
     }
+    
 
     /// <summary>
     /// 해당 번호의 스토어 패널 활성화

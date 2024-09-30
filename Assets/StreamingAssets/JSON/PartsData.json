@@ -1,7 +1,7 @@
 {
     "PartsData": [
         {
-            "invenId": 7,
+            "invenId": 8,
             "isActive" : false,
             "rank": 2,
             "mainAbility": 1,
@@ -12,7 +12,7 @@
             "subAbility5": null
         },
         {
-            "invenId": 8,
+            "invenId": 9,
             "isActive" : false,
             "rank": 4,
             "mainAbility": 3,

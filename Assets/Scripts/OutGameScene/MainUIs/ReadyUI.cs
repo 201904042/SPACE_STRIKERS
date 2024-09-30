@@ -375,8 +375,9 @@ public class ReadyUI : MainUIs
         // TF 인터페이스에서 결과를 기다림
         yield return StartCoroutine(selecteCharInterface.GetValue());
         
-        Debug.Log(selecteCharInterface.SelectedCode);
+        
         SetPlayerCode = selecteCharInterface.SelectedCode;
+        Debug.Log(SetPlayerCode);
     }
 
     private void GetPartsId(int partsSlotIndex)

@@ -39,6 +39,14 @@ public class StageDataReader : ReadOnlyData<StageData>
 
 }
 
+public class UpgradeDataReader : ReadOnlyData<UpgradeData>
+{
+    protected override int GetId(UpgradeData data)
+    {
+        return data.masterId;
+    }
+}
+
 
 public class AccountJsonReader : EditableData<AccountData>
 {

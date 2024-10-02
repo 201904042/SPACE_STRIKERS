@@ -46,7 +46,11 @@ public abstract class ReadOnlyData<T>
             var wrapper = JsonUtility.FromJson<StageDataWrapper>(json);
             dataList = wrapper.StageData as List<T>;
         }
-
+        else if (typeof(T) == typeof(UpgradeData))
+        {
+            var wrapper = JsonUtility.FromJson<UpgradeDataWrapper>(json);
+            dataList = wrapper.UpgradeData as List<T>;
+        }
         else if (typeof(T) == typeof(AccountData))
         {
             var wrapper = JsonUtility.FromJson<AccountDataWrapper>(json);
@@ -85,6 +89,7 @@ public abstract class ReadOnlyData<T>
     {
         return dataDict;
     }
+
 }
 
 // 읽기 및 쓰기 가능 데이터 관리 클래스

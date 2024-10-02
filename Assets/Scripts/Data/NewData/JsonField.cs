@@ -38,6 +38,7 @@ public class PartsData
 {
     public int invenId;
     public bool isActive;
+    public int level;
     public int rank;
     public int mainAbility;
     public Ability subAbility1;
@@ -102,3 +103,12 @@ public class StageData
     public StageItemReward[] firstReward;
     public StageItemReward[] defaultReward;
 }
+
+[System.Serializable]
+public class UpgradeData
+{
+    public int masterId;
+    public UpgradeCost[] upgradeCost;
+}
+
+

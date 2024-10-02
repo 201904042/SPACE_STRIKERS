@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class MasterDataWrapper
+{
+    public List<MasterData> MasterData; 
+}
+
 [System.Serializable]
 public class StoreDataWrapper
 {
@@ -10,9 +17,9 @@ public class StoreDataWrapper
 
 
 [System.Serializable]
-public class MasterDataWrapper
+public class UpgradeDataWrapper
 {
-    public List<MasterData> MasterData; // JSON에서의 루트 필드와 매칭
+    public List<UpgradeData> UpgradeData;
 }
 
 [System.Serializable]

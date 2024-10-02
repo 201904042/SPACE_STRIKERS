@@ -379,7 +379,7 @@ public class ReadyUI : MainUIs
     private IEnumerator GetCharacterIdCoroutine()
     {
         SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
-        // TF 인터페이스에서 결과를 기다림
+        
         yield return StartCoroutine(selecteCharInterface.GetValue());
         
         if(selecteCharInterface.result == true)
@@ -391,6 +391,8 @@ public class ReadyUI : MainUIs
             }
         }
     }
+
+    
 
     private void GetPartsId(int partsSlotIndex)
     {

@@ -27,13 +27,17 @@ public class PartsSlot : MonoBehaviour
         //√ ±‚»≠
         bgImage.color = Color.white;
         partsImage.sprite = null;
-
     }
 
     public void SetParts(PartsData parts)
     {
-        partsData = parts;
+        ResetData();
+        if(parts == null)
+        {
+            return;
+        }
 
+        partsData = parts;
         SetData();
     }
 

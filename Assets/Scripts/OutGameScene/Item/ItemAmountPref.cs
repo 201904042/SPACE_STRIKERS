@@ -35,6 +35,7 @@ public class ItemAmountPref : MonoBehaviour
 
     public void SetAmountUI(int masterId, int needAmount)
     {
+        
         InvenData invenData = (InvenData)DataManager.inven.GetDataWithMasterId(masterId);
         ownAmountText.text = $"{invenData.quantity}";
 

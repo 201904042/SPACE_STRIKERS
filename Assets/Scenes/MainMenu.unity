@@ -1588,8 +1588,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ItemName
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: de080edd3a3758f489a8c77e18719b69, type: 2}
+  m_sharedMaterial: {fileID: -5537079871064081507, guid: de080edd3a3758f489a8c77e18719b69, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1613,7 +1613,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.8
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3247,6 +3247,7 @@ MonoBehaviour:
   partsData:
     invenId: 0
     isActive: 0
+    level: 0
     rank: 0
     mainAbility: 0
     subAbility1:
@@ -10456,6 +10457,7 @@ MonoBehaviour:
   partsData:
     invenId: 0
     isActive: 0
+    level: 0
     rank: 0
     mainAbility: 0
     subAbility1:
@@ -17227,6 +17229,8 @@ MonoBehaviour:
   acceptByCoupon: {fileID: 0}
   acceptByMoneyText: {fileID: 0}
   acceptByCouponText: {fileID: 0}
+  gotchaTier: 0
+  paidTypeCode: 0
 --- !u!1 &866754432
 GameObject:
   m_ObjectHideFlags: 0
@@ -19198,6 +19202,7 @@ MonoBehaviour:
   partsData:
     invenId: 0
     isActive: 0
+    level: 0
     rank: 0
     mainAbility: 0
     subAbility1:
@@ -21230,6 +21235,7 @@ MonoBehaviour:
   clickedParts:
     invenId: 0
     isActive: 0
+    level: 0
     rank: 0
     mainAbility: 0
     subAbility1:
@@ -25637,6 +25643,7 @@ MonoBehaviour:
   storeUI: {fileID: 0}
   invenUI: {fileID: 0}
   labotoryUI: {fileID: 0}
+  itemAmountPref: {fileID: 3730208766140732368, guid: bc8abd08a2a25cf4b95a83d4620d394c, type: 3}
 --- !u!4 &1255954421
 Transform:
   m_ObjectHideFlags: 0
@@ -29928,6 +29935,7 @@ MonoBehaviour:
   partsData:
     invenId: 0
     isActive: 0
+    level: 0
     rank: 0
     mainAbility: 0
     subAbility1:
@@ -35857,6 +35865,7 @@ MonoBehaviour:
   partsData:
     invenId: 0
     isActive: 0
+    level: 0
     rank: 0
     mainAbility: 0
     subAbility1:
@@ -37678,6 +37687,7 @@ MonoBehaviour:
   upgradeBtn: {fileID: 0}
   mainBtn: {fileID: 0}
   storeBtn: {fileID: 0}
+  targetInvenCode: 0
 --- !u!1 &1893083240
 GameObject:
   m_ObjectHideFlags: 0

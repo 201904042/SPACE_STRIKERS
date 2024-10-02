@@ -18,6 +18,7 @@ public class DataManager : MonoBehaviour
     public static AbilityDataReader ability = new AbilityDataReader();
     public static StoreItemReader store = new StoreItemReader();
     public static StageDataReader stage = new StageDataReader();
+    public static UpgradeDataReader upgrade = new UpgradeDataReader();
 
     private void Awake()
     {
@@ -42,13 +43,12 @@ public class DataManager : MonoBehaviour
         ability.LoadData("Assets/StreamingAssets/JSON/AbilityData.json");
         store.LoadData("Assets/StreamingAssets/JSON/StoreData.json");
         stage.LoadData("Assets/StreamingAssets/JSON/StageData.json");
-
+        upgrade.LoadData("Assets/StreamingAssets/JSON/UpgradeData.json");
+       
         account.LoadData("Assets/StreamingAssets/JSON/AccountData.json");
         character.LoadData("Assets/StreamingAssets/JSON/CharacterData.json");
         inven.LoadData("Assets/StreamingAssets/JSON/InvenData.json");
         parts.LoadData("Assets/StreamingAssets/JSON/PartsData.json");
 
-        
     }
-
 }

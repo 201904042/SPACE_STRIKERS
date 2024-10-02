@@ -3,6 +3,7 @@
         {
             "invenId": 8,
             "isActive" : false,
+            "level" : 1,
             "rank": 2,
             "mainAbility": 1,
             "subAbility1": { "key": 1, "value": 10 },
@@ -14,6 +15,7 @@
         {
             "invenId": 9,
             "isActive" : false,
+            "level" : 1,
             "rank": 4,
             "mainAbility": 3,
             "subAbility1": { "key": 3, "value": 15 },

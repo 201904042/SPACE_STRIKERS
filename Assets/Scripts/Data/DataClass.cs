@@ -28,6 +28,21 @@ public class StageItemReward
     public int quantity;
 }
 
+[Serializable]
+public class UpgradeCost
+{
+    public int level;
+    public UpgradeIngred[] ingredients;
+}
+
+[Serializable]
+public class UpgradeIngred
+{
+    public int ingredMasterId; 
+    public int quantity;
+}
+
+
 public enum ItemType
 {
     Money,

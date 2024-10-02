@@ -10,8 +10,8 @@ public class UIManager : MonoBehaviour
 
     //UIs
     private Transform mainUIs;
-    public GameObject HeaderUIObj;
 
+    public GameObject HeaderUIObj;
     public MainUI mainUI;
     public PlanetUI planetUI;
     public StageUI stageUI;
@@ -33,7 +33,10 @@ public class UIManager : MonoBehaviour
     public static GotchaInterface gotchaInterface;
     public static PurchaseInterface purchaseInterface;
     public static ItemInformInterface itemInformInterface;
-    
+
+    //Prefab
+    public GameObject itemAmountPref;
+
     private void Awake()
     {
         if (UIInstance == null)

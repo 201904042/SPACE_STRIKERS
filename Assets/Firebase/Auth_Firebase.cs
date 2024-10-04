@@ -69,6 +69,7 @@ public class Auth_Firebase
             FirebaseUser newUser = authResult.User;
             isSuccess = true;
             Debug.Log("회원가입 성공");
+            //todo -> 회원가입에 성공했다면 firebase 데이터베이스에 해당 계정의 정보 추가
         }
         catch (Exception ex)
         {

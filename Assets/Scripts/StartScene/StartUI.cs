@@ -55,15 +55,7 @@ public class StartUI : MainUIs
     
     public override void SetComponent()
     {
-        loginInterface = transform.parent.GetComponentInChildren<LoginInterface>();
-        tfInterface = transform.parent.GetComponentInChildren<TFInterface>();
-        alertInterface = transform.parent.GetComponentInChildren<AlertInterface>();
-        loginInterface.SetComponent();
-        tfInterface.SetComponent();
-        alertInterface.SetComponent();
-        loginInterface.gameObject.SetActive(false);
-        tfInterface.gameObject.SetActive(false);
-        alertInterface.gameObject.SetActive(false);
+        SetInterfaces();
 
         backGround = transform.GetChild(0).GetComponent<Image>();
         optionBtn = transform.GetChild(1).GetComponent<Button>();
@@ -79,6 +71,19 @@ public class StartUI : MainUIs
         startBtn.interactable = false;
     }
 
+    private void SetInterfaces()
+    {
+        loginInterface = transform.parent.GetComponentInChildren<LoginInterface>();
+        tfInterface = transform.parent.GetComponentInChildren<TFInterface>();
+        alertInterface = transform.parent.GetComponentInChildren<AlertInterface>();
+        loginInterface.SetComponent();
+        tfInterface.SetComponent();
+        alertInterface.SetComponent();
+        loginInterface.gameObject.SetActive(false);
+        tfInterface.gameObject.SetActive(false);
+        alertInterface.gameObject.SetActive(false);
+    }
+
     private void OnChangeState(bool sign)
     {
         Debug.Log("로그인에 변화발생");
@@ -92,7 +97,7 @@ public class StartUI : MainUIs
         }
         else
         {
-            loginInterface.ResetUI();
+            loginInterface.ResetAll();
             loginBtnText.text = "LogIn";
             userInformText.text = "LogOut";
             isLogin = false;
@@ -143,7 +148,7 @@ public class StartUI : MainUIs
     }
     public void HomePageBtn()
     {
-        Application.OpenURL("https://naver.com");
+        Application.OpenURL("https://naver.com"); //우리 홈페이지로
     }
 
 

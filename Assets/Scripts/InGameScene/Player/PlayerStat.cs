@@ -76,13 +76,20 @@ public class PlayerStat : MonoBehaviour
     {
         CharData curPlayerChar = DataManager.character.GetData(id);
 
-        //아웃게임에서 받아온 캐릭터의 스텟
-        level = curPlayerChar.level;
-        initDamage = curPlayerChar.damage;
-        initDefence = curPlayerChar.defense;
-        initMoveSpeed = curPlayerChar.moveSpeed;
-        initAttackSpeed = curPlayerChar.attackSpeed;
-        initHp = curPlayerChar.hp;
+        ////아웃게임에서 받아온 캐릭터의 스텟 todo -> 이부분은 특정 데이터베이스를 통해 받아올예정
+        //level = curPlayerChar.level;
+        //initDamage = curPlayerChar.damage;
+        //initDefence = curPlayerChar.defense;
+        //initMoveSpeed = curPlayerChar.moveSpeed;
+        //initAttackSpeed = curPlayerChar.attackSpeed;
+        //initHp = curPlayerChar.hp;
+
+        level = 1;
+        initDamage = 10;
+        initDefence = 10;
+        initMoveSpeed = 10;
+        initAttackSpeed = 10;
+        initHp = 100;
     }
 
     /// <summary>

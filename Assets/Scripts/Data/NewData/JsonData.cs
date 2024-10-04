@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
@@ -7,8 +9,6 @@ using UnityEngine;
 public abstract class ReadOnlyData<T>
 {
     protected Dictionary<int, T> dataDict = new Dictionary<int, T>();
-
-    // JSON 파일에서 데이터를 로드하여 딕셔너리에 저장하는 함수
     public void LoadData(string filePath)
     {
         string json = File.ReadAllText(filePath);
@@ -76,7 +76,6 @@ public abstract class ReadOnlyData<T>
         return dataList;
     }
 
-    // 데이터에서 ID를 추출하는 추상 메서드
     protected abstract int GetId(T data);
 
     // 검색
@@ -96,27 +95,45 @@ public abstract class ReadOnlyData<T>
 public abstract class EditableData<T> : ReadOnlyData<T>
 {
     // 추가
-    public void AddData(int id, T data)
+    public bool AddData(int id, T data)
     {
+
+        if (dataDict.ContainsKey(id))
+        {
+            Debug.Log($"ID {id}는 이미 존재합니다");
+            return false;
+        }
+
         dataDict[id] = data;
+        dataDict.OrderBy(entry => entry.Key);
+        return true;
     }
 
     // 삭제
-    public void DeleteData(int id)
+    public bool DeleteData(int id)
     {
-        if (dataDict.ContainsKey(id))
+        if (!dataDict.ContainsKey(id))
         {
-            dataDict.Remove(id);
+            Debug.Log($"ID {id}가 존재하지 않음");
+            return false;
         }
+
+        dataDict.Remove(id);
+        return true;
     }
 
     // 업데이트
-    public void UpdateData(int id, T data)
+    public bool UpdateData(int id, T data)
     {
-        if (dataDict.ContainsKey(id))
+        if (!dataDict.ContainsKey(id))
         {
-            dataDict[id] = data;
+            Debug.Log($"ID {id}가 존재하지 않음");
+            return false;
         }
+       
+        dataDict[id] = data;
+        dataDict.OrderBy(entry => entry.Key);
+        return true;
     }
 
     // JSON으로 저장하는 함수 (필요 시 구현)

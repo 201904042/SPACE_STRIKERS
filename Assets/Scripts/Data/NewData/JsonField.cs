@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct MasterData //필드값
+public struct MasterData
 {
     public int id;
     public string name;
@@ -19,6 +18,7 @@ public class StoreItemData
     public int masterId;
     public int[] amount;
 }
+
 [System.Serializable]
 public class AbilityData
 {
@@ -64,29 +64,11 @@ public struct CharData
     public int id;
     public string name;
     public int level;
-
-    public float damage; //기본 능력치
-    public float defense;
-    public float attackSpeed;
-    public float moveSpeed;
-    public float hp;
-
-    public float hpRegen; //특수 능력치
-    public float troopsDamageUp;
-    public float bossDamageUp;
-    public float stageExpRateUp;
-    public float stageItemDropRateUp;
-    public float powRegenRateUp;
-    public float powAmountUp;
-    public float accountExpUp;
-    public float accountMoneyUp;
-    public float startLevelUp;
-    public float revival;
-    public float startWeaponUp;
+    public List<Ability> abilityDatas;
 }
 
 [System.Serializable]
-public struct InvenData //필드값
+public struct InvenData
 {
     public int id;
     public int masterId;
@@ -110,5 +92,3 @@ public class UpgradeData
     public int masterId;
     public UpgradeCost[] upgradeCost;
 }
-
-

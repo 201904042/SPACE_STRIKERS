@@ -3,15 +3,15 @@ using System;
 [System.Serializable]
 public class Ability
 {
-    public int key;
-    public float value;
+    public int key; //어빌리티 데이터의 키
+    public float value; //스텟 가산량
 }
 
 [System.Serializable]
 public class AbilityRate
 {
-    public float? min;
-    public float? max;
+    public float? min; //어빌리티의 값이 될수있는 최솟값
+    public float? max; //최댓값 즉 랜덤( min , max)
 }
 
 [Serializable]

@@ -1,0 +1,30 @@
+{
+  "CharacterData": [
+    {
+      "id": 101,
+      "name": "캐릭터1",
+      "level": 1,
+      "abilityDatas": [{"key": 1, "value": 10},{"key": 2, "value": 10},{"key": 3, "value": 10},{"key": 4, "value": 10},{"key": 5, "value": 100}]
+    },
+    {
+      "id": 102,
+      "name": "캐릭터2",
+      "level": 1,
+      "abilityDatas": [{"key": 1, "value": 10},{"key": 2, "value": 10},{"key": 3, "value": 10},{"key": 4, "value": 10},{"key": 5, "value": 100}]
+    },
+    {
+      "id": 103,
+      "name": "캐릭터3",
+      "level": 0,
+      "damage": 10,
+      "defense": 20,
+      "abilityDatas": [{"key": 1, "value": 10},{"key": 2, "value": 10},{"key": 3, "value": 10},{"key": 4, "value": 10},{"key": 5, "value": 100}]
+    },
+    {
+      "id": 104,
+      "name": "캐릭터4",
+      "level": 0,
+      "abilityDatas": [{"key": 1, "value": 10},{"key": 2, "value": 10},{"key": 3, "value": 10},{"key": 4, "value": 10},{"key": 5, "value": 100}]
+    }
+  ]
+}

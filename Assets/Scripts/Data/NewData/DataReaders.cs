@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
@@ -85,9 +88,6 @@ public class CharacterDataReader : EditableData<CharData>
     }
 }
 
-
-
-
 public class PartsDataReader : EditableData<PartsData>
 {
 
@@ -100,67 +100,17 @@ public class PartsDataReader : EditableData<PartsData>
     {
         if (ability == null) return; // 능력이 null이면 무시
 
-        AbilityData abilityData = DataManager.ability.GetData(ability.key);
-
-        if (abilityData == null) return; // 능력 데이터를 찾을 수 없으면 무시
-
-        switch (abilityData.id)
+        for (int i = 0; i < result.abilityDatas.Count; i++)
         {
-            case 1:
-                result.damage += ability.value;
-                break;
-            case 2:
-                result.defense += ability.value;
-                break;
-            case 3:
-                result.attackSpeed += ability.value;
-                break;
-            case 4:
-                result.moveSpeed += ability.value;
-                break;
-            case 5:
-                result.hp += ability.value;
-                break;
-            case 101:
-                result.hpRegen += ability.value;
-                break;
-            case 102:
-                result.troopsDamageUp += ability.value;
-                break;
-            case 103:
-                result.bossDamageUp += ability.value;
-                break;
-            case 104:
-                result.stageExpRateUp += ability.value;
-                break;
-            case 105:
-                result.stageItemDropRateUp += ability.value;
-                break;
-            case 201:
-                result.powRegenRateUp += ability.value;
-                break;
-            case 202:
-                result.powAmountUp += ability.value;
-                break;
-            case 203:
-                result.accountExpUp += ability.value;
-                break;
-            case 204:
-                result.accountMoneyUp += ability.value;
-                break;
-            case 301:
-                result.startLevelUp += ability.value;
-                break;
-            case 401:
-                result.revival += ability.value;
-                break;
-            case 402:
-                result.startWeaponUp += ability.value;
-                break;
-            default:
-                Debug.LogWarning($"Unknown ability type: {abilityData.id}");
-                break;
+            if (result.abilityDatas[i].key == ability.key)
+            {
+                result.abilityDatas[i].value += ability.value; // 기존 value에 추가
+                return; // 업데이트 후 메서드 종료
+            }
         }
+
+        //못찾았다면 리스트에 해당 어빌리티 추가
+        result.abilityDatas.Add(ability);
     }
 
 }

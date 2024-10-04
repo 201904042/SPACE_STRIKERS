@@ -39,16 +39,16 @@ public class DataManager : MonoBehaviour
     {
         enemyData = GetComponent<EnemyJsonReader>();
 
-        master.LoadData("Assets/StreamingAssets/JSON/MasterData.json");
-        ability.LoadData("Assets/StreamingAssets/JSON/AbilityData.json");
-        store.LoadData("Assets/StreamingAssets/JSON/StoreData.json");
-        stage.LoadData("Assets/StreamingAssets/JSON/StageData.json");
-        upgrade.LoadData("Assets/StreamingAssets/JSON/UpgradeData.json");
-       
-        account.LoadData("Assets/StreamingAssets/JSON/AccountData.json");
-        character.LoadData("Assets/StreamingAssets/JSON/CharacterData.json");
-        inven.LoadData("Assets/StreamingAssets/JSON/InvenData.json");
-        parts.LoadData("Assets/StreamingAssets/JSON/PartsData.json");
+        master.LoadData("Assets/StreamingAssets/JSON/ReadOnly/MasterData.json");
+        ability.LoadData("Assets/StreamingAssets/JSON/ReadOnly/AbilityData.json");
+        stage.LoadData("Assets/StreamingAssets/JSON/ReadOnly/StageData.json");
+        upgrade.LoadData("Assets/StreamingAssets/JSON/ReadOnly/UpgradeData.json");
+
+        store.LoadData("Assets/StreamingAssets/JSON/Writable/StoreData.json");
+        account.LoadData("Assets/StreamingAssets/JSON/Writable/AccountData.json");
+        character.LoadData("Assets/StreamingAssets/JSON/Writable/CharacterData.json");
+        inven.LoadData("Assets/StreamingAssets/JSON/Writable/InvenData.json");
+        parts.LoadData("Assets/StreamingAssets/JSON/Writable/PartsData.json");
 
     }
 }

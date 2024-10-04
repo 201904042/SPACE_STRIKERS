@@ -179,28 +179,13 @@ public class LabotoryUI : MainUIs
             sb.AppendLine($"{changedData.name}");
             sb.AppendLine($"LEVEL : {changedData.level}");
 
-            sb.AppendLine($"DMG: {changedData.damage}");
-            sb.AppendLine($"DEF: {changedData.defense}");
-            sb.AppendLine($"ASPD: {changedData.attackSpeed}");
-            sb.AppendLine($"MSPD: {changedData.moveSpeed}");
-            sb.AppendLine($"HP: {changedData.hp}");
-
-            if (changedData.hpRegen != 0) sb.AppendLine($"regenHP : {changedData.hpRegen}");
-            if (changedData.troopsDamageUp != 0) sb.AppendLine($"TroopsDmgUp: {changedData.troopsDamageUp}");
-            if (changedData.bossDamageUp != 0) sb.AppendLine($"BossDmgUp: {changedData.bossDamageUp}");
-            if (changedData.stageExpRateUp != 0) sb.AppendLine($"StageExpUp: {changedData.stageExpRateUp}");
-            if (changedData.stageItemDropRateUp != 0) sb.AppendLine($"ItemRegenUp: {changedData.stageItemDropRateUp}");
-            if (changedData.powRegenRateUp != 0) sb.AppendLine($"PowRegenUp: {changedData.powRegenRateUp}");
-            if (changedData.powAmountUp != 0) sb.AppendLine($"PowAmountUp : {changedData.powAmountUp}");
-            if (changedData.accountExpUp != 0) sb.AppendLine($"AccountExpUp: {changedData.accountExpUp}");
-            if (changedData.accountMoneyUp != 0) sb.AppendLine($"AccountMoneyUp: {changedData.accountMoneyUp}");
-            if (changedData.startLevelUp != 0) sb.AppendLine($"StartLevelUp: {changedData.startLevelUp}");
-            if (changedData.revival != 0) sb.AppendLine($"Revive : {changedData.revival}");
-            if (changedData.startWeaponUp != 0) sb.AppendLine($"StartWeaponUp: {changedData.startWeaponUp}");
+            foreach (Ability charAbility in changedData.abilityDatas)
+            {
+                AbilityData targetAbility = DataManager.ability.GetData(charAbility.key);
+                sb.AppendLine($"{targetAbility.name}: {charAbility.value}");
+            }
 
             upgradeInformText.text = sb.ToString();
-
-
             upgradeBtn.interactable = true;
         }
         else if(DataManager.master.GetData(masterCode).type == ItemType.Parts)

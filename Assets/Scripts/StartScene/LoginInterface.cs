@@ -28,7 +28,7 @@ public class LoginInterface : UIInterface
 
     private void OnEnable()
     {
-        ResetUI();
+        ResetAll();
     }
 
     private void SetBtnHandler()
@@ -58,7 +58,7 @@ public class LoginInterface : UIInterface
         createAccount = Btns.GetChild(2).GetComponent<Button>();
     }
 
-    public void ResetUI()
+    public void ResetAll()
     {
         emailField.text = "";
         pwField.text = "";
@@ -94,12 +94,12 @@ public class LoginInterface : UIInterface
 
             if (createTask.Result)
             {
-                ResetUI();
+                ResetAll();
             }
             else
             {
                 StartUI.alertInterface.SetAlert("회원가입 실패");
-                ResetUI();
+                ResetAll();
             }
         }
         else
@@ -145,7 +145,7 @@ public class LoginInterface : UIInterface
             else
             {
                 StartUI.alertInterface.SetAlert("로그인 실패");
-                ResetUI();
+                ResetAll();
             }
         }
         else

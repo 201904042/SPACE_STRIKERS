@@ -2,6 +2,7 @@ using Firebase.Auth;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Auth_Firebase
@@ -55,45 +56,49 @@ public class Auth_Firebase
     }
 
 
-    public void Create(string emailText, string pwText)
-    {
-        auth.CreateUserWithEmailAndPasswordAsync(emailText, pwText).ContinueWith(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("회원가입 취소");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("회원가입 실패");
-            }
+    
 
-            AuthResult authResult = task.Result;
+    public async Task<bool> CreateAccountAsync(string emailText, string pwText)
+    {
+        bool isSuccess = false;
+        try
+        {
+            // Firebase 인증 요청 대기
+            var authResult = await auth.CreateUserWithEmailAndPasswordAsync(emailText, pwText);
+
             FirebaseUser newUser = authResult.User;
-            //회원가입에 성공했다면 그에따른 데이터베이스도 생성해야함
-            Debug.Log("회원가입 완료");
-        });
+            isSuccess = true;
+            Debug.Log("회원가입 성공");
+        }
+        catch (Exception ex)
+        {
+            // 오류 처리
+            Debug.LogError($"회원가입 실패: {ex.Message}");
+        }
+
+        return isSuccess;
     }
 
-    public void Login(string emailText, string pwText)
-    {
-        auth.SignInWithEmailAndPasswordAsync(emailText, pwText).ContinueWith(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("로그인 취소");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("로그인 실패");
-            }
 
-            AuthResult authResult = task.Result;
+    public async Task<bool> LoginAsync(string emailText, string pwText)
+    {
+        bool isSuccess = false;
+        try
+        {
+            // Firebase 인증 요청 대기
+            var authResult = await auth.SignInWithEmailAndPasswordAsync(emailText, pwText);
+
             FirebaseUser newUser = authResult.User;
+            isSuccess = true;
             Debug.Log("로그인 완료");
-        });
+        }
+        catch (Exception ex)
+        {
+            // 오류 처리
+            Debug.LogError($"로그인 실패: {ex.Message}");
+        }
+
+        return isSuccess;
     }
 
     public void LogOut()

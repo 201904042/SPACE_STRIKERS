@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb88d04783d0e642bd505f0c722328b, type: 3}
-  m_Name: Enemy_Sandbag
+  m_Script: {fileID: 11500000, guid: 1aa57e4c6e1f48146829b3db0d71ef7c, type: 3}
+  m_Name: Enemy_Boss
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
-  enemyType: 1
+  prefab: {fileID: 1093731688987580955, guid: 07786a39446e9e04d838f3d480ecea63, type: 3}
+  enemyType: 5

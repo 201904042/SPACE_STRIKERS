@@ -144,10 +144,10 @@ public class Enemy_Boss : EnemyAct
     {
         isAttack = true;
         curPattern = "pattern5";
-        SpawnPattern selectedPattern = SpawnManager.spawnInstance.spawnPatterns[1]; //内靛2锅 利 3付府
+        SpawnPattern selectedPattern = Managers.Instance.Spawn.spawnPatterns[1]; //内靛2锅 利 3付府
         foreach (Vector2 pos in selectedPattern.positions)
         {
-            PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, pos, selectedPattern.spawnZone.rotation);
+            Managers.Instance.Pool.GetEnemy(selectedPattern.enemyId, pos, selectedPattern.spawnZone.rotation);
         }
         yield return new WaitForSeconds(3f);
         isAttack = false;

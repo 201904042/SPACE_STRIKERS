@@ -21,7 +21,7 @@ public class Ingame_Active : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
         skillInterface = transform.GetComponent<SkillInterface>();
         level = skillInterface.level;
     }

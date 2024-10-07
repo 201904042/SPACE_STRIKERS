@@ -9,7 +9,7 @@ public class ShooterUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        playerShooter = GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
+        playerShooter = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
     }
     
 

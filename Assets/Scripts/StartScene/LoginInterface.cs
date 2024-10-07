@@ -94,6 +94,8 @@ public class LoginInterface : UIInterface
 
             if (createTask.Result)
             {
+                //회원가잆 성공
+                //todo -> 회원정보와 더불어 코드를 통해 회원의 게임정보 데이터베이스 생성
                 ResetAll();
             }
             else

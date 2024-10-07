@@ -76,7 +76,7 @@ public class PlayerHoming : PlayerProjectile
         }
         else
         {
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
     }
 
@@ -93,7 +93,7 @@ public class PlayerHoming : PlayerProjectile
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
             hasHit = true;
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

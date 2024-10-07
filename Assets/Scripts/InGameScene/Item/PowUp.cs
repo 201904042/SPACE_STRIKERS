@@ -8,7 +8,7 @@ public class PowUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        PlayerSkill = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        PlayerSkill = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
 

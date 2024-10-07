@@ -8,7 +8,7 @@ public class LevelUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        playerExp = GameManager.gameInstance.myPlayer.GetComponent<PlayerInGameExp>();
+        playerExp = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

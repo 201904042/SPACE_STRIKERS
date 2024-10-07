@@ -51,7 +51,7 @@ public class SkillElecShockLauncher : Ingame_Active
     {
         activated = true;
 
-        PoolManager.poolInstance.GetSkill(SkillProjType.Skill_ElecShock, transform.position, Quaternion.identity).GetComponent<Skill_ElecShock>();
+        Managers.Instance.Pool.GetSkill(SkillProjType.Skill_ElecShock, transform.position, Quaternion.identity).GetComponent<Skill_ElecShock>();
         yield return new WaitForSeconds(coolTime);
         activated = false;
     }

@@ -13,7 +13,7 @@ public class ItemBasic : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
         itemRigid = GetComponent<Rigidbody2D>();
         liveTime = 10f;
     }
@@ -43,7 +43,7 @@ public class ItemBasic : MonoBehaviour
 
         yield return new WaitForSeconds(liveTime);
         Debug.Log("return item");
-        PoolManager.poolInstance.ReleasePool(gameObject);
+        Managers.Instance.Pool.ReleasePool(gameObject);
     }
 
     private void ApplyRandomForce()
@@ -57,7 +57,7 @@ public class ItemBasic : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
         if (collision.gameObject.CompareTag("Border"))
         {

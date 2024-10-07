@@ -52,7 +52,7 @@ public class Skill_MiniDroneLauncher : Ingame_Active
 
         for (int i = 0; i < projNum; i++)
         {
-            GameObject drone = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_MiniDrone, transform.position, Quaternion.identity);
+            GameObject drone = Managers.Instance.Pool.GetSkill(SkillProjType.Skill_MiniDrone, transform.position, Quaternion.identity);
             skill_MiniDrone droneStat = drone.GetComponent<skill_MiniDrone>();
             droneStat.damageRate = damageRate;
             droneStat.shootSpeedRate = shootSpeedRate;
@@ -69,7 +69,7 @@ public class Skill_MiniDroneLauncher : Ingame_Active
         base.LevelSet(level);
         for (int i = 0; i < activeDroneList.Count; i++)
         {
-            PoolManager.poolInstance.ReleasePool(activeDroneList[i]);
+            Managers.Instance.Pool.ReleasePool(activeDroneList[i]);
         }
 
         switch (level)

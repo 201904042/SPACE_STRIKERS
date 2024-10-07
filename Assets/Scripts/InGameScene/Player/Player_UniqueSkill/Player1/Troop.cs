@@ -17,7 +17,7 @@ public class Troop : MonoBehaviour
     private void Awake()
     {
         rootPath = "Assets/Prefabs/Player/Player_UniqueSkill/player1/shooter_";
-        palyerSpecialSkill = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        palyerSpecialSkill = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
     private void OnEnable()
@@ -76,12 +76,12 @@ public class Troop : MonoBehaviour
     {
         if (collision.gameObject.tag =="Enemy_Projectile")
         {
-            PoolManager.poolInstance.ReleasePool(collision.gameObject);
+            Managers.Instance.Pool.ReleasePool(collision.gameObject);
         }
 
         if (collision.gameObject.tag == "TroopBorder")
         {
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
 
     }

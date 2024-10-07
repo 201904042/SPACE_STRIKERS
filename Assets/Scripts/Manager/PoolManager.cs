@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,51 +9,56 @@ using static UnityEditor.MaterialProperty;
 
 public class PoolManager : MonoBehaviour
 {
-    public static PoolManager poolInstance;
     public List<EnemyInfo> enemyDataList;
-    public List<SkillProjData> SkillDataList;
-    public List<ProjData> ProjDataList;
+    public List<SkillProjData> skillDataList;
+    public List<ProjData> projDataList;
 
     public Transform projPool;
     public Transform enemyPool;
     public Transform skillPool;
 
-
     public Dictionary<EnemyType, List<GameObject>> enemyDic = new Dictionary<EnemyType, List<GameObject>>();
     public Dictionary<SkillProjType, List<GameObject>> skillDic = new Dictionary<SkillProjType, List<GameObject>>();
     public Dictionary<ProjType, List<GameObject>> projDic = new Dictionary<ProjType, List<GameObject>>();
 
-    private void Awake()
+    public void Init()
     {
-        if (poolInstance == null)
-        {
-            poolInstance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        enemyDataList = new List<EnemyInfo>();
+        skillDataList = new List<SkillProjData>();
+        projDataList = new List<ProjData>();
+        enemyDic = new Dictionary<EnemyType, List<GameObject>>();
+        skillDic = new Dictionary<SkillProjType, List<GameObject>>();
+        projDic = new Dictionary<ProjType, List<GameObject>>();
+
+        FindDataObject("Prefab/Scriptable/EnemyData", enemyDataList);
+        FindDataObject("Prefab/Scriptable/SkillData", skillDataList);
+        FindDataObject("Prefab/Scriptable/ProjData", projDataList);
+        ClearAllDict();
+        InitializeDictionary(enemyDic);
+        InitializeDictionary(skillDic);
+        InitializeDictionary(projDic);
+
+        projPool = GameObject.Find("ProjPool").transform;
+        enemyPool = GameObject.Find("EnemyPool").transform;
+        skillPool = GameObject.Find("SkillPool").transform;
     }
 
-    private void Start()
+    private void FindDataObject<T>(string path, List<T> targetList) where T : ScriptableObject
     {
-        Init();
+        T[] datas = Resources.LoadAll<T>(path);
+        foreach (T data in datas)
+        {
+            targetList.Add(data);
+        }
+
+        Debug.Log($"{typeof(T)} 스크리터블 오브젝트 {targetList.Count}개 확인");
     }
 
-    private void Init()
+    private void InitializeDictionary<T>(Dictionary<T, List<GameObject>> targetDict)
     {
-        //Dictionary에 새 List 생성
-        foreach (EnemyType type in System.Enum.GetValues(typeof(EnemyType)))
+        foreach (T type in Enum.GetValues(typeof(T)))
         {
-            enemyDic[type] = new List<GameObject>();
-        }
-        foreach (SkillProjType type in System.Enum.GetValues(typeof(SkillProjType)))
-        {
-            skillDic[type] = new List<GameObject>();
-        }
-        foreach (ProjType type in System.Enum.GetValues(typeof(ProjType)))
-        {
-            projDic[type] = new List<GameObject>();
+            targetDict[type] = new List<GameObject>();
         }
     }
 
@@ -71,7 +77,7 @@ public class PoolManager : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach(SkillProjData skillData in SkillDataList)
+        foreach(SkillProjData skillData in skillDataList)
         {
             if(skillType == skillData.skillType)
             {
@@ -104,7 +110,7 @@ public class PoolManager : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach (ProjData projData in ProjDataList)
+        foreach (ProjData projData in projDataList)
         {
             if (projType == projData.projType)
             {
@@ -135,35 +141,23 @@ public class PoolManager : MonoBehaviour
 
     private bool CheckEnemyDic(int enemyId, out EnemyType enemyType)
     {
-        if (enemyId == 0)
+        enemyType = enemyId switch
         {
-            enemyType = EnemyType.SandBag;
-            return true;
-        }
-        else if (enemyId > 0 && enemyId < 10)
+            0 => EnemyType.SandBag,
+            < 10 => EnemyType.Common,
+            < 20 => EnemyType.Elite,
+            < 30 => EnemyType.MidBoss,
+            < 40 => EnemyType.Boss,
+            _ => EnemyType.None
+        };
+
+        if (enemyType == EnemyType.None)
         {
-            enemyType = EnemyType.Common;
-            return true;
-        }
-        else if (enemyId >= 10 && enemyId < 20)
-        {
-            enemyType = EnemyType.Elite;
-            return true;
-        }
-        else if (enemyId >= 20 && enemyId < 30)
-        {
-            enemyType = EnemyType.MidBoss;
-            return true;
-        }
-        else if (enemyId >= 30 && enemyId < 40)
-        {
-            enemyType = EnemyType.Boss;
-            return true;
+            Debug.LogWarning("Id에 해당하는 타입이 없습니다");
+            return false;
         }
 
-        enemyType = EnemyType.None;
-        Debug.LogWarning("Id에 해당하는 타입이 없습니다");
-        return false;
+        return true;
     }
 
     public GameObject ActivePooledEnemy(EnemyType enemyType, int enemyId, Vector2 position, Quaternion rotation)
@@ -194,7 +188,7 @@ public class PoolManager : MonoBehaviour
                 }
                 //Debug.Log($"{obj} 활성화");
                 obj.SetActive(true);
-                SpawnManager.spawnInstance.activeEnemyList.Add(obj);
+                Managers.Instance.Spawn.activeEnemyList.Add(obj);
                 return obj;
             }
         }
@@ -228,7 +222,7 @@ public class PoolManager : MonoBehaviour
                 newObject.SetActive(true);
                 enemyDic[enemyType].Add(newObject);
                 //Debug.Log($"{newObject} 생성");
-                SpawnManager.spawnInstance.activeEnemyList.Add(newObject);
+                Managers.Instance.Spawn.activeEnemyList.Add(newObject);
                 return newObject;
             }
         }
@@ -237,9 +231,9 @@ public class PoolManager : MonoBehaviour
 
     public void ReleasePool(GameObject gameObject)
     {
-        if (SpawnManager.spawnInstance.activeEnemyList.Contains(gameObject))
+        if (Managers.Instance.Spawn.activeEnemyList.Contains(gameObject))
         {
-            SpawnManager.spawnInstance.activeEnemyList.Remove(gameObject);
+            Managers.Instance.Spawn.activeEnemyList.Remove(gameObject);
         }
         
         gameObject.transform.position = Vector3.zero;
@@ -250,8 +244,14 @@ public class PoolManager : MonoBehaviour
     //필요없는 오브젝트 제거
     public void DestroyPool(GameObject gameObject)
     {
-        
         Destroy(gameObject);
     }
 
+
+    public void ClearAllDict()
+    {
+        enemyDic.Clear();
+        skillDic.Clear();
+        projDic.Clear();
+    }
 }

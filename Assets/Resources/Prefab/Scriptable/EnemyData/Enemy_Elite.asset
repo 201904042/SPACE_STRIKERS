@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb88d04783d0e642bd505f0c722328b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aa57e4c6e1f48146829b3db0d71ef7c, type: 3}
   m_Name: Enemy_Elite
   m_EditorClassIdentifier: 
   prefab: {fileID: 2451726243676805503, guid: 0d7fed742d1b262429553c50c8c73e5b, type: 3}

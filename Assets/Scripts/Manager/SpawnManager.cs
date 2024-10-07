@@ -15,47 +15,37 @@ public struct SpawnPattern
 
 public class SpawnManager : MonoBehaviour
 {
-    public static SpawnManager spawnInstance;
-
-    [Header("커먼, 엘리트 등 스폰 관련")]
-    //스폰 위치
     public Transform mainSpawnZone;
     public Transform sideSpawnZoneL;
     public Transform sideSpawnZoneR;
    
-    //스폰할 패턴들
     public List<SpawnPattern> spawnPatterns;
-    //이 스테이지에서 생성 가능한 스폰
     public List<SpawnPattern> canSpawnList;
-
-    private int ranEnemy; //랜덤한 적
-
-    public List<GameObject> activeEnemyList; //스폰상태인 적의 리스트
+    public List<GameObject> activeEnemyList; //현재 활성 상태인 적들의 리스트
 
     public Transform bossSpawnZone;
     public bool isBossSpawned; //보스가 생성되었는지
     public bool isBossDown; //생성된 보스가 처치되었는지
 
+    private int stopIndex; // 패턴 간 번갈아 가는 stopCount 값을 저장하는 변수
 
-    private int stopIndex = 1; // 패턴 간 번갈아 가는 stopCount 값을 저장하는 변수
-
-    private void Awake()
+    public void Init()
     {
-        if (spawnInstance == null)
-        {
-            spawnInstance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        SpawnPatternSet();
+        Transform SpawnZone = GameObject.Find("SpawnZone").transform;
+        mainSpawnZone = SpawnZone.GetChild(0);
+        sideSpawnZoneL = SpawnZone.GetChild(1);
+        sideSpawnZoneR = SpawnZone.GetChild(2);
 
+        SpawnPatternSet(); //스폰 패턴 데이터
+        CheckPossiblePattern(); //이번 스테이지에서 사용 가능한 패턴
+        activeEnemyList = new List<GameObject>();
+        isBossSpawned = false;
+        isBossDown = false;
+        stopIndex = 1;
     }
 
     private void SpawnPatternSet()
     {
-        canSpawnList = new List<SpawnPattern>();
         spawnPatterns = new List<SpawnPattern>()
         {
             //메인스폰존
@@ -152,26 +142,18 @@ public class SpawnManager : MonoBehaviour
         };
 
     }
-
-    private void Start()
-    {
-        CheckPossiblePattern();
-
-        isBossSpawned = false;
-        isBossDown = false;
-        stopIndex = 1;
-    }
-
     private void CheckPossiblePattern()
     {
-        foreach(SpawnPattern pattern in spawnPatterns)
+        canSpawnList = new List<SpawnPattern>();
+        foreach (SpawnPattern pattern in spawnPatterns)
         {
-            if (StageManager.stageInstance.stageEnemyIdList.Contains(pattern.enemyId))
+            if (Managers.Instance.Stage.stageEnemyIdList.Contains(pattern.enemyId))
             {
                 canSpawnList.Add(pattern);
             }
         }
     }
+
     public IEnumerator SpawnEnemyTroops()
     {
         float spawnTimer = 8;
@@ -181,22 +163,27 @@ public class SpawnManager : MonoBehaviour
             {
                 break;
             }
-            Debug.Log("Current spawnTimer: " + spawnTimer);
-            if (spawnTimer == 8 && StageManager.stageInstance.minutes >= 5)
+
+            float initialSpawnTimer = 8f;
+            float minimumSpawnTimer = 1f;
+            float maxTime = 20f;
+            float timeToDecrease = 10f;
+
+            float currentMinutes = GameManager.Instance.minutes;
+
+            if (currentMinutes < timeToDecrease)
             {
-                spawnTimer = 6;
+                spawnTimer = Mathf.Lerp(initialSpawnTimer, minimumSpawnTimer, currentMinutes / timeToDecrease);
             }
-            else if (spawnTimer == 6 && StageManager.stageInstance.minutes >= 10)
+            else if (currentMinutes >= timeToDecrease && currentMinutes <= maxTime)
             {
-                spawnTimer = 4;
+                // 10~20분 사이에서는 최소값인 1을 유지 -> 변경가능성 있음
+                spawnTimer = minimumSpawnTimer;
             }
-            else if (spawnTimer == 4 && StageManager.stageInstance.minutes >= 15)
+            else if (currentMinutes > maxTime)
             {
-                spawnTimer = 2;
-            }
-            else if (spawnTimer == 2 && StageManager.stageInstance.minutes >= 20)
-            {
-                spawnTimer = 1;
+                // 20분 이후의 경우에도 spawnTimer는 1로 유지
+                spawnTimer = minimumSpawnTimer;
             }
 
             SpawnEnemy();
@@ -207,7 +194,7 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (StageManager.stageInstance.stage == 0)
+        if (Managers.Instance.Stage.stage == 0) 
         {
             // 기본 스폰 로직
             Vector3[] positions = new Vector3[]
@@ -219,10 +206,10 @@ public class SpawnManager : MonoBehaviour
 
             foreach (var position in positions)
             {
-                PoolManager.poolInstance.GetEnemy(0, position, Quaternion.identity);
+                Managers.Instance.Pool.GetEnemy(0, position, Quaternion.identity);
             }
         }
-        else if (StageManager.stageInstance.stage >= 1)
+        else if (Managers.Instance.Stage.stage >= 1)
         {
             // 패턴에 기반한 스폰 로직
             int patternIndex = Random.Range(0, canSpawnList.Count);
@@ -235,7 +222,7 @@ public class SpawnManager : MonoBehaviour
 
             for (int i = 0; i < selectedPattern.amount; i++)
             {
-                GameObject enemy = PoolManager.poolInstance.GetEnemy(selectedPattern.enemyId, selectedPattern.positions[i], selectedPattern.spawnZone.rotation);
+                GameObject enemy = Managers.Instance.Pool.GetEnemy(selectedPattern.enemyId, selectedPattern.positions[i], selectedPattern.spawnZone.rotation);
                 EnemyObject enemyObj = enemy.GetComponent<EnemyObject>();
 
                 // 패턴 내의 모든 적들에게 동일한 stopCount 값 할당
@@ -256,20 +243,19 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-
-
     public void SpawnBoss(int bossId)
     {
         
-        if (GameManager.gameInstance.SpawnCoroutine != null)
+        if (GameManager.Instance.SpawnCoroutine != null)
         {
-            StopCoroutine(GameManager.gameInstance.SpawnCoroutine);
-            GameManager.gameInstance.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
+            
+            StopCoroutine(GameManager.Instance.SpawnCoroutine);
+            GameManager.Instance.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
         }
 
         isBossSpawned = true;
         isBossDown = false;
-        PoolManager.poolInstance.GetEnemy(bossId, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
+        Managers.Instance.Pool.GetEnemy(bossId, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
     }
 
     //모든 적들을 시스템으로 사망(보상없음)

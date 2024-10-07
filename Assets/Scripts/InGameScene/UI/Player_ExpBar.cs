@@ -16,7 +16,7 @@ public class PlayerExpBar : MonoBehaviour
 
     private void Start()
     {
-        playerExpScr = GameManager.gameInstance.myPlayer.GetComponent<PlayerInGameExp>();
+        playerExpScr = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
     }
 
     private void Update()

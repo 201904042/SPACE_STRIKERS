@@ -118,7 +118,7 @@ public class EnemyLaser : EnemyProjectile
         yield return new WaitForSeconds(laserTime);
         isLaserCoroutineRunning = false;
         // Release laser
-        PoolManager.poolInstance.ReleasePool(gameObject);
+        Managers.Instance.Pool.ReleasePool(gameObject);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

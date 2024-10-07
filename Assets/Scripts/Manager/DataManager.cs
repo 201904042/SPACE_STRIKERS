@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager dataInstance;
-
+    
     public EnemyJsonReader enemyData;
 
     public static AccountJsonReader account = new AccountJsonReader();
@@ -20,25 +19,13 @@ public class DataManager : MonoBehaviour
     public static StageDataReader stage = new StageDataReader();
     public static UpgradeDataReader upgrade = new UpgradeDataReader();
 
-    private void Awake()
+    public void Init()
     {
-        if (dataInstance == null)
-        {
-            dataInstance = this;
-            DontDestroyOnLoad(dataInstance);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         LoadAllData();
     }
 
     private void LoadAllData()
     {
-        enemyData = GetComponent<EnemyJsonReader>();
-
         master.LoadData("Assets/StreamingAssets/JSON/ReadOnly/MasterData.json");
         ability.LoadData("Assets/StreamingAssets/JSON/ReadOnly/AbilityData.json");
         stage.LoadData("Assets/StreamingAssets/JSON/ReadOnly/StageData.json");
@@ -49,6 +36,5 @@ public class DataManager : MonoBehaviour
         character.LoadData("Assets/StreamingAssets/JSON/Writable/CharacterData.json");
         inven.LoadData("Assets/StreamingAssets/JSON/Writable/InvenData.json");
         parts.LoadData("Assets/StreamingAssets/JSON/Writable/PartsData.json");
-
     }
 }

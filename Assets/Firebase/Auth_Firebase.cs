@@ -27,6 +27,7 @@ public class Auth_Firebase
     public FirebaseUser user;
 
     public string UserId => user.UserId;
+    
 
     public void Init()
     {
@@ -54,9 +55,6 @@ public class Auth_Firebase
 
         }
     }
-
-
-    
 
     public async Task<bool> CreateAccountAsync(string emailText, string pwText)
     {

@@ -47,7 +47,7 @@ public class skill_MiniDroneBullet : PlayerProjectile
             }
 
             hashit = true;
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

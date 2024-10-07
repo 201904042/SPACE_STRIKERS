@@ -19,12 +19,12 @@ public class HeaderUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeText.text = StageManager.stageInstance.minutes.ToString()+" : "+ StageManager.stageInstance.seconds.ToString();
+        timeText.text = GameManager.Instance.minutes.ToString()+" : "+ GameManager.Instance.seconds.ToString();
 
-        if (GameManager.gameInstance.score != saveScore)
+        if (GameManager.Instance.score != saveScore)
         {
-            ScoreText.text = GameManager.gameInstance.score.ToString();
-            saveScore = GameManager.gameInstance.score;
+            ScoreText.text = GameManager.Instance.score.ToString();
+            saveScore = GameManager.Instance.score;
         }
     }
 

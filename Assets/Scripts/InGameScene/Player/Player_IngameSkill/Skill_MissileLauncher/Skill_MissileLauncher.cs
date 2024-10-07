@@ -55,9 +55,9 @@ public class Skill_MissileLauncher : Ingame_Active
         for (int i = 0; i < projNum; i++)
         {
             Vector3 randx_pos = new Vector3(Random.Range(-0.1f, 0.1f), 0, 0);
-            GameObject target = SpawnManager.spawnInstance.activeEnemyList.Count > 0 ? SpawnManager.spawnInstance.activeEnemyList[Random.Range(0, SpawnManager.spawnInstance.activeEnemyList.Count)] : null;
+            GameObject target = Managers.Instance.Spawn.activeEnemyList.Count > 0 ? Managers.Instance.Spawn.activeEnemyList[Random.Range(0, Managers.Instance.Spawn.activeEnemyList.Count)] : null;
             Vector3 direction = target != null ? (target.transform.position - transform.position + randx_pos).normalized : Vector2.up;
-            GameObject missile = PoolManager.poolInstance.GetSkill(SkillProjType.Skill_Missile, transform.position + randx_pos, Quaternion.identity);
+            GameObject missile = Managers.Instance.Pool.GetSkill(SkillProjType.Skill_Missile, transform.position + randx_pos, Quaternion.identity);
             
             missile.transform.up = direction;
         }

@@ -54,7 +54,7 @@ public class EnemyObject : MonoBehaviour
     protected virtual void Awake()
     {
         canvas = GameObject.Find("Canvas");
-        enemyData = DataManager.dataInstance.GetComponent<EnemyJsonReader>();
+        //enemyData = DataManager.dataInstance.GetComponent<EnemyJsonReader>();
     }
 
     protected virtual void Start()
@@ -173,22 +173,22 @@ public class EnemyObject : MonoBehaviour
     {
         for (int i = 0; i < enemyStat.enemyExpAmount; i++)
         {
-            PoolManager.poolInstance.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
+            Managers.Instance.Pool.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
         }
     }
 
     public void EnemyEliminate()
     {
         hpBar.gameObject.SetActive(false);
-        PoolManager.poolInstance.ReleasePool(gameObject);
+        Managers.Instance.Pool.ReleasePool(gameObject);
     }
 
     public void EnemyDeath()
     {
         if (enemyStat.enemyGrade == "Boss")
         {
-            SpawnManager.spawnInstance.isBossDown = true;
-            SpawnManager.spawnInstance.isBossSpawned = false;
+            Managers.Instance.Spawn.isBossDown = true;
+            Managers.Instance.Spawn.isBossSpawned = false;
         }
 
         DropExp();
@@ -200,16 +200,16 @@ public class EnemyObject : MonoBehaviour
         }
 
         hpBar.gameObject.SetActive(false);
-        PoolManager.poolInstance.ReleasePool(gameObject);
+        Managers.Instance.Pool.ReleasePool(gameObject);
     }
 
     private void DropItem()
     {
-        var projType = GameManager.gameInstance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
+        var projType = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
             ? ProjType.Item_ShooterUP
             : GetRandomItemType();
 
-        PoolManager.poolInstance.GetProj(projType, transform.position, transform.rotation);
+        Managers.Instance.Pool.GetProj(projType, transform.position, transform.rotation);
     }
 
     private ProjType GetRandomItemType()
@@ -226,7 +226,7 @@ public class EnemyObject : MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        GameManager.gameInstance.score += enemyStat.enemyScoreAmount;
+        GameManager.Instance.score += enemyStat.enemyScoreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)

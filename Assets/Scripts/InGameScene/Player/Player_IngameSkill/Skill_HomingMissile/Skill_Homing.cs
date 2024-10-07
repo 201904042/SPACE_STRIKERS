@@ -52,11 +52,11 @@ public class Skill_Homing : PlayerProjectile
     private void SetTarget()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if(SpawnManager.spawnInstance.activeEnemyList.Count == 0)
+        if(Managers.Instance.Spawn.activeEnemyList.Count == 0)
         {
             return;
         }
-        target = SpawnManager.spawnInstance.activeEnemyList[Random.Range(0, SpawnManager.spawnInstance.activeEnemyList.Count)];
+        target = Managers.Instance.Spawn.activeEnemyList[Random.Range(0, Managers.Instance.Spawn.activeEnemyList.Count)];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,7 +68,7 @@ public class Skill_Homing : PlayerProjectile
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
 
     }

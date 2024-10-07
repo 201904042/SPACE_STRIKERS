@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerSpecialSkill : MonoBehaviour
 {
-    private GameManager gameManager;
-
     [HideInInspector]
     public int playerId;
     public int specialCount; //인게임 레벨업시 스킬중 스페셜 스킬 증가가 있음
@@ -30,7 +28,6 @@ public class PlayerSpecialSkill : MonoBehaviour
     private void Awake()
     {
         playerStat = transform.GetComponent<PlayerStat>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerId = playerStat.curPlayerID;
         specialCount = 3; //기체레벨에 비례하여 증가하도록 수정예정
 
@@ -51,7 +48,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager.isBattleStart)
+        if (GameManager.Instance.BattleSwitch)
         {
             if (!firstSet || (curStatDamage != playerStat.damage)
             || (curDamageRate != damageIncreaseRate) || playerId != playerStat.curPlayerID)
@@ -79,8 +76,6 @@ public class PlayerSpecialSkill : MonoBehaviour
             }
 
             PowerLvSet();
-
-            
         }
     }
 
@@ -187,7 +182,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         for (int i = 0; i < spawnNum; i++)
         {
             Vector3 SpawnPosition = new Vector3(spawnXpos + (i * space), spawnYpos, 0f);
-            PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
+            Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
                 transform.rotation);
         }
     }
@@ -195,7 +190,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void BomberSpecial()
     {
-        PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
+        Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
     }
 
     private void TankerSpecial()
@@ -206,7 +201,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         shield.ShieldColorChange();
         shield.shieldIsActive = true;
 
-        GameObject field = PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
+        GameObject field = Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
         field.transform.SetParent(transform);
 
         if (powerLevel == 1)
@@ -232,7 +227,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     private IEnumerator Bomber_End(float timer, GameObject field)
     {
         yield return new WaitForSeconds(timer);
-        PoolManager.poolInstance.ReleasePool(field);
+        Managers.Instance.Pool.ReleasePool(field);
     }
 
     private void SplashSpecial()
@@ -259,7 +254,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         while (num!=0)
         {
-            PoolManager.poolInstance.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
+            Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
             num--;
             yield return new WaitForSeconds(0.1f);
         }

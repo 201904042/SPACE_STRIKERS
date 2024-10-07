@@ -36,7 +36,7 @@ public class skill_MiniDrone : MonoBehaviour
     void Awake()
     {
 
-        stat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        stat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
 
         liveTime = 15f;
         attackRange = 5f;
@@ -73,7 +73,7 @@ public class skill_MiniDrone : MonoBehaviour
 
 
         //에너미가 지정되지 않았거나, 타겟인 에너미가 비활성화되거나 , 적과 플레이어의 위치가 공격범위보다 크게 되면 적 재지정
-        if (!isEnemySet || targetEnemy.activeSelf == false || Vector2.Distance(GameManager.gameInstance.myPlayer.transform.position, targetEnemy.transform.position) > attackRange) //타겟이 정해지지 않으면 다시 타겟을 정함
+        if (!isEnemySet || targetEnemy.activeSelf == false || Vector2.Distance(GameManager.Instance.myPlayer.transform.position, targetEnemy.transform.position) > attackRange) //타겟이 정해지지 않으면 다시 타겟을 정함
         {
             SetTarget();
             if(targetEnemy == null)
@@ -101,7 +101,7 @@ public class skill_MiniDrone : MonoBehaviour
 
         isDroneActive = false;
 
-        PoolManager.poolInstance.ReleasePool(gameObject);
+        Managers.Instance.Pool.ReleasePool(gameObject);
     }
 
     private IEnumerator AttackRoutine(float attackDelay)
@@ -118,9 +118,9 @@ public class skill_MiniDrone : MonoBehaviour
     {
         List<GameObject> enemyCloseToPlayer = new List<GameObject>();
 
-        foreach(GameObject enemyObj in SpawnManager.spawnInstance.activeEnemyList)
+        foreach(GameObject enemyObj in Managers.Instance.Spawn.activeEnemyList)
         {
-            float dist = Vector2.Distance(enemyObj.transform.position, GameManager.gameInstance.myPlayer.transform.position);
+            float dist = Vector2.Distance(enemyObj.transform.position, GameManager.Instance.myPlayer.transform.position);
 
             if (dist <= attackRange)
             {
@@ -149,13 +149,13 @@ public class skill_MiniDrone : MonoBehaviour
 
     private void ReturnToPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, GameManager.gameInstance.myPlayer.transform.position, Time.deltaTime * moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, GameManager.Instance.myPlayer.transform.position, Time.deltaTime * moveSpeed);
     }
 
     private void DroneAttack()
     {
         
-        GameObject droneBullet = PoolManager.poolInstance.GetSkill(SkillProjType.Skilll_DroneBullet, transform.position, Quaternion.identity);
+        GameObject droneBullet = Managers.Instance.Pool.GetSkill(SkillProjType.Skilll_DroneBullet, transform.position, Quaternion.identity);
         droneBullet.GetComponent<skill_MiniDroneBullet>().damage = drone_damage;
     }
 

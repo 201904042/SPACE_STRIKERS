@@ -37,9 +37,9 @@ public class Shield : MonoBehaviour
         shieldIsActive = true;
         
 
-        playerControlScript = GameManager.gameInstance.myPlayer.GetComponent<PlayerControl>();
+        playerControlScript = GameManager.Instance.myPlayer.GetComponent<PlayerControl>();
         shieldHasDamageable = true;
-        playerStatDamage = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>().damage ;
+        playerStatDamage = GameManager.Instance.myPlayer.GetComponent<PlayerStat>().damage ;
         shieldDamage = playerStatDamage * shieldDamageRate;
 
     }

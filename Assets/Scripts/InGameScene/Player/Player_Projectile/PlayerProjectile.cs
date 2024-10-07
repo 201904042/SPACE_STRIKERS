@@ -14,7 +14,7 @@ public class PlayerProjectile : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.gameInstance.myPlayer.GetComponent<PlayerStat>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
     }
 
     protected virtual void OnEnable()
@@ -37,7 +37,7 @@ public class PlayerProjectile : MonoBehaviour
         if (collision.gameObject.tag == "BulletBorder")
         {
             //Destroy(gameObject);
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

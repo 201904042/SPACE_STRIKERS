@@ -8,7 +8,7 @@ public class SpecialUp : ItemBasic
     protected override void Awake()
     {
         base.Awake();
-        playerSpecial = GameManager.gameInstance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        playerSpecial = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

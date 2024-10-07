@@ -94,7 +94,7 @@ public class Skill_EnergyField : PlayerProjectile
         else
         {
             isActive = false;
-            PoolManager.poolInstance.ReleasePool(gameObject);
+            Managers.Instance.Pool.ReleasePool(gameObject);
         }
     }
 

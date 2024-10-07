@@ -32,8 +32,8 @@ public class LevelUP_UI : MonoBehaviour
 
     private void Awake()
     {
-        playerExp = GameManager.gameInstance.myPlayer.GetComponent<PlayerInGameExp>();
-        playerSkillSlot = GameManager.gameInstance.myPlayer.transform.GetChild(1);
+        playerExp = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
+        playerSkillSlot = GameManager.Instance.myPlayer.transform.GetChild(1);
         skillSlot = transform.GetChild(1);
         skillSlotInit();
         ableAPSkill = new List<SkillData>();

@@ -42,11 +42,11 @@ public class EnemyAct : EnemyObject
 
         if (split)
         {
-            enemyProj = PoolManager.poolInstance.GetProj(ProjType.Enemy_Split, transform.position, Quaternion.identity);
+            enemyProj = Managers.Instance.Pool.GetProj(ProjType.Enemy_Split, transform.position, Quaternion.identity);
         }
         else
         {
-            enemyProj = PoolManager.poolInstance.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
+            enemyProj = Managers.Instance.Pool.GetProj(ProjType.Enemy_Bullet, transform.position, Quaternion.identity);
         }
 
         if (enemyProj == null)
@@ -75,7 +75,7 @@ public class EnemyAct : EnemyObject
     //발사할 총알 프리팹, 분열총알이라면 true
     public void TargetShot(bool split = false, int splitCount = 3)
     {
-        Transform player = GameManager.gameInstance.myPlayer.transform;
+        Transform player = GameManager.Instance.myPlayer.transform;
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if (split)
         {
@@ -111,7 +111,7 @@ public class EnemyAct : EnemyObject
             {
                 //조준일 경우
                 Vector3 dirToPlayer;
-                Transform player = GameManager.gameInstance.myPlayer.transform;
+                Transform player = GameManager.Instance.myPlayer.transform;
                 dirToPlayer = (player.position - transform.position).normalized;
 
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
@@ -148,11 +148,11 @@ public class EnemyAct : EnemyObject
     //레이저 여러발일 경우의 앵글(기본 0), 조준여부
     public void Laser(float multiAngle = 0, bool isAimtoPlayer = false)
     {
-        EnemyLaser laserObject = PoolManager.poolInstance.GetProj(ProjType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
+        EnemyLaser laserObject = Managers.Instance.Pool.GetProj(ProjType.Enemy_Laser, transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
         laserObject.setDamage(enemyStat.enemyDamage);
         if (isAimtoPlayer)
         {
-            Transform player = GameManager.gameInstance.myPlayer.transform;
+            Transform player = GameManager.Instance.myPlayer.transform;
             Vector3 direction = player.position - laserObject.gameObject.transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             laserObject.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90 - multiAngle));

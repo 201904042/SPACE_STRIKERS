@@ -26,7 +26,6 @@ public class SpawnManager : MonoBehaviour
     public Transform bossSpawnZone;
     public bool isBossSpawned; //보스가 생성되었는지
     public bool isBossDown; //생성된 보스가 처치되었는지
-
     private int stopIndex; // 패턴 간 번갈아 가는 stopCount 값을 저장하는 변수
 
     public void Init()
@@ -38,6 +37,7 @@ public class SpawnManager : MonoBehaviour
 
         SpawnPatternSet(); //스폰 패턴 데이터
         CheckPossiblePattern(); //이번 스테이지에서 사용 가능한 패턴
+
         activeEnemyList = new List<GameObject>();
         isBossSpawned = false;
         isBossDown = false;

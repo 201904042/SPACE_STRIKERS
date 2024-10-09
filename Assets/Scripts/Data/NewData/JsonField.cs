@@ -41,11 +41,7 @@ public class PartsData
     public int level;
     public int rank;
     public int mainAbility;
-    public Ability subAbility1;
-    public Ability subAbility2;
-    public Ability subAbility3;
-    public Ability subAbility4;
-    public Ability subAbility5;
+    public Ability[] subAbilities;
 }
 
 [System.Serializable]

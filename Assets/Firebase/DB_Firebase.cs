@@ -136,10 +136,10 @@ public class DB_Firebase
     /// <summary>
     /// 특정 노드의 데이터를 현재 저장된 JSON 파일로 업데이트
     /// </summary>
-    public static void UpdateFirebaseNodeFromJson(string accountCode,string nodeName, string localJsonFilePath)
+    public static void UpdateFirebaseNodeFromJson(string accountCode,string nodeName, string JsonPath)
     {
         DatabaseReference db_root = FirebaseDatabase.DefaultInstance.RootReference;
-        string jsonData = LoadJsonFromFile(localJsonFilePath);
+        string jsonData = LoadJsonFromFile(JsonPath);
         if (jsonData != null)
         {
             // Firebase의 특정 노드를 업데이트

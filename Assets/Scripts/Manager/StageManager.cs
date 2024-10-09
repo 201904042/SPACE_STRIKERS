@@ -28,7 +28,7 @@ public class StageManager : MonoBehaviour
         planet = 0; 
         stage = 1;
 
-        
+        SetStageData();
     }
 
     /// <summary>
@@ -39,18 +39,7 @@ public class StageManager : MonoBehaviour
         planet = PlayerPrefs.GetInt("ChosenPlanet");
         stage = PlayerPrefs.GetInt("ChosenStage");
 
-        int StageCode = (planet + 1) * 10 + stage;
-
-        //foreach (StageData stage in stage.stageList.stage)
-        //{
-        //    if (stage.stageCode == stageCode)
-        //    {
-        //        curStageEnemyId = stage.enemyCode;
-        //        curStagefirstGain = stage.stageFirstGain;
-        //        curStageDefaultGain = stage.stageDefaultGain;
-        //        curDefaultFullGain = stage.defaultFullGain;
-        //    }
-        //}
+        int StageCode = (planet-1) * 10 + stage;
 
         StageData stageData = DataManager.stage.GetData(StageCode);
 

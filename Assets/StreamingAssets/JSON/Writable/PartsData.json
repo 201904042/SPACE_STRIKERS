@@ -2,27 +2,27 @@
     "PartsData": [
         {
             "invenId": 8,
-            "isActive" : false,
-            "level" : 1,
+            "isActive": false,
+            "level": 1,
             "rank": 2,
-            "mainAbility": 1,
-            "subAbility1": { "key": 1, "value": 10 },
-            "subAbility2": { "key": 2, "value": 12 },
-            "subAbility3": null,
-            "subAbility4": null,
-            "subAbility5": null
+            "mainAbility": { "key": 1, "value": 10 },
+            "subAbilities": [
+                { "key": 1, "value": 10 },
+                { "key": 2, "value": 12 }
+            ]
         },
         {
             "invenId": 9,
-            "isActive" : false,
-            "level" : 1,
+            "isActive": false,
+            "level": 1,
             "rank": 4,
-            "mainAbility": 3,
-            "subAbility1": { "key": 3, "value": 15 },
-            "subAbility2": { "key": 301, "value": 1 },
-            "subAbility3": { "key": 202, "value": 1 },
-            "subAbility4": { "key": 3, "value": 12 },
-            "subAbility5": null
+            "mainAbility": { "key": 3, "value": 10 },
+            "subAbilities": [
+                { "key": 3, "value": 15 },
+                { "key": 301, "value": 1 },
+                { "key": 202, "value": 1 },
+                { "key": 3, "value": 12 } 
+            ]
         }
     ]
 }

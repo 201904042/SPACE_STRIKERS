@@ -33,6 +33,7 @@ public class UpgradeCost
 {
     public int level;
     public UpgradeIngred[] ingredients;
+    public Ability[] upgradeValues;
 }
 
 [Serializable]

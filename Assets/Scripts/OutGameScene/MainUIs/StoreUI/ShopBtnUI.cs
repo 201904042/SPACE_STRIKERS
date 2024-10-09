@@ -78,11 +78,11 @@ public class ShopBtnUI : MonoBehaviour
         {
             //더블체크 완료시 구매 실행
             StoreUI.ItemPurchase(targetItemId, itemPrice);
-            UIManager.alterInterface.SetAlert($"구매가 완료되었습니다");
+            UIManager.alertInterface.SetAlert($"구매가 완료되었습니다");
         }
         else
         {
-            UIManager.alterInterface.SetAlert($"구매가 취소되었습니다");
+            UIManager.alertInterface.SetAlert($"구매가 취소되었습니다");
         }
     }
 }

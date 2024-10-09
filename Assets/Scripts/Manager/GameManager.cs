@@ -27,28 +27,7 @@ public class GameManager : MonoBehaviour
     public bool BattleSwitch
     {
         get => isBattleStart;
-        set
-        {
-            isBattleStart = value;
-            if (isBattleStart)
-            {
-                
-                if (SpawnCoroutine != null)
-                {
-                    StopCoroutine(SpawnCoroutine);
-                }
-                SpawnCoroutine = StartCoroutine(Managers.Instance.Spawn.SpawnEnemyTroops());
-                
-            }
-            else
-            {
-                if (SpawnCoroutine != null)
-                {
-                    StopCoroutine(SpawnCoroutine);
-                    SpawnCoroutine = null;
-                }
-            }
-        }
+        set => isBattleStart = value;
     }
     private void Awake()
     {
@@ -99,46 +78,79 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PlayGame()
     {
-        while(isBattleStart)
+        while (true)
         {
-            if (myPlayer.GetComponent<PlayerStat>().curHp <= 0) //플레이어의 hp가 0이 된다면 게임 종료
+            if(!BattleSwitch) //종료 조건
             {
-                Time.timeScale = 0;
-                gameEndUI.SetActive(true);
+                if (SpawnCoroutine != null)
+                {
+                    StopCoroutine(SpawnCoroutine);
+                    SpawnCoroutine = null;
+                }
+
                 yield break;
             }
 
-            if (!IsTimerActive())
+            if (SpawnCoroutine == null)
             {
-                //보스가 스폰되지 않을 경우에만 타이머 돌아감
-                Timer(); //스테이지 시간 타이머 업데이트
+                SpawnCoroutine = StartCoroutine(Managers.Instance.Spawn.SpawnEnemyTroops());
             }
+
+            CheckPlayerHp(); //플레이어의 체력 확인. 0이면 게임 종료
 
             if (Managers.Instance.Stage.isBossStage)
             {
-                //10분이 된 상태에서 보스가 스폰된적 없고 보스가 죽지 않았다면 보스를 스폰한다
-                if (minutes == 10 && !Managers.Instance.Spawn.isBossSpawned && !Managers.Instance.Spawn.isBossDown)
-                {
-                    Managers.Instance.Spawn.SpawnBoss(Managers.Instance.Stage.stageBossId);
-                }
-
-                if (!isGameClear && Managers.Instance.Spawn.isBossDown) //보스전에서는 시작 10분후 보스가 등장하고 그 보스를 처치하면 승리. 그 즉시 게임종료
-                {
-                    isGameClear = true;
-                    Time.timeScale = 0;
-                    gameEndUI.SetActive(true);
-                }
+                HandleBossStage();
             }
             else
             {
-                if (!isGameClear && minutes >= 10) //잡몹전에서는 10분 이상 버틴다면 스테이지 승리. 플레이어가 죽거나 그만둘때까지 무한
-                {
-                    isGameClear = true;
-                }
+                HandleNormalStage();
             }
+
+
+            if (!IsTimerActive())
+            {
+                Timer(); // 스테이지 시간 타이머 업데이트
+            }
+
+            yield return null;
         }
     }
-    
+
+    private void CheckPlayerHp()
+    {
+        if (myPlayer.GetComponent<PlayerStat>().curHp <= 0)
+        {
+            Time.timeScale = 0;
+            gameEndUI.SetActive(true);
+            StopCoroutine(PlayGame()); // 코루틴 종료
+        }
+    }
+
+    private void HandleBossStage()
+    {
+        if (minutes == 10 && !Managers.Instance.Spawn.isBossSpawned && !Managers.Instance.Spawn.isBossDown)
+        {
+            Managers.Instance.Spawn.SpawnBoss(Managers.Instance.Stage.stageBossId);
+        }
+
+        if (!isGameClear && Managers.Instance.Spawn.isBossDown)
+        {
+            isGameClear = true;
+            Time.timeScale = 0;
+            gameEndUI.SetActive(true);
+        }
+    }
+
+    private void HandleNormalStage()
+    {
+        if (!isGameClear && minutes >= 10)
+        {
+            isGameClear = true;
+        }
+    }
+
+
 
     private bool IsTimerActive()
     {

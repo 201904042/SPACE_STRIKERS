@@ -8,6 +8,10 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 150 },
             { "ingredMasterId": 301, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
@@ -15,6 +19,10 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 200 },
             { "ingredMasterId": 302, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
@@ -22,6 +30,10 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 250 },
             { "ingredMasterId": 303, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
@@ -29,22 +41,31 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 500 },
             { "ingredMasterId": 305, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
           "level": 5,
-          "ingredients": [ ]
+          "ingredients": [],
+          "upgradeValues": []
         }
       ]
     },
     {
-      "masterId": 201,
+      "masterId": 102,
       "upgradeCost": [
         {
           "level": 1,
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 150 },
             { "ingredMasterId": 301, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
@@ -52,6 +73,10 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 200 },
             { "ingredMasterId": 302, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
@@ -59,6 +84,10 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 250 },
             { "ingredMasterId": 303, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
@@ -66,11 +95,16 @@
           "ingredients": [
             { "ingredMasterId": 1, "quantity": 500 },
             { "ingredMasterId": 305, "quantity": 1 }
+          ],
+          "upgradeValues": [
+            { "key": 1, "value": 10 },
+            { "key": 2, "value": 10 }
           ]
         },
         {
           "level": 5,
-          "ingredients": [ ]
+          "ingredients": [],
+          "upgradeValues": []
         }
       ]
     }

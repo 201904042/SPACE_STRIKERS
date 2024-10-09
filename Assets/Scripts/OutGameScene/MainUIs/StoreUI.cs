@@ -1,3 +1,4 @@
+using Firebase.Auth;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -123,32 +124,46 @@ public class StoreUI : MainUIs
     /// </summary>
     public static void ItemPurchase(int targetMasterId, int cost, int amount = 1)
     {
-        //아이템 구매 시스템, 데이터변형
-        ////구매의 조건에 부합하는지 체크
-        //if (cost > DataManager.inven.InvenItemDic[0].quantity)
-        //{
-        //    //구매 불가 할경우. 알림 인터페이스 오픈
-        //    UIManager.alterInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
-        //    return;
-        //}
-        //MasterData targetData = new MasterData();
-        //bool success = DataManager.master.masterDic.TryGetValue(targetMasterId, out targetData);
-        //if (!success)
-        //{
-        //    Debug.Log("마스터 데이터를 찾지못함");
-        //    return;
-        //}
+        //구매의 조건에 부합하는지 체크
+        if (cost > DataManager.inven.GetData(1).quantity) //미네랄의 양 검사
+        {
+            //구매 불가 할경우. 알림 인터페이스 오픈
+            UIManager.alertInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
+            return;
+        }
+        MasterData targetData = DataManager.master.GetData(targetMasterId);
+        InvenData ownMineral = DataManager.inven.GetDataWithMasterId(1).Value;
+        ownMineral.quantity = ownMineral.quantity - (cost * amount);
 
-        //InvenData ownMineral = DataManager.inven.GetDataWithMasterId(0).Value;
+        DataManager.inven.UpdateData(ownMineral.id, ownMineral);
 
-        ////구매 인벤토리의 미네랄을 감소시키고 
-        //DataManager.inven.ModifyItem(ownMineral.id, ownMineral.quantity - (cost * amount));
+        //해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
+        InvenData? checkData = DataManager.inven.GetDataWithMasterId(targetMasterId);
+        if (checkData != null)
+        {
+            InvenData invenData = (InvenData)checkData;
+            invenData.quantity += amount;
+            DataManager.inven.UpdateData(invenData.id, invenData);
+        }
+        else
+        {
+            InvenData newData = new InvenData
+            {
+                id = DataManager.inven.GetLastKey()+1,
+                masterId = targetMasterId,
+                quantity = amount,
+                name = targetData.name
+            };
 
-        ////해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
-        //DataManager.inven.AddNewItem(targetData.type, targetData.id, targetData.name, amount); //일단은 한번에 한개만 증가
+            DataManager.inven.AddData(newData);
+        }
 
-        ////구매 성공시 알림 인터페이스 오픈
-        //UIManager.alterInterface.SetAlert("아이템을 구매하였습니다");
+        DataManager.inven.SaveData();
+        //완료시 파이어베이스로 보냄
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
+
+        //구매 성공시 알림 인터페이스 오픈
+        UIManager.alertInterface.SetAlert("아이템을 구매하였습니다");
     }
 }
  

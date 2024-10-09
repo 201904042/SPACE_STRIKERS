@@ -80,7 +80,7 @@ public class GotchaStore : MonoBehaviour
         }
         else
         {
-            UIManager.alterInterface.SetAlert($"가챠가 취소되었습니다");
+            UIManager.alertInterface.SetAlert($"가챠가 취소되었습니다");
         }
     }
 

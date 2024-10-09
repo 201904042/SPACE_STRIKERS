@@ -113,7 +113,7 @@ public class ItemInformInterface : UIInterface
         }
         else
         {
-            UIManager.alterInterface.SetAlert($"판매가 취소되었습니다");
+            UIManager.alertInterface.SetAlert($"판매가 취소되었습니다");
         }
     }
 
@@ -128,6 +128,6 @@ public class ItemInformInterface : UIInterface
         //해당 아이템의 sell가격 만큼 미네랄 증가
         //데이터베이스 전송
 
-        UIManager.alterInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
+        UIManager.alertInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
     }
 }

@@ -9,8 +9,11 @@ using UnityEngine;
 public abstract class ReadOnlyData<T>
 {
     protected Dictionary<int, T> dataDict = new Dictionary<int, T>();
-    public void LoadData(string filePath)
+    protected List<int> keysList = new List<int>();
+    protected string filePath;
+    public void LoadData(string _filePath)
     {
+        filePath = _filePath;
         string json = File.ReadAllText(filePath);
         List<T> dataList = null;
         dataList = SetJsonList(json, dataList);
@@ -19,6 +22,7 @@ public abstract class ReadOnlyData<T>
         {
             int id = GetId(data);
             dataDict[id] = data;
+            keysList.Add(id);
         }
 
         Debug.Log($"{typeof(T).Name}에 데이터 {dataDict.Count}개가 들어옴");
@@ -76,6 +80,11 @@ public abstract class ReadOnlyData<T>
         return dataList;
     }
 
+    public string GetFilePath()
+    {
+        return filePath;
+    }
+
     protected abstract int GetId(T data);
 
     // 검색
@@ -89,24 +98,33 @@ public abstract class ReadOnlyData<T>
         return dataDict;
     }
 
+    public bool IsDataExist(int id)
+    {
+        return dataDict.ContainsKey(id) ? true : false;
+    }
+
 }
 
 // 읽기 및 쓰기 가능 데이터 관리 클래스
 public abstract class EditableData<T> : ReadOnlyData<T>
 {
-    // 추가
-    public bool AddData(int id, T data)
+    public int GetLastKey()
     {
-
-        if (dataDict.ContainsKey(id))
+        keysList = keysList.OrderBy(x => x).ToList(); // 키 리스트 정렬
+        return keysList[keysList.Count - 1];
+    }
+    // 추가
+    public bool AddData(T data)
+    {
+        int id = GetId(data); // 데이터를 추가하기 전에 ID를 가져옵니다.
+        if (!dataDict.ContainsKey(id))
         {
-            Debug.Log($"ID {id}는 이미 존재합니다");
-            return false;
+            dataDict.Add(id,data);
+            keysList.Add(id); // 키 리스트에 추가
+            keysList = keysList.OrderBy(x => x).ToList(); // 키 리스트 정렬
+            return true;
         }
-
-        dataDict[id] = data;
-        dataDict.OrderBy(entry => entry.Key);
-        return true;
+        return false; // 중복 ID의 경우 false 반환
     }
 
     // 삭제
@@ -119,6 +137,7 @@ public abstract class EditableData<T> : ReadOnlyData<T>
         }
 
         dataDict.Remove(id);
+        keysList.Remove(id); // 키 리스트에서 삭제
         return true;
     }
 
@@ -130,19 +149,23 @@ public abstract class EditableData<T> : ReadOnlyData<T>
             Debug.Log($"ID {id}가 존재하지 않음");
             return false;
         }
-       
+
         dataDict[id] = data;
-        dataDict.OrderBy(entry => entry.Key);
         return true;
     }
 
     // JSON으로 저장하는 함수 (필요 시 구현)
-    public void SaveData(string filePath)
+    public void SaveData()
     {
         Wrapper<T> wrapper = new Wrapper<T> { datas = new List<T>(dataDict.Values) };
         string json = JsonUtility.ToJson(wrapper, true);
         File.WriteAllText(filePath, json);
+#if UNITY_EDITOR
+        UnityEditor.AssetDatabase.Refresh();
+#endif
     }
+
+    //추가 삭제 업데이트 후 saveData를 통해 해당 json을 json파일로 업데이트 하고 DB_Firebase를 통해 해당 JSON을 맞는 위치에 전송
 }
 
 // 제네릭 리스트를 JSON으로 감싸는 Wrapper 클래스

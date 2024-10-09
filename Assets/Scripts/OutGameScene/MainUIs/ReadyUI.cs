@@ -247,11 +247,10 @@ public class ReadyUI : MainUIs
         {
             if (!part.isActive) continue;
 
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility1);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility2);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility3);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility4);
-            PartsDataReader.ApplyAbilityToCharacter(ref result, part.subAbility5);
+            foreach(Ability ability in part.subAbilities)
+            {
+                PartsDataReader.ApplyAbilityToCharacter(ref result, ability);
+            }
         }
         return result;
     }

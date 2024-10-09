@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     //Interface
     private Transform interfaceUIs;
-    public static AlertInterface alterInterface;
+    public static AlertInterface alertInterface;
     public static TFInterface tfInterface;
 
     public static OptionInterface optionInteface;
@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
         labotoryUI = mainUIs.GetComponentInChildren<LabotoryUI>();
 
         interfaceUIs = GameObject.Find("InterfaceUIs").transform;
-        alterInterface = interfaceUIs.GetComponentInChildren<AlertInterface>();
+        alertInterface = interfaceUIs.GetComponentInChildren<AlertInterface>();
         tfInterface = interfaceUIs.GetComponentInChildren<TFInterface>();
         optionInteface = interfaceUIs.GetComponentInChildren<OptionInterface>();
         stageInteface = interfaceUIs.GetComponentInChildren<StageInterface>();

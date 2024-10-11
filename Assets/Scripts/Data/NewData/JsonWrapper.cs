@@ -66,3 +66,8 @@ public class StageDataWrapper
     public List<StageData> StageData;
 }
 
+public class EnemyDataWrapper
+{
+    public List<EnemyData> EnemyData;
+}
+

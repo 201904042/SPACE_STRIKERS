@@ -199,7 +199,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.enemyDamage / 2, collision.gameObject);
+            playerStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.damage / 2, collision.gameObject);
         }
     }
 

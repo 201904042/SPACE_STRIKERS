@@ -1,0 +1,76 @@
+{
+  "EnemyData": [
+    {
+      "id": 501,
+      "type": 1,
+      "hp": 50,
+      "damage": 10,
+      "moveSpeed": 3,
+      "attackSpeed": 3,
+      "expAmount": 3,
+      "socreAmount": 1,
+      "isStop": false,
+      "isAim": false
+    },
+    {
+      "id": 502,
+      "type": 1,
+      "hp": 30,
+      "damage": 10,
+      "moveSpeed": 1,
+      "attackSpeed": 2,
+      "expAmount": 3,
+      "socreAmount": 1,
+      "isStop": true,
+      "isAim": true
+    },
+    {
+      "id": 511,
+      "type": 2,
+      "hp": 100,
+      "damage": 10,
+      "moveSpeed": 3,
+      "attackSpeed": 3,
+      "expAmount": 3,
+      "socreAmount": 3,
+      "isStop": false,
+      "isAim": false
+    },
+    {
+      "id": 512,
+      "type": 2,
+      "hp": 50,
+      "damage": 10,
+      "moveSpeed": 1,
+      "attackSpeed": 2,
+      "expAmount": 3,
+      "socreAmount": 3,
+      "isStop": true,
+      "isAim": true
+    },
+    {
+      "id": 531,
+      "type": 4,
+      "hp": 10000,
+      "damage": 10,
+      "moveSpeed": 10,
+      "attackSpeed": 5,
+      "expAmount": 3,
+      "socreAmount": 0,
+      "isStop": false,
+      "isAim": false
+    },
+    {
+      "id": 600,
+      "type": 0,
+      "hp": 1000000,
+      "damage": 0,
+      "moveSpeed": 0,
+      "attackSpeed": 0,
+      "expAmount": 0,
+      "socreAmount": 0,
+      "isStop": false,
+      "isAim": false
+    }
+  ]
+}

@@ -143,11 +143,11 @@ public class PoolManager : MonoBehaviour
     {
         enemyType = enemyId switch
         {
-            0 => EnemyType.SandBag,
-            < 10 => EnemyType.Common,
-            < 20 => EnemyType.Elite,
-            < 30 => EnemyType.MidBoss,
-            < 40 => EnemyType.Boss,
+            600 => EnemyType.SandBag,
+            < 510 => EnemyType.Common,
+            < 520 => EnemyType.Elite,
+            < 530 => EnemyType.MidBoss,
+            < 540 => EnemyType.Boss,
             _ => EnemyType.None
         };
 
@@ -169,23 +169,7 @@ public class PoolManager : MonoBehaviour
             {
                 obj.transform.position = position;
                 obj.transform.rotation = rotation;
-                if(enemyType == EnemyType.Common)
-                {
-                    obj.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
-                }
-                else if (enemyType == EnemyType.Elite)
-                {
-                    obj.GetComponent<Enemy_Elite>().enemyStat.enemyId = enemyId;
-                }
-                /*
-                else if (enemyType == EnemyType.Common)
-                {
-                    obj.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
-                }*/
-                else if (enemyType == EnemyType.Boss)
-                {
-                    obj.GetComponent<Enemy_Boss>().enemyStat.enemyId = enemyId;
-                }
+                obj.GetComponent<EnemyObject>().SetId(enemyId);
                 //Debug.Log($"{obj} 활성화");
                 obj.SetActive(true);
                 Managers.Instance.Spawn.activeEnemyList.Add(obj);
@@ -202,23 +186,7 @@ public class PoolManager : MonoBehaviour
                 newObject.transform.SetParent(enemyPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
-                if (enemyType == EnemyType.Common)
-                {
-                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyId = enemyId;
-                }
-                else if (enemyType == EnemyType.Elite)
-                {
-                    newObject.GetComponent<Enemy_Elite>().enemyStat.enemyId = enemyId;
-                }
-                /*
-                else if (enemyType == EnemyType.Common)
-                {
-                    newObject.GetComponent<Enemy_Common>().enemyStat.enemyCode = enemyCode;
-                }*/
-                else if (enemyType == EnemyType.Boss)
-                {
-                    newObject.GetComponent<Enemy_Boss>().enemyStat.enemyId = enemyId;
-                }
+                newObject.GetComponent<EnemyObject>().SetId(enemyId);
                 newObject.SetActive(true);
                 enemyDic[enemyType].Add(newObject);
                 //Debug.Log($"{newObject} 생성");

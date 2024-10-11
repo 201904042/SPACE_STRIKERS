@@ -22,4 +22,9 @@ public class CharacterImageBtn : MonoBehaviour
         MasterData masterChar = DataManager.master.GetData(masterId);
         charImage.sprite = Resources.Load<Sprite>(masterChar.spritePath);
     }
+
+    public void ResetData()
+    {
+        charImage.sprite = null;
+    }
 }

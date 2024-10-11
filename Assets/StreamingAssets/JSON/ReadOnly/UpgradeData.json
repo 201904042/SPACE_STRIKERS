@@ -107,6 +107,99 @@
           "upgradeValues": []
         }
       ]
+    },
+    {
+      "masterId": 201,
+      "upgradeCost": [
+        {
+          "level": 1,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 150 },
+            { "ingredMasterId": 301, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 2,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 200 },
+            { "ingredMasterId": 302, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 3,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 250 },
+            { "ingredMasterId": 303, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 4,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 500 },
+            { "ingredMasterId": 305, "quantity": 1 }
+          ],
+          "upgradeValues": [
+
+          ]
+        },
+        {
+          "level": 5,
+          "ingredients": [],
+          "upgradeValues": []
+        }
+      ]
+    },
+    {
+      "masterId": 202,
+      "upgradeCost": [
+        {
+          "level": 1,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 150 },
+            { "ingredMasterId": 301, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 2,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 200 },
+            { "ingredMasterId": 302, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 3,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 250 },
+            { "ingredMasterId": 303, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 4,
+          "ingredients": [
+            { "ingredMasterId": 1, "quantity": 500 },
+            { "ingredMasterId": 305, "quantity": 1 }
+          ],
+          "upgradeValues": [
+          ]
+        },
+        {
+          "level": 5,
+          "ingredients": [],
+          "upgradeValues": []
+        }
+      ]
     }
   ]
 }

@@ -11,6 +11,7 @@ public abstract class ReadOnlyData<T>
     protected Dictionary<int, T> dataDict = new Dictionary<int, T>();
     protected List<int> keysList = new List<int>();
     protected string filePath;
+    public DataFieldType fieldType;
     public void LoadData(string _filePath)
     {
         filePath = _filePath;
@@ -24,7 +25,7 @@ public abstract class ReadOnlyData<T>
             dataDict[id] = data;
             keysList.Add(id);
         }
-
+        
         Debug.Log($"{typeof(T).Name}에 데이터 {dataDict.Count}개가 들어옴");
     }
 
@@ -34,6 +35,7 @@ public abstract class ReadOnlyData<T>
         {
             var wrapper = JsonUtility.FromJson<MasterDataWrapper>(json);
             dataList = wrapper.MasterData as List<T>;
+            
         }
         else if (typeof(T) == typeof(AbilityData))
         {
@@ -75,7 +77,14 @@ public abstract class ReadOnlyData<T>
             var wrapper = JsonUtility.FromJson<InvenDataWrapper>(json);
             dataList = wrapper.InvenData as List<T>;
         }
-        
+
+        else if (typeof(T) == typeof(EnemyData))
+        {
+            var wrapper = JsonUtility.FromJson<EnemyDataWrapper>(json);
+            dataList = wrapper.EnemyData as List<T>;
+        }
+
+
         // 필요한 만큼 else if 블록을 추가
         return dataList;
     }
@@ -155,24 +164,40 @@ public abstract class EditableData<T> : ReadOnlyData<T>
     }
 
     // JSON으로 저장하는 함수 (필요 시 구현)
+
     public void SaveData()
     {
-        Wrapper<T> wrapper = new Wrapper<T> { datas = new List<T>(dataDict.Values) };
+        Wrapper<T> wrapper = new Wrapper<T>(new List<T>(dataDict.Values));
         string json = JsonUtility.ToJson(wrapper, true);
+       
+        // JSON 필드명 변경
+        json = json.Replace("\"dataList\"", $"\"{DataManager.dataFieldNames[fieldType]}\"");
+
         File.WriteAllText(filePath, json);
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
 #endif
     }
 
-    //추가 삭제 업데이트 후 saveData를 통해 해당 json을 json파일로 업데이트 하고 DB_Firebase를 통해 해당 JSON을 맞는 위치에 전송
 }
 
 // 제네릭 리스트를 JSON으로 감싸는 Wrapper 클래스
 [System.Serializable]
 public class Wrapper<T>
 {
-    public List<T> datas;
+    // json의 동적 필드명을 저장하기 위해 추가
+    [SerializeField]
+    private List<T> dataList;
+
+    // Wrapper 클래스의 생성자
+    public Wrapper(List<T> dataList)
+    {
+        this.dataList = dataList;
+    }
+
+    // 데이터 리스트를 프로퍼티로 제공
+    public List<T> Datas => dataList;
 }
+
 
 

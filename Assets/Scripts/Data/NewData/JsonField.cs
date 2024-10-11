@@ -40,8 +40,8 @@ public class PartsData
     public bool isActive;
     public int level;
     public int rank;
-    public int mainAbility;
-    public Ability[] subAbilities;
+    public Ability mainAbility;
+    public List<Ability> subAbilities;
 }
 
 [System.Serializable]
@@ -88,3 +88,20 @@ public class UpgradeData
     public int masterId;
     public UpgradeCost[] upgradeCost;
 }
+
+
+[System.Serializable]
+public class EnemyData
+{
+    public int id;
+    public int type; //적의 등급 common,elite,midBoss, Boss, Obstacle
+    public float hp;
+    public float damage;
+    public float moveSpeed;
+    public float attackSpeed;
+    public float expAmount;
+    public int socreAmount;
+    public bool isStop; //false면 멈춰서 공격 true면 이동하면서 공격
+    public bool isAim; //true면 조준하여 사격 false면 그냥 앞으로 직선 사격
+}
+

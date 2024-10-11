@@ -217,12 +217,12 @@ using UnityEngine.SceneManagement;
 
         return 0;
     }
-
+    */
 
     public void toMainmenuBtn()
     {
 
         SceneManager.LoadScene("MainMenu");
     }
-    */
+    
 }

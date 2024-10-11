@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Enemy_Common : EnemyAct
+public class Enemy_Common : EnemyObject
 {
     private int curProjNum; //현재 발사체 숫자
     private float curProjAngle; //현재 발사체의 각도
@@ -42,7 +42,7 @@ public class Enemy_Common : EnemyAct
         enemyAttackDealy = 2;
         SetAttackPref();
 
-        if(enemyStat.enemyMoveAttack == true)
+        if(enemyStat.isStop == true)
         {
             isAttackReady = true;
         }
@@ -52,10 +52,10 @@ public class Enemy_Common : EnemyAct
     {
         base.Update();
 
-        if (enemyStat.enemyMoveAttack)
+        if (enemyStat.isStop)
         {
             //움직이며 공격하는 몹
-            EnemyMoveForward(gameObject);
+            EnemyAct.EnemyMoveForward(gameObject);
             if (!isAttackCoroutineActive)
             {
                 StartCoroutine(AttackRepeatly(100f,2f));
@@ -66,7 +66,7 @@ public class Enemy_Common : EnemyAct
         {
             if(isMove)
             {
-                EnemyMoveForward(gameObject);
+                EnemyAct.EnemyMoveForward(gameObject);
             }
             else
             {
@@ -106,7 +106,7 @@ public class Enemy_Common : EnemyAct
     private void Attack()
     {
 
-        BulletAttack(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
+        EnemyAct.BulletAttack(this,curProjNum, curProjAngle, enemyStat.attackSpeed, enemyStat.isAim);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -118,7 +118,7 @@ public class Enemy_Common : EnemyAct
             if (stopCount == stopTrigCount)
             {
                 isMove = false;
-                EnemyMoveStop(gameObject);
+                EnemyAct.EnemyMoveStop(gameObject);
             }
         }
     }

@@ -5,12 +5,11 @@ using UnityEngine.UI;
 public class EnemyObject : MonoBehaviour
 {
     [Header("공통 스텟")]
-    public Enemy enemyStat; // 이 스텟의 id로 처음에 스텟 초기화
+    public EnemyData enemyStat; // 이 스텟의 id로 처음에 스텟 초기화
     public int curEnemyId; // 임시. 스텟 초기화 후 id를 바꾼경우를 체크하기 위함
     public float curHp; // 현재의 maxHp. 이것이 0 이되면 파괴
     public GameObject enemyHpBar;
 
-    private EnemyJsonReader enemyData;
     private GameObject canvas;
     private GameObject hpBarInstance;
     private RectTransform hpBar;
@@ -35,7 +34,6 @@ public class EnemyObject : MonoBehaviour
             UpdateSpriteColor();
         }
     }
-
     public bool MakeEnemyShocked
     {
         get => isEnemySlow;
@@ -54,21 +52,16 @@ public class EnemyObject : MonoBehaviour
     protected virtual void Awake()
     {
         canvas = GameObject.Find("Canvas");
-        //enemyData = DataManager.dataInstance.GetComponent<EnemyJsonReader>();
     }
 
     protected virtual void Start()
     {
         HpBarSet();
-        initStat();
     }
 
     protected virtual void OnEnable()
     {
-        initStat();
-        StartCoroutine(SetEliminate());
-
-        isEnemyDropItem = false;
+        StartCoroutine(SetEliminatable());
     }
 
     protected virtual void OnDisable()
@@ -76,65 +69,64 @@ public class EnemyObject : MonoBehaviour
 
     }
 
+    protected virtual void Update()
+    {
+        if (isEliminatable)
+        {
+            if (curHp <= 0)
+            {
+                EnemyDeath();
+                return;
+            }
 
-    private IEnumerator SetEliminate()
+            if (curHp < enemyStat.hp && !hpBarInstance.activeSelf)
+            {
+                hpBarInstance.SetActive(true);
+            }
+
+            HpBarUpdate();
+        }
+    }
+
+    public void SetId(int id)
+    {
+        curEnemyId = id;
+        initStat();
+        
+    }
+
+    private void initStat()
+    {
+        enemyStat = DataManager.enemy.GetData(curEnemyId);
+
+        UpdateEnemyStat(enemyStat);
+        curHp = enemyStat.hp;
+
+        isAttackReady = true;
+        isEnemySlow = false;
+        isEliminatable = false;
+        isEnemyDropItem = false;
+        UpdateSpriteColor();
+    }
+
+    private IEnumerator SetEliminatable()
     {
         yield return new WaitForSeconds(1f);
         isEliminatable = true;
     }
 
-    protected virtual void Update()
+    private void UpdateEnemyStat(EnemyData enemy)
     {
-        if (enemyStat.enemyId != curEnemyId)
-        {
-            initStat();
-        }
-
-        if (curHp <= 0)
-        {
-            EnemyDeath();
-            return;
-        }
-
-        if (curHp < enemyStat.enemyMaxHp && !hpBarInstance.activeSelf)
-        {
-            hpBarInstance.SetActive(true);
-        }
-
-        HpBarUpdate();
-    }
-
-    private void initStat()
-    {
-        foreach (var enemy in enemyData.EnemyList.enemy)
-        {
-            if (enemyStat.enemyId == enemy.enemyId)
-            {
-                UpdateEnemyStat(enemy);
-                curHp = enemyStat.enemyMaxHp;
-                break;
-            }
-        }
-        isAttackReady = true;
-        isEnemySlow = false;
-        isEliminatable = false;
-        isEnemyDropItem=false;
-        UpdateSpriteColor();
-    }
-
-    private void UpdateEnemyStat(Enemy enemy)
-    {
-        enemyStat.enemyGrade = enemy.enemyGrade;
-        enemyStat.enemyName = enemy.enemyName;
-        enemyStat.enemyMaxHp = enemy.enemyMaxHp;
-        enemyStat.enemyDamage = enemy.enemyDamage;
-        enemyStat.enemyMoveSpeed = enemy.enemyMoveSpeed;
-        enemyStat.enemyAttackSpeed = enemy.enemyAttackSpeed;
-        enemyStat.enemyExpAmount = enemy.enemyExpAmount;
-        enemyStat.enemyScoreAmount = enemy.enemyScoreAmount;
-        enemyStat.enemyMoveAttack = enemy.enemyMoveAttack;
-        enemyStat.isEnemyAiming = enemy.isEnemyAiming;
-        curEnemyId = enemy.enemyId;
+        enemyStat.type = enemy.type;
+        enemyStat.hp = enemy.hp;
+        enemyStat.damage = enemy.damage;
+        enemyStat.moveSpeed = enemy.moveSpeed;
+        enemyStat.attackSpeed = enemy.attackSpeed;
+        enemyStat.expAmount = enemy.expAmount;
+        enemyStat.socreAmount = enemy.socreAmount;
+        enemyStat.isStop = enemy.isStop;
+        enemyStat.isAim = enemy.isAim;
+        curEnemyId = enemy.id;
     }
 
     private void UpdateSpriteColor()
@@ -150,14 +142,18 @@ public class EnemyObject : MonoBehaviour
         }
     }
 
+    //해당 에너미 오브젝트의 hp를 만듬
     private void HpBarSet()
     {
         if (hpBar != null) return;
 
         hpBarInstance = Instantiate(enemyHpBar, canvas.transform);
-        hpBarInstance.transform.SetParent(canvas.transform.GetChild(0));
         hpBar = hpBarInstance.GetComponent<RectTransform>();
         hpSlider = hpBarInstance.GetComponent<Slider>();
+
+        hpBarInstance.name = $"{gameObject.name}'s hp";
+        hpBarInstance.transform.SetParent(canvas.transform.GetChild(0));
+        
         hpBar.sizeDelta = new Vector2(transform.localScale.x * 200, hpBar.sizeDelta.y);
         hpBarInstance.SetActive(false);
     }
@@ -166,12 +162,12 @@ public class EnemyObject : MonoBehaviour
     {
         var hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - transform.localScale.y, 0));
         hpBar.position = hpBarPos;
-        hpSlider.value = curHp / enemyStat.enemyMaxHp;
+        hpSlider.value = curHp / enemyStat.hp;
     }
 
     private void DropExp()
     {
-        for (int i = 0; i < enemyStat.enemyExpAmount; i++)
+        for (int i = 0; i < enemyStat.expAmount; i++)
         {
             Managers.Instance.Pool.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
         }
@@ -185,7 +181,7 @@ public class EnemyObject : MonoBehaviour
 
     public void EnemyDeath()
     {
-        if (enemyStat.enemyGrade == "Boss")
+        if (enemyStat.type == 4)
         {
             Managers.Instance.Spawn.isBossDown = true;
             Managers.Instance.Spawn.isBossSpawned = false;
@@ -226,7 +222,7 @@ public class EnemyObject : MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        GameManager.Instance.score += enemyStat.enemyScoreAmount;
+        GameManager.Instance.score += enemyStat.socreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)
@@ -239,7 +235,7 @@ public class EnemyObject : MonoBehaviour
     {
         if (collision.CompareTag("BulletBorder") && isEliminatable)
         {
-            if (enemyStat.enemyGrade == "common" || enemyStat.enemyGrade == "elite")
+            if (enemyStat.type == 1 || enemyStat.type == 2)
             {
                 EnemyEliminate();
             }

@@ -36,7 +36,7 @@ public class Enemy_Elite : EnemyAct
         enemyAttackTime = 10;
         enemyAttackDealy = 2;
         SetAttackPref();
-        if (enemyStat.enemyMoveAttack == true)
+        if (enemyStat.isStop == true)
         {
             isAttackReady = true;
         }
@@ -46,7 +46,7 @@ public class Enemy_Elite : EnemyAct
     {
         base.Update();
 
-        if (enemyStat.enemyMoveAttack)
+        if (enemyStat.isStop)
         {
             //움직이며 공격하는 몹
             EnemyMoveForward(gameObject);
@@ -84,7 +84,7 @@ public class Enemy_Elite : EnemyAct
     private void Attack()
     {
         Debug.Log("공격");
-        BulletAttack(curProjNum, curProjAngle, enemyStat.enemyAttackSpeed, enemyStat.isEnemyAiming);
+        BulletAttack(this, curProjNum, curProjAngle, enemyStat.attackSpeed, enemyStat.isAim);
     }
 
     private IEnumerator AttackRepeatly(float attackTime, float attackDelay)

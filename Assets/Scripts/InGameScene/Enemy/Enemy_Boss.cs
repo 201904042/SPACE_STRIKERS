@@ -92,11 +92,11 @@ public class Enemy_Boss : EnemyAct
     {
         isAttack = true;
         curPattern = "pattern1";
-        BulletAttack(5, 10, 5, true);
+        BulletAttack(this,5, 10, 5, true);
         yield return new WaitForSeconds(1f);
-        BulletAttack(4, 10, 5, true);
+        BulletAttack(this, 4, 10, 5, true);
         yield return new WaitForSeconds(1f);
-        BulletAttack(5, 10, 5, true);
+        BulletAttack(this, 5, 10, 5, true);
         yield return new WaitForSeconds(3f);
         isAttack = false;
     }
@@ -105,11 +105,11 @@ public class Enemy_Boss : EnemyAct
     {
         isAttack = true;
         curPattern = "pattern2";
-        BulletAttack(1, 0, 5, false, -180, true, 10);
+        BulletAttack(this, 1, 0, 5, false, -180, true, 10);
         yield return new WaitForSeconds(0.2f);
-        BulletAttack(1, 0, 5, false, -125, true, 10);
+        BulletAttack(this, 1, 0, 5, false, -125, true, 10);
         yield return new WaitForSeconds(0.2f);
-        BulletAttack(1, 0, 5, false, 125, true, 10);
+        BulletAttack(this, 1, 0, 5, false, 125, true, 10);
         yield return new WaitForSeconds(3f);
         isAttack = false;
     }
@@ -118,11 +118,11 @@ public class Enemy_Boss : EnemyAct
     {
         isAttack = true;
         curPattern = "pattern3";
-        BulletAttack(30, 360, 5, true);
+        BulletAttack(this, 30, 360, 5, true);
         yield return new WaitForSeconds(1f);
-        BulletAttack(30, 355, 5, true);
+        BulletAttack(this, 30, 355, 5, true);
         yield return new WaitForSeconds(1f);
-        BulletAttack(30, 360, 5, true);
+        BulletAttack(this, 30, 360, 5, true);
         yield return new WaitForSeconds(3f);
         isAttack = false;
     }
@@ -131,11 +131,11 @@ public class Enemy_Boss : EnemyAct
     {
         isAttack = true;
         curPattern = "pattern4";
-        MultiLaser(1, 30, true);
+        MultiLaser(this, 1, 30, true);
         yield return new WaitForSeconds(3f);
-        MultiLaser(1, 30, true);
+        MultiLaser(this, 1, 30, true);
         yield return new WaitForSeconds(3f);
-        MultiLaser(1, 30, true);
+        MultiLaser(this, 1, 30, true);
         yield return new WaitForSeconds(3f);
         isAttack = false;
     }

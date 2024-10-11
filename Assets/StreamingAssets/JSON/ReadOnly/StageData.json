@@ -4,8 +4,8 @@
       "stageCode": 1,
       "stageType": "일반",
       "stageEnemy": [
-        {"enemyId": 1, "quantity": 50},
-        {"enemyId": 2, "quantity": 50}
+        {"enemyId": 501, "quantity": 50},
+        {"enemyId": 502, "quantity": 50}
       ],
       "firstReward": [
         {"itemId": 1, "quantity": 500},
@@ -21,8 +21,8 @@
       "stageCode": 2,
       "stageType": "일반",
       "stageEnemy": [
-        {"enemyId": 1, "quantity": 50},
-        {"enemyId": 2, "quantity": 50}
+        {"enemyId": 501, "quantity": 50},
+        {"enemyId": 502, "quantity": 50}
       ],
       "firstReward": [
         {"itemId": 1, "quantity": 500},
@@ -38,10 +38,10 @@
       "stageCode": 3,
       "stageType": "일반",
       "stageEnemy": [
-        {"enemyId": 1, "quantity": 50},
-        {"enemyId": 2, "quantity": 50},
-        {"enemyId": 11, "quantity": 50},
-        {"enemyId": 12, "quantity": 50}
+        {"enemyId": 501, "quantity": 50},
+        {"enemyId": 502, "quantity": 50},
+        {"enemyId": 511, "quantity": 50},
+        {"enemyId": 512, "quantity": 50}
       ],
       "firstReward": [
         {"itemId": 1, "quantity": 500},
@@ -57,10 +57,10 @@
       "stageCode": 4,
       "stageType": "일반",
       "stageEnemy": [
-        {"enemyId": 1, "quantity": 50},
-        {"enemyId": 2, "quantity": 50},
-        {"enemyId": 11, "quantity": 50},
-        {"enemyId": 12, "quantity": 50}
+        {"enemyId": 501, "quantity": 50},
+        {"enemyId": 502, "quantity": 50},
+        {"enemyId": 511, "quantity": 50},
+        {"enemyId": 512, "quantity": 50}
       ],
       "firstReward": [
         {"itemId": 1, "quantity": 500},
@@ -76,11 +76,11 @@
       "stageCode": 5,
       "stageType": "보스",
       "stageEnemy": [
-        {"enemyId": 1, "quantity": 50},
-        {"enemyId": 2, "quantity": 50},
-        {"enemyId": 11, "quantity": 50},
-        {"enemyId": 12, "quantity": 50},
-        {"enemyId": 31, "quantity": 1}
+        {"enemyId": 501, "quantity": 50},
+        {"enemyId": 502, "quantity": 50},
+        {"enemyId": 511, "quantity": 50},
+        {"enemyId": 512, "quantity": 50},
+        {"enemyId": 531, "quantity": 1}
       ],
       "firstReward": [
         {"itemId": 1, "quantity": 500},

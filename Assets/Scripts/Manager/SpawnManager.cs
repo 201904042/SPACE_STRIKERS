@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
         {
             //메인스폰존
             new SpawnPattern() { 
-                enemyId = 1,
+                enemyId = 501,
                 amount = 5,
                 spawnZone = mainSpawnZone,
                 positions = new Vector2[]
@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour
                 }
             },
             new SpawnPattern() {
-                enemyId = 2,
+                enemyId = 502,
                 amount = 3,
                 spawnZone = mainSpawnZone,
                 positions = new Vector2[]
@@ -75,7 +75,7 @@ public class SpawnManager : MonoBehaviour
             },
             new SpawnPattern
             {
-                enemyId = 11, 
+                enemyId = 511, 
                 amount = 2,
                 spawnZone = mainSpawnZone,
                 positions = new Vector2[]
@@ -86,7 +86,7 @@ public class SpawnManager : MonoBehaviour
             },
             new SpawnPattern
             {
-                enemyId = 12, 
+                enemyId = 512, 
                 amount = 1,
                 spawnZone = mainSpawnZone,
                 positions = new Vector2[]
@@ -97,7 +97,7 @@ public class SpawnManager : MonoBehaviour
             //사이드 스폰존
             new SpawnPattern
             {
-                enemyId = 2,
+                enemyId = 502,
                 amount = 3,
                 spawnZone = sideSpawnZoneL,
                 positions = new Vector2[]
@@ -109,7 +109,7 @@ public class SpawnManager : MonoBehaviour
             },
              new SpawnPattern
             {
-                enemyId = 2,
+                enemyId = 502,
                 amount = 3,
                 spawnZone = sideSpawnZoneR,
                 positions = new Vector2[]
@@ -121,7 +121,7 @@ public class SpawnManager : MonoBehaviour
             },
              new SpawnPattern
             {
-                enemyId = 12,
+                enemyId = 512,
                 amount = 1,
                 spawnZone = sideSpawnZoneL,
                 positions = new Vector2[]
@@ -131,7 +131,7 @@ public class SpawnManager : MonoBehaviour
             },
              new SpawnPattern
             {
-                enemyId = 12,
+                enemyId = 512,
                 amount = 1,
                 spawnZone = sideSpawnZoneR,
                 positions = new Vector2[]

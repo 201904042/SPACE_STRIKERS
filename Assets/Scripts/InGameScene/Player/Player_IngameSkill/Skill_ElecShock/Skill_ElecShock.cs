@@ -70,7 +70,7 @@ public class Skill_ElecShock : PlayerProjectile
                 else
                 {
                     enemy.EnemyDamaged(damage, gameObject);
-                    if (enemy.enemyStat.enemyGrade != "Boss")
+                    if (enemy.enemyStat.type != 4)
                     {
                         StartCoroutine(SlowEnemy(collision));
                     }
@@ -85,17 +85,17 @@ public class Skill_ElecShock : PlayerProjectile
         EnemyObject enemy = collision.GetComponent<EnemyObject>();
         SpriteRenderer enemySprite = collision.GetComponent<SpriteRenderer>();
 
-       float originalSpeed = enemy.enemyStat.enemyMoveSpeed;
+       float originalSpeed = enemy.enemyStat.moveSpeed;
 
         enemy.MakeEnemyShocked = true;
-        enemy.enemyStat.enemyMoveSpeed = enemy.enemyStat.enemyMoveSpeed *(1 - slowRate);
+        enemy.enemyStat.moveSpeed = enemy.enemyStat.moveSpeed *(1 - slowRate);
 
         yield return new WaitForSeconds(slowTime);
 
         if (enemy.gameObject.activeSelf != false && enemy.MakeEnemyShocked == true)
         {
             enemy.MakeEnemyShocked = false;
-            enemy.enemyStat.enemyMoveSpeed = originalSpeed;
+            enemy.enemyStat.moveSpeed = originalSpeed;
         }
     }
 }

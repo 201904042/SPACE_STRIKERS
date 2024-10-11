@@ -1149,6 +1149,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1365009835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6388701695144634678, guid: ed030da652c2a4847a8121992f243963, type: 3}
+  m_PrefabInstance: {fileID: 1452531521}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1452531521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1378,7 +1383,7 @@ GameObject:
   - component: {fileID: 2040664560}
   - component: {fileID: 2040664559}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: '@GameManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1397,7 +1402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 0}
-  gameEndUI: {fileID: 0}
+  gameEndUI: {fileID: 1365009835}
   stageTime: 0
   minutes: 0
   seconds: 0

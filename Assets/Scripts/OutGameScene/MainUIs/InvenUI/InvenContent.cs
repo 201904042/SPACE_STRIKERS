@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InvenContent : MonoBehaviour
 {
     public GameObject itemUIPref;
-    public ItemType contentType; //2:파츠, 3:재료, 4:소모품
+    public MasterType contentType; //2:파츠, 3:재료, 4:소모품
 
     private void OnEnable()
     {
@@ -25,7 +25,7 @@ public class InvenContent : MonoBehaviour
         }
     }
 
-    public void SearchInDatabase(ItemType targetType)
+    public void SearchInDatabase(MasterType targetType)
     {
         foreach (InvenData item in DataManager.inven.GetDictionary().Values)
         {

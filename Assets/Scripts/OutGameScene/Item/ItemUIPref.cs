@@ -30,7 +30,7 @@ public class ItemUIPref : MonoBehaviour
 
     public Sprite defaultImage;
 
-    public ItemType curItemType; //2면 파츠, 나머지면 다른 아이템
+    public MasterType curItemType; //2면 파츠, 나머지면 다른 아이템
 
     private void Awake()
     {
@@ -63,13 +63,13 @@ public class ItemUIPref : MonoBehaviour
         if (invenId == -1)
         {
             partsData.invenId = -1;
-            curItemType = (ItemType)2;
+            curItemType = (MasterType)2;
             return;
         }
         invenData = DataManager.inven.GetData(invenId);
 
-        ItemType itemtype = DataManager.master.GetData(invenData.masterId).type;
-        if(itemtype == (ItemType)2) //파츠일경우
+        MasterType itemtype = DataManager.master.GetData(invenData.masterId).type;
+        if(itemtype == (MasterType)2) //파츠일경우
         {
             partsData = DataManager.parts.GetData(invenData.id);
         }
@@ -84,7 +84,7 @@ public class ItemUIPref : MonoBehaviour
 
     private void SetData()
     {
-        if (curItemType == (ItemType)2)
+        if (curItemType == (MasterType)2)
         {
             switch (partsData.rank)
             {

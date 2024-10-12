@@ -6,7 +6,7 @@ public struct MasterData
 {
     public int id;
     public string name;
-    public ItemType type;
+    public MasterType type;
     public string description;
     public string spritePath;
 }

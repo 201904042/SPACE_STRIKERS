@@ -13,7 +13,7 @@ public class Ability
         key = other.key;
         value = other.value;
     }
-    public Ability(int key, int abilityKey, float value)
+    public Ability(int key, float value)
     {
         this.key = key;
         this.value = value;
@@ -29,7 +29,6 @@ public class Ability
         }
         return a;
     }
-
 }
 
 [System.Serializable]
@@ -38,6 +37,7 @@ public class AbilityRate
     public float? min; //어빌리티의 값이 될수있는 최솟값
     public float? max; //최댓값 즉 랜덤( min , max)
 }
+
 
 [Serializable]
 public class StageEnemyData
@@ -68,12 +68,12 @@ public class UpgradeIngred
     public int quantity;
 }
 
-
-public enum ItemType
+public enum MasterType
 {
     Money,
     Character,
     Parts,
     Ingredient,
-    Consume
+    Consume,
+    Enemy
 }

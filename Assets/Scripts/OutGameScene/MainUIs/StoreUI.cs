@@ -122,36 +122,64 @@ public class StoreUI : MainUIs
     /// <summary>
     /// 구매할 아이템 정보 , 개당 구매 가격, 구매 개수
     /// </summary>
-    public static void ItemPurchase(int targetMasterId, int cost, int amount = 1)
+    public static void ItemPurchase(TradeData data)
     {
-        //구매의 조건에 부합하는지 체크
-        if (cost > DataManager.inven.GetData(1).quantity) //미네랄의 양 검사
+        MasterData targetData = DataManager.master.GetData(data.targetId);
+        InvenData costData = new InvenData();
+
+        if (data.tradeCost == TradeType.Mineral)
         {
-            //구매 불가 할경우. 알림 인터페이스 오픈
-            UIManager.alertInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
+            costData = DataManager.inven.GetDataWithMasterId(1).Value;
+            if (data.price > costData.quantity) //미네랄의 양 검사
+            {
+                //구매 불가 할경우. 알림 인터페이스 오픈
+                UIManager.alertInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
+                return;
+            }
+
+            
+        }
+        else if (data.tradeCost == TradeType.Ruby)
+        {
+            costData = DataManager.inven.GetDataWithMasterId(2).Value;
+            if (data.price > costData.quantity) //미네랄의 양 검사
+            {
+                //구매 불가 할경우. 알림 인터페이스 오픈
+                UIManager.alertInterface.SetAlert("구매 불가/n 루비가 부족합니다");
+                return;
+            }
+        }
+        else if (data.tradeCost == TradeType.Cash)
+        {
+            //현금 결재는 보류
+            UIManager.alertInterface.SetAlert("아직 캐쉬구매는 불가합니다");
             return;
         }
-        MasterData targetData = DataManager.master.GetData(targetMasterId);
-        InvenData ownMineral = DataManager.inven.GetDataWithMasterId(1).Value;
-        ownMineral.quantity = ownMineral.quantity - (cost * amount);
+        else
+        {
+            UIManager.alertInterface.SetAlert("올바르지 않은 구매입니다");
+            return;
+        }
 
-        DataManager.inven.UpdateData(ownMineral.id, ownMineral);
+        //거래 대가 감소
+        costData.quantity -= data.price;
+        DataManager.inven.UpdateData(costData.id, costData);
 
-        //해당 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
-        InvenData? checkData = DataManager.inven.GetDataWithMasterId(targetMasterId);
+        //구매한 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
+        InvenData? checkData = DataManager.inven.GetDataWithMasterId(data.targetId);
         if (checkData != null)
         {
             InvenData invenData = (InvenData)checkData;
-            invenData.quantity += amount;
+            invenData.quantity += data.tradeAmount;
             DataManager.inven.UpdateData(invenData.id, invenData);
         }
         else
         {
             InvenData newData = new InvenData
             {
-                id = DataManager.inven.GetLastKey()+1,
-                masterId = targetMasterId,
-                quantity = amount,
+                id = DataManager.inven.GetLastKey() + 1,
+                masterId = data.targetId,
+                quantity = data.tradeAmount,
                 name = targetData.name
             };
 

@@ -59,7 +59,7 @@ public class ItemInformInterface : UIInterface
         nameText.text = masterData.name;
         descriptionText.text = masterData.description;
         itemImage.sprite = Resources.Load<Sprite>(masterData.spritePath);
-        if(masterData.type == ItemType.Parts)
+        if(masterData.type == MasterType.Parts)
         {
             int rank = DataManager.parts.GetData(invenItemId).rank;
             switch (rank)

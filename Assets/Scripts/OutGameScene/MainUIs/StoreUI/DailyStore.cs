@@ -9,8 +9,6 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-
-
 public class DailyStore : MonoBehaviour
 {
     public Transform ItemBtns;
@@ -88,8 +86,8 @@ public class DailyStore : MonoBehaviour
             //최초에는 새로운 PlayerPref를 지정하며 24시간 마다 PlayerPref가 변화
             //PlayerPref에 마스터 아이디를 저장하여 해당 마스터 아이디로 검색 및 아이템 저장
             MasterData target = DataManager.master.GetData(DataManager.store.GetData(registStoreItem[i].storeItemId).masterId);
-            Sprite targetImage = Resources.Load<Sprite>(target.spritePath);
-            ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetUIValue(target.id, targetImage, 1000* (3/4), true); //id, 이미지, 가격 , 구매가능여부
+            
+            ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetTradeData(TradeType.Mineral , target.id, 1, 750, false);
         }
     }
 

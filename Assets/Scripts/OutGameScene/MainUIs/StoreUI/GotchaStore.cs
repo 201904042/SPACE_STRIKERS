@@ -84,12 +84,21 @@ public class GotchaStore : MonoBehaviour
         }
     }
 
-    public void Gotcha(int tier, int paidCod)
+    public void Gotcha(int tier, int paidCode)
     {
         //todo -> 가챠 시스템 추가할것
         //해당 재화를 가지고 있는지 확인
 
         //가챠를 실행 -> 랜덤으로 생성된 파츠를 인벤토리에 추가
+        /*
+         * s급 파츠 확률
+         * a급 파츠 확률
+         * b급 파츠확률
+         * c급 파츠 확률
+         * d급 파츠 확률
+         * 아이템이 나올 확률
+         * 재화가 나올 확률
+         */
 
         //(필요시) 생성된 파츠를 보여줌
 

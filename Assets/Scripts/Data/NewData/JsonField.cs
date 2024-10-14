@@ -105,3 +105,25 @@ public class EnemyData
     public bool isAim; //true면 조준하여 사격 false면 그냥 앞으로 직선 사격
 }
 
+
+[System.Serializable]
+public class GotchaData
+{
+    public int id;
+    public GotchaInform[] items;
+    public GotchaCost[] cost;
+}
+
+[System.Serializable]
+public class GotchaInform
+{
+    public string type;
+    public float rate;
+}
+
+[System.Serializable]
+public class GotchaCost
+{
+    public int id;
+    public float amount;
+}

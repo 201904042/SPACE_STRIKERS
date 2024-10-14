@@ -65,6 +65,15 @@ public class EnemyDataReader : ReadOnlyData<EnemyData>
     }
 }
 
+public class GotchaDataReader : ReadOnlyData<GotchaData>
+{
+    protected override int GetId(GotchaData data)
+    {
+        fieldType = DataFieldType.GotchaData;
+        return data.id;
+    }
+}
+
 
 
 public class AccountJsonReader : EditableData<AccountData>

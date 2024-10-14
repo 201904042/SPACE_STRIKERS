@@ -15,7 +15,8 @@ public enum DataFieldType
     CharData,
     PartsData,
     InvenData,
-    EnemyData
+    EnemyData,
+    GotchaData
 }
 
 
@@ -32,7 +33,8 @@ public class DataManager : MonoBehaviour
     { DataFieldType.CharData, "CharacterData" },
     { DataFieldType.PartsData, "PartsData" },
     { DataFieldType.InvenData, "InvenData" },
-    { DataFieldType.EnemyData, "EnemyData" }
+    { DataFieldType.EnemyData, "EnemyData" },
+    { DataFieldType.GotchaData, "GotchaData" }
 };
 
     public static AccountJsonReader account = new AccountJsonReader();
@@ -45,7 +47,7 @@ public class DataManager : MonoBehaviour
     public static StoreItemReader store = new StoreItemReader();
     public static StageDataReader stage = new StageDataReader();
     public static UpgradeDataReader upgrade = new UpgradeDataReader();
-
+    public static GotchaDataReader gotcha = new GotchaDataReader();
     public void Init()
     {
         LoadAllData();
@@ -58,6 +60,7 @@ public class DataManager : MonoBehaviour
         stage.LoadData("Assets/StreamingAssets/JSON/ReadOnly/StageData.json");
         upgrade.LoadData("Assets/StreamingAssets/JSON/ReadOnly/UpgradeData.json");
         enemy.LoadData("Assets/StreamingAssets/JSON/ReadOnly/EnemyData.json");
+        gotcha.LoadData("Assets/StreamingAssets/JSON/ReadOnly/GotchaData.json");
 
         store.LoadData("Assets/StreamingAssets/JSON/Writable/StoreData.json");
         account.LoadData("Assets/StreamingAssets/JSON/Writable/AccountData.json");

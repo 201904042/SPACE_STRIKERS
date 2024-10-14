@@ -18,7 +18,6 @@ public class ItemAmountPref : MonoBehaviour
         textGroup = transform.GetChild(1);
         ownAmountText = textGroup.GetChild(0).GetComponent<TextMeshProUGUI>();
         needAmountText = textGroup.GetChild(1).GetComponent<TextMeshProUGUI>();
-        
     }
 
     private void OnEnable()
@@ -31,24 +30,29 @@ public class ItemAmountPref : MonoBehaviour
         itemImage.sprite = null;
         needAmountText.text = "";
         ownAmountText.text = "";
+        ownAmountText.color = Color.black;
     }
 
-    public void SetAmountUI(int masterId, int needAmount)
+    public void SetAmountUI(int masterId, float needAmount)
     {
-        
-        InvenData invenData = (InvenData)DataManager.inven.GetDataWithMasterId(masterId);
-        ownAmountText.text = $"{invenData.quantity}";
-
+        InvenData invenData = DataManager.inven.GetDataWithMasterId(masterId);
         MasterData masterData = DataManager.master.GetData(masterId);
 
         itemImage.sprite = Resources.Load<Sprite>(masterData.spritePath);
 
+
         needAmountText.text = $"{needAmount}";
 
-        if(needAmount > invenData.quantity)
+        int haveAmount = 0;
+        if(invenData != null && invenData.quantity > 0)
+        {
+            haveAmount = invenData.quantity;
+        }
+
+        ownAmountText.text = $"{haveAmount}";
+        if (needAmount > haveAmount)
         {
             ownAmountText.color = Color.red;
         }
-        
     }
 }

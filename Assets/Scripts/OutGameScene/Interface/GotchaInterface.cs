@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Text;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -17,8 +19,8 @@ public class GotchaInterface : UIInterface
     public Button acceptByMoney;
     public Button acceptByCoupon;
 
-    public TextMeshProUGUI acceptByMoneyText;
-    public TextMeshProUGUI acceptByCouponText;
+    public ItemAmountPref ItemAmountForMoney;
+    public ItemAmountPref ItemAmountForCoupon;
 
     public int gotchaTier = 0; // 1하급 2중급 3상급
     public int paidTypeCode;
@@ -35,9 +37,9 @@ public class GotchaInterface : UIInterface
         Btns = transform.GetChild(3);
         closeBtn = Btns.GetChild(0).GetComponent<Button>();
         acceptByMoney = Btns.GetChild(1).GetComponent<Button>();
-        acceptByMoneyText = acceptByMoney.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        ItemAmountForMoney = acceptByMoney.transform.GetChild(0).GetComponent<ItemAmountPref>();
         acceptByCoupon = Btns.GetChild(2).GetComponent<Button>();
-        acceptByCouponText = acceptByCoupon.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        ItemAmountForCoupon = acceptByCoupon.transform.GetChild(0).GetComponent<ItemAmountPref>();
     }
 
 
@@ -80,25 +82,42 @@ public class GotchaInterface : UIInterface
 
     private void TextSet(int grade)
     {
-        if (grade == 1)
+        GotchaData gotchaData = DataManager.gotcha.GetData(grade);
+        StringBuilder sb = new StringBuilder();
+        foreach(GotchaInform gi in gotchaData.items)
         {
-            gotchaContentText.text =  "E급 파츠 40%\r\nD급 파츠 25%\r\nC급 파츠 15%\r\nB급 파츠 10%\r\n소비 아이템 10%"; //하급
-            acceptByMoneyText.text = "미네랄\n1000";
-            acceptByCouponText.text = "하급뽑기권\n1";
+            string itemName = TransText(gi.type);
+            sb.Append($"{itemName} : {gi.rate}%");
         }
-        else if (grade == 2)
-        {
-            gotchaContentText.text= " C급 파츠 35%\r\nB급 파츠 20%\r\nA급 파츠 20%\r\n소비 아이템 25%\r\n미네랄 1000~2000"; //중급
-            acceptByMoneyText.text = "미네랄\n10000";
-            acceptByCouponText.text = "중급뽑기권\n1";
+        gotchaContentText.text = sb.ToString();
 
-        }
-        else if (grade == 3)
+        foreach (GotchaCost gc in gotchaData.cost)
         {
-            gotchaContentText.text=  " B급 파츠 30%\r\nA급 파츠 30%\r\nS급 파츠 30%\r\n소비 아이템 10%\r\n미네랄 1000~5000"; //상급
-            acceptByMoneyText.text = "미네랄\n100000";
-            acceptByCouponText.text = "고급뽑기권\n1";
+            if(gc.id == 1)
+            {
+                ItemAmountForMoney.SetAmountUI(gc.id, gc.amount);
+            }
+            else
+            {
+                ItemAmountForCoupon.SetAmountUI(gc.id, gc.amount);
+            }
         }
+    }
+
+    private string TransText(string type)
+    {
+        string transString = "알 수 없음";
+        switch (type)
+        {
+            case "S": transString = "S급 파츠"; break; 
+            case "A": transString = "A급 파츠"; break;
+            case "B": transString = "B급 파츠"; break;
+            case "C": transString = "C급 파츠"; break;
+            case "D": transString = "D급 파츠"; break;
+            case "consume": transString = "소비아이템"; break;
+        }
+
+        return transString;
     }
 
     private void AcceptBtn(bool result, int paidType)

@@ -34,6 +34,12 @@ public class AbilityDataWrapper
     public List<AbilityData> AbilityData;
 }
 
+public class GotchaDataWrapper
+{
+    public List<GotchaData> GotchaData;
+}
+
+
 
 //Writable
 [System.Serializable]

@@ -25,8 +25,15 @@ public abstract class ReadOnlyData<T>
             dataDict[id] = data;
             keysList.Add(id);
         }
+        if(dataDict.Count == 0)
+        {
+            Debug.LogWarning($"{typeof(T).Name}에 데이터 {dataDict.Count}개가 들어옴");
+        }
+        else
+        {
+            Debug.Log($"{typeof(T).Name}에 데이터 {dataDict.Count}개가 들어옴");
+        }
         
-        Debug.Log($"{typeof(T).Name}에 데이터 {dataDict.Count}개가 들어옴");
     }
 
     private static List<T> SetJsonList(string json, List<T> dataList)
@@ -82,6 +89,11 @@ public abstract class ReadOnlyData<T>
         {
             var wrapper = JsonUtility.FromJson<EnemyDataWrapper>(json);
             dataList = wrapper.EnemyData as List<T>;
+        }
+        else if (typeof(T) == typeof(GotchaData))
+        {
+            var wrapper = JsonUtility.FromJson<GotchaDataWrapper>(json);
+            dataList = wrapper.GotchaData as List<T>;
         }
 
 

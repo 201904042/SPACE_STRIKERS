@@ -105,16 +105,16 @@ public class SelectCharInterface : UIInterface
     private void BtnListenerSet()
     {
         char1Btn.onClick.RemoveAllListeners();
-        char1Btn.onClick.AddListener(() => SelectedCode = 1); // 캐릭터 코드 101
+        char1Btn.onClick.AddListener(() => SelectedCode = 101); // 캐릭터 코드 101
 
         char2Btn.onClick.RemoveAllListeners();
-        char2Btn.onClick.AddListener(() => SelectedCode = 2); // 캐릭터 코드 102
+        char2Btn.onClick.AddListener(() => SelectedCode = 102); // 캐릭터 코드 102
 
         char3Btn.onClick.RemoveAllListeners();
-        char3Btn.onClick.AddListener(() => SelectedCode = 3); // 캐릭터 코드 103
+        char3Btn.onClick.AddListener(() => SelectedCode = 103); // 캐릭터 코드 103
 
         char4Btn.onClick.RemoveAllListeners();
-        char4Btn.onClick.AddListener(() => SelectedCode = 4); // 캐릭터 코드 104
+        char4Btn.onClick.AddListener(() => SelectedCode = 104); // 캐릭터 코드 104
     }
 
     private void SelectCharacterButton(Button charBtn,int CharacterCode)

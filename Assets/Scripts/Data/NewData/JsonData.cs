@@ -126,13 +126,14 @@ public abstract class EditableData<T> : ReadOnlyData<T>
     public bool AddData(T data)
     {
         int id = GetId(data); // 데이터를 추가하기 전에 ID를 가져옵니다.
-        if (!dataDict.ContainsKey(id))
+        if (!dataDict.ContainsKey(id)) //해당 아이디가 없음
         {
             dataDict.Add(id,data);
             keysList.Add(id); // 키 리스트에 추가
             keysList = keysList.OrderBy(x => x).ToList(); // 키 리스트 정렬
             return true;
         }
+        
         return false; // 중복 ID의 경우 false 반환
     }
 

@@ -55,7 +55,7 @@ public class AccountData
 }
 
 [System.Serializable]
-public struct CharData
+public class CharData
 {
     public int id;
     public string name;
@@ -64,7 +64,7 @@ public struct CharData
 }
 
 [System.Serializable]
-public struct InvenData
+public class InvenData
 {
     public int id;
     public int masterId;

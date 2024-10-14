@@ -25,14 +25,14 @@ public class LabotoryUI : MainUIs
     public Transform ingredientSlot;
     public TextMeshProUGUI upgradeInformText;
 
-    public Transform Buttons;
+    public Transform buttons;
     public Button upgradeBtn;
     public Button mainBtn;
     public Button storeBtn;
     
 
     public int targetInvenCode; //강화하려는 캐릭터 혹은 파츠의 인벤토리 아이디
-    public int targetType;
+    public MasterType targetType;
     List<UpgradeIngred> ingredientList = new List<UpgradeIngred>(); //강화에 드는 재료 (key , amount)
     List<Ability> valueList = new List<Ability>(); //강화할시 추가될 값 (key , value)
 
@@ -45,6 +45,22 @@ public class LabotoryUI : MainUIs
     {
         base.SetComponent();
 
+        InitializeUIComponents();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        ResetUI();
+        SetupButtons();
+        ActivateCharacterMode();
+    }
+
+    //@UI 구성
+
+    //컴포넌트 설정
+    private void InitializeUIComponents()
+    {
         changeModeBtns = transform.GetChild(0);
         charModeBtn = changeModeBtns.GetChild(0).GetComponent<Button>();
         partModeBtn = changeModeBtns.GetChild(1).GetComponent<Button>();
@@ -57,78 +73,85 @@ public class LabotoryUI : MainUIs
         ingredientSlot = informSlots.GetChild(0).GetComponentInChildren<ScrollRect>().content;
         upgradeInformText = informSlots.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
 
-        Buttons = transform.GetChild(3);
-        upgradeBtn = Buttons.GetChild(0).GetComponent<Button>();
-        mainBtn = Buttons.GetChild(1).GetComponent<Button>();
-        storeBtn = Buttons.GetChild(2).GetComponent<Button>();
-
+        buttons = transform.GetChild(3);
+        upgradeBtn = buttons.GetChild(0).GetComponent<Button>();
+        mainBtn = buttons.GetChild(1).GetComponent<Button>();
+        storeBtn = buttons.GetChild(2).GetComponent<Button>();
     }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        Reset();
-        SetButtons();
-        CharMode();
-    }
-
-    public void Reset()
+    //UI 초기화
+    private void ResetUI()
     {
         targetInvenCode = 0;
-        targetType = 0;
+        targetType = MasterType.None;
         upgradeBtn.interactable = false;
         charSlot.GetComponent<CharacterImageBtn>().ResetData();
         partsSlot.GetComponent<PartsSlot>().ResetData();
         ingredientList.Clear();
         valueList.Clear();
-
-        //재료칸의 재료 프리팹들 모두 삭제
-        if (ingredientSlot.childCount != 0)
-        {
-            for (int i = ingredientSlot.childCount - 1; i >= 0; i--)
-            {
-                Transform child = ingredientSlot.GetChild(i);
-                Destroy(child.gameObject);
-            }
-        }
-
+        ClearChildObjects(ingredientSlot);
         upgradeInformText.text = "";
     }
 
-    private void SetButtons()
+    //자식객체 삭제
+    private void ClearChildObjects(Transform parent)
     {
-        //모드버튼, 슬롯버튼, UI조작 버튼들모두 설정
-
-        //모든 버튼 초기화
-        Button[] buttons = GetComponentsInChildren<Button>();
-        for (int i = 0; i < buttons.Length; i++) {
-            buttons[i].onClick.RemoveAllListeners();
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            Destroy(parent.GetChild(i).gameObject);
         }
+    }
 
-        charModeBtn.onClick.AddListener(CharMode);
-        partModeBtn.onClick.AddListener(PartsMode);
+    //버튼 핸들러 설정
+    private void SetupButtons()
+    {
+        RemoveAllButtonListeners();
+        charModeBtn.onClick.AddListener(ActivateCharacterMode);
+        partModeBtn.onClick.AddListener(ActivatePartsMode);
 
-        //슬롯을 클릭하면 캐릭터나 파츠 인터페이스 실행
         charSlot.onClick.AddListener(GetCharId);
         partsSlot.onClick.AddListener(GetPartsId);
 
-        upgradeBtn.onClick.AddListener(UpgradeBtnHandler);
-        mainBtn.onClick.AddListener(GotoMain);
-        storeBtn.onClick.AddListener(GotoShop);
-
+        upgradeBtn.onClick.AddListener(UpgradeBtn);
+        mainBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.mainUI));
+        storeBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.stageUI));
     }
 
-    public void CharMode()
+    //모든 버튼의 리스터 제거
+    private void RemoveAllButtonListeners()
     {
-        charSlot.gameObject.SetActive(true);
-        partsSlot.gameObject.SetActive(false);
-
-        Reset();
+        foreach (Button button in GetComponentsInChildren<Button>())
+        {
+            button.onClick.RemoveAllListeners();
+        }
     }
 
+    //캐릭터 강화 모드 버튼 클릭
+    private void ActivateCharacterMode()
+    {
+        ToggleMode(true);
+    }
+
+    //파츠 강화 모드 버튼 클릭
+    private void ActivatePartsMode()
+    {
+        ToggleMode(false);
+    }
+
+    //현재 모드에 따른 활성화
+    private void ToggleMode(bool isCharacterMode)
+    {
+        charSlot.gameObject.SetActive(isCharacterMode);
+        partsSlot.gameObject.SetActive(!isCharacterMode);
+        ResetUI();
+    }
+
+    //@강화 대상 선택
+
+    //캐릭터 선택 과정
     private void GetCharId()
     {
-        Reset();
+        ResetUI();
         StartCoroutine(GetCharIdCoroutine());
     }
 
@@ -139,29 +162,9 @@ public class LabotoryUI : MainUIs
         yield return StartCoroutine(selecteCharInterface.GetValue());
         if(selecteCharInterface.result == true)
         {
-            targetInvenCode = DataManager.inven.GetDataWithMasterId(selecteCharInterface.SelectedCode + 100).Value.id; // 현재 인게임의 캐릭터 코드의 미수정으로 임시 +100.
-            targetType = 1;
+            targetInvenCode = DataManager.inven.GetDataWithMasterId(selecteCharInterface.SelectedCode).id;
+            targetType = MasterType.Character;
             SetUpgradeUIForCharacter(targetInvenCode);
-        }
-    }
-
-
-    private void GetPartsId()
-    {
-        Reset();
-        StartCoroutine(GetPartsIdCoroutine());
-    }
-
-    private IEnumerator GetPartsIdCoroutine()
-    {
-        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface.GetComponent<SelectPartsInterface>();
-
-        yield return StartCoroutine(selectPartsInterface.GetValue());
-        if(selectPartsInterface.result == true)
-        {
-            targetInvenCode = selectPartsInterface.SelectedParts.invenId;
-            targetType = 2;
-            SetUpgradeUIForParts(targetInvenCode);
         }
     }
 
@@ -169,15 +172,13 @@ public class LabotoryUI : MainUIs
     {
         int masterCode = DataManager.inven.GetData(invenCode).masterId;
         charSlot.GetComponent<CharacterImageBtn>().SetImageByMasterCode(masterCode);
-
         CharData charData = DataManager.character.GetData(masterCode);
         int curLevel = charData.level;
 
         UpgradeData upgradeData = DataManager.upgrade.GetData(masterCode);
 
-        if (upgradeData.upgradeCost[curLevel].ingredients.Length == 0)
+        if (!CanUpgrade(upgradeData, curLevel))
         {
-            // 강화 불가(이미 최대 강화 상태)
             upgradeInformText.text = "강화불가";
             return;
         }
@@ -199,75 +200,102 @@ public class LabotoryUI : MainUIs
         upgradeBtn.interactable = true;
     }
 
+    //파츠 선택 과정
+    private void GetPartsId()
+    {
+        ResetUI();
+        StartCoroutine(GetPartsIdCoroutine());
+    }
+
+    private IEnumerator GetPartsIdCoroutine()
+    {
+        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface.GetComponent<SelectPartsInterface>();
+
+        yield return StartCoroutine(selectPartsInterface.GetValue());
+        if(selectPartsInterface.result == true)
+        {
+            targetInvenCode = selectPartsInterface.SelectedParts.invenId;
+            targetType = MasterType.Parts;
+            SetUpgradeUIForParts(targetInvenCode);
+        }
+    }
+
     private void SetUpgradeUIForParts(int invenCode)
     {
         int masterCode = DataManager.inven.GetData(invenCode).masterId;
         PartsData partsData = DataManager.parts.GetData(invenCode);
+        int curLevel = partsData.level;
+
         partsSlot.GetComponent<PartsSlot>().SetParts(partsData);
-        int curLevel = DataManager.parts.GetData(invenCode).level;
         UpgradeData upgradeData = DataManager.upgrade.GetData(masterCode);
 
-        if (upgradeData.upgradeCost[curLevel].ingredients.Length == 0)
+        if (!CanUpgrade(upgradeData, curLevel))
         {
-            // 강화 불가(이미 최대 강화 상태)
             upgradeInformText.text = "강화불가";
             return;
         }
 
-        //훼손 방지를위한 new 생성
-        ingredientList = new List<UpgradeIngred>(upgradeData.upgradeCost[curLevel].ingredients);
-
-        //메인 어빌리티 일정량 상승
-
-        Ability mainAbility = new Ability(partsData.mainAbility); // 원래 데이터
-        List<Ability> subAbility = Ability.CopyList(partsData.subAbilities);
-        List<Ability> beforeAbility = new List<Ability>();
-        beforeAbility.Add(mainAbility);
-        
-
-        Ability changedMainAbility = new Ability(mainAbility);
-        changedMainAbility.value += 5;
-
-        List<Ability> resultAbility = new List<Ability>();
-        resultAbility.Add(changedMainAbility);
-
-
-        foreach (UpgradeIngred cost in ingredientList)
-        {
-            // 재료 UI들 생성
-            ItemAmountPref itemAmountPref = Instantiate(UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
-            itemAmountPref.SetAmountUI(cost.ingredMasterId, cost.quantity);
-        }
-
-        upgradeInformText.text = MakeSBText(curLevel, resultAbility, beforeAbility);
+        SetUpgradeIngredients(upgradeData.upgradeCost[curLevel].ingredients);
+        UpdateUpgradeUIForParts(partsData, curLevel);
         upgradeBtn.interactable = true;
     }
 
-    public void PartsMode()
+    private bool CanUpgrade(UpgradeData upgradeData, int curLevel)
     {
-        charSlot.gameObject.SetActive(false);
-        partsSlot.gameObject.SetActive(true);
+        return upgradeData.upgradeCost[curLevel].ingredients.Length > 0;
+    }
 
-        Reset();
+    private void SetUpgradeIngredients(UpgradeIngred[] ingredients)
+    {
+        ingredientList = new List<UpgradeIngred>(ingredients);
+        ClearChildObjects(ingredientSlot);
+
+        foreach (var cost in ingredientList)
+        {
+            var itemAmountPref = Instantiate(UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
+            itemAmountPref.SetAmountUI(cost.ingredMasterId, cost.quantity);
+        }
+    }
+
+    private void UpdateUpgradeUIForParts(PartsData partsData, int curLevel)
+    {
+        var mainAbility = new Ability(partsData.mainAbility);
+        var beforeAbilities = new List<Ability> { mainAbility };
+
+        var changedMainAbility = new Ability(mainAbility) { value = mainAbility.value + 5 };
+        var resultAbilities = new List<Ability> { changedMainAbility };
+
+        upgradeInformText.text = CreateUpgradeInfoText(curLevel, resultAbilities, beforeAbilities);
+    }
+
+    private string CreateUpgradeInfoText(int level, List<Ability> newAbilities, List<Ability> beforeAbilities)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine($"LEVEL : {level} -> {level + 1}");
+        foreach (var ability in newAbilities)
+        {
+            var beforeAbility = beforeAbilities.Find(a => a.key == ability.key);
+            var data = DataManager.ability.GetData(ability.key);
+            sb.AppendLine($"{data.name} : {beforeAbility?.value ?? 0} -> {ability.value}");
+        }
+        return sb.ToString();
     }
 
     //이전과 더할 어벌리티 리스트를 합쳐 result를 리턴함
     private List<Ability> SumAbility(List<Ability> beforeList, List<Ability> addList)
     {
+        var result = Ability.CopyList(beforeList);
 
-        List<Ability> result = Ability.CopyList(beforeList);
-
-        foreach (Ability ability in addList)
+        foreach (var ability in addList)
         {
-            Ability existingAbility = result.Find(a => a.key == ability.key);
-
-            if (existingAbility != null) // 이미 존재하는 능력이라면
+            var existingAbility = result.Find(a => a.key == ability.key);
+            if (existingAbility != null)
             {
-                existingAbility.value += ability.value; // 값 업데이트
+                existingAbility.value += ability.value;
             }
-            else // 존재하지 않는 능력이라면
+            else
             {
-                result.Add(new Ability(ability)); // 새로운 능력 추가
+                result.Add(new Ability(ability));
             }
         }
 
@@ -275,28 +303,24 @@ public class LabotoryUI : MainUIs
     }
 
     //result로 하여금 스트링빌더로 정보를 구성
-    private string MakeSBText(int level, List<Ability> ResultList, List<Ability> beforeList)
+    private string MakeSBText(int level, List<Ability> resultList, List<Ability> beforeList)
     {
         StringBuilder sb = new StringBuilder();
         sb.AppendLine($"LEVEL : {level} -> {level + 1}");
-        foreach (Ability ability in ResultList)
+
+        foreach (Ability ability in resultList)
         {
             Ability before = beforeList.Find(a => a.key == ability.key);
             AbilityData data = DataManager.ability.GetData(ability.key);
-            if (before != null)
-            {
-                sb.AppendLine($"{data.name} : {before.value} -> {ability.value}");
-            }
-            else
-            {
-                sb.AppendLine($"{data.name} : 0 -> {ability.value}");
-            }
+            sb.AppendLine($"{data.name} : {before?.value ?? 0} -> {ability.value}");
         }
 
         return sb.ToString();
     }
 
-    public void UpgradeBtnHandler()
+
+    //@업그레이드 진행
+    public void UpgradeBtn()
     {
         //강화 가능 여부 체크 및 강화실행
         if (!CheckAbleToUpgrade(ingredientList))
@@ -309,12 +333,13 @@ public class LabotoryUI : MainUIs
         StartCoroutine(UpgradeCheck());
     }
 
+    //강화 가능 여부 검사
     private bool CheckAbleToUpgrade(List<UpgradeIngred> ingredients)
     {
         
         foreach(UpgradeIngred ingred in ingredients)
         {
-            if(!DataManager.inven.IsEnoughItem(ingred.ingredMasterId, ingred.quantity))
+            if(!DataManager.inven.IsEnoughItem(ingred.ingredMasterId, ingred.quantity)) //아이템의 양이 충분?
             {
                 return false;
             }
@@ -331,7 +356,8 @@ public class LabotoryUI : MainUIs
         if ((bool)tFInterface.result)
         {
             //더블체크 완료시 강화실행
-            UpgradeTarget();
+            ChangeIngredientData();
+            ChangeUpgradeTargetData();
         }
         else
         {
@@ -339,62 +365,69 @@ public class LabotoryUI : MainUIs
         }
     }
 
-    private void UpgradeTarget()
+    private void ChangeIngredientData()
     {
-        //강화 실행 및 데이터 변경
-        //재료 아이템 감소 및 인벤토리에 해당 파츠 혹은 캐릭터의 레벨을 증가시키고 증가함에 따른 스텟을 증가시킴
-        InvenData targetData = DataManager.inven.GetData(targetInvenCode);
+        foreach(UpgradeIngred ingred in ingredientList)
+        {
+            InvenData invenData = DataManager.inven.GetDataWithMasterId(ingred.ingredMasterId);
+            invenData.quantity -= ingred.quantity;
+            DataManager.inven.UpdateData(invenData.id, invenData);
+        }
+        DataManager.inven.SaveData();
+    }
 
-        if (targetType == 1)
+    //실질적인 업그레이드로 인한 데이터 변화
+    private void ChangeUpgradeTargetData()
+    {
+        if (targetType == MasterType.Character)
         {
             //캐릭터
-            CharData targetChar = DataManager.character.GetData(DataManager.inven.GetData(targetInvenCode).masterId);
-            targetChar.level += 1;
-            List<Ability> targetAbility = targetChar.abilityDatas; // 원래 데이터
-            foreach (Ability ability in valueList)
-            {
-                Ability existingAbility = targetAbility.Find(a => a.key == ability.key);
-
-                if (existingAbility != null) // 이미 존재하는 능력이라면
-                {
-                    existingAbility.value += ability.value; // 값 업데이트
-                }
-                else // 존재하지 않는 능력이라면
-                {
-                    targetAbility.Add(new Ability(ability)); // 새로운 능력 추가
-                }
-            }
-            Debug.Log("캐릭터 강화 완료");
-
-            DataManager.character.SaveData();
-            //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(CharData),DataManager.character.GetFilePath());
+            ChangeCharacterData();
         }
-        else if (targetType == 2) 
+        else if (targetType == MasterType.Parts)
         {
             //파츠
-            PartsData targetParts = DataManager.parts.GetData(targetInvenCode);
-            targetParts.level += 1;
-            targetParts.mainAbility.value += 5;
-            DataManager.parts.SaveData();
-            //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(PartsData),DataManager.parts.GetFilePath());
-
+            ChangePartsData();
         }
         else
         {
             Debug.Log("강화할수 없는 타입");
         }
-        //firebase를 통한 전송
-
-        Reset();
+        ResetUI();
     }
 
-    public void GotoMain()
+
+    private void ChangeCharacterData()
     {
-        ChangeUI(UIManager.UIInstance.mainUI);
+        CharData targetChar = DataManager.character.GetData(DataManager.inven.GetData(targetInvenCode).masterId);
+        targetChar.level += 1;
+        List<Ability> targetAbility = targetChar.abilityDatas; // 원래 데이터
+        foreach (Ability ability in valueList)
+        {
+            Ability existingAbility = targetAbility.Find(a => a.key == ability.key);
+
+            if (existingAbility != null) // 이미 존재하는 능력이라면
+            {
+                existingAbility.value += ability.value; // 값 업데이트
+            }
+            else // 존재하지 않는 능력이라면
+            {
+                targetAbility.Add(new Ability(ability)); // 새로운 능력 추가
+            }
+        }
+        Debug.Log("캐릭터 강화 완료");
+        DataManager.character.UpdateData(DataManager.inven.GetData(targetInvenCode).masterId, targetChar);
+        DataManager.character.SaveData();
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(CharData),DataManager.character.GetFilePath());
     }
 
-    public void GotoShop()
+    private void ChangePartsData()
     {
-        ChangeUI(UIManager.UIInstance.stageUI);
+        PartsData targetParts = DataManager.parts.GetData(targetInvenCode);
+        targetParts.level += 1;
+        targetParts.mainAbility.value += 5;
+        DataManager.parts.UpdateData(targetInvenCode, targetParts);
+        DataManager.parts.SaveData();
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(PartsData),DataManager.parts.GetFilePath());
     }
 }

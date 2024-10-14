@@ -3,15 +3,15 @@
         {
             "id": 101,
             "name": "캐릭터1",
-            "level": 1,
+            "level": 2,
             "abilityDatas": [
                 {
                     "key": 1,
-                    "value": 30.0
+                    "value": 50.0
                 },
                 {
                     "key": 2,
-                    "value": 30.0
+                    "value": 50.0
                 },
                 {
                     "key": 3,
@@ -30,15 +30,15 @@
         {
             "id": 102,
             "name": "캐릭터2",
-            "level": 1,
+            "level": 3,
             "abilityDatas": [
                 {
                     "key": 1,
-                    "value": 10.0
+                    "value": 40.0
                 },
                 {
                     "key": 2,
-                    "value": 10.0
+                    "value": 40.0
                 },
                 {
                     "key": 3,

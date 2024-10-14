@@ -87,7 +87,7 @@ public class DailyStore : MonoBehaviour
             //PlayerPref에 마스터 아이디를 저장하여 해당 마스터 아이디로 검색 및 아이템 저장
             MasterData target = DataManager.master.GetData(DataManager.store.GetData(registStoreItem[i].storeItemId).masterId);
             
-            ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetTradeData(TradeType.Mineral , target.id, 1, 750, false);
+            ItemBtns.GetChild(i).GetComponent<ShopBtnUI>().SetTradeData(TradeType.Item, 1, 750, target.id, 1, false);
         }
     }
 

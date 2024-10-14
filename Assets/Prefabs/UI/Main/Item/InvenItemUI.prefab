@@ -137,31 +137,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9c28db41e0e0140adab23853722107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenData:
+    id: 0
+    masterId: 0
+    name: 
+    quantity: 0
   partsData:
-    inventoryCode: 0
-    masterCode: 0
-    isOn: 0
-    grade: 0
-    mainAbility: 0
-    ability1:
+    invenId: 0
+    isActive: 0
+    level: 0
+    rank: 0
+    mainAbility:
       key: 0
       value: 0
-    ability2:
-      key: 0
-      value: 0
-    ability3:
-      key: 0
-      value: 0
-    ability4:
-      key: 0
-      value: 0
-    ability5:
-      key: 0
-      value: 0
+    subAbilities: []
+  itemData:
+    id: 0
+    name: 
+    type: 0
+    description: 
+    spritePath: 
   bgImage: {fileID: 0}
-  partsImage: {fileID: 0}
+  itemImage: {fileID: 0}
   selectText: {fileID: 0}
+  amountText: {fileID: 0}
   defaultImage: {fileID: 0}
+  curItemType: 0
 --- !u!1 &3149590758506961820
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +198,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: -2}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8501556309895289011
 CanvasRenderer:
@@ -254,7 +255,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
+  m_fontSize: 10
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -689,11 +690,11 @@ RectTransform:
   - {fileID: 1983912489767252849}
   m_Father: {fileID: 8273515999170872420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.65000004, y: 0.125}
-  m_AnchorMax: {x: 0.87500006, y: 0.32500002}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 1, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -4.8099995, y: 3.5}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &6973548208997096908
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -715,7 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.4392157}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -110,6 +110,14 @@ public class ItemInformInterface : UIInterface
         if ((bool)tfInterface.result)
         {
             SellItem(invenItemId);
+
+            //해당 아이템UI의 개수 업데이트
+            ItemUIPref itemPref = FindItemUIPref(invenItemId);
+            if(itemPref == null)
+            {
+                yield return null;
+            } 
+            itemPref.UpdateItemAmount();
         }
         else
         {
@@ -117,17 +125,34 @@ public class ItemInformInterface : UIInterface
         }
     }
 
+   
+
+    private ItemUIPref FindItemUIPref(int invenId)
+    {
+        ItemUIPref[] itemUis = FindObjectsOfType<ItemUIPref>();
+        foreach (ItemUIPref itemUI in itemUis)
+        {
+            if (itemUI.invenData.id == invenId)
+            {
+                return itemUI;
+            }
+        }
+        return null;
+    }
+
     private void SellItem(int invenItemId)
     {
-        /* 
-         * todo -> 아이템 판매 로직
-         * 데이터베이스에서 해당 아이템 삭제 및 미네랄 추가
-        */
-
-        //해당 아이템 1 감소
-        //해당 아이템의 sell가격 만큼 미네랄 증가
-        //데이터베이스 전송
-
+        TradeData sellData = new TradeData()
+        {
+            tradeCost = TradeType.Item,
+            costId = DataManager.inven.GetData(invenItemId).masterId,
+            costAmount = 1,
+            targetId = 1, //미네랄
+            tradeAmount = 1000,
+            isMultiTrade= false
+        };
+        
+        StoreUI.TradeItem(sellData);
         UIManager.alertInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
     }
 }

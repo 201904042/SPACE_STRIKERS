@@ -122,30 +122,18 @@ public class StoreUI : MainUIs
     /// <summary>
     /// 구매할 아이템 정보 , 개당 구매 가격, 구매 개수
     /// </summary>
-    public static void ItemPurchase(TradeData data)
+    public static void TradeItem(TradeData data)
     {
-        MasterData targetData = DataManager.master.GetData(data.targetId);
-        InvenData costData = new InvenData();
+        MasterData tradeTargetMaster = DataManager.master.GetData(data.targetId); //증가할 아이템
+        InvenData tradeCostItem = new InvenData(); //감소할 아이템
 
-        if (data.tradeCost == TradeType.Mineral)
+        if (data.tradeCost == TradeType.Item)
         {
-            costData = DataManager.inven.GetDataWithMasterId(1).Value;
-            if (data.price > costData.quantity) //미네랄의 양 검사
+            tradeCostItem = DataManager.inven.GetDataWithMasterId(data.costId);
+            if (data.costAmount > tradeCostItem.quantity) //미네랄의 양 검사
             {
                 //구매 불가 할경우. 알림 인터페이스 오픈
-                UIManager.alertInterface.SetAlert("구매 불가/n미네랄이 부족합니다");
-                return;
-            }
-
-            
-        }
-        else if (data.tradeCost == TradeType.Ruby)
-        {
-            costData = DataManager.inven.GetDataWithMasterId(2).Value;
-            if (data.price > costData.quantity) //미네랄의 양 검사
-            {
-                //구매 불가 할경우. 알림 인터페이스 오픈
-                UIManager.alertInterface.SetAlert("구매 불가/n 루비가 부족합니다");
+                UIManager.alertInterface.SetAlert("구매 불가/ 비용 아이템이 부족합니다");
                 return;
             }
         }
@@ -162,14 +150,14 @@ public class StoreUI : MainUIs
         }
 
         //거래 대가 감소
-        costData.quantity -= data.price;
-        DataManager.inven.UpdateData(costData.id, costData);
+        tradeCostItem.quantity -= data.costAmount;
+        DataManager.inven.UpdateData(tradeCostItem.id, tradeCostItem);
 
         //구매한 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
-        InvenData? checkData = DataManager.inven.GetDataWithMasterId(data.targetId);
+        InvenData checkData = DataManager.inven.GetDataWithMasterId(data.targetId);
         if (checkData != null)
         {
-            InvenData invenData = (InvenData)checkData;
+            InvenData invenData = checkData;
             invenData.quantity += data.tradeAmount;
             DataManager.inven.UpdateData(invenData.id, invenData);
         }
@@ -180,9 +168,8 @@ public class StoreUI : MainUIs
                 id = DataManager.inven.GetLastKey() + 1,
                 masterId = data.targetId,
                 quantity = data.tradeAmount,
-                name = targetData.name
+                name = tradeTargetMaster.name
             };
-
             DataManager.inven.AddData(newData);
         }
 

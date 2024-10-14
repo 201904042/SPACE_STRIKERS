@@ -209,7 +209,7 @@ public class ReadyUI : MainUIs
 
     private void PlayerChange()
     {
-        int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode") + 100;
+        int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode");
         charSlotUI.SetImageByMasterCode(playerMasterCode);
 
         PlayerStatTextSet();
@@ -217,7 +217,7 @@ public class ReadyUI : MainUIs
 
     private void PlayerStatTextSet()
     {
-        int masterId = PlayerPrefs.GetInt("curCharacterCode") + 100;
+        int masterId = PlayerPrefs.GetInt("curCharacterCode");
         CharData targetBasicData = DataManager.character.GetData(masterId);
 
         CharData changedData = CalculateStat(targetBasicData);

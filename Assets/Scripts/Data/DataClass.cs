@@ -68,6 +68,24 @@ public class UpgradeIngred
     public int quantity;
 }
 
+[System.Serializable]
+public enum TradeType
+{
+    Item,
+    Cash
+}
+
+[System.Serializable]
+public class TradeData
+{
+    public TradeType tradeCost;
+    public int costId;   //대가로 감소될 아이템 아이디
+    public int costAmount;    //대가로 감소될 아이템 양
+    public int targetId; //교환으로 증가될 아이템 아이디
+    public int tradeAmount; //교환으로 증가될 아이템의 양
+    public bool isMultiTrade; //여러번 거래 가능
+}
+
 public enum MasterType
 {
     Money,
@@ -75,5 +93,6 @@ public enum MasterType
     Parts,
     Ingredient,
     Consume,
-    Enemy
+    Enemy,
+    None
 }

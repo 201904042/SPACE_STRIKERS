@@ -29,8 +29,12 @@ public class ItemUIPref : MonoBehaviour
     [SerializeField] private GameObject amountText;
 
     public Sprite defaultImage;
-
     public MasterType curItemType; //2면 파츠, 나머지면 다른 아이템
+
+    public int ItemAmount 
+    { 
+        get => invenData.quantity; 
+    }
 
     private void Awake()
     {
@@ -63,13 +67,13 @@ public class ItemUIPref : MonoBehaviour
         if (invenId == -1)
         {
             partsData.invenId = -1;
-            curItemType = (MasterType)2;
+            curItemType = MasterType.Parts;
             return;
         }
         invenData = DataManager.inven.GetData(invenId);
 
         MasterType itemtype = DataManager.master.GetData(invenData.masterId).type;
-        if(itemtype == (MasterType)2) //파츠일경우
+        if(itemtype == MasterType.Parts) //파츠일경우
         {
             partsData = DataManager.parts.GetData(invenData.id);
         }
@@ -84,7 +88,7 @@ public class ItemUIPref : MonoBehaviour
 
     private void SetData()
     {
-        if (curItemType == (MasterType)2)
+        if (curItemType == MasterType.Parts)
         {
             switch (partsData.rank)
             {
@@ -117,8 +121,13 @@ public class ItemUIPref : MonoBehaviour
 
             itemImage.sprite = image;
             amountText.SetActive(true);
-            amountText.GetComponentInChildren<TextMeshProUGUI>().text = invenData.quantity.ToString();
+            UpdateItemAmount();
         }
+    }
+
+    public void UpdateItemAmount()
+    {
+        amountText.GetComponentInChildren<TextMeshProUGUI>().text = ItemAmount.ToString();
     }
 
     public void ResetData()

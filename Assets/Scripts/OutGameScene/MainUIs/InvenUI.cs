@@ -58,8 +58,8 @@ public class InvenUI : MainUIs
         invenBtn.onClick.AddListener(() => ChangeContent(ingredContent));
         consumeBtn.onClick.AddListener(() => ChangeContent(consumeContent));
 
-        backBtn.onClick.AddListener(GotoMain);
-        laboBtn.onClick.AddListener(GotoLabotory);
+        backBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.mainUI));
+        laboBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.labotoryUI));
     }
 
     public void Init()
@@ -78,14 +78,4 @@ public class InvenUI : MainUIs
         targetTransform.gameObject.SetActive(true);
     }
 
-    public void GotoMain()
-    {
-        ChangeUI(UIManager.UIInstance.mainUI);
-    }
-
-    public void GotoLabotory()
-    {
-        //연구소 UI로 바꾸기
-        ChangeUI(UIManager.UIInstance.labotoryUI);
-    }
 }

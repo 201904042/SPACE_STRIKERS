@@ -85,7 +85,7 @@ public class InventoryDataReader : EditableData<InvenData>
         return data.id;
     }
 
-    public InvenData? GetDataWithMasterId(int masterId)
+    public InvenData GetDataWithMasterId(int masterId)
     {
         foreach (InvenData value in dataDict.Values)
         {
@@ -106,11 +106,11 @@ public class InventoryDataReader : EditableData<InvenData>
             Debug.Log("해당 마스터아이디를 가진 아이템이 존재하지 않음");
             return false;
         }
-        InvenData data = (InvenData)check;
+        
 
-        if (data.quantity < needAmount)
+        if (check.quantity < needAmount)
         {
-            Debug.Log($"해당 {data.id} 아이템의 량이 충분치 않음");
+            Debug.Log($"해당 {check.id} 아이템의 량이 충분치 않음");
             return false;
         }
 

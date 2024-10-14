@@ -4,24 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-[System.Serializable]
-public enum TradeType
-{
-    Mineral,
-    Ruby,
-    Cash
-}
-
-[System.Serializable]
-public class TradeData
-{
-    public TradeType tradeCost;
-    public int targetId; //해당 아이템의 마스터 코드
-    public int tradeAmount; //한번의 구매로 주어질 양
-    public int price; //거래가격 (타입은 트레이드 타입으로 결정)
-    public bool isMultiTrade; //여러번 거래 가능
-}
+using static UnityEngine.GraphicsBuffer;
 
 public class ShopBtnUI : MonoBehaviour
 {
@@ -30,12 +13,6 @@ public class ShopBtnUI : MonoBehaviour
     public Image itemImage;
     public TextMeshProUGUI costText;
     public Button button;
-
-    public int tradeId;
-    public int tradeAmount;
-    public int tradePrice;
-    public bool isMultiTrade;
-
     private void Awake()
     {
         itemImage = transform.GetChild(0).GetComponent<Image>();
@@ -47,32 +24,38 @@ public class ShopBtnUI : MonoBehaviour
     {
         if (tradeData != null)
         {
-            SetUIValue(tradeData.targetId, tradeData.tradeAmount, tradeData.price, tradeData.isMultiTrade);
+            SetUIValue(tradeData.tradeCost, tradeData.costId, tradeData.costAmount, tradeData.targetId, tradeData.tradeAmount, tradeData.isMultiTrade);
         }
     }
+    //ublic class TradeData
+    //{
+    //    public TradeType tradeCost;
+    //    public int costId;   //대가로 감소될 아이템 아이디
+    //    public int costAmount;    //대가로 감소될 아이템 양
+    //    public int targetId; //교환으로 증가될 아이템 아이디
+    //    public int tradeAmount; //교환으로 증가될 아이템의 양
+    //    public bool isMultiTrade; //여러번 거래 가능
+    //}
 
-    public void SetTradeData(TradeType tradeCost, int targetMasterId, int targetAmount, int targetPrice = 1000, bool multiTrade = true)
+    public void SetTradeData(TradeType tradeCost, int costId, int costAmount, int targetId, int tradeAmount, bool isMultiTrade)
     {
         tradeData = new TradeData{
-            tradeCost = tradeCost,
-            targetId = targetMasterId,
-            tradeAmount = targetAmount,
-            price = targetPrice,
-            isMultiTrade = multiTrade,
+            tradeCost = tradeCost, 
+            costId = costId, 
+            costAmount = costAmount, 
+            targetId = targetId, 
+            tradeAmount = tradeAmount, 
+            isMultiTrade = isMultiTrade
         };
 
-        SetUIValue(tradeData.targetId, tradeData.tradeAmount, tradeData.price, tradeData.isMultiTrade);
+        SetUIValue(tradeData.tradeCost, tradeData.costId, tradeData.costAmount, tradeData.targetId, tradeData.tradeAmount, tradeData.isMultiTrade);
     }
 
-    private void SetUIValue(int targetMasterId, int targetAmount,int targetPrice = 1000, bool multiTrade = true)
+    private void SetUIValue(TradeType tradeCost, int costId, int costAmount, int targetId, int tradeAmount, bool isMultiTrade)
     {
-        tradeId = targetMasterId;
-        tradeAmount = targetAmount;
-        tradePrice = targetPrice;
-        isMultiTrade = multiTrade;
-        MasterData masterDate = DataManager.master.GetData(tradeId);
+        MasterData masterDate = DataManager.master.GetData(targetId);
         itemImage.sprite = Resources.Load<Sprite>(masterDate.spritePath);
-        costText.text = $"비용 : {tradePrice}"; //일일상점에서 세일된 가격일수 있음
+        costText.text = $"비용 : {costAmount}"; //일일상점에서 세일된 가격일수 있음
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(PurchaseBtnHandler);
@@ -83,7 +66,7 @@ public class ShopBtnUI : MonoBehaviour
     private void PurchaseBtnHandler()
     {
         StartCoroutine(ConfiremPurchase());
-        UIManager.purchaseInterface.SetPurchaseInterface(tradeId, tradePrice);
+        UIManager.purchaseInterface.SetPurchaseData(tradeData);
     }
 
     private IEnumerator ConfiremPurchase()
@@ -118,8 +101,8 @@ public class ShopBtnUI : MonoBehaviour
         if ((bool)tFInterface.result)
         {
             //더블체크 완료시 구매 실행
-            StoreUI.ItemPurchase(tradeData);
-            if (!isMultiTrade) 
+            StoreUI.TradeItem(tradeData);
+            if (!tradeData.isMultiTrade) 
             { 
                 button.interactable = false;
             }

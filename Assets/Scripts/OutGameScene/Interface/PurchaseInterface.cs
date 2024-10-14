@@ -16,9 +16,6 @@ public class PurchaseInterface : UIInterface
     public Button cancelBtn;
     public Button purchaseBtn;
 
-    public MasterData itemData;
-    public int resultPrice;
-    public int itemAmount;
     protected override void Awake()
     {
         base.Awake();
@@ -39,15 +36,13 @@ public class PurchaseInterface : UIInterface
     /// <summary>
     /// 지정된 매개변수로 인터페이스를 구성함. 
     /// </summary>
-    public bool SetPurchaseInterface(int itemMasterCode, int itemPrice, int itemAmount = 1)
+    public bool SetPurchaseData(TradeData tradeData)
     {
-        itemData = DataManager.master.GetData(itemMasterCode);
+        MasterData itemData = DataManager.master.GetData(tradeData.targetId);
 
         itemImage.sprite = Resources.Load<Sprite>(itemData.spritePath);
         itemText.text = itemData.description;
-        resultPrice = itemPrice * itemAmount; //todo 이것을 해결해야함. 구매 가격이 일일상점에서 더 싼 경우가 있음
-        this.itemAmount = itemAmount;
-        purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"구 매\n{resultPrice}";
+        purchaseBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"구 매\n{tradeData.costAmount}";
 
         return true;
     }

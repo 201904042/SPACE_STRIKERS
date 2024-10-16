@@ -22,7 +22,7 @@ public class SelectPartsInterface : UIInterface
     public int curPageIndex;
     public int maxPageIndex;
 
-    public PartsData SelectedParts {
+    public PartsAbilityData SelectedParts {
         get => clickedParts;
         set
         {
@@ -30,7 +30,7 @@ public class SelectPartsInterface : UIInterface
             selectBtn.interactable = SelectedParts == null ? false : true;
         }
     } //인터페이스에서 선택된 파츠
-    [SerializeField] private PartsData clickedParts;
+    [SerializeField] private PartsAbilityData clickedParts;
     protected override void Awake()
     {
         base.Awake();
@@ -108,9 +108,9 @@ public class SelectPartsInterface : UIInterface
         }
 
         //파츠db에서 불러오기
-        List<PartsData> isOnPartsList = new List<PartsData>();
-        List<PartsData> isOffPartsList = new List<PartsData>();
-        foreach (PartsData parts in DataManager.parts.GetDictionary().Values)
+        List<PartsAbilityData> isOnPartsList = new List<PartsAbilityData>();
+        List<PartsAbilityData> isOffPartsList = new List<PartsAbilityData>();
+        foreach (PartsAbilityData parts in DataManager.parts.GetDictionary().Values)
         {
             if (parts.isActive)
             {
@@ -136,7 +136,7 @@ public class SelectPartsInterface : UIInterface
         emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
 
         //장착되어 있는 파츠들 먼저 나열
-        foreach (PartsData parts in isOnPartsList)
+        foreach (PartsAbilityData parts in isOnPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
             prefab.SetByInvenId(parts.invenId);
@@ -145,7 +145,7 @@ public class SelectPartsInterface : UIInterface
         }
 
         //나머지 파츠들 나열
-        foreach (PartsData parts in isOffPartsList)
+        foreach (PartsAbilityData parts in isOffPartsList)
         {
             ItemUIPref prefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
             prefab.SetByInvenId(parts.invenId);
@@ -156,7 +156,7 @@ public class SelectPartsInterface : UIInterface
 
     public void PartsButtonEvent(ItemUIPref partsBtn)
     {
-        SelectedParts = partsBtn.partsData;
+        SelectedParts = partsBtn.PartsAbilityData;
     }
 
     public void PrevPage()

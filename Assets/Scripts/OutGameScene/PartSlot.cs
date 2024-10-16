@@ -13,7 +13,7 @@ public class PartsSlot : MonoBehaviour
     //해당 UI에 파츠 혹은 아이템(재료, 소모품) 할당
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
-    public PartsData partsData;
+    public PartsAbilityData PartsAbilityData;
     [SerializeField] private Image bgImage;
     [SerializeField] private Image partsImage;
 
@@ -29,7 +29,7 @@ public class PartsSlot : MonoBehaviour
         partsImage.sprite = null;
     }
 
-    public void SetParts(PartsData parts)
+    public void SetParts(PartsAbilityData parts)
     {
         ResetData();
         if(parts == null)
@@ -37,7 +37,7 @@ public class PartsSlot : MonoBehaviour
             return;
         }
 
-        partsData = parts;
+        PartsAbilityData = parts;
         SetData();
     }
 
@@ -46,7 +46,7 @@ public class PartsSlot : MonoBehaviour
         bgImage.color = Color.white;
         partsImage.sprite = null;
 
-        switch (partsData.rank)
+        switch (PartsAbilityData.rank)
         {
             case 5: bgImage.color = PartsGradeColor.S_Color; break;
             case 4: bgImage.color = PartsGradeColor.A_Color; break;
@@ -56,7 +56,7 @@ public class PartsSlot : MonoBehaviour
             default:bgImage.color = Color.black; break;
         }
 
-        MasterData master = DataManager.master.GetData(DataManager.inven.GetData(partsData.invenId).masterId);
+        MasterData master = DataManager.master.GetData(DataManager.inven.GetData(PartsAbilityData.invenId).masterId);
         Sprite image = Resources.Load<Sprite>(master.spritePath);
         if(image == null)
         {
@@ -68,7 +68,7 @@ public class PartsSlot : MonoBehaviour
 
     public void ResetData()
     {
-        partsData = null;
+        PartsAbilityData = null;
         bgImage.color = Color.white;
         partsImage.sprite = null;
     }

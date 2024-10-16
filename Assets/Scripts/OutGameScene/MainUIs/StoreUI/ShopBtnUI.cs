@@ -24,15 +24,15 @@ public class ShopBtnUI : MonoBehaviour
     {
         if (tradeData != null)
         {
-            SetUIValue(tradeData.tradeCost, tradeData.costId, tradeData.costAmount, tradeData.targetId, tradeData.tradeAmount, tradeData.isMultiTrade);
+            SetUIValue(tradeData.tradeCost, tradeData.costInvenId, tradeData.costAmount, tradeData.targetMasterId, tradeData.tradeAmount, tradeData.isMultiTrade);
         }
     }
     //ublic class TradeData
     //{
     //    public TradeType tradeCost;
-    //    public int costId;   //대가로 감소될 아이템 아이디
+    //    public int costInvenId;   //대가로 감소될 아이템 아이디
     //    public int costAmount;    //대가로 감소될 아이템 양
-    //    public int targetId; //교환으로 증가될 아이템 아이디
+    //    public int targetMasterId; //교환으로 증가될 아이템 아이디
     //    public int tradeAmount; //교환으로 증가될 아이템의 양
     //    public bool isMultiTrade; //여러번 거래 가능
     //}
@@ -41,14 +41,14 @@ public class ShopBtnUI : MonoBehaviour
     {
         tradeData = new TradeData{
             tradeCost = tradeCost, 
-            costId = costId, 
+            costInvenId = costId, 
             costAmount = costAmount, 
-            targetId = targetId, 
+            targetMasterId = targetId, 
             tradeAmount = tradeAmount, 
             isMultiTrade = isMultiTrade
         };
 
-        SetUIValue(tradeData.tradeCost, tradeData.costId, tradeData.costAmount, tradeData.targetId, tradeData.tradeAmount, tradeData.isMultiTrade);
+        SetUIValue(tradeData.tradeCost, tradeData.costInvenId, tradeData.costAmount, tradeData.targetMasterId, tradeData.tradeAmount, tradeData.isMultiTrade);
     }
 
     private void SetUIValue(TradeType tradeCost, int costId, int costAmount, int targetId, int tradeAmount, bool isMultiTrade)

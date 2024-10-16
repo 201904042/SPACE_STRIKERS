@@ -223,10 +223,10 @@ public class LabotoryUI : MainUIs
     private void SetUpgradeUIForParts(int invenCode)
     {
         int masterCode = DataManager.inven.GetData(invenCode).masterId;
-        PartsData partsData = DataManager.parts.GetData(invenCode);
-        int curLevel = partsData.level;
+        PartsAbilityData PartsAbilityData = DataManager.parts.GetData(invenCode);
+        int curLevel = PartsAbilityData.level;
 
-        partsSlot.GetComponent<PartsSlot>().SetParts(partsData);
+        partsSlot.GetComponent<PartsSlot>().SetParts(PartsAbilityData);
         UpgradeData upgradeData = DataManager.upgrade.GetData(masterCode);
 
         if (!CanUpgrade(upgradeData, curLevel))
@@ -236,7 +236,7 @@ public class LabotoryUI : MainUIs
         }
 
         SetUpgradeIngredients(upgradeData.upgradeCost[curLevel].ingredients);
-        UpdateUpgradeUIForParts(partsData, curLevel);
+        UpdateUpgradeUIForParts(PartsAbilityData, curLevel);
         upgradeBtn.interactable = true;
     }
 
@@ -257,9 +257,9 @@ public class LabotoryUI : MainUIs
         }
     }
 
-    private void UpdateUpgradeUIForParts(PartsData partsData, int curLevel)
+    private void UpdateUpgradeUIForParts(PartsAbilityData PartsAbilityData, int curLevel)
     {
-        var mainAbility = new Ability(partsData.mainAbility);
+        var mainAbility = new Ability(PartsAbilityData.mainAbility);
         var beforeAbilities = new List<Ability> { mainAbility };
 
         var changedMainAbility = new Ability(mainAbility) { value = mainAbility.value + 5 };
@@ -339,7 +339,7 @@ public class LabotoryUI : MainUIs
         
         foreach(UpgradeIngred ingred in ingredients)
         {
-            if(!DataManager.inven.IsEnoughItem(ingred.ingredMasterId, ingred.quantity)) //아이템의 양이 충분?
+            if(!DataManager.inven.IsEnoughItem(DataManager.inven.GetDataWithMasterId(ingred.ingredMasterId).id, ingred.quantity)) //아이템의 양이 충분?
             {
                 return false;
             }
@@ -369,9 +369,7 @@ public class LabotoryUI : MainUIs
     {
         foreach(UpgradeIngred ingred in ingredientList)
         {
-            InvenData invenData = DataManager.inven.GetDataWithMasterId(ingred.ingredMasterId);
-            invenData.quantity -= ingred.quantity;
-            DataManager.inven.UpdateData(invenData.id, invenData);
+            DataManager.inven.DataUpdateOrDelete(DataManager.inven.GetDataWithMasterId(ingred.ingredMasterId).id, ingred.quantity);
         }
         DataManager.inven.SaveData();
     }
@@ -387,7 +385,7 @@ public class LabotoryUI : MainUIs
         else if (targetType == MasterType.Parts)
         {
             //파츠
-            ChangePartsData();
+            ChangePartsAbilityData();
         }
         else
         {
@@ -421,13 +419,13 @@ public class LabotoryUI : MainUIs
         //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(CharData),DataManager.character.GetFilePath());
     }
 
-    private void ChangePartsData()
+    private void ChangePartsAbilityData()
     {
-        PartsData targetParts = DataManager.parts.GetData(targetInvenCode);
+        PartsAbilityData targetParts = DataManager.parts.GetData(targetInvenCode);
         targetParts.level += 1;
         targetParts.mainAbility.value += 5;
         DataManager.parts.UpdateData(targetInvenCode, targetParts);
         DataManager.parts.SaveData();
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(PartsData),DataManager.parts.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(PartsAbilityData),DataManager.parts.GetFilePath());
     }
 }

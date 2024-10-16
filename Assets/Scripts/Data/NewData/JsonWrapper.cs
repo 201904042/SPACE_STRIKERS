@@ -43,9 +43,9 @@ public class GotchaDataWrapper
 
 //Writable
 [System.Serializable]
-public class PartsDataWrapper
+public class PartsAbilityDataWrapper
 {
-    public List<PartsData> PartsData;
+    public List<PartsAbilityData> PartsAbilityData;
 }
 
 [System.Serializable]

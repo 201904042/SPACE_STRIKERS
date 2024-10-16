@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,17 +25,17 @@ public class AbilityData
 {
     public int id;
     public string name;
-    public string minRank;
-    public string basicValue;
-    public AbilityRate SValue;
-    public AbilityRate AValue;
-    public AbilityRate BValue;
-    public AbilityRate CValue;
-    public AbilityRate DValue;
+    public int minRank;
+    public int basicValue;
+    public AbilityRate SRange;
+    public AbilityRate ARange;
+    public AbilityRate BRange;
+    public AbilityRate CRange;
+    public AbilityRate DRange;
 }
 
 [System.Serializable]
-public class PartsData
+public class PartsAbilityData
 {
     public int invenId;
     public bool isActive;
@@ -82,13 +83,13 @@ public class StageData
     public StageItemReward[] defaultReward;
 }
 
+
 [System.Serializable]
 public class UpgradeData
 {
     public int masterId;
     public UpgradeCost[] upgradeCost;
 }
-
 
 [System.Serializable]
 public class EnemyData
@@ -114,16 +115,3 @@ public class GotchaData
     public GotchaCost[] cost;
 }
 
-[System.Serializable]
-public class GotchaInform
-{
-    public string type;
-    public float rate;
-}
-
-[System.Serializable]
-public class GotchaCost
-{
-    public int id;
-    public float amount;
-}

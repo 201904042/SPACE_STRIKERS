@@ -145,14 +145,17 @@ public class ItemInformInterface : UIInterface
         TradeData sellData = new TradeData()
         {
             tradeCost = TradeType.Item,
-            costId = DataManager.inven.GetData(invenItemId).masterId,
+            costInvenId = DataManager.inven.GetData(invenItemId).masterId,
             costAmount = 1,
-            targetId = 1, //미네랄
+            targetMasterId = 1, //미네랄
             tradeAmount = 1000,
             isMultiTrade= false
         };
         
         StoreUI.TradeItem(sellData);
         UIManager.alertInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
+        UIManager.UIInstance.invenUI.FetchContent();
+
+        CloseInterface();
     }
 }

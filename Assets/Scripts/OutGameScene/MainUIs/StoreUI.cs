@@ -124,13 +124,14 @@ public class StoreUI : MainUIs
     /// </summary>
     public static void TradeItem(TradeData data)
     {
-        MasterData tradeTargetMaster = DataManager.master.GetData(data.targetId); //증가할 아이템
+        MasterData tradeTargetMaster = DataManager.master.GetData(data.targetMasterId); //증가할 아이템
         InvenData tradeCostItem = new InvenData(); //감소할 아이템
 
         if (data.tradeCost == TradeType.Item)
         {
-            tradeCostItem = DataManager.inven.GetDataWithMasterId(data.costId);
-            if (data.costAmount > tradeCostItem.quantity) //미네랄의 양 검사
+            tradeCostItem = DataManager.inven.GetDataWithMasterId(data.costInvenId);
+            
+            if (!DataManager.inven.IsEnoughItem(tradeCostItem.id, data.costAmount)) //미네랄의 양 검사
             {
                 //구매 불가 할경우. 알림 인터페이스 오픈
                 UIManager.alertInterface.SetAlert("구매 불가/ 비용 아이템이 부족합니다");
@@ -150,30 +151,18 @@ public class StoreUI : MainUIs
         }
 
         //거래 대가 감소
-        tradeCostItem.quantity -= data.costAmount;
-        DataManager.inven.UpdateData(tradeCostItem.id, tradeCostItem);
+        DataManager.inven.DataUpdateOrDelete(tradeCostItem.id, data.costAmount);
 
         //구매한 아이템이 인벤토리에 존재하면 개수 증가  없으면 추가
-        InvenData checkData = DataManager.inven.GetDataWithMasterId(data.targetId);
-        if (checkData != null)
-        {
-            InvenData invenData = checkData;
-            invenData.quantity += data.tradeAmount;
-            DataManager.inven.UpdateData(invenData.id, invenData);
-        }
-        else
-        {
-            InvenData newData = new InvenData
-            {
-                id = DataManager.inven.GetLastKey() + 1,
-                masterId = data.targetId,
-                quantity = data.tradeAmount,
-                name = tradeTargetMaster.name
-            };
-            DataManager.inven.AddData(newData);
-        }
+        DataManager.inven.DataAddOrUpdate(data.targetMasterId, data.tradeAmount);
+
 
         DataManager.inven.SaveData();
+
+        if(DataManager.master.GetData(tradeCostItem.masterId).type == MasterType.Parts||
+            tradeTargetMaster.type == MasterType.Parts) // -> 파츠를 거래할경우 무조건 삭제가 일어나므로 
+            DataManager.parts.SaveData();
+
         //완료시 파이어베이스로 보냄
         //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
 

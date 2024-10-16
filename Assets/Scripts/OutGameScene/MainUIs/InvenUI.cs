@@ -23,6 +23,8 @@ public class InvenUI : MainUIs
     public Button backBtn;
     public Button laboBtn;
 
+    Transform activeTransform;
+
     protected override void Awake()
     {
         base.Awake();
@@ -76,6 +78,12 @@ public class InvenUI : MainUIs
         consumeContent.gameObject.SetActive(false);
 
         targetTransform.gameObject.SetActive(true);
+        activeTransform = targetTransform;
+    }
+
+    public void FetchContent()
+    {
+        activeTransform.GetComponent<InvenContent>().ResetContent();
     }
 
 }

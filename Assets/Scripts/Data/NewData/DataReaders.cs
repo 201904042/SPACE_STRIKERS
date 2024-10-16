@@ -17,6 +17,12 @@ public class MasterDataReader : ReadOnlyData<MasterData>
         fieldType = DataFieldType.MasterData;
         return data.id;
     }
+
+    public List<MasterData> GetItemsByType(MasterType type)
+    {
+        // 특정 type의 데이터를 필터링하여 반환
+        return dataDict.Values.Where(item => item.type == type).ToList();
+    }
 }
 
 public class StoreItemReader : ReadOnlyData<StoreItemData>
@@ -106,9 +112,9 @@ public class InventoryDataReader : EditableData<InvenData>
         return null;
     }
 
-    public bool IsEnoughItem(int masterId, int needAmount)
+    public bool IsEnoughItem(int invenId, int needAmount)
     {
-        InvenData? check = GetDataWithMasterId(masterId);
+        InvenData check = GetData(invenId);
 
         if(check == null)
         {
@@ -125,6 +131,53 @@ public class InventoryDataReader : EditableData<InvenData>
 
         return true;
     }
+
+    public void DataAddOrUpdate(int masterId, int amount)
+    {
+        InvenData checkData = DataManager.inven.GetDataWithMasterId(masterId);
+        if (checkData != null)
+        {
+            InvenData invenData = checkData;
+            invenData.quantity += amount;
+            DataManager.inven.UpdateData(invenData.id, invenData);
+        }
+        else
+        {
+            InvenData newData = new InvenData
+            {
+                id = DataManager.inven.GetLastKey() + 1,
+                masterId = masterId,
+                quantity = amount,
+                name = DataManager.master.GetData(masterId).name
+            };
+            DataManager.inven.AddData(newData);
+        }
+    }
+
+    public void DataUpdateOrDelete(int invenId, int amount)
+    {
+        InvenData invenData = DataManager.inven.GetData(invenId);
+        invenData.quantity -= amount;
+        if (invenData.quantity > 0)
+        {
+            DataManager.inven.UpdateData(invenData.id, invenData);
+        }
+        else
+        {
+            MasterData targetMaster = DataManager.master.GetData(invenData.masterId);
+            if (targetMaster.type == MasterType.Money) 
+            {
+                //머니 데이터는 삭제 하지 않음
+                return;
+            }
+            if(targetMaster.type == MasterType.Parts)
+            {
+                //파츠라면 파츠스텟 데이터도 연쇄삭제
+                DataManager.parts.DeleteData(invenId);
+            }
+            DataManager.inven.DeleteData(invenData.id);
+        }
+    }
 }
 
 public class CharacterDataReader : EditableData<CharData>
@@ -136,12 +189,12 @@ public class CharacterDataReader : EditableData<CharData>
     }
 }
 
-public class PartsDataReader : EditableData<PartsData>
+public class PartsAbilityDataReader : EditableData<PartsAbilityData>
 {
 
-    protected override int GetId(PartsData data)
+    protected override int GetId(PartsAbilityData data)
     {
-        fieldType = DataFieldType.PartsData;
+        fieldType = DataFieldType.PartsAbilityData;
         return data.invenId;
     }
 

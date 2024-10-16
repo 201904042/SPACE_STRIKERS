@@ -3,14 +3,6 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
 
-public struct PartsGradeColor
-{
-    public static Color S_Color = new Color(1, 1, 0, 1);
-    public static Color A_Color = new Color(1, 0, 1, 1);
-    public static Color B_Color = new Color(0, 0, 1, 1);
-    public static Color C_Color = new Color(0, 1, 0, 1);
-    public static Color D_Color = new Color(1, 1, 1, 1);
-}
 
 public class ItemUIPref : MonoBehaviour
 {
@@ -20,7 +12,7 @@ public class ItemUIPref : MonoBehaviour
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
     public InvenData invenData;
-    public PartsData partsData; //소유한 파츠의 데이터
+    public PartsAbilityData PartsAbilityData; //소유한 파츠의 데이터
     public MasterData itemData; //소유한 파츠 이외의 아이템이나 소유하지 않은 모든 아이템의 데이터
 
     [SerializeField] private Image bgImage;
@@ -31,10 +23,10 @@ public class ItemUIPref : MonoBehaviour
     public Sprite defaultImage;
     public MasterType curItemType; //2면 파츠, 나머지면 다른 아이템
 
-    public int ItemAmount 
-    { 
-        get => invenData.quantity; 
-    }
+    //public int ItemAmount 
+    //{ 
+    //    get => invenData.quantity; 
+    //}
 
     private void Awake()
     {
@@ -66,7 +58,7 @@ public class ItemUIPref : MonoBehaviour
         ResetData();
         if (invenId == -1)
         {
-            partsData.invenId = -1;
+            PartsAbilityData.invenId = -1;
             curItemType = MasterType.Parts;
             return;
         }
@@ -75,7 +67,7 @@ public class ItemUIPref : MonoBehaviour
         MasterType itemtype = DataManager.master.GetData(invenData.masterId).type;
         if(itemtype == MasterType.Parts) //파츠일경우
         {
-            partsData = DataManager.parts.GetData(invenData.id);
+            PartsAbilityData = DataManager.parts.GetData(invenData.id);
         }
         else
         {
@@ -90,7 +82,7 @@ public class ItemUIPref : MonoBehaviour
     {
         if (curItemType == MasterType.Parts)
         {
-            switch (partsData.rank)
+            switch (PartsAbilityData.rank)
             {
                 case 5: bgImage.color = PartsGradeColor.S_Color; break;
                 case 4: bgImage.color = PartsGradeColor.A_Color; break;
@@ -100,7 +92,7 @@ public class ItemUIPref : MonoBehaviour
                 default: bgImage.color = Color.black; break;
             }
 
-            MasterData master = DataManager.master.GetData(DataManager.inven.GetData(partsData.invenId).masterId);
+            MasterData master = DataManager.master.GetData(DataManager.inven.GetData(PartsAbilityData.invenId).masterId);
 
             Sprite image = Resources.Load<Sprite>(master.spritePath);
             if (image == null)
@@ -109,7 +101,7 @@ public class ItemUIPref : MonoBehaviour
             }
 
             itemImage.sprite = image;
-            selectText.SetActive(partsData.isActive == true ? true : false);
+            selectText.SetActive(PartsAbilityData.isActive == true ? true : false);
         }
         else
         {
@@ -127,14 +119,14 @@ public class ItemUIPref : MonoBehaviour
 
     public void UpdateItemAmount()
     {
-        amountText.GetComponentInChildren<TextMeshProUGUI>().text = ItemAmount.ToString();
+        amountText.GetComponentInChildren<TextMeshProUGUI>().text = invenData.quantity.ToString();
     }
 
     public void ResetData()
     {
         invenData = new InvenData();
         itemData = new MasterData();
-        partsData = new PartsData();
+        PartsAbilityData = new PartsAbilityData();
 
         bgImage.color = Color.white;
         itemImage.sprite = null;

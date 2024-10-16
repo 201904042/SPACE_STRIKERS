@@ -25,6 +25,19 @@ public class InvenContent : MonoBehaviour
         }
     }
 
+    public void ResetContent()
+    {
+        if (transform.childCount > 0)
+        {
+            foreach (Transform child in transform.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        SearchInDatabase(contentType);
+    }
+
     public void SearchInDatabase(MasterType targetType)
     {
         foreach (InvenData item in DataManager.inven.GetDictionary().Values)

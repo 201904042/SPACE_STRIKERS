@@ -38,7 +38,7 @@ public class PurchaseInterface : UIInterface
     /// </summary>
     public bool SetPurchaseData(TradeData tradeData)
     {
-        MasterData itemData = DataManager.master.GetData(tradeData.targetId);
+        MasterData itemData = DataManager.master.GetData(tradeData.targetMasterId);
 
         itemImage.sprite = Resources.Load<Sprite>(itemData.spritePath);
         itemText.text = itemData.description;

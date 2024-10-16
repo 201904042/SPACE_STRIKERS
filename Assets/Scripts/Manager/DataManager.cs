@@ -13,7 +13,7 @@ public enum DataFieldType
     UpgradeData,
     AccountData,
     CharData,
-    PartsData,
+    PartsAbilityData,
     InvenData,
     EnemyData,
     GotchaData
@@ -31,7 +31,7 @@ public class DataManager : MonoBehaviour
     { DataFieldType.UpgradeData, "UpgradeData" },
     { DataFieldType.AccountData, "AccountData" },
     { DataFieldType.CharData, "CharacterData" },
-    { DataFieldType.PartsData, "PartsData" },
+    { DataFieldType.PartsAbilityData, "PartsAbilityData" },
     { DataFieldType.InvenData, "InvenData" },
     { DataFieldType.EnemyData, "EnemyData" },
     { DataFieldType.GotchaData, "GotchaData" }
@@ -42,7 +42,7 @@ public class DataManager : MonoBehaviour
     public static InventoryDataReader inven = new InventoryDataReader();
     public static EnemyDataReader enemy = new EnemyDataReader();
     public static CharacterDataReader character = new CharacterDataReader();
-    public static PartsDataReader parts = new PartsDataReader();
+    public static PartsAbilityDataReader parts = new PartsAbilityDataReader();
     public static AbilityDataReader ability = new AbilityDataReader();
     public static StoreItemReader store = new StoreItemReader();
     public static StageDataReader stage = new StageDataReader();
@@ -66,6 +66,6 @@ public class DataManager : MonoBehaviour
         account.LoadData("Assets/StreamingAssets/JSON/Writable/AccountData.json");
         character.LoadData("Assets/StreamingAssets/JSON/Writable/CharacterData.json");
         inven.LoadData("Assets/StreamingAssets/JSON/Writable/InvenData.json");
-        parts.LoadData("Assets/StreamingAssets/JSON/Writable/PartsData.json");
+        parts.LoadData("Assets/StreamingAssets/JSON/Writable/PartsAbilityData.json");
     }
 }

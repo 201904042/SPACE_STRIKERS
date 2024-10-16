@@ -22,8 +22,13 @@ public class GotchaInterface : UIInterface
     public ItemAmountPref ItemAmountForMoney;
     public ItemAmountPref ItemAmountForCoupon;
 
+    public GotchaData curGotchaData;
+    public GotchaCost moneyCost;
+    public GotchaCost couponCost;
     public int gotchaTier = 0; // 1하급 2중급 3상급
-    public int paidTypeCode;
+
+    public int acceptCostId;
+    public int acceptCostAmount;
 
     protected override void Awake()
     {
@@ -42,28 +47,25 @@ public class GotchaInterface : UIInterface
         ItemAmountForCoupon = acceptByCoupon.transform.GetChild(0).GetComponent<ItemAmountPref>();
     }
 
+    public void SetGotchaInterface(int tier)
+    {
+        gotchaTier = tier;
+        Debug.Log($"{tier}번 가챠 실행");
+        curGotchaData = DataManager.gotcha.GetData(gotchaTier);
 
+    }
     public override IEnumerator GetValue()
     {
         yield return base.GetValue();
 
         result = null;
-        paidTypeCode = -1;  // 미네랄1, 쿠폰4,5,6
         TextSet(gotchaTier);
-
-        switch (gotchaTier)
-        {
-            case 1 : gotchaTier = 4; break;
-            case 2: gotchaTier = 5; break;
-            case 3: gotchaTier = 6; break;
-            default: Debug.Log($"티어가 맞지 않음 {gotchaTier}");  break;
-        }
 
         acceptByMoney.onClick.RemoveAllListeners();
         acceptByCoupon.onClick.RemoveAllListeners();
         closeBtn.onClick.RemoveAllListeners();
-        acceptByMoney.onClick.AddListener(() => AcceptBtn(true, 0));
-        acceptByCoupon.onClick.AddListener(() => AcceptBtn(true, gotchaTier));
+        acceptByMoney.onClick.AddListener(() => AcceptBtn(true, moneyCost.id, moneyCost.amount));
+        acceptByCoupon.onClick.AddListener(() => AcceptBtn(true, couponCost.id, couponCost.amount));
         closeBtn.onClick.AddListener(() => OnConfirm(false));
 
         // 사용자가 버튼을 누를 때까지 대기
@@ -74,32 +76,27 @@ public class GotchaInterface : UIInterface
         yield return result;
     }
 
-
-    public void SetGotchaInterface(int tier)
-    {
-        gotchaTier = tier;
-    }
-
     private void TextSet(int grade)
     {
-        GotchaData gotchaData = DataManager.gotcha.GetData(grade);
         StringBuilder sb = new StringBuilder();
-        foreach(GotchaInform gi in gotchaData.items)
+        foreach(GotchaInform gi in curGotchaData.items)
         {
             string itemName = TransText(gi.type);
-            sb.Append($"{itemName} : {gi.rate}%");
+            sb.Append($"{itemName} : {gi.rate}%\n");
         }
         gotchaContentText.text = sb.ToString();
 
-        foreach (GotchaCost gc in gotchaData.cost)
+        foreach (GotchaCost gc in curGotchaData.cost)
         {
             if(gc.id == 1)
             {
                 ItemAmountForMoney.SetAmountUI(gc.id, gc.amount);
+                moneyCost = gc;
             }
             else
             {
                 ItemAmountForCoupon.SetAmountUI(gc.id, gc.amount);
+                couponCost = gc;
             }
         }
     }
@@ -120,9 +117,10 @@ public class GotchaInterface : UIInterface
         return transString;
     }
 
-    private void AcceptBtn(bool result, int paidType)
+    private void AcceptBtn(bool result, int costId, int costAmount)
     {
         OnConfirm(result);
-        paidTypeCode = paidType;
+        acceptCostId = costId;
+        acceptCostAmount = costAmount;
     }
 }

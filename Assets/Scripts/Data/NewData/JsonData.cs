@@ -74,10 +74,10 @@ public abstract class ReadOnlyData<T>
             var wrapper = JsonUtility.FromJson<CharacterDataWrapper>(json);
             dataList = wrapper.CharacterData as List<T>;
         }
-        else if (typeof(T) == typeof(PartsData))
+        else if (typeof(T) == typeof(PartsAbilityData))
         {
-            var wrapper = JsonUtility.FromJson<PartsDataWrapper>(json);
-            dataList = wrapper.PartsData as List<T>;
+            var wrapper = JsonUtility.FromJson<PartsAbilityDataWrapper>(json);
+            dataList = wrapper.PartsAbilityData as List<T>;
         }
         else if (typeof(T) == typeof(InvenData))
         {
@@ -180,12 +180,23 @@ public abstract class EditableData<T> : ReadOnlyData<T>
 
     public void SaveData()
     {
-        Wrapper<T> wrapper = new Wrapper<T>(new List<T>(dataDict.Values));
+        List<int> sortedKeys = dataDict.Keys.OrderBy(key => key).ToList();
+
+        // 정렬된 키에 따라 데이터 리스트를 생성
+        List<T> sortedDataList = new List<T>();
+        foreach (int key in sortedKeys)
+        {
+            sortedDataList.Add(dataDict[key]);
+        }
+
+        // Wrapper를 사용하여 JSON으로 변환
+        Wrapper<T> wrapper = new Wrapper<T>(sortedDataList);
         string json = JsonUtility.ToJson(wrapper, true);
-       
+
         // JSON 필드명 변경
         json = json.Replace("\"dataList\"", $"\"{DataManager.dataFieldNames[fieldType]}\"");
 
+        // 파일에 저장
         File.WriteAllText(filePath, json);
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();

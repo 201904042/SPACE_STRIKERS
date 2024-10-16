@@ -45,39 +45,39 @@ public class ReadyUI : MainUIs
         }
     }
 
-    private List<PartsData> equippedPartsList = new List<PartsData>();
-    public List<PartsData> EquippedPartsList => equippedPartsList;
+    private List<PartsAbilityData> equippedPartsList = new List<PartsAbilityData>();
+    public List<PartsAbilityData> EquippedPartsList => equippedPartsList;
 
-    public PartsData SetPartsSlot1
+    public PartsAbilityData SetPartsSlot1
     {
-        get => parts1Btn.GetComponent<ItemUIPref>().partsData;
+        get => parts1Btn.GetComponent<ItemUIPref>().PartsAbilityData;
         set
         {
             UpdatePartsSlot(parts1Btn, value, "partsSlot1");
         }
     }
 
-    public PartsData SetPartsSlot2
+    public PartsAbilityData SetPartsSlot2
     {
-        get => parts2Btn.GetComponent<ItemUIPref>().partsData;
+        get => parts2Btn.GetComponent<ItemUIPref>().PartsAbilityData;
         set
         {
             UpdatePartsSlot(parts2Btn, value, "partsSlot2");
         }
     }
 
-    public PartsData SetPartsSlot3
+    public PartsAbilityData SetPartsSlot3
     {
-        get => parts3Btn.GetComponent<ItemUIPref>().partsData;
+        get => parts3Btn.GetComponent<ItemUIPref>().PartsAbilityData;
         set
         {
             UpdatePartsSlot(parts3Btn, value, "partsSlot3");
         }
     }
 
-    public PartsData SetPartsSlot4
+    public PartsAbilityData SetPartsSlot4
     {
-        get => parts4Btn.GetComponent<ItemUIPref>().partsData;
+        get => parts4Btn.GetComponent<ItemUIPref>().PartsAbilityData;
         set
         {
             UpdatePartsSlot(parts4Btn, value, "partsSlot4");
@@ -165,10 +165,10 @@ public class ReadyUI : MainUIs
     {
         SetPlayerCode = PlayerPrefs.GetInt("curCharacterCode");
 
-        SetPartsSlot1 = GetOwnPartsDataFromSlot("partsSlot1");
-        SetPartsSlot2 = GetOwnPartsDataFromSlot("partsSlot2");
-        SetPartsSlot3 = GetOwnPartsDataFromSlot("partsSlot3");
-        SetPartsSlot4 = GetOwnPartsDataFromSlot("partsSlot4");
+        SetPartsSlot1 = GetOwnPartsAbilityDataFromSlot("partsSlot1");
+        SetPartsSlot2 = GetOwnPartsAbilityDataFromSlot("partsSlot2");
+        SetPartsSlot3 = GetOwnPartsAbilityDataFromSlot("partsSlot3");
+        SetPartsSlot4 = GetOwnPartsAbilityDataFromSlot("partsSlot4");
 
         PlayerStatTextSet();
 
@@ -249,14 +249,14 @@ public class ReadyUI : MainUIs
 
             foreach(Ability ability in part.subAbilities)
             {
-                PartsDataReader.ApplyAbilityToCharacter(ref result, ability);
+                PartsAbilityDataReader.ApplyAbilityToCharacter(ref result, ability);
             }
         }
         return result;
     }
     
-    //todo -> PartsData Reader에서 static변수로 만들기
-    private PartsData GetOwnPartsDataFromSlot(string invenKey)
+    //todo -> PartsAbilityData Reader에서 static변수로 만들기
+    private PartsAbilityData GetOwnPartsAbilityDataFromSlot(string invenKey)
     {
         int invenId = PlayerPrefs.GetInt(invenKey, -1);
 
@@ -265,7 +265,7 @@ public class ReadyUI : MainUIs
             return null;
         }
 
-        PartsData data = DataManager.parts.GetData(DataManager.inven.GetData(invenId).masterId);
+        PartsAbilityData data = DataManager.parts.GetData(DataManager.inven.GetData(invenId).masterId);
         if (data != null)
         {
             return data;
@@ -275,19 +275,19 @@ public class ReadyUI : MainUIs
 
     private void CheckDuplicateParts(int partsInvenCode)
     {
-        if (parts1Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
+        if (parts1Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
         {
             SetPartsSlot1 = null;
         }
-        if (parts2Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
+        if (parts2Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
         {
             SetPartsSlot2 = null;
         }
-        if (parts3Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
+        if (parts3Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
         {
             SetPartsSlot3 = null;
         }
-        if (parts4Btn.GetComponent<PartsSlot>().partsData?.invenId == partsInvenCode)
+        if (parts4Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
         {
             SetPartsSlot4 = null;
         }
@@ -296,18 +296,18 @@ public class ReadyUI : MainUIs
     /// <summary>
     /// 장착 슬롯에 해당 파츠를 등록 혹은 해제
     /// </summary>
-    private void UpdatePartsSlot(Button partsButton, PartsData value, string slotKey)
+    private void UpdatePartsSlot(Button partsButton, PartsAbilityData value, string slotKey)
     {
         PartsSlot partsUIPref = partsButton.GetComponent<PartsSlot>();
 
         //해당 장착칸에 이미 파츠가 있는 경우 해당 파츠를 제거
-        if(partsUIPref.partsData != null)
+        if(partsUIPref.PartsAbilityData != null)
         {
-            partsUIPref.partsData.isActive = false;
-            equippedPartsList.Remove(partsUIPref.partsData);
+            partsUIPref.PartsAbilityData.isActive = false;
+            equippedPartsList.Remove(partsUIPref.PartsAbilityData);
         }
 
-        PartsData currentParts = partsUIPref.partsData;
+        PartsAbilityData currentParts = partsUIPref.PartsAbilityData;
         if (value != null) //해당 파츠 슬롯을 주어진 value값으로 채움
         {
             CheckDuplicateParts(value.invenId); //다른 슬롯에 해당 파츠가 설정되어 잇는지 체크. 만약 다른 슬롯에 있다면 그 슬롯의 파츠 해제
@@ -393,7 +393,7 @@ public class ReadyUI : MainUIs
 
         if (selectPartsInterface.result == true)
         {
-            PartsData parts = selectPartsInterface.SelectedParts;
+            PartsAbilityData parts = selectPartsInterface.SelectedParts;
 
             switch (partsSlotIndex)
             {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowUp : ItemBasic
+public class Item_PowUp : Ingame_Item
 {
     PlayerSpecialSkill PlayerSkill;
     protected override void Awake()
@@ -17,6 +17,7 @@ public class PowUp : ItemBasic
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
+            Managers.Instance.Pool.ReleasePool(gameObject);
             PowUP();
         }
     }

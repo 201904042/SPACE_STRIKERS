@@ -1,24 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class ShooterUp : ItemBasic
+public class Item_LevelUp : Ingame_Item
 {
-    private playerShooterUpgrade playerShooter;
+    PlayerInGameExp playerExp;
     protected override void Awake()
     {
         base.Awake();
-        playerShooter = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
+        playerExp = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
     }
-    
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerShooter.ShooterUPBtn();
+            Managers.Instance.Pool.ReleasePool(gameObject);
+            playerExp.LevelUP();
         }
     }
 }

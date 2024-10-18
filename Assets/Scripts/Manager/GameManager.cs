@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject myPlayer;
+
     public GameObject gameEndUI;
 
     public float stageTime;

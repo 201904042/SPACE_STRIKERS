@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialUp : ItemBasic
+public class Item_SpecialUp : Ingame_Item
 {
     private PlayerSpecialSkill playerSpecial;
     protected override void Awake()
@@ -16,6 +16,7 @@ public class SpecialUp : ItemBasic
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
+            Managers.Instance.Pool.ReleasePool(gameObject);
             playerSpecial.specialCount++;
         }
     }

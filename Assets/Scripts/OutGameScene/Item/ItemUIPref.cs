@@ -21,7 +21,7 @@ public class ItemUIPref : MonoBehaviour
     [SerializeField] private GameObject amountText;
 
     public Sprite defaultImage;
-    public MasterType curItemType; //2면 파츠, 나머지면 다른 아이템
+    public MasterType curItemType; //3면 파츠, 나머지면 다른 아이템
 
     //public int ItemAmount 
     //{ 
@@ -56,12 +56,13 @@ public class ItemUIPref : MonoBehaviour
     public void SetByInvenId(int invenId)
     {
         ResetData();
-        if (invenId == -1)
+        if (invenId == 0)
         {
-            PartsAbilityData.invenId = -1;
+            PartsAbilityData.invenId = 0;
             curItemType = MasterType.Parts;
             return;
         }
+
         invenData = DataManager.inven.GetData(invenId);
 
         MasterType itemtype = DataManager.master.GetData(invenData.masterId).type;

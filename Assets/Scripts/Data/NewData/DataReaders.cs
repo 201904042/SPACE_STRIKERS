@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,92 @@ public class AccountJsonReader : EditableData<AccountData>
     {
         fieldType = DataFieldType.AccountData;
         return data.id;
+    }
+
+    public void SetCharValue(int id)
+    {
+        dataDict[0].useChar = id;
+        SaveData();
+    }
+
+    public void SetStageValue(int value)
+    {
+        dataDict[0].stageIndex = value;
+        SaveData();
+    }
+    public void SetPlanetValue(int value)
+    {
+        dataDict[0].planetIndex = value;
+        SaveData();
+    }
+
+    public void AddExp(int addAmount)
+    {
+        dataDict[0].exp = addAmount;
+        CalculateLevel();
+        SaveData();
+    }
+
+    public void SetParts(int slotNum, int partsInvenId)
+    {
+        dataDict[0].useParts[slotNum-1] = partsInvenId;
+        SaveData();
+    }
+
+    public void SetStageProgress(int progress)
+    {
+        dataDict[0].stageProgress = progress;
+        SaveData();
+    }
+
+    public void CalculateLevel()
+    {
+        AccountData data = dataDict[0];
+        int level = 1; // 기본 레벨 1
+
+        for (int i = 0; i < data.needExp.Count; i++)
+        {
+            if (data.needExp[i] == -1) // -1이면 더 이상 레벨업 불가
+            {
+                break;
+            }
+
+            if (data.exp >= data.needExp[i]) // 현재 경험치가 필요한 경험치 이상일 경우 레벨업
+            {
+                level++;
+            }
+            else
+            {
+                break; // 현재 경험치가 필요 경험치보다 적으면 더 이상 레벨업 불가
+            }
+        }
+
+        data.level = level;
+    }
+
+    public int GetChar()
+    {
+        return dataDict[0].useChar;
+    }
+    public int[] GetPartsArray()
+    {
+        return dataDict[0].useParts;
+    }
+    public int GetParts(int slotId)
+    {
+        return dataDict[0].useParts[slotId-1];
+    }
+    public int GetPlanet()
+    {
+        return dataDict[0].planetIndex;
+    }
+    public int GetStage()
+    {
+        return dataDict[0].stageIndex;
+    }
+    public int GetStageProgress()
+    {
+        return dataDict[0].stageProgress;
     }
 }
 

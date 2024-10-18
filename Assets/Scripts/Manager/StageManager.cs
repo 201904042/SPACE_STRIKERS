@@ -36,8 +36,9 @@ public class StageManager : MonoBehaviour
     /// </summary>
     public void SetStageData()
     {
-        planet = PlayerPrefs.GetInt("ChosenPlanet");
-        stage = PlayerPrefs.GetInt("ChosenStage");
+        AccountData account = DataManager.account.GetData(0);
+        planet = account.planetIndex;
+        stage = account.stageIndex;
 
         int StageCode = (planet-1) * 10 + stage;
 

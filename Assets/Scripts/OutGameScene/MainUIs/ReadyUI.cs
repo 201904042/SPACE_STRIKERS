@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -17,115 +18,22 @@ public class ReadyUI : MainUIs
     public TextMeshProUGUI charInformText;
 
     public Transform partsZone;
-    public Button parts1Btn;
-    public Button parts2Btn;
-    public Button parts3Btn;
-    public Button parts4Btn;
-
-    public Transform itemZone;
-    public Button item1;
-    public Button item2;
-    public Button item3;
-    public Button item4;
 
     public Transform bottomZone;
     public TextMeshProUGUI stageText;
     public Button backBtn;
     public Button gotoIngameBtn;
 
-    [SerializeField]private int curPlayerCode; 
-    public int SetPlayerCode
+    public int CurPlayerCode
     {
-        get => curPlayerCode;
-        set
-        {
-            curPlayerCode = value;
-            PlayerPrefs.SetInt("curCharacterCode", value);
-            PlayerChange();
-        }
+        get => DataManager.account.GetChar();
     }
-
-    private List<PartsAbilityData> equippedPartsList = new List<PartsAbilityData>();
-    public List<PartsAbilityData> EquippedPartsList => equippedPartsList;
-
-    public PartsAbilityData SetPartsSlot1
+    public int[] PartsCode
     {
-        get => parts1Btn.GetComponent<ItemUIPref>().PartsAbilityData;
-        set
-        {
-            UpdatePartsSlot(parts1Btn, value, "partsSlot1");
-        }
-    }
-
-    public PartsAbilityData SetPartsSlot2
-    {
-        get => parts2Btn.GetComponent<ItemUIPref>().PartsAbilityData;
-        set
-        {
-            UpdatePartsSlot(parts2Btn, value, "partsSlot2");
-        }
-    }
-
-    public PartsAbilityData SetPartsSlot3
-    {
-        get => parts3Btn.GetComponent<ItemUIPref>().PartsAbilityData;
-        set
-        {
-            UpdatePartsSlot(parts3Btn, value, "partsSlot3");
-        }
-    }
-
-    public PartsAbilityData SetPartsSlot4
-    {
-        get => parts4Btn.GetComponent<ItemUIPref>().PartsAbilityData;
-        set
-        {
-            UpdatePartsSlot(parts4Btn, value, "partsSlot4");
-        }
+        get => DataManager.account.GetPartsArray();
     }
 
     //아이템 파트는 아직 미구현
-    private bool isItem1On;
-    private bool isItem2On;
-    private bool isItem3On;
-    private bool isItem4On;
-
-    
-    public bool IsItem1On{
-        get => isItem1On;
-        set
-        {
-            isItem1On = value;
-            ItemBtnChange(item1, value);
-        }
-    }
-    public bool IsItem2On
-    {
-        get => isItem2On;
-        set
-        {
-            isItem2On = value;
-            ItemBtnChange(item2, value);
-        }
-    }
-    public bool IsItem3On
-    {
-        get => isItem3On;
-        set
-        {
-            isItem3On = value;
-            ItemBtnChange(item3, value);
-        }
-    }
-    public bool IsItem4On
-    {
-        get => isItem4On;
-        set
-        {
-            isItem4On = value;
-            ItemBtnChange(item4, value);
-        }
-    }
 
     protected override void Awake()
     {
@@ -140,15 +48,11 @@ public class ReadyUI : MainUIs
         charSlotUI = charSlotBtn.GetComponent<CharacterImageBtn>();
         charInformText = charZone.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         partsZone = transform.GetChild(1);
-        parts1Btn = partsZone.GetChild(0).GetComponent<Button>();
-        parts2Btn = partsZone.GetChild(1).GetComponent<Button>();
-        parts3Btn = partsZone.GetChild(2).GetComponent<Button>();
-        parts4Btn = partsZone.GetChild(3).GetComponent<Button>();
-        itemZone = transform.GetChild(2).GetChild(1);
-        item1 = itemZone.GetChild(0).GetComponent<Button>();
-        item2 = itemZone.GetChild(1).GetComponent<Button>();
-        item3 = itemZone.GetChild(2).GetComponent<Button>();
-        item4 = itemZone.GetChild(3).GetComponent<Button>();
+        //itemZone = transform.GetChild(2).GetChild(1);
+        //item1 = itemZone.GetChild(0).GetComponent<Button>();
+        //item2 = itemZone.GetChild(1).GetComponent<Button>();
+        //item3 = itemZone.GetChild(2).GetComponent<Button>();
+        //item4 = itemZone.GetChild(3).GetComponent<Button>();
         bottomZone = transform.GetChild(3);
         stageText = bottomZone.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         backBtn = bottomZone.GetChild(1).GetChild(1).GetComponent<Button>();
@@ -158,26 +62,21 @@ public class ReadyUI : MainUIs
     protected override void OnEnable()
     {
         base.OnEnable();
-        SetInit();
+        SetInitUIs();
     }
 
-    private void SetInit()
+    private void SetInitUIs()
     {
-        SetPlayerCode = PlayerPrefs.GetInt("curCharacterCode");
+        PlayerImageSet();
 
-        SetPartsSlot1 = GetOwnPartsAbilityDataFromSlot("partsSlot1");
-        SetPartsSlot2 = GetOwnPartsAbilityDataFromSlot("partsSlot2");
-        SetPartsSlot3 = GetOwnPartsAbilityDataFromSlot("partsSlot3");
-        SetPartsSlot4 = GetOwnPartsAbilityDataFromSlot("partsSlot4");
+        for (int i = 0; i< PartsCode.Length; i++)
+        {
+            UpdatePartsSlot(i+1, PartsCode[i]);
+        }
 
         PlayerStatTextSet();
 
-        IsItem1On = false;
-        IsItem2On = false;
-        IsItem3On = false;
-        IsItem4On = false;
-
-        stageText.text = $"스테이지 : {PlayerPrefs.GetInt("ChosenPlanet")}-{PlayerPrefs.GetInt("ChosenStage")}";
+        stageText.text = $"스테이지 : {DataManager.account.GetPlanet()}-{DataManager.account.GetStage()}";
 
         SetBtnListener();
     }
@@ -192,14 +91,7 @@ public class ReadyUI : MainUIs
             partsZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
             partsZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => GetPartsId(index));
         }
-        for (int i = 0; i < itemZone.childCount; i++)
-        {
-            int index = i;
-            itemZone.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
-            itemZone.GetChild(i).GetComponent<Button>().onClick.AddListener(() => ItemOn(index));
-        }
-
-
+        
         backBtn.onClick.RemoveAllListeners();
         backBtn.onClick.AddListener(GotoStage);
         gotoIngameBtn.onClick.RemoveAllListeners();
@@ -207,131 +99,166 @@ public class ReadyUI : MainUIs
 
     }
 
-    private void PlayerChange()
+    private void UpdateCharacter(int characterMasterId)
     {
-        int playerMasterCode = PlayerPrefs.GetInt("curCharacterCode");
-        charSlotUI.SetImageByMasterCode(playerMasterCode);
-
+        DataManager.account.SetCharValue(characterMasterId);
+        PlayerImageSet();
         PlayerStatTextSet();
+    }
+
+    private void PlayerImageSet()
+    {
+        charSlotUI.SetImageByMasterCode(CurPlayerCode);
     }
 
     private void PlayerStatTextSet()
     {
-        int masterId = PlayerPrefs.GetInt("curCharacterCode");
-        CharData targetBasicData = DataManager.character.GetData(masterId);
-
-        CharData changedData = CalculateStat(targetBasicData);
+        CharData targetBasicData = DataManager.character.GetData(CurPlayerCode);
+        Dictionary<int, float> changedData = CalculateTotalAbilities();
         StringBuilder sb = new StringBuilder();
 
-        sb.AppendLine($"{changedData.name}");
-        sb.AppendLine($"LEVEL : {changedData.level}");
+        sb.AppendLine($"{targetBasicData.name}");
+        sb.AppendLine($"LEVEL : {targetBasicData.level}");
 
-        foreach(Ability charAbility in changedData.abilityDatas)
+        foreach (var ability in changedData)
         {
-            AbilityData targetAbility = DataManager.ability.GetData(charAbility.key);
-            sb.AppendLine($"{targetAbility.name}: {charAbility.value}");
+            AbilityData targetAbility = DataManager.ability.GetData(ability.Key);
+            sb.AppendLine($"{targetAbility.name}: {ability.Value}");
         }
-        
+
         charInformText.text = sb.ToString();
     }
 
     /// <summary>
     /// 현재 플레이어가 장착한 파츠들로 스텟 증감
     /// </summary>
-    private CharData CalculateStat(CharData targetBasicData)
+    public Dictionary<int, float> CalculateTotalAbilities()
     {
-        CharData result = targetBasicData;
-
-        //todo -> 여기서 파츠의 내용을 적용시키지 못하는 문제 발생
-        foreach (var part in EquippedPartsList)
+        CharData characterData = DataManager.character.GetData(CurPlayerCode);
+        // 캐릭터의 어빌리티 값을 딕셔너리로 변환
+        Dictionary<int, float> totalAbilities = new Dictionary<int, float>();
+        foreach (var ability in characterData.abilityDatas)
         {
-            if (!part.isActive) continue;
-
-            foreach(Ability ability in part.subAbilities)
+            if (!totalAbilities.ContainsKey(ability.key))
             {
-                PartsAbilityDataReader.ApplyAbilityToCharacter(ref result, ability);
+                totalAbilities[ability.key] = ability.value;
+            }
+            else
+            {
+                totalAbilities[ability.key] += ability.value;
             }
         }
-        return result;
-    }
-    
-    //todo -> PartsAbilityData Reader에서 static변수로 만들기
-    private PartsAbilityData GetOwnPartsAbilityDataFromSlot(string invenKey)
-    {
-        int invenId = PlayerPrefs.GetInt(invenKey, -1);
 
-        if (invenId == -1)
+        foreach(int partsInvenId in PartsCode)
         {
-            return null;
-        }
+            PartsAbilityData partData = DataManager.parts.GetData(partsInvenId);
+            if(partData == null)
+            {
+                continue;
+            }
+            if (partData.mainAbility != null)
+            {
+                int mainKey = partData.mainAbility.key;
+                float mainValue = partData.mainAbility.value;
 
-        PartsAbilityData data = DataManager.parts.GetData(DataManager.inven.GetData(invenId).masterId);
-        if (data != null)
-        {
-            return data;
-        }
-        return null;
-    }
+                if (!totalAbilities.ContainsKey(mainKey))
+                {
+                    totalAbilities[mainKey] = mainValue;
+                }
+                else
+                {
+                    totalAbilities[mainKey] += mainValue;
+                }
+            }
 
-    private void CheckDuplicateParts(int partsInvenCode)
-    {
-        if (parts1Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
-        {
-            SetPartsSlot1 = null;
+            // 파츠의 서브 어빌리티 추가
+            foreach (var subAbility in partData.subAbilities)
+            {
+                int subKey = subAbility.key;
+                float subValue = subAbility.value;
+
+                if (!totalAbilities.ContainsKey(subKey))
+                {
+                    totalAbilities[subKey] = subValue;
+                }
+                else
+                {
+                    totalAbilities[subKey] += subValue;
+                }
+            }
         }
-        if (parts2Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
-        {
-            SetPartsSlot2 = null;
-        }
-        if (parts3Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
-        {
-            SetPartsSlot3 = null;
-        }
-        if (parts4Btn.GetComponent<PartsSlot>().PartsAbilityData?.invenId == partsInvenCode)
-        {
-            SetPartsSlot4 = null;
-        }
+        // 파츠의 메인 어빌리티 추가
+
+        return totalAbilities;
     }
 
     /// <summary>
     /// 장착 슬롯에 해당 파츠를 등록 혹은 해제
     /// </summary>
-    private void UpdatePartsSlot(Button partsButton, PartsAbilityData value, string slotKey)
+    private void UpdatePartsSlot(int slotKey, int changedPartsId)
     {
-        PartsSlot partsUIPref = partsButton.GetComponent<PartsSlot>();
+        CheckDuplicateParts(changedPartsId);
+        DataManager.account.SetParts(slotKey, changedPartsId);
+        partsZone.GetChild(slotKey-1).GetComponent<PartsSlot>().SetParts(changedPartsId);
+        
+    }
 
-        //해당 장착칸에 이미 파츠가 있는 경우 해당 파츠를 제거
-        if(partsUIPref.PartsAbilityData != null)
+    private void CheckDuplicateParts(int partsInvenCode)
+    {
+        for (int i = 0; i < PartsCode.Length; i++)
         {
-            partsUIPref.PartsAbilityData.isActive = false;
-            equippedPartsList.Remove(partsUIPref.PartsAbilityData);
-        }
-
-        PartsAbilityData currentParts = partsUIPref.PartsAbilityData;
-        if (value != null) //해당 파츠 슬롯을 주어진 value값으로 채움
-        {
-            CheckDuplicateParts(value.invenId); //다른 슬롯에 해당 파츠가 설정되어 잇는지 체크. 만약 다른 슬롯에 있다면 그 슬롯의 파츠 해제
-            partsUIPref.SetParts(value);
-            PlayerPrefs.SetInt(slotKey, value.invenId);
-            value.isActive = true;
-            if (!equippedPartsList.Contains(value))
+            if (PartsCode[i] == partsInvenCode)
             {
-                equippedPartsList.Add(value);
+                //배열을 순회하며 바꿔야하는 아이디가 같다면 해당 칸은 비움
+                DataManager.account.SetParts(i + 1, 0);
+                partsZone.GetChild(i).GetComponent<PartsSlot>().SetParts(0);
             }
-        }
-        else
-        { //파츠데이터가 널일경우 -> 그 파츠슬롯을 빈상태로 만듬
-            if (currentParts != null && equippedPartsList.Contains(currentParts))
-            {
-                currentParts.isActive = false;
-                equippedPartsList.Remove(currentParts);
-            }
-
-            partsUIPref.ResetData();
-            PlayerPrefs.SetInt(slotKey, -1);
         }
     }
 
+    
+
+    //인터페이스에 의한 캐릭터 선택
+    private void GetCharacterId()
+    {
+        StartCoroutine(GetCharacterIdCoroutine());
+    }
+
+    private IEnumerator GetCharacterIdCoroutine()
+    {
+        SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
+
+        yield return StartCoroutine(selecteCharInterface.GetValue());
+
+        if (selecteCharInterface.result == true)
+        {
+            UpdateCharacter(selecteCharInterface.SelectedCode);
+            PlayerStatTextSet();
+        }
+    }
+
+    //인터페이스에 의한 파츠의 선택
+    private void GetPartsId(int partsSlotId)
+    {
+        StartCoroutine(GetPartsIdCoroutine(partsSlotId));
+    }
+
+    private IEnumerator GetPartsIdCoroutine(int partsSlotId)
+    {
+        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface;
+
+        yield return StartCoroutine(selectPartsInterface.GetValue());
+
+        if (selectPartsInterface.result == true)
+        {
+            UpdatePartsSlot(partsSlotId, selectPartsInterface.SelectedParts.invenId);
+            PlayerStatTextSet();
+        }
+
+    }
+
+
+    /* 아이템은 보류
     private void ItemBtnChange(Button item, bool value)
     {
         item.transform.GetChild(0).GetComponent<Image>().color = value ? Color.yellow : Color.white;
@@ -348,6 +275,7 @@ public class ReadyUI : MainUIs
             case 3: IsItem4On = !IsItem4On ? true : false; break;
         }
     }
+    */
 
     public void GotoStage()
     {
@@ -355,57 +283,9 @@ public class ReadyUI : MainUIs
     }
     public void GameStart()
     {
+        //게임 시작
         SceneManager.LoadScene("InGameTest");
-    }
-    private void GetCharacterId()
-    {
-        StartCoroutine(GetCharacterIdCoroutine());
-    }
-
-    private IEnumerator GetCharacterIdCoroutine()
-    {
-        SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
-        
-        yield return StartCoroutine(selecteCharInterface.GetValue());
-        
-        if(selecteCharInterface.result == true)
-        {
-            if (selecteCharInterface.SelectedCode != -1)
-            {
-                SetPlayerCode = selecteCharInterface.SelectedCode;
-                Debug.Log(SetPlayerCode);
-            }
-        }
     }
 
     
-
-    private void GetPartsId(int partsSlotIndex)
-    {
-        StartCoroutine(GetPartsIdCoroutine(partsSlotIndex));
-    }
-
-    private IEnumerator GetPartsIdCoroutine(int partsSlotIndex)
-    {
-        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface;
-
-        yield return StartCoroutine(selectPartsInterface.GetValue());
-
-        if (selectPartsInterface.result == true)
-        {
-            PartsAbilityData parts = selectPartsInterface.SelectedParts;
-
-            switch (partsSlotIndex)
-            {
-                case 1: SetPartsSlot1 = parts.invenId != -1 ? parts : null; break;
-                case 2: SetPartsSlot2 = parts.invenId != -1 ? parts : null; ; break;
-                case 3: SetPartsSlot3 = parts.invenId != -1 ? parts : null; ; break;
-                case 4: SetPartsSlot4 = parts.invenId != -1 ? parts : null; ; break;
-            }
-
-            PlayerStatTextSet();
-
-        }
-
-    }
 }

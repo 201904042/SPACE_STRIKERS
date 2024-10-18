@@ -1,11 +1,32 @@
 {
-  "AccountData": [
-  {
-    "id": 0,
-    "name": "master",
-    "level": 1,
-    "exp": 0,
-    "stageProgress": 5
-  }
-]
+    "AccountData": [
+        {
+            "id": 0,
+            "name": "master",
+            "level": 3,
+            "exp": 13,
+            "needExp": [
+                5,
+                10,
+                15,
+                20,
+                25,
+                30,
+                35,
+                40,
+                45,
+                -1
+            ],
+            "stageProgress": 5,
+            "useChar": 101,
+            "useParts": [
+                19,
+                0,
+                18,
+                0
+            ],
+            "planetIndex": 1,
+            "stageIndex": 1
+        }
+    ]
 }

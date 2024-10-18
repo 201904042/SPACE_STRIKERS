@@ -1,60 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InvenContent : MonoBehaviour
 {
     public GameObject itemUIPref;
-    public MasterType contentType; //2:파츠, 3:재료, 4:소모품
+    public MasterType[] contentType; // 3: 파츠, 4: 재료, 5: 소모품
 
     private void OnEnable()
     {
-        SearchInDatabase(contentType);
+        UpdateContent();
     }
 
     private void OnDisable()
     {
-        //비활성화시 모든 생성된 파츠UI 삭제
-        if (transform.childCount > 0)
-        {
-            foreach (Transform child in transform.transform)
-            {
-                Destroy(child.gameObject);
-            }
-        }
+        ClearContent();
     }
 
     public void ResetContent()
     {
-        if (transform.childCount > 0)
-        {
-            foreach (Transform child in transform.transform)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        SearchInDatabase(contentType);
+        ClearContent();
+        UpdateContent();
     }
 
-    public void SearchInDatabase(MasterType targetType)
+    private void UpdateContent()
+    {
+        foreach (MasterType type in contentType)
+        {
+            Debug.Log(type);
+            PopulateContentByType(type);
+        }
+    }
+
+    private void ClearContent()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void PopulateContentByType(MasterType targetType)
     {
         foreach (InvenData item in DataManager.inven.GetDictionary().Values)
         {
-            if (DataManager.master.GetData(item.masterId).type == targetType) 
+            if (item.masterId == 1 || item.masterId == 2 || item.masterId == 3)
             {
-                ItemUIPref itemUI = Instantiate(itemUIPref, transform).GetComponent<ItemUIPref>();
-                itemUI.SetByInvenId(item.id);
-                Button btn = itemUI.GetComponent<Button>();
-                btn.onClick.RemoveAllListeners();
-                btn.onClick.AddListener(() => UIBtnClickEvent(item.id));
+                continue;
+            }
+            Debug.Log($"{item.masterId} : {DataManager.master.GetData(item.masterId).type}");
+            if (DataManager.master.GetData(item.masterId).type == targetType)
+            {
+                
+                CreateItemUI(item);
             }
         }
     }
 
+    private void CreateItemUI(InvenData item)
+    {
+        ItemUIPref itemUI = Instantiate(itemUIPref, transform).GetComponent<ItemUIPref>();
+        itemUI.SetByInvenId(item.id);
+        Button btn = itemUI.GetComponent<Button>();
+        btn.onClick.AddListener(() => UIBtnClickEvent(item.id));
+    }
 
-    public void UIBtnClickEvent(int invenItemId)
+    private void UIBtnClickEvent(int invenItemId)
     {
         UIManager.itemInformInterface.SetInterface(invenItemId);
         UIManager.itemInformInterface.OpenInterface();

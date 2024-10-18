@@ -52,7 +52,12 @@ public class AccountData
     public string name;
     public int level;
     public int exp;
+    public List<int> needExp;
     public int stageProgress;
+    public int useChar;
+    public int[] useParts;
+    public int planetIndex;
+    public int stageIndex;
 }
 
 [System.Serializable]

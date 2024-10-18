@@ -29,19 +29,24 @@ public class PartsSlot : MonoBehaviour
         partsImage.sprite = null;
     }
 
-    public void SetParts(PartsAbilityData parts)
+    public void SetParts(int partsId)
     {
         ResetData();
-        if(parts == null)
+        if(partsId == 0)
         {
             return;
         }
 
+        PartsAbilityData parts =  DataManager.parts.GetData(partsId);
+        if(parts == null)
+        {
+            return;
+        }
         PartsAbilityData = parts;
-        SetData();
+        SetPartsUI();
     }
 
-    private void SetData()
+    private void SetPartsUI()
     {
         bgImage.color = Color.white;
         partsImage.sprite = null;

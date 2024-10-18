@@ -131,7 +131,7 @@ public class SelectPartsInterface : UIInterface
 
         //ºó ÆÄÃ÷¸¦ ´ãÀ» ÇÁ¸®ÆÕ
         ItemUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-        emptyPartsPrefab.SetByInvenId(-1);
+        emptyPartsPrefab.SetByInvenId(0);
         emptyPartsPrefab.GetComponent<Button>().onClick.RemoveAllListeners();
         emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
 

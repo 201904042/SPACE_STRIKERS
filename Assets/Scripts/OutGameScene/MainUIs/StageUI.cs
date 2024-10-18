@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ public class StageUI : MainUIs
         base.OnEnable();
 
         curStage = 0;
-        curPlanet = PlayerPrefs.GetInt("ChosenPlanet");
+        curPlanet = DataManager.account.GetPlanet();
         Stages = transform.GetChild(0).GetChild(curPlanet - 1).GetChild(0);
         PlanetsUISet();
         FindMaxStageInData();
@@ -53,7 +54,7 @@ public class StageUI : MainUIs
 
     private void FindMaxStageInData()
     {
-        int accountLastStage = DataManager.account.GetData(0).stageProgress;
+        int accountLastStage = DataManager.account.GetStageProgress();
 
         int lastPlanet = (accountLastStage / 10) +1;  //0부터가 아닌 1부터 시작
         int lastStage = (accountLastStage % 10) +1 ;
@@ -167,7 +168,7 @@ public class StageUI : MainUIs
 
         if ((bool)stageInterface.result)
         {
-            PlayerPrefs.SetInt("ChosenStage", curStage);
+            DataManager.account.SetStageValue(curStage);
             GotoReady();
         }
         else

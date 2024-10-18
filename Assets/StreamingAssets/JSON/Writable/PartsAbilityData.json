@@ -19,6 +19,34 @@
                     "value": 8
                 }
             ]
+        },
+        {
+            "invenId": 19,
+            "isActive": false,
+            "level": 1,
+            "rank": 4,
+            "mainAbility": {
+                "key": 3,
+                "value": 10
+            },
+            "subAbilities": [
+                {
+                    "key": 204,
+                    "value": 20
+                },
+                {
+                    "key": 203,
+                    "value": 6
+                },
+                {
+                    "key": 4,
+                    "value": 13
+                },
+                {
+                    "key": 3,
+                    "value": 16
+                }
+            ]
         }
     ]
 }

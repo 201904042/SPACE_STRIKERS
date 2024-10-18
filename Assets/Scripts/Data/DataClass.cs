@@ -109,15 +109,14 @@ public class PartsGradeColor
     public static Color D_Color = new Color(1, 1, 1, 1);
 }
 
-
 public enum MasterType
 {
+    None,
     Money,
     Character,
     Parts,
-    Ingredient,
+    Ingredient, 
     Consume,
-    Enemy,
-    None
+    Enemy 
 }
 

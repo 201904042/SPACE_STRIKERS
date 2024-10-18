@@ -226,7 +226,7 @@ public class LabotoryUI : MainUIs
         PartsAbilityData PartsAbilityData = DataManager.parts.GetData(invenCode);
         int curLevel = PartsAbilityData.level;
 
-        partsSlot.GetComponent<PartsSlot>().SetParts(PartsAbilityData);
+        partsSlot.GetComponent<PartsSlot>().SetParts(invenCode);
         UpgradeData upgradeData = DataManager.upgrade.GetData(masterCode);
 
         if (!CanUpgrade(upgradeData, curLevel))

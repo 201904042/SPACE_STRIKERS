@@ -72,7 +72,7 @@ public class PlanetUI : MainUIs
     {
         ClearColor();
 
-        int stageProgress = DataManager.account.GetData(0).stageProgress;
+        int stageProgress = DataManager.account.GetStageProgress();
         planetList[0].interactable = true;
         if (stageProgress > 10)
         {
@@ -90,7 +90,7 @@ public class PlanetUI : MainUIs
 
     public void GotoStage()
     {
-        PlayerPrefs.SetInt("ChosenPlanet", planetId);
+        DataManager.account.SetPlanetValue(planetId);
         ChangeUI(UIManager.UIInstance.stageUI);
     }
 

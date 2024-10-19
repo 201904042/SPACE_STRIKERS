@@ -48,7 +48,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.BattleSwitch)
+        if (GameManager.game.BattleSwitch)
         {
             if (!firstSet || (curStatDamage != playerStat.damage)
             || (curDamageRate != damageIncreaseRate) || playerId != playerStat.curPlayerID)

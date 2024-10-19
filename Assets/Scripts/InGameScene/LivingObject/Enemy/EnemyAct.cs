@@ -45,7 +45,7 @@ public class EnemyAct : EnemyObject
     //발사할 총알 프리팹, 분열총알이라면 true
     public static void TargetShot(EnemyObject enemy,  bool split = false, float speed = 1, int splitCount = 3)
     {
-        Transform player = GameManager.Instance.myPlayer.transform;
+        Transform player = GameManager.game.myPlayer.transform;
         Vector3 dirToPlayer = (player.position - enemy.transform.position).normalized;
         if (split)
         {
@@ -81,7 +81,7 @@ public class EnemyAct : EnemyObject
             {
                 //조준일 경우
                 Vector3 dirToPlayer;
-                Transform player = GameManager.Instance.myPlayer.transform;
+                Transform player = GameManager.game.myPlayer.transform;
                 dirToPlayer = (player.position - enemy.transform.position).normalized;
 
                 Vector3 velocity = Quaternion.Euler(0, 0, angle) * -dirToPlayer;
@@ -122,7 +122,7 @@ public class EnemyAct : EnemyObject
         laserObject.setDamage(enemy.enemyStat.damage);
         if (isAimtoPlayer)
         {
-            Transform player = GameManager.Instance.myPlayer.transform;
+            Transform player = GameManager.game.myPlayer.transform;
             Vector3 direction = player.position - laserObject.gameObject.transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             laserObject.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90 - multiAngle));

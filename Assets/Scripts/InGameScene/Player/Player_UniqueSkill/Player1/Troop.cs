@@ -17,7 +17,7 @@ public class Troop : MonoBehaviour
     private void Awake()
     {
         rootPath = "Assets/Prefabs/Player/Player_UniqueSkill/player1/shooter_";
-        palyerSpecialSkill = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        palyerSpecialSkill = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
     private void OnEnable()

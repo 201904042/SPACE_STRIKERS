@@ -14,7 +14,7 @@ public class MissileSplashDamage : MonoBehaviour
     {
         missileSplashDamageRate = 0.5f;
         explodeRadius = 2.5f;
-        playerStatDamage = GameManager.Instance.myPlayer.GetComponent<PlayerStat>().damage;
+        playerStatDamage = GameManager.game.myPlayer.GetComponent<PlayerStat>().damage;
         missileSplashDamage = playerStatDamage * missileSplashDamageRate;
         splashTime = 0;
     }

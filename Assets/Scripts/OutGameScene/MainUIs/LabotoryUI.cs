@@ -416,7 +416,7 @@ public class LabotoryUI : MainUIs
         Debug.Log("캐릭터 강화 완료");
         DataManager.character.UpdateData(DataManager.inven.GetData(targetInvenCode).masterId, targetChar);
         DataManager.character.SaveData();
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(CharData),DataManager.character.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.game.UserId,nameof(CharData),DataManager.character.GetFilePath());
     }
 
     private void ChangePartsAbilityData()
@@ -426,6 +426,6 @@ public class LabotoryUI : MainUIs
         targetParts.mainAbility.value += 5;
         DataManager.parts.UpdateData(targetInvenCode, targetParts);
         DataManager.parts.SaveData();
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(PartsAbilityData),DataManager.parts.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.game.UserId,nameof(PartsAbilityData),DataManager.parts.GetFilePath());
     }
 }

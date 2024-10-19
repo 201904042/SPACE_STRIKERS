@@ -8,7 +8,7 @@ using UnityEngine.Pool;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager game;
     public GameObject myPlayer;
 
     public GameObject gameEndUI;
@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        if (Instance == null)
+        if (game == null)
         {
-            Instance = this;
+            game = this;
         }
         else
         {

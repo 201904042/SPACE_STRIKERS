@@ -12,8 +12,8 @@ public class Skill_Shield : MonoBehaviour
 
     private void Awake()
     {
-        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
-        playerControl = GameManager.Instance.myPlayer.GetComponent<PlayerControl>();
+        playerStat = GameManager.game.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.game.myPlayer.GetComponent<PlayerControl>();
         shieldGenerator = GameObject.Find("skill_shieldGenerator");
         transform.SetParent(shieldGenerator.transform);
     }

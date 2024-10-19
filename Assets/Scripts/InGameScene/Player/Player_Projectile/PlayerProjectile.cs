@@ -14,7 +14,7 @@ public class PlayerProjectile : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
+        playerStat = GameManager.game.myPlayer.GetComponent<PlayerStat>();
     }
 
     protected virtual void OnEnable()

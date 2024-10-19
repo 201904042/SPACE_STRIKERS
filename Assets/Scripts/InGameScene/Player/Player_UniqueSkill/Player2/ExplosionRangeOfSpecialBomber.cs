@@ -17,7 +17,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
     private bool time_has_set;
     private void Awake()
     {
-        specialScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
         damageTik = 0.1f;
         isDamaging = false;
         time_has_set = false;

@@ -23,7 +23,7 @@ public class TroopShooter : MonoBehaviour
 
     void Awake()
     {
-        player_stat = GameManager.Instance.myPlayer.transform.GetComponent<PlayerStat>();
+        player_stat = GameManager.game.myPlayer.transform.GetComponent<PlayerStat>();
         shooter_Transform = GetComponentInParent<Transform>();
     }
 

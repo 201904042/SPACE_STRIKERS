@@ -169,7 +169,7 @@ public class SpawnManager : MonoBehaviour
             float maxTime = 20f;
             float timeToDecrease = 10f;
 
-            float currentMinutes = GameManager.Instance.minutes;
+            float currentMinutes = GameManager.game.minutes;
 
             if (currentMinutes < timeToDecrease)
             {
@@ -246,11 +246,11 @@ public class SpawnManager : MonoBehaviour
     public void SpawnBoss(int bossId)
     {
         
-        if (GameManager.Instance.SpawnCoroutine != null)
+        if (GameManager.game.SpawnCoroutine != null)
         {
             
-            StopCoroutine(GameManager.Instance.SpawnCoroutine);
-            GameManager.Instance.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
+            StopCoroutine(GameManager.game.SpawnCoroutine);
+            GameManager.game.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
         }
 
         isBossSpawned = true;

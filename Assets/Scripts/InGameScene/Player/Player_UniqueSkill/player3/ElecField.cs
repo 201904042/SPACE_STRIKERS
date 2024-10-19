@@ -13,7 +13,7 @@ public class Elec_Field : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        specialScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
         damage = specialScript.specialDamage;
         isDamaging = false;
         damageTik = 0.1f;

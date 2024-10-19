@@ -201,7 +201,7 @@ public class EnemyObject : MonoBehaviour
 
     private void DropItem()
     {
-        var projType = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
+        var projType = GameManager.game.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
             ? ProjType.Item_ShooterUP
             : GetRandomItemType();
 
@@ -222,7 +222,7 @@ public class EnemyObject : MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        GameManager.Instance.score += enemyStat.socreAmount;
+        GameManager.game.score += enemyStat.socreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)

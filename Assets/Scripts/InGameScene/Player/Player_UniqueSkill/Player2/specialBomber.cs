@@ -16,7 +16,7 @@ public class SpecialBomber : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
-        specialScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
 
         damage = specialScript.specialDamage;
         level = specialScript.powerLevel;

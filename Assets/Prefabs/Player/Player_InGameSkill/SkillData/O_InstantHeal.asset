@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb07b5e6d65d3fc45b292c343a04ca51, type: 3}
   m_Name: O_InstantHeal
   m_EditorClassIdentifier: 
-  skillID: 201
+  skillID: 681
   skilltype: 2
-  skillIcon: {fileID: -819309159, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}

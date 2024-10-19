@@ -12,8 +12,8 @@ public class Skill_Shield : MonoBehaviour
 
     private void Awake()
     {
-        playerStat = GameManager.game.myPlayer.GetComponent<PlayerStat>();
-        playerControl = GameManager.game.myPlayer.GetComponent<PlayerControl>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.Instance.myPlayer.GetComponent<PlayerControl>();
         shieldGenerator = GameObject.Find("skill_shieldGenerator");
         transform.SetParent(shieldGenerator.transform);
     }
@@ -25,8 +25,7 @@ public class Skill_Shield : MonoBehaviour
 
     private void Init()
     {
-        shieldDamage = playerStat.damage * shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
-        curDamagerate = shieldGenerator.GetComponent<Skill_ShieldGenerator>().damageRate;
+
     }
 
 
@@ -49,8 +48,7 @@ public class Skill_Shield : MonoBehaviour
             }
 
             playerControl.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
-            shieldGenerator.GetComponent<Skill_ShieldGenerator>().ShieldOn = false;
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }   
     }
 }

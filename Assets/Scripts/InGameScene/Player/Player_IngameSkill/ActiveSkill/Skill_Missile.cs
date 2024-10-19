@@ -6,20 +6,17 @@ using UnityEngine;
 
 public class skill_Missile : PlayerProjectile
 {
-    public GameObject splashColliderObject;
     public float missileDamage;
     private float playerStatDamage;
     public float missileDamageRate;
     public float explosionRange;
     private float missileSpeed;
 
-    private Skill_MissileLauncher missileLauncher;
 
     protected override void Awake()
     {
         base.Awake();
-        splashColliderObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_InGameSkill/Proj/skill_missileSplash.prefab");
-        missileLauncher = GameObject.Find("skill_MissileLauncher").GetComponent<Skill_MissileLauncher>();
+        
         missileDamageRate = 1.5f;
         explosionRange = 1.0f;
         playerStatDamage = playerStat.damage;
@@ -35,10 +32,14 @@ public class skill_Missile : PlayerProjectile
     {
         base.Init();
         missileDamage = playerStatDamage * missileDamageRate;
-        explosionRange = missileLauncher.explosionRange;
-        missileDamageRate = missileLauncher.damageRate;
+    }
+
+
+    public void SetParameter()
+    {
 
     }
+
 
     private void Update()
     {
@@ -61,9 +62,9 @@ public class skill_Missile : PlayerProjectile
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
             }
 
-            MissileSplash splashDamage = Managers.Instance.Pool.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<MissileSplash>();
+            MissileSplash splashDamage = GameManager.Instance.Pool.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<MissileSplash>();
             splashDamage.SetVariable(explosionRange, missileDamage);
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

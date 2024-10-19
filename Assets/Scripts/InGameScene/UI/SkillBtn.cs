@@ -14,7 +14,7 @@ public class SkillBtn : MonoBehaviour
         {
             Debug.Log("스킬데이터 인계");
             skillData = value;
-            FindSkillInPlayerSkill();
+            //FindSkillInPlayerSkill();
         }
     }
 
@@ -33,24 +33,24 @@ public class SkillBtn : MonoBehaviour
         isButtonSelected = false;
     }
 
-    private void FindSkillInPlayerSkill()
-    {
-        Transform playerSkillSlot = GameObject.Find("Player").transform.GetChild(1);
-        SkillInterface skillInterface;
-        for (int i = 0; i < playerSkillSlot.childCount; i++)
-        {
-            if (playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().skillId == skillData.skillID)
-            {
-                skillInterface = playerSkillSlot.GetChild(i).GetComponent<SkillInterface>();
-                Debug.Log(imageObj);
-                imageObj.sprite = skillData.skillIcon;
-                LvText.text = skillInterface.level.ToString();
-                explainText.text = skillInterface.skillIntro.ToString();
+    //private void FindSkillInPlayerSkill()
+    //{
+    //    Transform playerSkillSlot = GameObject.Find("Player").transform.GetChild(1);
+    //    SkillInterface skillInterface;
+    //    for (int i = 0; i < playerSkillSlot.childCount; i++)
+    //    {
+    //        if (playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().skillId == skillData.skillID)
+    //        {
+    //            skillInterface = playerSkillSlot.GetChild(i).GetComponent<SkillInterface>();
+    //            Debug.Log(imageObj);
+    //            imageObj.sprite = skillData.skillIcon;
+    //            LvText.text = skillInterface.level.ToString();
+    //            explainText.text = skillInterface.skillIntro.ToString();
 
-                break;
-            }
-        }
-    }
+    //            break;
+    //        }
+    //    }
+    //}
 
     public void ChosenSkill()
     {

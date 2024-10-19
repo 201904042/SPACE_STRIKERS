@@ -12,8 +12,8 @@ public class Ingame_Passive : MonoBehaviour
     public float increaseRate;
     protected virtual void Awake()
     {
-        playerStat = GameManager.game.myPlayer.GetComponent<PlayerStat>();
-        playerControl = GameManager.game.myPlayer.GetComponent<PlayerControl>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.Instance.myPlayer.GetComponent<PlayerControl>();
         passiveLevel = transform.GetComponent<SkillInterface>().level;
 
         increaseRate = 1;

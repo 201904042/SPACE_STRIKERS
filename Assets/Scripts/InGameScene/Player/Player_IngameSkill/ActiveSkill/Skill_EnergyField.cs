@@ -16,7 +16,6 @@ public class Skill_EnergyField : PlayerProjectile
     private float shootSpeed;
     [SerializeField]
     private List<GameObject> hittedEnemy;
-    private Skill_EnergyFieldGenerator launcherScr;
     private bool isActive;
     private bool isDealing;
     private bool isShoot;
@@ -24,8 +23,6 @@ public class Skill_EnergyField : PlayerProjectile
     protected override void Awake()
     {
         base.Awake();
-        launcher = GameObject.Find("skill_EnergyFieldGenerator");
-        launcherScr = launcher.GetComponent<Skill_EnergyFieldGenerator>();
         shootSpeed = 3;
     }
 
@@ -46,12 +43,8 @@ public class Skill_EnergyField : PlayerProjectile
     protected override void Init()
     {
         base.Init();
-        transform.SetParent(launcher.transform);
         hittedEnemy = new List<GameObject>();
-        damageRate = launcherScr.damageRate;
-        activeTime = launcherScr.duration;
-        isShootable = launcherScr.isShootable;
-        skillRange = launcherScr.range;
+
         enemyDamage = playerStat.damage * damageRate;
         isActive = false;
         isDealing = false;
@@ -61,10 +54,6 @@ public class Skill_EnergyField : PlayerProjectile
 
     private void Update()
     {
-        if(transform.parent != launcher)
-        {
-            transform.SetParent(launcher.transform);
-        }
 
         if(isActive&& !isDealing&&  hittedEnemy.Count > 0)
         {
@@ -94,7 +83,7 @@ public class Skill_EnergyField : PlayerProjectile
         else
         {
             isActive = false;
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 

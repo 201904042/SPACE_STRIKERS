@@ -48,7 +48,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.game.BattleSwitch)
+        if (GameManager.Instance.BattleSwitch)
         {
             if (!firstSet || (curStatDamage != playerStat.damage)
             || (curDamageRate != damageIncreaseRate) || playerId != playerStat.curPlayerID)
@@ -182,7 +182,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         for (int i = 0; i < spawnNum; i++)
         {
             Vector3 SpawnPosition = new Vector3(spawnXpos + (i * space), spawnYpos, 0f);
-            Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
+            GameManager.Instance.Pool.GetSkill(SkillProjType.Spcial_Player1, SpawnPosition,
                 transform.rotation);
         }
     }
@@ -190,7 +190,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void BomberSpecial()
     {
-        Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
+        GameManager.Instance.Pool.GetSkill(SkillProjType.Spcial_Player2, transform.position, transform.rotation);
     }
 
     private void TankerSpecial()
@@ -201,7 +201,7 @@ public class PlayerSpecialSkill : MonoBehaviour
         shield.ShieldColorChange();
         shield.shieldIsActive = true;
 
-        GameObject field = Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
+        GameObject field = GameManager.Instance.Pool.GetSkill(SkillProjType.Spcial_Player3, transform.position,transform.rotation);
         field.transform.SetParent(transform);
 
         if (powerLevel == 1)
@@ -227,7 +227,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     private IEnumerator Bomber_End(float timer, GameObject field)
     {
         yield return new WaitForSeconds(timer);
-        Managers.Instance.Pool.ReleasePool(field);
+        GameManager.Instance.Pool.ReleasePool(field);
     }
 
     private void SplashSpecial()
@@ -254,7 +254,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         while (num!=0)
         {
-            Managers.Instance.Pool.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
+            GameManager.Instance.Pool.GetSkill(SkillProjType.Spcial_Player4, transform.position, transform.rotation);
             num--;
             yield return new WaitForSeconds(0.1f);
         }

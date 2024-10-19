@@ -169,22 +169,22 @@ public class EnemyObject : MonoBehaviour
     {
         for (int i = 0; i < enemyStat.expAmount; i++)
         {
-            Managers.Instance.Pool.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
+            GameManager.Instance.Pool.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
         }
     }
 
     public void EnemyEliminate()
     {
         hpBar.gameObject.SetActive(false);
-        Managers.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Instance.Pool.ReleasePool(gameObject);
     }
 
     public void EnemyDeath()
     {
         if (enemyStat.type == 4)
         {
-            Managers.Instance.Spawn.isBossDown = true;
-            Managers.Instance.Spawn.isBossSpawned = false;
+            GameManager.Instance.Spawn.isBossDown = true;
+            GameManager.Instance.Spawn.isBossSpawned = false;
         }
 
         DropExp();
@@ -196,16 +196,16 @@ public class EnemyObject : MonoBehaviour
         }
 
         hpBar.gameObject.SetActive(false);
-        Managers.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Instance.Pool.ReleasePool(gameObject);
     }
 
     private void DropItem()
     {
-        var projType = GameManager.game.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
+        var projType = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
             ? ProjType.Item_ShooterUP
             : GetRandomItemType();
 
-        Managers.Instance.Pool.GetProj(projType, transform.position, transform.rotation);
+        GameManager.Instance.Pool.GetProj(projType, transform.position, transform.rotation);
     }
 
     private ProjType GetRandomItemType()
@@ -222,7 +222,7 @@ public class EnemyObject : MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        GameManager.game.score += enemyStat.socreAmount;
+        GameManager.Instance.score += enemyStat.socreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)

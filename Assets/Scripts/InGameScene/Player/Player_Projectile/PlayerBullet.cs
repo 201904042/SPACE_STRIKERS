@@ -47,7 +47,7 @@ public class PlayerBullet : PlayerProjectile
 
             hasHit = true;
             //Destroy(gameObject);
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 

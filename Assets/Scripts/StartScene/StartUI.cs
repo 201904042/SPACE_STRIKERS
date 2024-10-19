@@ -118,7 +118,7 @@ public class StartUI : MainUIs
         homePageBtn.onClick.AddListener(HomePageBtn);
         quitBtn.onClick.AddListener(EndBtn);
 
-        //startBtn.interactable = Auth_Firebase.game.UserId == null ? false : true;
+        //startBtn.interactable = Auth_Firebase.Instance.UserId == null ? false : true;
     }
 
 

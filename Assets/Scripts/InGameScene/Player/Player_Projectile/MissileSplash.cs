@@ -61,7 +61,7 @@ public class MissileSplash : MonoBehaviour
     private IEnumerator activeTime(float time)
     {
         yield return new WaitForSeconds(time);
-        Managers.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Instance.Pool.ReleasePool(gameObject);
     }
     
 

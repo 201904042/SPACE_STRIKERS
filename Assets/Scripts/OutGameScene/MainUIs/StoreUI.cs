@@ -164,7 +164,7 @@ public class StoreUI : MainUIs
             DataManager.parts.SaveData();
 
         //완료시 파이어베이스로 보냄
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.game.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
 
         //구매 성공시 알림 인터페이스 오픈
         UIManager.alertInterface.SetAlert("아이템을 구매하였습니다");

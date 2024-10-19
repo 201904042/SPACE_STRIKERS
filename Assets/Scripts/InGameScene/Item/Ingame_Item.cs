@@ -14,7 +14,7 @@ public class Ingame_Item : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.game.myPlayer.GetComponent<PlayerStat>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
         itemRigid = GetComponent<Rigidbody2D>();
         liveTime = 10f;
     }
@@ -62,7 +62,7 @@ public class Ingame_Item : MonoBehaviour
         {
             if (liveTimeOut)
             {
-                Managers.Instance.Pool.ReleasePool(gameObject);
+                GameManager.Instance.Pool.ReleasePool(gameObject);
             }
             else
             {

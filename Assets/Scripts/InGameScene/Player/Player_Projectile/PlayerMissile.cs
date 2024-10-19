@@ -57,10 +57,10 @@ public class PlayerMissile : PlayerProjectile
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
             }
             
-            MissileSplash splashDamage = Managers.Instance.Pool.GetProj(ProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<MissileSplash>();
+            MissileSplash splashDamage = GameManager.Instance.Pool.GetProj(ProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<MissileSplash>();
             splashDamage.explosionRange = explosionRange;
             splashDamage.missileDamage = missileDamage;
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

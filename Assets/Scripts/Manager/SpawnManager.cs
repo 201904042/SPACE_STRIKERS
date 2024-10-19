@@ -42,6 +42,8 @@ public class SpawnManager : MonoBehaviour
         isBossSpawned = false;
         isBossDown = false;
         stopIndex = 1;
+
+        Debug.Log("스폰 초기화 완료");
     }
 
     private void SpawnPatternSet()
@@ -147,7 +149,7 @@ public class SpawnManager : MonoBehaviour
         canSpawnList = new List<SpawnPattern>();
         foreach (SpawnPattern pattern in spawnPatterns)
         {
-            if (Managers.Instance.Stage.stageEnemyIdList.Contains(pattern.enemyId))
+            if (GameManager.Instance.Stage.stageEnemyIdList.Contains(pattern.enemyId))
             {
                 canSpawnList.Add(pattern);
             }
@@ -169,7 +171,7 @@ public class SpawnManager : MonoBehaviour
             float maxTime = 20f;
             float timeToDecrease = 10f;
 
-            float currentMinutes = GameManager.game.minutes;
+            float currentMinutes = GameManager.Instance.minutes;
 
             if (currentMinutes < timeToDecrease)
             {
@@ -194,7 +196,7 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (Managers.Instance.Stage.stage == 0) 
+        if (GameManager.Instance.Stage.stage == 0) 
         {
             // 기본 스폰 로직
             Vector3[] positions = new Vector3[]
@@ -206,10 +208,10 @@ public class SpawnManager : MonoBehaviour
 
             foreach (var position in positions)
             {
-                Managers.Instance.Pool.GetEnemy(0, position, Quaternion.identity);
+                GameManager.Instance.Pool.GetEnemy(0, position, Quaternion.identity);
             }
         }
-        else if (Managers.Instance.Stage.stage >= 1)
+        else if (GameManager.Instance.Stage.stage >= 1)
         {
             // 패턴에 기반한 스폰 로직
             int patternIndex = Random.Range(0, canSpawnList.Count);
@@ -222,7 +224,7 @@ public class SpawnManager : MonoBehaviour
 
             for (int i = 0; i < selectedPattern.amount; i++)
             {
-                GameObject enemy = Managers.Instance.Pool.GetEnemy(selectedPattern.enemyId, selectedPattern.positions[i], selectedPattern.spawnZone.rotation);
+                GameObject enemy = GameManager.Instance.Pool.GetEnemy(selectedPattern.enemyId, selectedPattern.positions[i], selectedPattern.spawnZone.rotation);
                 EnemyObject enemyObj = enemy.GetComponent<EnemyObject>();
 
                 // 패턴 내의 모든 적들에게 동일한 stopCount 값 할당
@@ -246,16 +248,16 @@ public class SpawnManager : MonoBehaviour
     public void SpawnBoss(int bossId)
     {
         
-        if (GameManager.game.SpawnCoroutine != null)
+        if (GameManager.Instance.SpawnCoroutine != null)
         {
             
-            StopCoroutine(GameManager.game.SpawnCoroutine);
-            GameManager.game.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
+            StopCoroutine(GameManager.Instance.SpawnCoroutine);
+            GameManager.Instance.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
         }
 
         isBossSpawned = true;
         isBossDown = false;
-        Managers.Instance.Pool.GetEnemy(bossId, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
+        GameManager.Instance.Pool.GetEnemy(bossId, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation);
     }
 
     //모든 적들을 시스템으로 사망(보상없음)

@@ -14,5 +14,4 @@ public class SkillData : ScriptableObject
 {
     public int skillID;
     public SkillType skilltype;
-    public Sprite skillIcon;
 }

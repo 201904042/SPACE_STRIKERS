@@ -8,7 +8,7 @@ public class Item_LevelUp : Ingame_Item
     protected override void Awake()
     {
         base.Awake();
-        playerExp = GameManager.game.myPlayer.GetComponent<PlayerInGameExp>();
+        playerExp = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -16,7 +16,7 @@ public class Item_LevelUp : Ingame_Item
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
             playerExp.LevelUP();
         }
     }

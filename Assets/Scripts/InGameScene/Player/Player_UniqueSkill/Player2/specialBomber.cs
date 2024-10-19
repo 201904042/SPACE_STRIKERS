@@ -16,7 +16,7 @@ public class SpecialBomber : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
-        specialScript = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
+        specialScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
 
         damage = specialScript.specialDamage;
         level = specialScript.powerLevel;
@@ -46,7 +46,7 @@ public class SpecialBomber : MonoBehaviour
             .GetComponent<ExplosionRangeOfSpecialBomber>();
         range.damage = damage;
         range.level = level;
-        Managers.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Instance.Pool.ReleasePool(gameObject);
     }
 
     bool IsVisibleFrom(Camera camera) //객체가 화면 안에 있는가?

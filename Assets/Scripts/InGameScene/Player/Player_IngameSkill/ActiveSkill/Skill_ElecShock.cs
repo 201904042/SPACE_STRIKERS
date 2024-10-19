@@ -14,7 +14,6 @@ public class Skill_ElecShock : PlayerProjectile
     public float slowTime;
 
     public bool isExtraDamageToSlowEnemyOn;
-    private SkillElecShockLauncher elecShockLauncher;
 
     protected override void Awake()
     {
@@ -30,14 +29,6 @@ public class Skill_ElecShock : PlayerProjectile
     {
         base.Init();
 
-        launcher = GameObject.Find("skill_ElecShockLauncher");
-        elecShockLauncher = launcher.GetComponent<SkillElecShockLauncher>();
-
-        shockDamageRate = elecShockLauncher.damageRate;
-        shockRange = elecShockLauncher.shockRange;
-        slowRate = elecShockLauncher.slowRate;
-        slowTime = elecShockLauncher.slowTime;
-        isExtraDamageToSlowEnemyOn = elecShockLauncher.isExtraDamageToSlowEnemy;
         damage = playerStat.damage * shockDamageRate;
         transform.localScale *= shockRange;
     }

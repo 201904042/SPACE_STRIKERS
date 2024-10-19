@@ -1,47 +1,57 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct PassiveSkillLevel
-{
-    public float EffectValue; // 효과 값 (공격력, 방어력, 이동 속도 등)
-}
 
 public class NewPassiveSkill : InGameSkill
 {
-    public List<PassiveSkillLevel> SkillLevels = new List<PassiveSkillLevel>();
-    private int currentLevel = 0; // 현재 레벨
+    public List<Skill_LevelValue> SkillLevels = new List<Skill_LevelValue>();
+    public int currentLevel = 0; // 현재 레벨
 
-    public float CurrentEffectValue => SkillLevels[currentLevel].EffectValue; // 현재 효과 값
+    public float CurrentEffectValue => SkillLevels[currentLevel-1].DamageRate; // 현재 효과 값
+    
+    public override void Init()
+    {
+        
+    }
+
+    public override void SetLevel()
+    {
+        Debug.Log($"{SkillCode}의 레벨데이터 세팅");
+    }
 
     public override void LevelUp()
     {
         if (currentLevel < SkillLevels.Count - 1)
         {
             currentLevel++;
+            ApplyEffect();
         }
     }
 
-    public void ApplyEffect(PlayerStat playerStats)
+    public void ApplyEffect()
     {
+        PlayerStat playerStats = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
         // 현재 레벨의 효과를 플레이어의 스탯에 반영
         switch (SkillCode)
         {
             case 641:
-                playerStats.damage += CurrentEffectValue;
+                playerStats.damageIncreaseRate += CurrentEffectValue;
                 break;
             case 642:
-                playerStats.defence += CurrentEffectValue;
+                playerStats.defenceIncreaseRate += CurrentEffectValue;
                 break;
             case 643:
-                playerStats.moveSpeed += CurrentEffectValue;
+                playerStats.moveSpeedIncreaseRate += CurrentEffectValue;
                 break;
             case 644:
-                playerStats.attackSpeed += CurrentEffectValue;
+                playerStats.attackSpeedIncreaseRate += CurrentEffectValue;
                 break;
             case 645:
                 playerStats.hpRegenRate += CurrentEffectValue;
                 break;
         }
+        playerStats.ApplyStat();
     }
 }

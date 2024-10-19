@@ -8,9 +8,17 @@ using UnityEngine.Pool;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager game;
-    public GameObject myPlayer;
+    public static GameManager Instance;
+    private readonly PoolManager _pool = new();
+    private readonly SpawnManager _spawn = new();
+    private readonly StageManager _stage = new();
 
+    public PoolManager Pool => Instance._pool;
+    public SpawnManager Spawn => Instance._spawn;
+    public StageManager Stage => Instance._stage;
+
+
+    public GameObject myPlayer;
     public GameObject gameEndUI;
 
     public float stageTime;
@@ -32,9 +40,9 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        if (game == null)
+        if (Instance == null)
         {
-            game = this;
+            Instance = this;
         }
         else
         {
@@ -42,7 +50,11 @@ public class GameManager : MonoBehaviour
         }
 
         SetGame();
-        Managers.Instance.GameSceneInit(); //스테이지, 풀, 스폰 매니저 초기화
+        Stage.Init();
+        Spawn.Init();
+        Pool.Init();
+
+        Debug.Log("게임 초기화 완료");
     }
 
     //게임씬의 init. 플레이어를 등록하고 모든 기물을 초기화함
@@ -93,12 +105,12 @@ public class GameManager : MonoBehaviour
 
             if (SpawnCoroutine == null)
             {
-                SpawnCoroutine = StartCoroutine(Managers.Instance.Spawn.SpawnEnemyTroops());
+                SpawnCoroutine = StartCoroutine(GameManager.Instance.Spawn.SpawnEnemyTroops());
             }
 
             CheckPlayerHp(); //플레이어의 체력 확인. 0이면 게임 종료
 
-            if (Managers.Instance.Stage.isBossStage)
+            if (GameManager.Instance.Stage.isBossStage)
             {
                 HandleBossStage();
             }
@@ -129,12 +141,12 @@ public class GameManager : MonoBehaviour
 
     private void HandleBossStage()
     {
-        if (minutes == 10 && !Managers.Instance.Spawn.isBossSpawned && !Managers.Instance.Spawn.isBossDown)
+        if (minutes == 10 && !GameManager.Instance.Spawn.isBossSpawned && !GameManager.Instance.Spawn.isBossDown)
         {
-            Managers.Instance.Spawn.SpawnBoss(Managers.Instance.Stage.stageBossId);
+            GameManager.Instance.Spawn.SpawnBoss(GameManager.Instance.Stage.stageBossId);
         }
 
-        if (!isGameClear && Managers.Instance.Spawn.isBossDown)
+        if (!isGameClear && GameManager.Instance.Spawn.isBossDown)
         {
             isGameClear = true;
             Time.timeScale = 0;
@@ -156,7 +168,7 @@ public class GameManager : MonoBehaviour
     {
         bool active = true;
 
-        if (Managers.Instance.Spawn.isBossSpawned)
+        if (GameManager.Instance.Spawn.isBossSpawned)
         {
             active = false;
         }
@@ -173,6 +185,6 @@ public class GameManager : MonoBehaviour
 
     public void SpawnBossBtn()
     {
-        Managers.Instance.Spawn.SpawnBoss(31);
+        GameManager.Instance.Spawn.SpawnBoss(31);
     }
 }

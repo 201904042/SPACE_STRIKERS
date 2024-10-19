@@ -11,7 +11,6 @@ public class Skill_ChargeShot : PlayerProjectile
     private float chargeShotSpeed;
 
     private List<GameObject> hittedList;
-    private Skill_ChargeShotLauncher launcherScr;
 
     protected override void Awake()
     {
@@ -29,11 +28,6 @@ public class Skill_ChargeShot : PlayerProjectile
     {
         base.Init();
         hittedList = new List<GameObject>();
-        launcher = GameObject.Find("skill_ChargeShotLauncher");
-        launcherScr = launcher.GetComponent<Skill_ChargeShotLauncher>();
-        isPenetrate = launcherScr.isPenetrate;
-        damageRate = launcherScr.damageRate;
-
         chargeShotDamage = playerStat.damage * damageRate;
     }
 
@@ -57,7 +51,7 @@ public class Skill_ChargeShot : PlayerProjectile
             }
             if (!isPenetrate)
             {
-                Managers.Instance.Pool.ReleasePool(gameObject);
+                GameManager.Instance.Pool.ReleasePool(gameObject);
             }
         }
     }

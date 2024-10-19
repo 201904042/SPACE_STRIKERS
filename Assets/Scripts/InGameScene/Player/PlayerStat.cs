@@ -32,39 +32,44 @@ public class PlayerStat : MonoBehaviour
     public float attackSpeedIncreaseRate;
     public float hpRegenRate;
 
-    
-
     private PlayerControl playerController;
 
     private void Awake()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerControl>();
+        
+    }
 
+    private void Start()
+    {
         Init();
     }
 
     private void Init()
     {
-        isFirstSetDone = false; 
-        int savedPlayerId = DataManager.account.GetChar();
-        Debug.Log(savedPlayerId);
-        curPlayerID = savedPlayerId + 100;
-        SetStat(curPlayerID);
-    }
-
-    public void SetStat(int playerId)
-    {
-        PlayerSet(playerId);
-
-        maxHp = initHp;
-        curHp = maxHp;
-
-        //각 스텟의 증가율 : 패시브 스킬이나 아이템적용 등으로 가변
         damageIncreaseRate = 1;
         defenceIncreaseRate = 1;
         moveSpeedIncreaseRate = 1;
         attackSpeedIncreaseRate = 1;
         hpRegenRate = 0;
+
+        isFirstSetDone = false; 
+        int savedPlayerId = DataManager.account.GetChar();
+        Debug.Log("stat init");
+        curPlayerID = savedPlayerId;
+        SetStat(curPlayerID);
+
+        PlayerSkillManager ps = transform.GetComponent<PlayerSkillManager>();
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
+        ps.AddPassiveSkill((NewPassiveSkill)ps.FindSkillByCode(641));
+    }
+
+    public void SetStat(int playerId)
+    {
+        Debug.Log("플레이어 스텟 설정");
+        PlayerSet(playerId);
+        maxHp = initHp;
+        curHp = maxHp;
 
         ApplyStat();
     }

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb07b5e6d65d3fc45b292c343a04ca51, type: 3}
   m_Name: A_MiniDrone
   m_EditorClassIdentifier: 
-  skillID: 6
+  skillID: 605
   skilltype: 0
-  skillIcon: {fileID: 404316041, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}

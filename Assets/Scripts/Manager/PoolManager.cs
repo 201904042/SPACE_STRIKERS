@@ -41,6 +41,8 @@ public class PoolManager : MonoBehaviour
         projPool = GameObject.Find("ProjPool").transform;
         enemyPool = GameObject.Find("EnemyPool").transform;
         skillPool = GameObject.Find("SkillPool").transform;
+
+        Debug.Log("풀링 초기화 완료");
     }
 
     private void FindDataObject<T>(string path, List<T> targetList) where T : ScriptableObject
@@ -172,7 +174,7 @@ public class PoolManager : MonoBehaviour
                 obj.GetComponent<EnemyObject>().SetId(enemyId);
                 //Debug.Log($"{obj} 활성화");
                 obj.SetActive(true);
-                Managers.Instance.Spawn.activeEnemyList.Add(obj);
+                GameManager.Instance.Spawn.activeEnemyList.Add(obj);
                 return obj;
             }
         }
@@ -190,7 +192,7 @@ public class PoolManager : MonoBehaviour
                 newObject.SetActive(true);
                 enemyDic[enemyType].Add(newObject);
                 //Debug.Log($"{newObject} 생성");
-                Managers.Instance.Spawn.activeEnemyList.Add(newObject);
+                GameManager.Instance.Spawn.activeEnemyList.Add(newObject);
                 return newObject;
             }
         }
@@ -199,9 +201,9 @@ public class PoolManager : MonoBehaviour
 
     public void ReleasePool(GameObject gameObject)
     {
-        if (Managers.Instance.Spawn.activeEnemyList.Contains(gameObject))
+        if (GameManager.Instance.Spawn.activeEnemyList.Contains(gameObject))
         {
-            Managers.Instance.Spawn.activeEnemyList.Remove(gameObject);
+            GameManager.Instance.Spawn.activeEnemyList.Remove(gameObject);
         }
         
         gameObject.transform.position = Vector3.zero;

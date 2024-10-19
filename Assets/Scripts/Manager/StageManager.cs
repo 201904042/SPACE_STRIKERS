@@ -29,6 +29,8 @@ public class StageManager : MonoBehaviour
         stage = 1;
 
         SetStageData();
+
+        Debug.Log("스테이지 초기화 완료");
     }
 
     /// <summary>
@@ -62,7 +64,7 @@ public class StageManager : MonoBehaviour
     //임시 스테이지 변경. 이후에는 쓸일 없음.
     public void StageChange()
     {
-        Managers.Instance.Spawn.DeleteEnemy();
+        GameManager.Instance.Spawn.DeleteEnemy();
         if (stage == 0)
         {
             stage = 1;

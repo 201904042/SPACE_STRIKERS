@@ -31,7 +31,7 @@ public class PlayerPowBar : MonoBehaviour
 
     private void VariableSet()
     {
-        playerSpecialSkill = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
+        playerSpecialSkill = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
 
     }
 

@@ -31,10 +31,10 @@ public class TrackingMissile : PlayerProjectile
     {
         base.Awake();
         onHit = false ;
-        speicalScript = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
+        speicalScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
         damage = speicalScript.specialDamage*2;
 
-        startPosition = GameManager.game.myPlayer.transform.position; //시작지점
+        startPosition = GameManager.Instance.myPlayer.transform.position; //시작지점
         basicEndPosition = startPosition + Vector2.up * 20;
         handlePosition = startPosition + Vector2.right * Random.Range(-3, 4); //굽어지는 정도
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -136,7 +136,7 @@ public class TrackingMissile : PlayerProjectile
         {
             collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
             onHit = true;
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb07b5e6d65d3fc45b292c343a04ca51, type: 3}
   m_Name: P_MoveSpeed
   m_EditorClassIdentifier: 
-  skillID: 104
+  skillID: 643
   skilltype: 1
-  skillIcon: {fileID: 448343298, guid: f3ae0dea5cfeb30469dfc0a58fc2394a, type: 3}

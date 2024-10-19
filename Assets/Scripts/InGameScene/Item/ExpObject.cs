@@ -15,9 +15,9 @@ public class Exp_object : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.game.myPlayer != null)
+        if (GameManager.Instance.myPlayer != null)
         {
-            Vector2 direction = GameManager.game.myPlayer.transform.position - transform.position;
+            Vector2 direction = GameManager.Instance.myPlayer.transform.position - transform.position;
             transform.up = direction;
 
             Rigidbody2D rigid = transform.GetComponent<Rigidbody2D>();
@@ -30,7 +30,7 @@ public class Exp_object : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.GetComponent<PlayerInGameExp>().ExpGet += expAmount;
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

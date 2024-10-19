@@ -8,7 +8,7 @@ public class Item_PowUp : Ingame_Item
     protected override void Awake()
     {
         base.Awake();
-        PlayerSkill = GameManager.game.myPlayer.GetComponent<PlayerSpecialSkill>();
+        PlayerSkill = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
 
@@ -17,7 +17,7 @@ public class Item_PowUp : Ingame_Item
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            Managers.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Instance.Pool.ReleasePool(gameObject);
             PowUP();
         }
     }

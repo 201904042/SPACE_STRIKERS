@@ -31,8 +31,8 @@ public class LauncherStat : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.game.myPlayer.GetComponent<PlayerStat>();
-        playerControl = GameManager.game.myPlayer.GetComponent<PlayerControl>();
+        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
+        playerControl = GameManager.Instance.myPlayer.GetComponent<PlayerControl>();
         fireDirection = transform.up;
     }
 

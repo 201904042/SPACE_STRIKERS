@@ -20,8 +20,8 @@ public class playerShooterUpgrade : MonoBehaviour
 
     void Start()
     {
-        player = transform.parent.gameObject;
-        playerStatScript = player.GetComponent<PlayerStat>();
+        player = GameManager.Instance.myPlayer;
+        playerStatScript = GameManager.Instance.playerStat;
         shooterLevel = 1;
         characterNumber = playerStatScript.curPlayerID;
         UpdatePlayerId();

@@ -7,55 +7,46 @@ using UnityEngine.UI;
 
 public class SkillBtn : MonoBehaviour
 {
-    public SkillData SkillData
-    {
-        get => skillData;
-        set
-        {
-            Debug.Log("스킬데이터 인계");
-            skillData = value;
-            //FindSkillInPlayerSkill();
-        }
-    }
+    public Transform skillImages;
+    public Image skillImage;
+    public TextMeshProUGUI levelText;
+    public Transform description;
+    public TextMeshProUGUI descripText;
 
-    private SkillData skillData;
-    public TextMeshProUGUI LvText;
-    public TextMeshProUGUI explainText;
-    public Image imageObj;
+    public InGameSkill skillData;
 
-    public bool isButtonSelected;
 
     private void Awake()
     {
-        imageObj = transform.GetChild(0).GetComponent<Image>();
-        LvText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        explainText = transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
-        isButtonSelected = false;
+        skillImages = transform.GetChild(0);
+        levelText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        description = transform.GetChild(2);
+
+        skillImage = skillImages.GetChild(1).GetComponent<Image>();
+        descripText = description.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
-    //private void FindSkillInPlayerSkill()
-    //{
-    //    Transform playerSkillSlot = GameObject.Find("Player").transform.GetChild(1);
-    //    SkillInterface skillInterface;
-    //    for (int i = 0; i < playerSkillSlot.childCount; i++)
-    //    {
-    //        if (playerSkillSlot.GetChild(i).GetComponent<SkillInterface>().skillId == skillData.skillID)
-    //        {
-    //            skillInterface = playerSkillSlot.GetChild(i).GetComponent<SkillInterface>();
-    //            Debug.Log(imageObj);
-    //            imageObj.sprite = skillData.skillIcon;
-    //            LvText.text = skillInterface.level.ToString();
-    //            explainText.text = skillInterface.skillIntro.ToString();
-
-    //            break;
-    //        }
-    //    }
-    //}
-
-    public void ChosenSkill()
+    public void SetSkillData(InGameSkill skill)
     {
-        transform.GetComponentInParent<LevelUP_UI>().ChosenSkillData  = skillData;
-
-        transform.parent.parent.GetChild(2).GetComponent<Button>().interactable = true;
+        ResetData();
+        skillData = skill;
+        skillImage.sprite = Resources.Load<Sprite>("Sprite/default"); //todo db의 이미지대로
+        levelText.text = $"lv . {skill.currentLevel}";
+        descripText.text = skill.SkillLevels[skill.currentLevel-1].Description;
     }
+
+    public void ResetData()
+    {
+        skillData = null;
+        skillImage.sprite = null;
+        levelText.text = "";
+        descripText.text = "";
+    }
+
+    public InGameSkill GetSkillData()
+    {
+        return skillData;
+    }
+
+    
 }

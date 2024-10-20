@@ -24,16 +24,18 @@ public struct Skill_LevelValue
 
 public class NewActiveSkill : InGameSkill
 {
-    public List<Skill_LevelValue> SkillLevels = new List<Skill_LevelValue>();
-    public int currentLevel = 1; // 현재 레벨
+    
     protected Skill_LevelValue CurSkillValue => SkillLevels[currentLevel-1];
     public Transform instantPoint;
     public Coroutine skillCoroutine;
     
     public override void Init()
     {
+        SkillLevels = new List<Skill_LevelValue>();
         instantPoint = GameManager.Instance.myPlayer.transform;
         skillCoroutine = null;
+        type = SkillType.Active;
+        currentLevel = 1;
     }
 
     public override void SetLevel()

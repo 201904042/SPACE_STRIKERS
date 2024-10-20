@@ -42,11 +42,12 @@ public class PlayerStat : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        
     }
 
-    private void Init()
+    public void Init()
     {
+        
         damageIncreaseRate = 1;
         defenceIncreaseRate = 1;
         moveSpeedIncreaseRate = 1;
@@ -55,13 +56,15 @@ public class PlayerStat : MonoBehaviour
 
         isFirstSetDone = false; 
         int savedPlayerId = DataManager.account.GetChar();
-        Debug.Log("stat init");
         curPlayerID = savedPlayerId;
         SetStat(curPlayerID);
 
-        PlayerSkillManager ps = transform.GetComponent<PlayerSkillManager>();
+        PlayerSkillManager ps = GameManager.Instance.psManager;
+
         ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
         ps.AddPassiveSkill((NewPassiveSkill)ps.FindSkillByCode(641));
+
+        Debug.Log("플레이어 스텟 초기화 완료");
     }
 
     public void SetStat(int playerId)

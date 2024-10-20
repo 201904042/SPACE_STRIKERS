@@ -33,6 +33,19 @@ public class Passive_Damage : NewPassiveSkill
         };
         SkillLevels.Add(damage_lv3);
 
+        Skill_LevelValue damage_lv4 = new Skill_LevelValue()
+        {
+            DamageRate = 40
+        };
+        SkillLevels.Add(damage_lv4);
+
+
+        Skill_LevelValue damage_lv5 = new Skill_LevelValue()
+        {
+            DamageRate = 50
+        };
+        SkillLevels.Add(damage_lv5);
+
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 }

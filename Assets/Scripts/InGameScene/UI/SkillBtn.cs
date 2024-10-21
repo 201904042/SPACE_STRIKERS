@@ -32,7 +32,7 @@ public class SkillBtn : MonoBehaviour
         skillData = skill;
         skillImage.sprite = Resources.Load<Sprite>("Sprite/default"); //todo db의 이미지대로
         levelText.text = $"lv . {skill.currentLevel}";
-        descripText.text = skill.SkillLevels[skill.currentLevel-1].Description;
+        //descripText.text = skill.SkillLevels[skill.currentLevel-1].Description;
     }
 
     public void ResetData()

@@ -33,7 +33,7 @@ public class PlayerBullet : PlayerProjectile
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (hasHit)
+        if (isAlreadyHit)
         {
             return;
         }
@@ -45,7 +45,7 @@ public class PlayerBullet : PlayerProjectile
                 collision.GetComponent<EnemyObject>().EnemyDamaged(bulletDamage, gameObject);
             }
 
-            hasHit = true;
+            isAlreadyHit = true;
             //Destroy(gameObject);
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }

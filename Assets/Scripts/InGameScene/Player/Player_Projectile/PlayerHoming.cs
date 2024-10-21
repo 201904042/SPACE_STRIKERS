@@ -82,7 +82,7 @@ public class PlayerHoming : PlayerProjectile
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (hasHit)
+        if (isAlreadyHit)
         {
             return;
         }
@@ -92,7 +92,7 @@ public class PlayerHoming : PlayerProjectile
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
-            hasHit = true;
+            isAlreadyHit = true;
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }

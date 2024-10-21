@@ -43,7 +43,7 @@ public class PlayerMissile : PlayerProjectile
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(hasHit)
+        if(isAlreadyHit)
         {
             return;
         }
@@ -51,7 +51,7 @@ public class PlayerMissile : PlayerProjectile
         {
             //임시로 적을 맞추면 데미지를 합산
             //적을 만들면 적의 hp를 감소하게끔 바꾸기
-            hasHit = true;
+            isAlreadyHit = true;
             if (collision.GetComponent<EnemyObject>() != null)
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);

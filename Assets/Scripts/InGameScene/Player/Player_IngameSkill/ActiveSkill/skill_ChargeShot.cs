@@ -6,15 +6,13 @@ using UnityEngine.Android;
 
 public class Skill_ChargeShot : PlayerProjectile
 {
-    private List<GameObject> hittedList;
-
-    public bool isPenetrate;
-    public int penetrateCount;
+    protected bool isPenetrate;
+    protected int penetrateCount;
+    protected int damageCount;
 
     protected override void Awake()
     {
         base.Awake();
-        isAlreadyHit = false;
     }
 
     protected override void ResetProj()
@@ -22,29 +20,17 @@ public class Skill_ChargeShot : PlayerProjectile
         base.ResetProj();
         isPenetrate = false;
         penetrateCount = 0;
+        damageCount = 0;
     }
 
 
-    public override void SetProjParameter(int projSpeed, int dmgRate, float liveTime, float range)
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range, float value1 =0 , float value2 = 0)
     {
-        base.SetProjParameter(projSpeed, dmgRate,  liveTime, range);
-        isPenetrate = false;
-        penetrateCount = 0;
+        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range,value1,value2);
 
-        speed = projSpeed;
-        damageRate = dmgRate;
-        this.range = range;
-
-        finalDamage = (int)playerStat.damage * damageRate / 100;
-    }
-
-    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
-    {
-        base.SetAddParameter(value1, value2, value3);
         isPenetrate = true;
         penetrateCount = (int)value1;
     }
-
 
     private void Update()
     {
@@ -53,18 +39,25 @@ public class Skill_ChargeShot : PlayerProjectile
     }
 
     //todo -> 트리거부분도 개선해볼것
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        base.OnTriggerEnter2D(collision);
+    }
+
+    protected override void TriggedEnemy(Collider2D collision)
+    {
+        base.TriggedEnemy(collision);
+
+        if (!isPenetrate)
         {
-            if (collision.GetComponent<EnemyObject>() != null)
-            {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject);
-            }
-            if (!isPenetrate)
-            {
-                GameManager.Instance.Pool.ReleasePool(gameObject);
-            }
+            GameManager.Instance.Pool.ReleasePool(gameObject);
+            return;
+        }
+
+        damageCount++;
+        if (damageCount == penetrateCount)
+        {
+            GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
 }

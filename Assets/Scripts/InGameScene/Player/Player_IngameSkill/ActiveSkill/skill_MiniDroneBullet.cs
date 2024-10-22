@@ -16,16 +16,16 @@ public class skill_MiniDroneBullet : PlayerProjectile
         speed = 10f;
     }
 
-    protected override void OnEnable()
-    {
-        Init();
-    }
+    //protected override void OnEnable()
+    //{
+    //    Init();
+    //}
 
-    protected override void Init()
-    {
-        base.Init();
-        hashit = false;
-    }
+    //protected override void Init()
+    //{
+    //    base.Init();
+    //    hashit = false;
+    //}
 
 
     private void Update()
@@ -33,21 +33,21 @@ public class skill_MiniDroneBullet : PlayerProjectile
         transform.position += transform.up * speed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (hashit)
-        {
-            return;
-        }
-        if (collision.gameObject.tag == "Enemy")
-        {
-            if (collision.GetComponent<EnemyObject>() != null)
-            {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
-            }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (hashit)
+    //    {
+    //        return;
+    //    }
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        if (collision.GetComponent<EnemyObject>() != null)
+    //        {
+    //            collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
+    //        }
 
-            hashit = true;
-            GameManager.Instance.Pool.ReleasePool(gameObject);
-        }
-    }
+    //        hashit = true;
+    //        GameManager.Instance.Pool.ReleasePool(gameObject);
+    //    }
+    //}
 }

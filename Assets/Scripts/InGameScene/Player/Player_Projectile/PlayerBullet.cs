@@ -20,20 +20,10 @@ public class PlayerBullet : PlayerProjectile
         bulletDamage = playerStatDamage * bulletDamageRate;
     }
 
-    protected override void OnEnable()
-    {
-        Init();
-    }
-
-    protected override void Init()
-    {
-        base.Init();
-
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isAlreadyHit)
+        if (isHitOnce)
         {
             return;
         }
@@ -45,7 +35,7 @@ public class PlayerBullet : PlayerProjectile
                 collision.GetComponent<EnemyObject>().EnemyDamaged(bulletDamage, gameObject);
             }
 
-            isAlreadyHit = true;
+            isHitOnce = true;
             //Destroy(gameObject);
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }

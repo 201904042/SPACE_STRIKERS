@@ -56,16 +56,16 @@ public class TrackingMissile : PlayerProjectile
 
     }
 
-    protected override void OnEnable()
-    {
-        Init();
-    }
+    //protected override void OnEnable()
+    //{
+    //    Init();
+    //}
 
-    protected override void Init()
-    {
-        base.Init();
+    //protected override void Init()
+    //{
+    //    base.Init();
 
-    }
+    //}
 
 
     void Update()
@@ -130,15 +130,15 @@ public class TrackingMissile : PlayerProjectile
         return p;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Enemy")
-        {
-            collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
-            onHit = true;
-            GameManager.Instance.Pool.ReleasePool(gameObject);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Enemy")
+    //    {
+    //        collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
+    //        onHit = true;
+    //        GameManager.Instance.Pool.ReleasePool(gameObject);
+    //    }
+    //}
 
     protected override void OnTriggerExit2D(Collider2D collision)
     {

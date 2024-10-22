@@ -25,19 +25,15 @@ public class PlayerHoming : PlayerProjectile
         
     }
 
-    protected override void OnEnable()
-    {
-        Init();
-    }
-
-    protected override void Init()
-    {
-        base.Init();
-        targetSet = false;
-        playerStatDamage = playerStat.damage;
-        homingSpeed = 10;
-        homingDamage = playerStatDamage * homingDamageRate;
-    }
+    
+    //protected override void Init()
+    //{
+    //    base.Init();
+    //    targetSet = false;
+    //    playerStatDamage = playerStat.damage;
+    //    homingSpeed = 10;
+    //    homingDamage = playerStatDamage * homingDamageRate;
+    //}
 
 
     private void FindEnemy()
@@ -82,7 +78,7 @@ public class PlayerHoming : PlayerProjectile
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isAlreadyHit)
+        if (isHitOnce)
         {
             return;
         }
@@ -92,7 +88,7 @@ public class PlayerHoming : PlayerProjectile
             {
                 collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
             }
-            isAlreadyHit = true;
+            isHitOnce = true;
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }

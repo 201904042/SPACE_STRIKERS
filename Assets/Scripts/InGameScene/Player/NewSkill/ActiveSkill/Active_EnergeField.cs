@@ -26,12 +26,9 @@ public class Active_EnergeField : NewActiveSkill
     {
         base.ActivateSkill();
 
-        for (int i = 0; i < CurSkillValue.ProjNum; i++)
-        {
-            skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_Missile>();
-            Vector2 RandomDir = DirectionToRandomEnemy();
-            missile.transform.up = RandomDir;
-        }
+        Skill_EnergyField energyField =
+                GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_EnergyField>();
+        energyField.SetProjParameter(projSpeed, dmgRate, liveTime, range,cycleDelay);
     }
 
 

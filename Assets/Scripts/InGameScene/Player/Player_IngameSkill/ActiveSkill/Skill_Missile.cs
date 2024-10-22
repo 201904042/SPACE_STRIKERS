@@ -23,16 +23,16 @@ public class skill_Missile : PlayerProjectile
         missileSpeed = 10f;
     }
 
-    protected override void OnEnable()
-    {
-        Init();
-    }
+    //protected override void OnEnable()
+    //{
+    //    Init();
+    //}
 
-    protected override void Init()
-    {
-        base.Init();
-        missileDamage = playerStatDamage * missileDamageRate;
-    }
+    //protected override void Init()
+    //{
+    //    base.Init();
+    //    missileDamage = playerStatDamage * missileDamageRate;
+    //}
 
 
     public void SetParameter()
@@ -46,25 +46,25 @@ public class skill_Missile : PlayerProjectile
         transform.position += transform.up * missileSpeed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (isAlreadyHit)
-        {
-            return;
-        }
-        if (collision.gameObject.tag == "Enemy")
-        {
-            //임시로 적을 맞추면 데미지를 합산
-            //적을 만들면 적의 hp를 감소하게끔 바꾸기
-            isAlreadyHit = true;
-            if (collision.GetComponent<EnemyObject>() != null)
-            {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
-            }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (isHitOnce)
+    //    {
+    //        return;
+    //    }
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        //임시로 적을 맞추면 데미지를 합산
+    //        //적을 만들면 적의 hp를 감소하게끔 바꾸기
+    //        isHitOnce = true;
+    //        if (collision.GetComponent<EnemyObject>() != null)
+    //        {
+    //            collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
+    //        }
 
-            MissileSplash splashDamage = GameManager.Instance.Pool.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<MissileSplash>();
-            splashDamage.SetVariable(explosionRange, missileDamage);
-            GameManager.Instance.Pool.ReleasePool(gameObject);
-        }
-    }
+    //        MissileSplash splashDamage = GameManager.Instance.Pool.GetSkill(SkillProjType.Skill_Splash, transform.position, transform.rotation).GetComponent<MissileSplash>();
+    //        splashDamage.SetVariable(explosionRange, missileDamage);
+    //        GameManager.Instance.Pool.ReleasePool(gameObject);
+    //    }
+    //}
 }

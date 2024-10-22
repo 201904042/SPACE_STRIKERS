@@ -21,18 +21,18 @@ public class Skill_Homing : PlayerProjectile
         homingDamageRate = 0.8f;
     }
 
-    protected override void OnEnable()
-    {
-        Init();
+    //protected override void OnEnable()
+    //{
+    //    Init();
 
-        SetTarget();
-    }
+    //    SetTarget();
+    //}
 
-    protected override void Init()
-    {
-        base.Init();
-        homingDamage = playerStatDamage * homingDamageRate;
-    }
+    //protected override void Init()
+    //{
+    //    base.Init();
+    //    homingDamage = playerStatDamage * homingDamageRate;
+    //}
 
 
     void Update()
@@ -59,17 +59,17 @@ public class Skill_Homing : PlayerProjectile
         target = GameManager.Instance.Spawn.activeEnemyList[Random.Range(0, GameManager.Instance.Spawn.activeEnemyList.Count)];
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
         
-        if (collision.gameObject.tag == "Enemy")
-        {
-            if (collision.GetComponent<EnemyObject>() != null)
-            {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
-            }
-            GameManager.Instance.Pool.ReleasePool(gameObject);
-        }
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        if (collision.GetComponent<EnemyObject>() != null)
+    //        {
+    //            collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
+    //        }
+    //        GameManager.Instance.Pool.ReleasePool(gameObject);
+    //    }
 
-    }
+    //}
 }

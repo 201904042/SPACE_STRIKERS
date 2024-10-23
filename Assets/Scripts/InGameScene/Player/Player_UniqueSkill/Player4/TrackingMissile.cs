@@ -22,7 +22,7 @@ public class TrackingMissile : PlayerProjectile
     private Vector2 handlePosition; // 한 개의 핸들 포인트
 
     public float handleDistanceMultiplier = 1.0f; // 핸들 포인트의 거리를 조절하는 계수
-    public float speed = 10f;
+    //public float speed = 10f;
     private bool targetSet;
     private float t = 0.0f;
     private int random;
@@ -68,50 +68,50 @@ public class TrackingMissile : PlayerProjectile
     //}
 
 
-    void Update()
-    {
-        Vector2 curpos = new Vector2(transform.position.x, transform.position.y);
+    //void Update()
+    //{
+    //    Vector2 curpos = new Vector2(transform.position.x, transform.position.y);
 
-        if (curpos == endPosition && onHit == false) //적의 위치에 왔지만 타격하지 못함 -> 타겟의 위치로 재설정
-        {
-            endPosition = basicEndPosition;
-        }
+    //    if (curpos == endPosition && onHit == false) //적의 위치에 왔지만 타격하지 못함 -> 타겟의 위치로 재설정
+    //    {
+    //        endPosition = basicEndPosition;
+    //    }
 
-        if (targetSet == true)
-        {
-            if (targetEnemy != null)
-            {
-                targetSet = false; //적이 도중에 사라질경우 -> 타겟설정을 거짓으로 두고 목표위치를 기본목표위치로
-            }
-        }
-        if (!targetSet)  //타겟이 설정되지 않았을시 
-        {
-            enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            if (enemies.Length != 0) //적이 다시 생겼을 경우
-            {
-                endPosition = enemies[Random.Range(0, enemies.Length)].transform.position;
-                random = Random.Range(0, enemies.Length);
-                targetSet = true;
-            }
-            else
-            {
-                endPosition = basicEndPosition;
-            }
-        }
+    //    if (targetSet == true)
+    //    {
+    //        if (targetEnemy != null)
+    //        {
+    //            targetSet = false; //적이 도중에 사라질경우 -> 타겟설정을 거짓으로 두고 목표위치를 기본목표위치로
+    //        }
+    //    }
+    //    if (!targetSet)  //타겟이 설정되지 않았을시 
+    //    {
+    //        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    //        if (enemies.Length != 0) //적이 다시 생겼을 경우
+    //        {
+    //            endPosition = enemies[Random.Range(0, enemies.Length)].transform.position;
+    //            random = Random.Range(0, enemies.Length);
+    //            targetSet = true;
+    //        }
+    //        else
+    //        {
+    //            endPosition = basicEndPosition;
+    //        }
+    //    }
 
         
 
-        t += Time.deltaTime * speed;
-        if (t > 1.0f)
-            t = 1.0f;
+    //    t += Time.deltaTime * speed;
+    //    if (t > 1.0f)
+    //        t = 1.0f;
 
-            // 베지어 곡선에서 현재 위치 계산
-        Vector2 newPosition = BezierCurve(startPosition, handlePosition, endPosition, t);
+    //        // 베지어 곡선에서 현재 위치 계산
+    //    Vector2 newPosition = BezierCurve(startPosition, handlePosition, endPosition, t);
 
-            // 오브젝트 이동
-        transform.position = newPosition;
+    //        // 오브젝트 이동
+    //    transform.position = newPosition;
                                 
-    }
+    //}
 
     // 베지어 곡선을 계산하는 함수
     Vector2 BezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, float t)

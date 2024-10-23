@@ -66,6 +66,8 @@ public class LevelUPInterface : UIInterface
         ResetInterface();
         InstantSkillSlot();
 
+        selectBtn.onClick.RemoveAllListeners();
+        returnBtn.onClick.RemoveAllListeners();
         selectBtn.onClick.AddListener(SelectBtn);
         returnBtn.onClick.AddListener(ReturnBtn);
     }
@@ -126,6 +128,7 @@ public class LevelUPInterface : UIInterface
             Button skillSlotBtn = skillSlot.GetChild(i).GetComponent<Button>();
             skillSlotBtn.gameObject.SetActive(true);
             skillSlotBtn.GetComponent<SkillBtn>().SetSkillData(skillList[randomIndex]);
+            skillSlotBtn.onClick.RemoveAllListeners();
             skillSlotBtn.onClick.AddListener(() => SlotBtnListener(index));
         }
 

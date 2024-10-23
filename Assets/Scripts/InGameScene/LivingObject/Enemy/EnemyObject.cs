@@ -34,16 +34,7 @@ public class EnemyObject : MonoBehaviour
             UpdateSpriteColor();
         }
     }
-    public bool MakeEnemyShocked
-    {
-        get => isEnemySlow;
-        set
-        {
-            isEnemySlow = value;
-            isAttackReady = !value;
-            UpdateSpriteColor();
-        }
-    }
+
 
     private readonly Color enemyBasicColor = Color.white;
     private readonly Color itemEnemyColor = Color.red;
@@ -198,6 +189,17 @@ public class EnemyObject : MonoBehaviour
         hpBar.gameObject.SetActive(false);
         GameManager.Instance.Pool.ReleasePool(gameObject);
     }
+
+    //public Coroutine EnemySlow(int slowRate, float SlowTime)
+    //{
+    //    float enemySpeedIndex = 
+    //    isEnemySlow = true;
+    //    isAttackReady = false;
+
+    //    UpdateSpriteColor();
+
+    //    yield return new WaitForSeconds(SlowTime);
+    //}
 
     private void DropItem()
     {

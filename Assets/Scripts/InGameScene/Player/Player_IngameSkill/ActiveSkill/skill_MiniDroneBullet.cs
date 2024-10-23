@@ -8,12 +8,10 @@ public class skill_MiniDroneBullet : PlayerProjectile
     private bool hashit = false;
 
     public float damage;
-    private float speed;
 
     protected override void Awake()
     {
         base.Awake();
-        speed = 10f;
     }
 
     //protected override void OnEnable()
@@ -28,10 +26,10 @@ public class skill_MiniDroneBullet : PlayerProjectile
     //}
 
 
-    private void Update()
-    {
-        transform.position += transform.up * speed * Time.deltaTime;
-    }
+    //private void Update()
+    //{
+    //    transform.position += transform.up * speed * Time.deltaTime;
+    //}
 
     //private void OnTriggerEnter2D(Collider2D collision)
     //{

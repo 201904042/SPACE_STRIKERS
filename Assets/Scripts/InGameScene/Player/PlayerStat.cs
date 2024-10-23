@@ -61,8 +61,14 @@ public class PlayerStat : MonoBehaviour
 
         PlayerSkillManager ps = GameManager.Instance.psManager;
 
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddPassiveSkill((NewPassiveSkill)ps.FindSkillByCode(641));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(604));
+        //ps.AddPassiveSkill((NewPassiveSkill)ps.FindSkillByCode(641));
 
         Debug.Log("플레이어 스텟 초기화 완료");
     }

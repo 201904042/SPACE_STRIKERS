@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 4468691836379696590}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.30553648, y: -0.3582697, z: 0}
-  m_LocalScale: {x: 0.12496, y: 0.12496, z: 0.12496}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -162,7 +162,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat: {fileID: 0}
-  launcher: {fileID: 0}
-  hasHit: 0
-  homingDamage: 0
-  homingDamageRate: 0
+  isParameterSet: 0
+  damageRate: 0
+  speed: 0
+  liveTime: 0
+  range: 0
+  isHitOnce: 0
+  hittedEnemyList: []

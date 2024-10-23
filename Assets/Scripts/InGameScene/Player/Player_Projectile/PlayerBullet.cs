@@ -18,11 +18,17 @@ public class PlayerBullet : PlayerProjectile
         base.Awake ();
         playerStatDamage = playerStat.damage;
         bulletDamage = playerStatDamage * bulletDamageRate;
+
+        isShootingObj = true;
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "BulletBorder")
+        {
+            GameManager.Instance.Pool.ReleasePool(gameObject);
+        }
         if (isHitOnce)
         {
             return;

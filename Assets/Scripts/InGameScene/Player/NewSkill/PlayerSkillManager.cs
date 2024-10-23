@@ -28,7 +28,15 @@ public class PlayerSkillManager : MonoBehaviour
     {
         Active_Missile active_missile = new Active_Missile();
         ingameSkillList.Add(active_missile);
-        
+        Active_ChargeShot active_chargeShot = new Active_ChargeShot();
+        ingameSkillList.Add(active_chargeShot);
+        Active_ElecShock active_elecShock = new Active_ElecShock();
+        ingameSkillList.Add(active_elecShock);
+        Active_EnergeField active_energyField = new Active_EnergeField();
+        ingameSkillList.Add(active_energyField);
+        Active_HomingMissile active_homingMissile = new Active_HomingMissile();
+        ingameSkillList.Add(active_homingMissile);
+
         Passive_Damage passive_damage = new Passive_Damage();
         ingameSkillList.Add(passive_damage);
         Passive_Defence passive_defence = new Passive_Defence();
@@ -45,8 +53,6 @@ public class PlayerSkillManager : MonoBehaviour
             ingameSkillList[i].Init();
         }
     }
-
-  
 
     public InGameSkill FindSkillByCode(int skillCode)
     {
@@ -80,10 +86,10 @@ public class PlayerSkillManager : MonoBehaviour
 
     public void AddActiveSkill(NewActiveSkill skill)
     {
-        var existingSkill = usingActiveSkills.Find(s => s.SkillCode == skill.SkillCode);
+        NewActiveSkill existingSkill = usingActiveSkills.Find(s => s.SkillCode == skill.SkillCode);
         if (existingSkill != null)
         {
-            existingSkill.LevelUp(); // 기존 스킬의 레벨업
+            LevelUpSkill(existingSkill); // 기존 스킬의 레벨업
             if(existingSkill.currentLevel == existingSkill.SkillLevels.Count)
             {
                 ingameSkillList.Remove(skill); //만약 최대레벨이 되면 인게임 리스트에서는 삭제

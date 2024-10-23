@@ -8,8 +8,14 @@ using UnityEngine.WSA;
 
 public class Skill_EnergyField : PlayerProjectile
 {
-    protected bool isCycleDamage; //여러번 데미지를 주는 변수 인가 = 장판스킬
-    protected int cycleRate;
+    [SerializeField] protected bool isCycleDamage; //여러번 데미지를 주는 변수 인가 = 장판스킬
+    [SerializeField] protected float cycleRate;
+
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
 
     protected override void ResetProj()
     {
@@ -18,23 +24,48 @@ public class Skill_EnergyField : PlayerProjectile
         cycleRate = 0;
     }
 
-
-    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range, float value1=0, float value2 = 0)
+    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
     {
-        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range, value1, value2);
+        base.SetAddParameter(value1, value2, value3);
+        if(value1 == 0)
+        {
+            return;
+        }
         isCycleDamage = true;
-        cycleRate = (int)value1;
+        cycleRate = value1;
     }
 
-    protected override void OnDisable()
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
     {
-        base.OnDisable();
+        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range);
+        isHitOnce = false;
+        isShootingObj = false;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected override IEnumerator LiveTimer(float activeTime)
     {
-        base.OnTriggerEnter2D(collision);
+        yield return new WaitForSeconds(activeTime);
+        if (speed == 0)
+        {
+            GameManager.Instance.Pool.ReleasePool(gameObject);
+        }
+        else
+        {
+            isShootingObj = true;
+        }
     }
 
+    
+
+    protected override void TriggedEnemy(Collider2D collision)
+    {
+        base.TriggedEnemy(collision);
+
+        if(damaging == null)
+        {
+            damaging = StartCoroutine(AreaDamageLogic(cycleRate));
+        }
+        
+    }
 
 }

@@ -6,87 +6,80 @@ using UnityEngine.UIElements;
 public class Skill_ElecShock : PlayerProjectile
 {
 
-    private float damage;
-    public float shockDamageRate;
-    public float shockRange;
-    private float shockSpeed;
-    public float slowRate;
-    public float slowTime;
-
-    public bool isExtraDamageToSlowEnemyOn;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        shockSpeed = 1;
-    }
-    //protected override void OnEnable()
-    //{
-    //    Init();
-    //}
-
-    //protected override void Init()
-    //{
-    //    base.Init();
-
-    //    damage = playerStat.damage * shockDamageRate;
-    //    transform.localScale *= shockRange;
-    //}
+    [SerializeField] protected bool isCycleDamage; //여러번 데미지를 주는 변수 인가 = 장판스킬
+    [SerializeField] protected float cycleRate;
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        transform.localScale /= shockRange;
     }
 
-
-    // Update is called once per frame
-    void Update()
+    protected override void ResetProj()
     {
-        transform.position += transform.up * shockSpeed * Time.deltaTime;
+        base.ResetProj();
+        isCycleDamage = false;
+        cycleRate = 0;
+        isSlow = false;
+        slowRate = 0;
+        isSlowExtraDamage = false;
+        extraDamageRate = 0;
     }
 
+    private bool isSlow;
+    private int slowRate;
+    private bool isSlowExtraDamage;
+    private int extraDamageRate;
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(collision.gameObject.tag == "Enemy")
-    //    {
-    //        EnemyObject enemy = collision.GetComponent<EnemyObject>();
-    //        if (enemy != null)
-    //        {
-    //            if (enemy.MakeEnemyShocked) //쇼크 상태일때 트리거 작동시 2배의 데미지를 줌
-    //            {
-    //                enemy.EnemyDamaged(damage * 2, gameObject);
-    //            }
-    //            else
-    //            {
-    //                enemy.EnemyDamaged(damage, gameObject);
-    //                if (enemy.enemyStat.type != 4)
-    //                {
-    //                    StartCoroutine(SlowEnemy(collision));
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-
-    private IEnumerator SlowEnemy(Collider2D collision)
+    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
     {
-        
-        EnemyObject enemy = collision.GetComponent<EnemyObject>();
-        SpriteRenderer enemySprite = collision.GetComponent<SpriteRenderer>();
-
-       float originalSpeed = enemy.enemyStat.moveSpeed;
-
-        enemy.MakeEnemyShocked = true;
-        enemy.enemyStat.moveSpeed = enemy.enemyStat.moveSpeed *(1 - slowRate);
-
-        yield return new WaitForSeconds(slowTime);
-
-        if (enemy.gameObject.activeSelf != false && enemy.MakeEnemyShocked == true)
+        base.SetAddParameter(value1, value2, value3);
+        if (value1 == 0)
         {
-            enemy.MakeEnemyShocked = false;
-            enemy.enemyStat.moveSpeed = originalSpeed;
+            return;
+        }
+        isCycleDamage = true;
+        cycleRate = value1;
+
+        if (value2 == 0)
+        {
+            return;
+        }
+        isSlow = true;
+        slowRate = (int)value2;
+
+        if (value3 == 0)
+        {
+            return;
+        }
+        isSlowExtraDamage = true;
+        extraDamageRate = (int)value3;
+    }
+
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
+    {
+        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range);
+        isHitOnce = false;
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //적 리뉴얼 후 슬로우 효과 추가
         }
     }
+
+    protected override void TriggedEnemy(Collider2D collision)
+    {
+        base.TriggedEnemy(collision);
+        
+
+        if (damaging == null)
+        {
+            damaging = StartCoroutine(AreaDamageLogic(cycleRate));
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ public class Active_HomingMissile : NewActiveSkill
         SkillCode = 604;
         projType = SkillProjType.Skill_Homing;
         SetLevel();
+        SkillParameterSet();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
         Debug.Log("Active_HomingMissile 초기화 완료");
         isInit = true;
@@ -29,9 +30,10 @@ public class Active_HomingMissile : NewActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjNum; i++)
         {
-            skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_Missile>();
+            Skill_Homing proj = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Homing>();
             Vector2 RandomDir = DirectionToRandomEnemy();
-            missile.transform.up = RandomDir;
+            proj.transform.up = RandomDir;
+            proj.SetProjParameter(projSpeed, dmgRate, liveTime, range);
         }
     }
 
@@ -44,6 +46,7 @@ public class Active_HomingMissile : NewActiveSkill
             ProjSpeed = 20,
             Cooldown = 3,
             DamageRate = 80,
+            Range = 0.1f
         };
         SkillLevels.Add(lv1);
 
@@ -53,6 +56,7 @@ public class Active_HomingMissile : NewActiveSkill
             ProjSpeed = 20,
             Cooldown = 3,
             DamageRate = 80,
+            Range = 0.1f
         };
         SkillLevels.Add(lv2);
 
@@ -99,7 +103,7 @@ public class Active_HomingMissile : NewActiveSkill
             Cooldown = 0.5f,
             DamageRate = 80,
         };
-        SkillLevels.Add(lv6);
+        SkillLevels.Add(lv7);
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 }

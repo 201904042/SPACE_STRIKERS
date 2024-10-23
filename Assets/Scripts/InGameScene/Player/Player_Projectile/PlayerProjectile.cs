@@ -13,37 +13,23 @@ using UnityEngine.Timeline;
 public class PlayerProjectile : MonoBehaviour
 {
     public PlayerStat playerStat; //플레이어의 데미지를 불러올 스텟
-    protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
+    [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
 
-    //protected bool isSlow;
-    //protected int isSlowCount;
-    //protected bool isSlowExtraDamage;
-    //protected int slowExtraDamageRate;
 
-    //protected bool isPenetrate;
-    //protected int penetrateCount;
-    //protected int damageCount;
-
-    //protected bool isCycleDamage; //여러번 데미지를 주는 변수 인가 = 장판스킬
-    //protected int cycleRate;
-
-    //protected bool isShootable; //해당 스킬이 발사 가능한 스킬인가
-
-    //protected bool isDrone;
-    //protected int droneAtkSpd;
-
-    //생성하는 스크립트에서 받을(set) 변수
-    protected int damageRate;
-    protected int speed;
-    protected float liveTime;
-    protected float range;
+    [SerializeField] protected int damageRate;
+    [SerializeField] protected int speed;
+    [SerializeField] protected float liveTime;
+    [SerializeField] protected float range;
 
     protected int finalDamage; //플레이어의 스텟과 발사체의 데미지증폭을 곱하여 최종적으로 적용할 데미지
-    protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행
-    protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
+    [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행
+    [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
     //todo -> 적리뉴얼후 적 스크립트로 바꿔보기
 
+    protected bool isShootingObj; //발사되는지 아니면 플레이어를 따라다니는지
 
+    protected Coroutine activated;
+    protected Coroutine damaging;
 
     protected virtual void Awake()
     {
@@ -62,31 +48,27 @@ public class PlayerProjectile : MonoBehaviour
         hittedEnemyList = new List<GameObject>();
         isParameterSet = false;
 
-        //isSlow = false;
-        //isSlowCount = 0;
-        //isSlowExtraDamage = false; 
-        //slowExtraDamageRate = 0;
-        //isPenetrate = false; 
-        //penetrateCount = 0;
-        //damageCount = 0;
-        //isCycleDamage = false;
-        //cycleRate = 0;
-        //isShootable = false;
-        //isDrone = false; ;
-        //droneAtkSpd = 0;
-
         damageRate = 0;
         speed = 0;
         liveTime = 0;
         range = 0;
         finalDamage = 0; 
-        isHitOnce = false; 
-        hittedEnemyList = new List<GameObject>(); 
+        isHitOnce = true;
+        isShootingObj = false;
+        activated = null;
+        damaging= null;
     }
 
-    protected void MoveLogic()
+    protected virtual void Update()
     {
-
+        if (isShootingObj) 
+        {
+            MoveUp();
+        }
+        else
+        {
+            FollowPlayer();
+        }
     }
 
     protected void FollowPlayer()
@@ -102,20 +84,24 @@ public class PlayerProjectile : MonoBehaviour
         }
     }
 
-    protected bool ableToMove;
-    protected bool isAreaSkill;
-    public virtual void SetProjParameter(int _projSpeed,int _dmgRate, float _liveTime, float _range, float value1 = 0, float value2 = 0)
+    public virtual void SetAddParameter(float value1, float value2 =0, float value3 = 0)
+    {
+        Debug.Log("서브 파라미터 세팅");
+    }
+
+    // -> 필수 상속
+    public virtual void SetProjParameter(int _projSpeed,int _dmgRate, float _liveTime, float _range)
     {
         Debug.Log("메인 파라미터 세팅");
         isParameterSet = true;
 
         if (_projSpeed == 0)
         {
-            ableToMove = false;
+            isShootingObj = false;
         }
         else
         {
-            ableToMove = true;
+            isShootingObj = true;
             speed = _projSpeed;
         }
 
@@ -137,35 +123,44 @@ public class PlayerProjectile : MonoBehaviour
 
         if (_range == 0)
         {
-            isAreaSkill = false;
+            Debug.Log("기본 크기");
         }
         else
         {
             range = _range;
             transform.localScale = new Vector3(range, range, 0);
-            isAreaSkill = true;
         }
     }
 
-    //범위형 데미지 로직. 
-    protected virtual IEnumerator AreaDamageLogic()
+    //범위형 데미지 로직. 범위내 적 1회씩 타격을 사이클 시간마다 반복
+    protected virtual IEnumerator AreaDamageLogic(float _cycleRate)
     {
-        while (isCycleDamage)
+        while (true)
         {
+            if(hittedEnemyList.Count == 0)
+            {
+                yield return new WaitForSeconds(_cycleRate);
+                continue;
+            }
             MultiEnemyDamage(); // 기존 데미지 로직 호출
 
-            yield return new WaitForSeconds(cycleRate); // 주기적으로 데미지 적용
+            yield return new WaitForSeconds(_cycleRate); // 주기적으로 데미지 적용
         }
     }
 
-    //리스트의 한마리의 적만 타격
+    //충돌한 적 1체만 데미지 이후 파괴로직 수행
     protected virtual void SingleEnemyDamage()
     {
         GameObject enemy = hittedEnemyList[0];
         enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject);
+        hittedEnemyList.RemoveAt(0);
+        if (isHitOnce)
+        {
+            GameManager.Instance.Pool.ReleasePool(gameObject);
+        }
     }
 
-    //리스트에 들어온 여러마리의 적 타격. 사라지지 않으니 라이브 타임으로 조절
+    //범위 내 적 1회씩 타격
     protected virtual void MultiEnemyDamage()
     {
         for (int i = hittedEnemyList.Count - 1; i >= 0; i--)
@@ -179,8 +174,6 @@ public class PlayerProjectile : MonoBehaviour
             else
             {
                 enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject); // 적에게 데미지
-
-                // isHitOnce가 true일 경우, 타격 후 적을 리스트에서 제거
                 if (isHitOnce)
                 {
                     hittedEnemyList.RemoveAt(i);
@@ -190,7 +183,7 @@ public class PlayerProjectile : MonoBehaviour
     }
 
 
-    protected IEnumerator LiveTimer(float activeTime)
+    protected virtual IEnumerator LiveTimer(float activeTime)
     {
         yield return new WaitForSeconds(activeTime);
         
@@ -211,7 +204,7 @@ public class PlayerProjectile : MonoBehaviour
         }
     }
 
-    //penetrate필요시 여기에 추가
+    //실행할 데미지루틴의 코루틴을 시작시킬것 -> 필수 상속
     protected virtual void TriggedEnemy(Collider2D collision)
     {
         //기본 데미지의 실행로직
@@ -220,8 +213,11 @@ public class PlayerProjectile : MonoBehaviour
             Debug.Log("적 스크립트가 맞지 유효하지 않음");
             return;
         }
-
-        hittedEnemyList.Add(collision.gameObject);
+        if (!hittedEnemyList.Contains(collision.gameObject))
+        {
+            hittedEnemyList.Add(collision.gameObject);
+        }
+        
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision) //영역 밖으로 나갔다면 리스트에서 적 제거

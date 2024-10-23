@@ -12,6 +12,7 @@ public class Active_ElecShock : NewActiveSkill
         SkillCode = 602;
         projType = SkillProjType.Skill_ElecShock;
         SetLevel();
+        SkillParameterSet();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
         Debug.Log("Active_ElecShock 초기화 완료");
         isInit = true;
@@ -28,9 +29,9 @@ public class Active_ElecShock : NewActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjNum; i++)
         {
-            skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_Missile>();
-            Vector2 RandomDir = DirectionToRandomEnemy();
-            missile.transform.up = RandomDir;
+            Skill_ElecShock elecShock = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_ElecShock>();
+            elecShock.SetAddParameter(cycleDelay, slowRate, slowDmgRate);
+            elecShock.SetProjParameter(projSpeed, dmgRate, liveTime, range);
         }
     }
 
@@ -40,7 +41,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 30,
             Range = 1
@@ -53,7 +54,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed =1,
             Cooldown = 5,
             DamageRate = 60,
             Range = 1
@@ -65,7 +66,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 60,
             Range = 1.5f
@@ -77,7 +78,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv4 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 90,
             Range = 1.5f
@@ -89,7 +90,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv5 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 120,
             Range = 1.5f
@@ -101,7 +102,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv6 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 120,
             Range = 1.5f
@@ -113,7 +114,7 @@ public class Active_ElecShock : NewActiveSkill
         Skill_LevelValue lv7 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 12,
+            ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 120,
             Range = 3f

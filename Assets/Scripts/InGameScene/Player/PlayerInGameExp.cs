@@ -31,6 +31,7 @@ public class PlayerInGameExp : MonoBehaviour
         curExp = 0;
     }
 
+    [ContextMenu("·¹º§¾÷")]
     public void LevelUP()
     {
         InGameLv++;

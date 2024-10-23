@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Active_EnergeField : NewActiveSkill
 {
-    public bool isInit = false;
-
     public override void Init()
     {
         base.Init();
         SkillCode = 603;
         projType = SkillProjType.Skill_EnergyField;
         SetLevel();
+        SkillParameterSet();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
         Debug.Log("Active_EnergeField 초기화 완료");
-        isInit = true;
     }
 
     public override void LevelUp()
@@ -28,7 +26,8 @@ public class Active_EnergeField : NewActiveSkill
 
         Skill_EnergyField energyField =
                 GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_EnergyField>();
-        energyField.SetProjParameter(projSpeed, dmgRate, liveTime, range,cycleDelay);
+        energyField.SetAddParameter(cycleDelay);
+        energyField.SetProjParameter(projSpeed, dmgRate, liveTime, range);
     }
 
 
@@ -38,7 +37,7 @@ public class Active_EnergeField : NewActiveSkill
         {
             Cooldown = 10,
             DamageRate = 20,
-            Range = 8,
+            Range = 2,
             LiveTime = 5
         };
         lv1.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 1f));
@@ -48,7 +47,7 @@ public class Active_EnergeField : NewActiveSkill
         {
             Cooldown = 10,
             DamageRate = 40,
-            Range = 8,
+            Range = 2,
             LiveTime = 5
         };
         lv2.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 1f));
@@ -58,7 +57,7 @@ public class Active_EnergeField : NewActiveSkill
         {
             Cooldown = 10,
             DamageRate = 40,
-            Range = 8,
+            Range = 4,
             LiveTime = 7
         };
         lv3.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 1f));
@@ -68,7 +67,7 @@ public class Active_EnergeField : NewActiveSkill
         {
             Cooldown = 10,
             DamageRate = 40,
-            Range = 10,
+            Range = 4,
             LiveTime = 7
         };
         lv4.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));
@@ -78,7 +77,7 @@ public class Active_EnergeField : NewActiveSkill
         {
             Cooldown = 10,
             DamageRate = 70,
-            Range = 10,
+            Range = 6,
             LiveTime = 7
         };
         lv5.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));
@@ -88,7 +87,7 @@ public class Active_EnergeField : NewActiveSkill
         {
             Cooldown = 10,
             DamageRate = 70,
-            Range = 10,
+            Range = 6,
             LiveTime = 9
         };
         lv6.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));
@@ -99,7 +98,7 @@ public class Active_EnergeField : NewActiveSkill
             ProjSpeed = 10,
             Cooldown = 10,
             DamageRate = 70,
-            Range = 12,
+            Range = 8,
             LiveTime = 9
         };
         lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));

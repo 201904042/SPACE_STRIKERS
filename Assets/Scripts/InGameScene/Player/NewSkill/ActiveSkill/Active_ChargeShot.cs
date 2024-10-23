@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class Active_ChargeShot : NewActiveSkill
 {
-    public bool isInit = false;
-
     public override void Init()
     {
         base.Init();
         SkillCode = 601;
         projType = SkillProjType.Skill_ChageShot;
         SetLevel();
-        // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
+        SkillParameterSet();
         Debug.Log("Active_ChargeShot 초기화 완료");
-        isInit = true;
     }
 
     public override void LevelUp()
@@ -27,9 +24,10 @@ public class Active_ChargeShot : NewActiveSkill
         base.ActivateSkill();
 
         for (int i = 0; i < CurSkillValue.ProjNum; i++)
-        {
+       {
             Skill_ChargeShot proj = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_ChargeShot>();
-            proj.SetProjParameter(projSpeed, dmgRate, liveTime, range, penetrateCount);
+            proj.SetAddParameter(penetrateCount);
+            proj.SetProjParameter(projSpeed, dmgRate, liveTime, range);
         }
     }
 
@@ -39,7 +37,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 5,
             DamageRate = 150
         };
@@ -49,7 +47,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 5,
             DamageRate = 170
         };
@@ -58,7 +56,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 4,
             DamageRate = 190
         };
@@ -68,7 +66,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv4 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 4,
             DamageRate = 210
         };
@@ -78,7 +76,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv5 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 3,
             DamageRate = 230
         };
@@ -88,7 +86,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv6 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 3,
             DamageRate = 250
         };
@@ -98,7 +96,7 @@ public class Active_ChargeShot : NewActiveSkill
         Skill_LevelValue lv7 = new Skill_LevelValue()
         {
             ProjNum = 1,
-            ProjSpeed = 15,
+            ProjSpeed = 10,
             Cooldown = 3,
             DamageRate = 300
         };

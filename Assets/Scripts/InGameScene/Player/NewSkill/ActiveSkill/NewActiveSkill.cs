@@ -23,7 +23,7 @@ public class S_EffectValuePair
     }
 }
 
-public struct Skill_LevelValue
+public class Skill_LevelValue
 {
     public int ProjNum; // 투사체 수. 수치만큼 반복하여 생성
     public int ProjSpeed; //투사체의 속도. 기준 10(플레이어의 기본속도). 20이면 플레이어 2배속도 5면 플레이어보다 반배 느림
@@ -32,6 +32,11 @@ public struct Skill_LevelValue
     public float Range; // 범위(발사체의 로컬 스케일), 주로 범위형 스킬에 쓰임
     public float LiveTime; //지속시간(시간 초). 이 지속시간이 끝나면 발사체는 파괴
     public List<S_EffectValuePair> AdditionalEffects; // 추가 효과 (둔화율, 관통, 조준 등)
+
+    public Skill_LevelValue()
+    {
+        AdditionalEffects = new List<S_EffectValuePair>();
+    }
 }
 
 public class NewActiveSkill : InGameSkill
@@ -75,7 +80,7 @@ public class NewActiveSkill : InGameSkill
 
     public override void LevelUp()
     {
-        if (currentLevel < SkillLevels.Count - 1)
+        if (currentLevel < SkillLevels.Count)
         {
             currentLevel++;
         }
@@ -83,7 +88,7 @@ public class NewActiveSkill : InGameSkill
         SkillParameterSet();
     }
 
-    private void SkillParameterSet()
+    protected void SkillParameterSet()
     {
         Skill_LevelValue skillData = SkillLevels[currentLevel - 1];
         projNum = skillData.ProjNum;
@@ -112,14 +117,13 @@ public class NewActiveSkill : InGameSkill
         }
 }
 
-    //스킬 획득시 최초 실행 종료동안 ActivateSkill을 계속하여 반복
+    //반복 스킬 발동 코루틴
     public IEnumerator ActivateSkillCoroutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(CurSkillValue.Cooldown); // 쿨타임 동안 대기
-
             ActivateSkill(); // 스킬 발동
+            yield return new WaitForSeconds(CurSkillValue.Cooldown); // 쿨타임 동안 대기
         }
     }
 

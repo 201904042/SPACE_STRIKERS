@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7292232937672625659}
   - component: {fileID: 5187782934482967286}
   - component: {fileID: -2768266258289629381}
-  - component: {fileID: 159162281917694163}
+  - component: {fileID: 4781705549109108140}
   m_Layer: 0
   m_Name: skill_missileSplash
   m_TagString: Untagged
@@ -149,7 +149,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &159162281917694163
+--- !u!114 &4781705549109108140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,11 +158,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7671727333348972235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ef50b040745a86458dd23531a33c3c5, type: 3}
+  m_Script: {fileID: 11500000, guid: ce6405b74d2fd6b47b6b356dec6b65ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missileDamage: 0
-  explosionRange: 0
-  missileSplashDamage: 0
-  splashDamageRate: 0
-  splashTime: 0
+  playerStat: {fileID: 0}
+  isParameterSet: 0
+  damageRate: 0
+  speed: 0
+  liveTime: 0
+  range: 0
+  isHitOnce: 0
+  hittedEnemyList: []

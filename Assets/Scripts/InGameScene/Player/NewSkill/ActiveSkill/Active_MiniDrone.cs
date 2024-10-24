@@ -12,6 +12,7 @@ public class Active_MiniDrone : NewActiveSkill
         SkillCode = 605;
         projType = SkillProjType.Skill_MiniDrone;
         SetLevel();
+        SkillParameterSet();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
         Debug.Log("Active_MiniDrone 초기화 완료");
         isInit = true;
@@ -28,9 +29,9 @@ public class Active_MiniDrone : NewActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjNum; i++)
         {
-            skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_Missile>();
-            Vector2 RandomDir = DirectionToRandomEnemy();
-            missile.transform.up = RandomDir;
+            skill_MiniDrone proj = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_MiniDrone>();
+            proj.SetAddParameter(droneAtkSpd);
+            proj.SetProjParameter(projSpeed, dmgRate, liveTime, range);
         }
     }
 
@@ -41,10 +42,10 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 1,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 30, //재생성 시간
             DamageRate = 50,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 3,  //드론의 감지범위
+            LiveTime = 15, //드론의 생존시간
         };
         lv1.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 1.2f));
         SkillLevels.Add(lv1);
@@ -53,10 +54,10 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 1,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 30, //재생성 시간
             DamageRate = 70,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 3,  //드론의 감지범위
+            LiveTime = 15, //드론의 생존시간
         };
         lv2.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 1.2f));
         SkillLevels.Add(lv2);
@@ -65,10 +66,10 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 1,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 25, //재생성 시간
             DamageRate = 70,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 3,  //드론의 감지범위
+            LiveTime = 15, //드론의 생존시간
         };
         lv3.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.9f));
         SkillLevels.Add(lv3);
@@ -77,10 +78,10 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 2,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 25, //재생성 시간
             DamageRate = 70,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 4,  //드론의 감지범위
+            LiveTime = 15, //드론의 생존시간
         };
         lv4.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.9f));
         SkillLevels.Add(lv4);
@@ -89,10 +90,10 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 2,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 25, //재생성 시간
             DamageRate = 100,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 4,  //드론의 감지범위
+            LiveTime = 20, //드론의 생존시간
         };
         lv5.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.9f));
         SkillLevels.Add(lv5);
@@ -102,10 +103,10 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 2,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 25, //재생성 시간
             DamageRate = 100,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 4,  //드론의 감지범위
+            LiveTime = 20, //드론의 생존시간
         };
         lv6.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.7f));
         SkillLevels.Add(lv6);
@@ -114,12 +115,12 @@ public class Active_MiniDrone : NewActiveSkill
         {
             ProjNum = 4,
             ProjSpeed = 15, //드론의 이동속도
-            Cooldown = 10, //재생성 시간
+            Cooldown = 20, //재생성 시간
             DamageRate = 150,
-            Range = 10,  //드론의 감지범위
-            LiveTime = 5, //드론의 생존시간
+            Range = 5,  //드론의 감지범위
+            LiveTime = 20, //드론의 생존시간
         };
-        lv6.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.5f));
+        lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.5f));
         SkillLevels.Add(lv6);
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }

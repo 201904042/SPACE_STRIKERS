@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4207304314952022487}
   - component: {fileID: 5721872805009436234}
   - component: {fileID: 3985399326261574136}
-  - component: {fileID: 4601735406161017321}
+  - component: {fileID: 8465158035562090108}
   m_Layer: 0
   m_Name: skill_miniDrone
   m_TagString: Player_Drone
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6486308639380917487}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.43, y: -0.6, z: 0}
   m_LocalScale: {x: 0.2, y: 0.5, z: 0}
   m_ConstrainProportionsScale: 0
@@ -99,11 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aec6e448663e774d879c4754fe83c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proj: {fileID: 2508219021905162072, guid: c94423721ae975a498711a7b5cd2cf8f, type: 3}
+  playerStat: {fileID: 0}
+  isParameterSet: 0
   damageRate: 0
-  shootSpeedRate: 0
-  shootTimer: 0
-  isDroneActive: 0
+  speed: 0
+  liveTime: 0
+  range: 0
+  isHitOnce: 0
+  hittedEnemyList: []
 --- !u!50 &3985399326261574136
 Rigidbody2D:
   serializedVersion: 4
@@ -131,8 +134,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &4601735406161017321
-PolygonCollider2D:
+--- !u!58 &8465158035562090108
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,19 +167,5 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.5}
-    newSize: {x: 1, y: 0.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0.25}
-      - {x: -0.5, y: 0}
-      - {x: 0, y: -0.25}
-      - {x: 0.5, y: 0}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Radius: 3

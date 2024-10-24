@@ -26,8 +26,7 @@ public class PlayerSkillManager : MonoBehaviour
     //존재하는 모든 스킬들은 인게임 스킬 리스트에 등록 => 여기서 선택된 스킬을 찾아서 using리스트에 등록
     private void SetAllSkill()
     {
-        Active_Missile active_missile = new Active_Missile();
-        ingameSkillList.Add(active_missile);
+        
         Active_ChargeShot active_chargeShot = new Active_ChargeShot();
         ingameSkillList.Add(active_chargeShot);
         Active_ElecShock active_elecShock = new Active_ElecShock();
@@ -36,6 +35,10 @@ public class PlayerSkillManager : MonoBehaviour
         ingameSkillList.Add(active_energyField);
         Active_HomingMissile active_homingMissile = new Active_HomingMissile();
         ingameSkillList.Add(active_homingMissile);
+        Active_MiniDrone active_miniDrone = new Active_MiniDrone();
+        ingameSkillList.Add(active_miniDrone);
+        Active_Missile active_missile = new Active_Missile();
+        ingameSkillList.Add(active_missile);
 
         Passive_Damage passive_damage = new Passive_Damage();
         ingameSkillList.Add(passive_damage);

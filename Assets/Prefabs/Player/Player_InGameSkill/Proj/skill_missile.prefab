@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3227319426088898931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.306, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.13, y: 0.17, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -172,9 +172,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat: {fileID: 0}
-  launcher: {fileID: 0}
-  hasHit: 0
-  splashColliderObject: {fileID: 0}
-  missileDamage: 0
-  missileDamageRate: 0
-  explosionRange: 0
+  isParameterSet: 0
+  damageRate: 0
+  speed: 0
+  liveTime: 0
+  range: 0
+  isHitOnce: 0
+  hittedEnemyList: []

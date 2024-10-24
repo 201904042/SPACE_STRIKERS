@@ -28,7 +28,7 @@ public class Active_Shield : NewActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjNum; i++)
         {
-            skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_Missile>();
+            Skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Missile>();
             Vector2 RandomDir = DirectionToRandomEnemy();
             missile.transform.up = RandomDir;
         }

@@ -61,6 +61,12 @@ public class PlayerProjectile : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (!isParameterSet)
+        {
+            Debug.Log("파라미터가 설정되지 않음");
+            return;
+        }
+
         if (isShootingObj) 
         {
             MoveUp();

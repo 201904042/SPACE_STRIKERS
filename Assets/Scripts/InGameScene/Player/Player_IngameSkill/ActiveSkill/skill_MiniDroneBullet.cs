@@ -5,47 +5,16 @@ using UnityEngine;
 
 public class skill_MiniDroneBullet : PlayerProjectile
 {
-    private bool hashit = false;
-
-    public float damage;
-
-    protected override void Awake()
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
     {
-        base.Awake();
+        base.SetProjParameter(_projSpeed, _dmgRate, 0, 0);
+        Debug.Log("»ý¼ºµÊ");
     }
 
-    //protected override void OnEnable()
-    //{
-    //    Init();
-    //}
+    protected override void TriggedEnemy(Collider2D collision)
+    {
+        base.TriggedEnemy(collision);
 
-    //protected override void Init()
-    //{
-    //    base.Init();
-    //    hashit = false;
-    //}
-
-
-    //private void Update()
-    //{
-    //    transform.position += transform.up * speed * Time.deltaTime;
-    //}
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (hashit)
-    //    {
-    //        return;
-    //    }
-    //    if (collision.gameObject.tag == "Enemy")
-    //    {
-    //        if (collision.GetComponent<EnemyObject>() != null)
-    //        {
-    //            collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
-    //        }
-
-    //        hashit = true;
-    //        GameManager.Instance.Pool.ReleasePool(gameObject);
-    //    }
-    //}
+        SingleEnemyDamage();
+    }
 }

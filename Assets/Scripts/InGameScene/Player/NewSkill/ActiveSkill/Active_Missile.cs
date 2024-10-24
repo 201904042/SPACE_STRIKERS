@@ -15,6 +15,7 @@ public class Active_Missile : NewActiveSkill
         SkillCode = 606;
         projType = SkillProjType.Skill_Missile;
         SetLevel();
+        SkillParameterSet();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
         Debug.Log("Active_Missile 초기화 완료");
         isInit = true;
@@ -31,9 +32,11 @@ public class Active_Missile : NewActiveSkill
         
         for (int i = 0; i < CurSkillValue.ProjNum; i++)
         {
-            skill_Missile missile = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_Missile>();
+            Skill_Missile proj = GameManager.Instance.Pool.GetSkill(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Missile>();
             Vector2 RandomDir = DirectionToRandomEnemy();
-            missile.transform.up = RandomDir;
+            proj.transform.up = RandomDir;
+
+            proj.SetProjParameter(projSpeed, dmgRate, liveTime, range);
         }
     }
 

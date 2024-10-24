@@ -1093,6 +1093,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sandbag1
       objectReference: {fileID: 0}
+    - target: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8419977345515811547, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
       propertyPath: curHp
       value: 100000
@@ -1665,6 +1669,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sandbag
       objectReference: {fileID: 0}
+    - target: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8419977345515811547, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
       propertyPath: curHp
       value: 100000
@@ -1928,6 +1936,10 @@ PrefabInstance:
     - target: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
       propertyPath: m_Name
       value: Sandbag2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8419977345515811547, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
       propertyPath: curHp

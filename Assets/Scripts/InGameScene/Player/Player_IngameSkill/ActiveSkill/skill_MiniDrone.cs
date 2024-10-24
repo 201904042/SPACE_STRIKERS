@@ -1,162 +1,225 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO.IsolatedStorage;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
+using static UnityEditor.MaterialProperty;
 
-public class skill_MiniDrone : MonoBehaviour
+public class skill_MiniDrone : PlayerProjectile
 {
-    public GameObject proj;
+    private const int droneBulletSpd = 15;
+    private float droneAtkTime;
+    private Transform target;
+    private List<EnemyObject> triggedList;
+    private SkillProjType droneBullet;
 
-    private GameObject targetEnemy;
-    private PlayerStat stat;
-    Vector3 targetPosition;
+    private GameObject Player;
+    private bool isAttacking = false;
+    private Vector3 targetPos;
+    private Coroutine attackCoroutine;
+    private Coroutine behaviorCoroutine;
 
-    private float drone_damage;
-    public float damageRate;
-    private float shootSpeed;
-    public float shootSpeedRate;
-    private float moveSpeed;
+    private float detectionRange; // 드론이 플레이어와 감지 범위에서 멀어졌는지 판단하는 거리
 
-    public float shootTimer;
-
-    private float liveTime;
-
-    private float attackRange;
-    private bool isEnemySet;
-    private bool is_firstSet;
-
-    private float basic_speed;
-    public bool isDroneActive;
-    private bool isAttack;
-
-    void Awake()
+    protected override void ResetProj()
     {
+        base.ResetProj();
+        droneAtkTime = 0;
+        detectionRange = 0;
+        triggedList = new List<EnemyObject>();
+        droneBullet = SkillProjType.Skilll_DroneBullet;
+        Player = GameManager.Instance.myPlayer;
+        isAttacking = false;
 
-        stat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
-
-        liveTime = 15f;
-        attackRange = 5f;
-        basic_speed = 1;
-        moveSpeed = 10f;
-    }
-
-    private void OnEnable()
-    {
-        Init();
-
-        StartCoroutine(ActiveSkill(liveTime));
-    }
-
-    private void Init()
-    {
-        drone_damage = stat.damage * damageRate;
-        shootSpeed = basic_speed - shootSpeedRate;
-        shootTimer = shootSpeed;
-        isEnemySet = false;
-        isAttack = false;
-        isDroneActive = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!is_firstSet)
+        if (behaviorCoroutine != null)
         {
-            drone_damage = stat.damage * damageRate;
-            shootTimer = shootSpeed;
-            is_firstSet = true;
+            StopCoroutine(behaviorCoroutine);
         }
+        
+    }
 
+    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
+    {
+        base.SetAddParameter(value1, value2, value3);
+        droneAtkTime = value1;
+    }
 
-        //에너미가 지정되지 않았거나, 타겟인 에너미가 비활성화되거나 , 적과 플레이어의 위치가 공격범위보다 크게 되면 적 재지정
-        if (!isEnemySet || targetEnemy.activeSelf == false || Vector2.Distance(GameManager.Instance.myPlayer.transform.position, targetEnemy.transform.position) > attackRange) //타겟이 정해지지 않으면 다시 타겟을 정함
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
+    {
+        Debug.Log("드론 파라미터 세팅");
+        isParameterSet = true;
+
+        if (_projSpeed == 0)
         {
-            SetTarget();
-            if(targetEnemy == null)
-            {
-                ReturnToPlayer();
-            }
+            isShootingObj = false;
         }
         else
         {
-            MoveToEnemy();
-            if (transform.position == targetPosition)
-            {
-                if (!isAttack)
-                {
-                    StartCoroutine(AttackRoutine(shootSpeed));
-                }
-            }
+            isShootingObj = true;
+            speed = _projSpeed;
         }
+
+        if (_dmgRate == 0)
+        {
+            Debug.LogError("데미지가 설정되지 않음");
+        }
+        else
+        {
+            damageRate = _dmgRate;
+        }
+
+        if (_liveTime != 0)
+        {
+            liveTime = _liveTime;
+            StartCoroutine(LiveTimer(liveTime));
+        }
+
+        range = _range;
+        detectionRange = range;
+        transform.GetComponent<CircleCollider2D>().radius = range;
+
+        behaviorCoroutine = StartCoroutine(DroneBehaviorRoutine());
     }
 
-    private IEnumerator ActiveSkill(float liveTime)
+    protected override void Update()
     {
-        isDroneActive = true;
-        yield return new WaitForSeconds(liveTime);
-
-        isDroneActive = false;
-
-        GameManager.Instance.Pool.ReleasePool(gameObject);
-    }
-
-    private IEnumerator AttackRoutine(float attackDelay)
-    {
-        isAttack = true;
-        DroneAttack();
-        yield return new WaitForSeconds(attackDelay);
-
-        isAttack = false;
-
+        Debug.Log("자식 Update");
     }
 
     private void SetTarget()
     {
-        List<GameObject> enemyCloseToPlayer = new List<GameObject>();
-
-        foreach(GameObject enemyObj in GameManager.Instance.Spawn.activeEnemyList)
+        if (triggedList.Count == 0)
         {
-            float dist = Vector2.Distance(enemyObj.transform.position, GameManager.Instance.myPlayer.transform.position);
-
-            if (dist <= attackRange)
-            {
-                enemyCloseToPlayer.Add(enemyObj);
-            }
+            return;
         }
-
-        
-        if (enemyCloseToPlayer.Count > 0)
+        else if (triggedList.Count == 1)
         {
-            targetEnemy = enemyCloseToPlayer[Random.Range(0, enemyCloseToPlayer.Count)];
-            isEnemySet = true;
+            target = triggedList[0].transform;
         }
         else
         {
-            targetEnemy = null;
-            isEnemySet = false;
+            int randomCount = Random.Range(0, triggedList.Count);
+            target = triggedList[randomCount].transform;
         }
     }
 
-    private void MoveToEnemy()
+    private IEnumerator AttackRoutine(float attackDelay)
     {
-        targetPosition = targetEnemy.transform.position + new Vector3(0, -1, 0);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-    }
-
-    private void ReturnToPlayer()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, GameManager.Instance.myPlayer.transform.position, Time.deltaTime * moveSpeed);
+        DroneAttack();
+        yield return new WaitForSeconds(attackDelay);
+        isAttacking = false;
+        attackCoroutine = null;
     }
 
     private void DroneAttack()
     {
-        
-        GameObject droneBullet = GameManager.Instance.Pool.GetSkill(SkillProjType.Skilll_DroneBullet, transform.position, Quaternion.identity);
-        droneBullet.GetComponent<skill_MiniDroneBullet>().damage = drone_damage;
+        skill_MiniDroneBullet proj = GameManager.Instance.Pool.GetSkill(droneBullet, transform.position, transform.rotation).GetComponent<skill_MiniDroneBullet>();
+        proj.SetProjParameter(droneBulletSpd, damageRate, liveTime, range);
+    }
+
+    private IEnumerator MoveToEnemyRoutine()
+    {
+
+        while (target != null && transform.position != target.position)
+        {
+            // 플레이어와 드론 사이의 거리 확인
+            if (Vector3.Distance(transform.position, Player.transform.position) > detectionRange)
+            {
+                yield break;
+            }
+
+            // 적에게 이동
+            targetPos = target.position + new Vector3(0, -1, 0);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+
+            // 이동 후 적과의 거리 확인
+            if (Vector3.Distance(transform.position, targetPos) < 0.1f) // 충분히 가까워지면
+            {
+                // 공격 시작
+                if (!isAttacking)
+                {
+                    isAttacking = true; // 공격 중 표시
+                    attackCoroutine = StartCoroutine(AttackRoutine(droneAtkTime));
+                }
+            }
+
+            yield return null; // 다음 프레임으로 넘어감
+        }
+
+        // 공격이 끝나면 isAttacking을 false로 설정
+        if (isAttacking)
+        {
+            isAttacking = false; // 공격 종료
+        }
+    }
+
+
+    private IEnumerator ReturnToPlayerRoutine()
+    {
+        while (target == null && transform.position != Player.transform.position)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Time.deltaTime * speed);
+            yield return null;
+        }
+    }
+
+    private IEnumerator DroneBehaviorRoutine()
+    {
+        while (true)
+        {
+            if (!isParameterSet)
+            {
+                yield return null;
+            }
+            if (target == null)
+            {
+                SetTarget(); // 타겟 설정
+            }
+
+            // 플레이어와 드론 사이의 거리 확인
+            if (Vector3.Distance(transform.position, Player.transform.position) > detectionRange)
+            {
+                // 플레이어와 너무 멀어지면 적을 무시하고 플레이어에게 돌아감
+                target = null;
+                yield return StartCoroutine(ReturnToPlayerRoutine());
+            }
+            else if (target == null)
+            {
+                yield return StartCoroutine(ReturnToPlayerRoutine());
+            }
+            else
+            {
+                yield return StartCoroutine(MoveToEnemyRoutine());
+            }
+
+            yield return null;
+        }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (!triggedList.Contains(collision.GetComponent<EnemyObject>()))
+            {
+                triggedList.Add(collision.GetComponent<EnemyObject>());
+            }
+        }
+    }
+
+    protected override void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (triggedList.Contains(collision.GetComponent<EnemyObject>()))
+            {
+                if (target != null && target.gameObject == collision.gameObject)
+                {
+                    target = null;
+                }
+                triggedList.Remove(collision.GetComponent<EnemyObject>());
+            }
+        }
     }
 
 }

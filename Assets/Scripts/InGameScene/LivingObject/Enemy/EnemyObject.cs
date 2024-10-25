@@ -160,7 +160,7 @@ public class EnemyObject : MonoBehaviour
     {
         for (int i = 0; i < enemyStat.expAmount; i++)
         {
-            GameManager.Instance.Pool.GetProj(ProjType.Item_Exp, transform.position, transform.rotation);
+            GameManager.Instance.Pool.GetOtherProj(OtherProjType.Item_Exp, transform.position, transform.rotation);
         }
     }
 
@@ -204,19 +204,19 @@ public class EnemyObject : MonoBehaviour
     private void DropItem()
     {
         var projType = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
-            ? ProjType.Item_ShooterUP
+            ? OtherProjType.Item_ShooterUP
             : GetRandomItemType();
 
-        GameManager.Instance.Pool.GetProj(projType, transform.position, transform.rotation);
+        GameManager.Instance.Pool.GetOtherProj(projType, transform.position, transform.rotation);
     }
 
-    private ProjType GetRandomItemType()
+    private OtherProjType GetRandomItemType()
     {
         var randomItemList = new[]
         {
-            ProjType.Item_LevelUp,
-            ProjType.Item_PowUp,
-            ProjType.Item_SpecialUp
+            OtherProjType.Item_LevelUp,
+            OtherProjType.Item_PowUp,
+            OtherProjType.Item_SpecialUp
         };
 
         return randomItemList[Random.Range(0, randomItemList.Length)];

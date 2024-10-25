@@ -22,7 +22,7 @@ public class PlayerMissile : PlayerProjectile
     //    splashColliderObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/splashRange.prefab");
     //    missileDamageRate = 1.5f;
     //    explosionRange = 1.0f;
-    //    playerStatDamage = playerStat.damage;
+    //    playerStatDamage = myPlayerStat.damage;
 
     //    missileDamage = playerStatDamage * missileDamageRate;
     //}
@@ -57,7 +57,7 @@ public class PlayerMissile : PlayerProjectile
     //            collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
     //        }
             
-    //        Skill_Explosion splashDamage = GameManager.Instance.Pool.GetProj(ProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<Skill_Explosion>();
+    //        PlayerExplosion splashDamage = GameManager.Instance.Pool.GetOtherProj(OtherProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<PlayerExplosion>();
     //        splashDamage.explosionRange = explosionRange;
     //        splashDamage.missileDamage = missileDamage;
     //        GameManager.Instance.Pool.ReleasePool(gameObject);

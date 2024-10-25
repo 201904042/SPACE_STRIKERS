@@ -4,7 +4,9 @@ using System.IO;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
-{ 
+{
+    public const int basicStat = 10; //레벨1의 가장 기본 스텟
+
     [Header("기본 정보")]
     public int curPlayerID;
     public int level;
@@ -61,14 +63,14 @@ public class PlayerStat : MonoBehaviour
 
         PlayerSkillManager ps = GameManager.Instance.psManager;
 
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(606));
-        //ps.AddPassiveSkill((NewPassiveSkill)ps.FindSkillByCode(641));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        ps.AddActiveSkill((NewActiveSkill)ps.FindSkillByCode(607));
+        //ps.AddPassiveSkill((InGamePassiveSkill)ps.FindSkillByCode(641));
 
         Debug.Log("플레이어 스텟 초기화 완료");
     }

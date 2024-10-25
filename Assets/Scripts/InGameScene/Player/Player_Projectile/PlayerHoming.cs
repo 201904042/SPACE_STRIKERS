@@ -30,7 +30,7 @@ public class PlayerHoming : PlayerProjectile
     //{
     //    base.Init();
     //    targetSet = false;
-    //    playerStatDamage = playerStat.damage;
+    //    playerStatDamage = myPlayerStat.damage;
     //    homingSpeed = 10;
     //    homingDamage = playerStatDamage * homingDamageRate;
     //}

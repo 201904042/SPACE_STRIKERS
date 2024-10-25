@@ -9,38 +9,44 @@ using static UnityEditor.MaterialProperty;
 
 public class PoolManager : MonoBehaviour
 {
-    public List<EnemyInfo> enemyDataList;
-    public List<SkillProjData> skillDataList;
-    public List<ProjData> projDataList;
+    public List<EnemyInfo> EnemyDataList;
+    public List<PlayerProjData> playerProjDataList;
+    public List<OtherProjData> OtherProjDataList;
 
-    public Transform projPool;
+    public Transform otherProjPool;
     public Transform enemyPool;
-    public Transform skillPool;
+    public Transform playerProjPool;
 
     public Dictionary<EnemyType, List<GameObject>> enemyDic = new Dictionary<EnemyType, List<GameObject>>();
-    public Dictionary<SkillProjType, List<GameObject>> skillDic = new Dictionary<SkillProjType, List<GameObject>>();
-    public Dictionary<ProjType, List<GameObject>> projDic = new Dictionary<ProjType, List<GameObject>>();
+    public Dictionary<PlayerProjType, List<GameObject>> playerProjDic = new Dictionary<PlayerProjType, List<GameObject>>();
+    public Dictionary<OtherProjType, List<GameObject>> otherProjDic = new Dictionary<OtherProjType, List<GameObject>>();
 
     public void Init()
     {
-        enemyDataList = new List<EnemyInfo>();
-        skillDataList = new List<SkillProjData>();
-        projDataList = new List<ProjData>();
+        EnemyDataList = new List<EnemyInfo>();
+        playerProjDataList = new List<PlayerProjData>();
+        OtherProjDataList = new List<OtherProjData>();
         enemyDic = new Dictionary<EnemyType, List<GameObject>>();
-        skillDic = new Dictionary<SkillProjType, List<GameObject>>();
-        projDic = new Dictionary<ProjType, List<GameObject>>();
+        playerProjDic = new Dictionary<PlayerProjType, List<GameObject>>();
+        otherProjDic = new Dictionary<OtherProjType, List<GameObject>>();
 
-        FindDataObject("Prefab/Scriptable/EnemyData", enemyDataList);
-        FindDataObject("Prefab/Scriptable/SkillData", skillDataList);
-        FindDataObject("Prefab/Scriptable/ProjData", projDataList);
+        FindDataObject("Prefab/Scriptable/EnemyData", EnemyDataList);
+        FindDataObject("Prefab/Scriptable/PlayerProjData", playerProjDataList);
+        FindDataObject("Prefab/Scriptable/OtherProjData", OtherProjDataList);
+
         ClearAllDict();
         InitializeDictionary(enemyDic);
-        InitializeDictionary(skillDic);
-        InitializeDictionary(projDic);
+        InitializeDictionary(playerProjDic);
+        InitializeDictionary(otherProjDic);
 
-        projPool = GameObject.Find("ProjPool").transform;
-        enemyPool = GameObject.Find("EnemyPool").transform;
-        skillPool = GameObject.Find("SkillPool").transform;
+        Transform Pools = GameObject.Find("Pools").transform;
+        otherProjPool = Pools.Find("OtherProjs");
+        enemyPool = Pools.Find("EnemyPool");
+        playerProjPool = Pools.Find("PlayerProjs");
+        if(otherProjPool == null || enemyPool == null || playerProjPool == null)
+        {
+            Debug.LogError("풀 지정안됨");
+        }
 
         Debug.Log("풀링 초기화 완료");
     }
@@ -64,9 +70,9 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public GameObject GetSkill(SkillProjType skillType, Vector2 position, Quaternion rotation)
+    public GameObject GetPlayerProj(PlayerProjType projType, Vector2 position, Quaternion rotation)
     {
-        List<GameObject> objectList = skillDic[skillType]; //해당 타입의 리스트를 지정
+        List<GameObject> objectList = playerProjDic[projType]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
             if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
@@ -79,16 +85,15 @@ public class PoolManager : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach(SkillProjData skillData in skillDataList)
+        foreach(PlayerProjData proj in playerProjDataList)
         {
-            if(skillType == skillData.skillType)
+            if(projType == proj.projType)
             {
-                GameObject newObject = Instantiate(skillData.prefab);
-                newObject.transform.SetParent(skillPool);
+                GameObject newObject = Instantiate(proj.prefab, playerProjPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
-                skillDic[skillType].Add(newObject);
+                playerProjDic[projType].Add(newObject);
                 //Debug.Log($"{newObject} 생성");
                 return newObject;
             }
@@ -96,9 +101,9 @@ public class PoolManager : MonoBehaviour
         return null;
     }
 
-    public GameObject GetProj(ProjType projType, Vector2 position, Quaternion rotation)
+    public GameObject GetOtherProj(OtherProjType projType, Vector2 position, Quaternion rotation)
     {
-        List<GameObject> objectList = projDic[projType]; //해당 타입의 리스트를 지정
+        List<GameObject> objectList = otherProjDic[projType]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
             if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
@@ -112,16 +117,15 @@ public class PoolManager : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach (ProjData projData in projDataList)
+        foreach (OtherProjData projData in OtherProjDataList)
         {
             if (projType == projData.projType)
             {
-                GameObject newObject = Instantiate(projData.prefab);
-                newObject.transform.SetParent(projPool);
+                GameObject newObject = Instantiate(projData.prefab, otherProjPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
-                projDic[projType].Add(newObject);
+                otherProjDic[projType].Add(newObject);
                 //Debug.Log($"{newObject} 생성");
                 return newObject;
             }
@@ -180,12 +184,11 @@ public class PoolManager : MonoBehaviour
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach (EnemyInfo enemyData in enemyDataList)
+        foreach (EnemyInfo enemyData in EnemyDataList)
         {
             if (enemyType == enemyData.enemyType)
             {
-                GameObject newObject = Instantiate(enemyData.prefab);
-                newObject.transform.SetParent(enemyPool);
+                GameObject newObject = Instantiate(enemyData.prefab, enemyPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.GetComponent<EnemyObject>().SetId(enemyId);
@@ -221,7 +224,7 @@ public class PoolManager : MonoBehaviour
     public void ClearAllDict()
     {
         enemyDic.Clear();
-        skillDic.Clear();
-        projDic.Clear();
+        playerProjDic.Clear();
+        otherProjDic.Clear();
     }
 }

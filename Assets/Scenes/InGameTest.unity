@@ -132,6 +132,40 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3360607442837251674, guid: bf173ce231449b64c8d6d994e430a3d2, type: 3}
   m_PrefabInstance: {fileID: 699057031}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &167428070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167428071}
+  m_Layer: 0
+  m_Name: Pools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &167428071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167428070}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7, y: -7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1224589940}
+  - {fileID: 766276375}
+  - {fileID: 809886656}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &221404899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1267,7 +1301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 766276375}
   m_Layer: 0
-  m_Name: EnemyPool
+  m_Name: PlayerProjs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1281,12 +1315,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766276374}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 167428071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &783560415 stripped
 MonoBehaviour:
@@ -1309,7 +1343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 809886656}
   m_Layer: 0
-  m_Name: SkillPool
+  m_Name: EnemyPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,12 +1357,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809886655}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 167428071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985938546 stripped
 GameObject:
@@ -1696,7 +1730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1224589940}
   m_Layer: 0
-  m_Name: ProjPool
+  m_Name: OtherProjs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1710,12 +1744,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224589939}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 167428071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1285835839
 GameObject:
@@ -2133,7 +2167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 0}
-  playerStat: {fileID: 0}
+  myPlayerStat: {fileID: 0}
+  myPlayerControl: {fileID: 0}
   psManager: {fileID: 0}
   gameEndUI: {fileID: 6388701694382569079}
   stageTime: 0
@@ -10124,6 +10159,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2040664560}
+  - {fileID: 167428071}
   - {fileID: 519420032}
   - {fileID: 528935864}
   - {fileID: 652688496}
@@ -10134,9 +10170,6 @@ SceneRoots:
   - {fileID: 1038280738}
   - {fileID: 350328014}
   - {fileID: 1078144450801319660}
-  - {fileID: 1224589940}
-  - {fileID: 766276375}
-  - {fileID: 809886656}
   - {fileID: 221404899}
   - {fileID: 1174884277}
   - {fileID: 684944933}

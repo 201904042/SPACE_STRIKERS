@@ -22,7 +22,9 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] protected float range;
 
     protected int finalDamage; //플레이어의 스텟과 발사체의 데미지증폭을 곱하여 최종적으로 적용할 데미지
+
     [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행
+
     [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
     //todo -> 적리뉴얼후 적 스크립트로 바꿔보기
 
@@ -33,7 +35,7 @@ public class PlayerProjectile : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat = GameManager.Instance.myPlayer.GetComponent<PlayerStat>();
+        playerStat =GameManager.Instance.myPlayerStat;
         ResetProj();
     }
 

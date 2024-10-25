@@ -12,11 +12,11 @@ public class EnemyAct : EnemyObject
 
         if (split)
         {
-            enemyProj = GameManager.Instance.Pool.GetProj(ProjType.Enemy_Split, enemy.transform.position, Quaternion.identity);
+            enemyProj = GameManager.Instance.Pool.GetOtherProj(OtherProjType.Enemy_Split, enemy.transform.position, Quaternion.identity);
         }
         else
         {
-            enemyProj = GameManager.Instance.Pool.GetProj(ProjType.Enemy_Bullet, enemy.transform.position, Quaternion.identity);
+            enemyProj = GameManager.Instance.Pool.GetOtherProj(OtherProjType.Enemy_Bullet, enemy.transform.position, Quaternion.identity);
         }
 
         if (enemyProj == null)
@@ -118,7 +118,7 @@ public class EnemyAct : EnemyObject
     //레이저 여러발일 경우의 앵글(기본 0), 조준여부
     public static void Laser(EnemyObject enemy,float multiAngle = 0, bool isAimtoPlayer = false)
     {
-        EnemyLaser laserObject = GameManager.Instance.Pool.GetProj(ProjType.Enemy_Laser, enemy.transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
+        EnemyLaser laserObject = GameManager.Instance.Pool.GetOtherProj(OtherProjType.Enemy_Laser, enemy.transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
         laserObject.setDamage(enemy.enemyStat.damage);
         if (isAimtoPlayer)
         {

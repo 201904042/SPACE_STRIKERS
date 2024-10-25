@@ -21,7 +21,7 @@ public class playerShooterUpgrade : MonoBehaviour
     void Start()
     {
         player = GameManager.Instance.myPlayer;
-        playerStatScript = GameManager.Instance.playerStat;
+        playerStatScript = GameManager.Instance.myPlayerStat;
         shooterLevel = 1;
         characterNumber = playerStatScript.curPlayerID;
         UpdatePlayerId();

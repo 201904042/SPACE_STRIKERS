@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
 
     public bool isAbleToMove; // 움직이기가 가능한 상태
     public bool isInvincibleState; // 무적 상태
-    public bool isShootable; // 발사가 가능한 상태
+    public bool isAttackable; // 발사가 가능한 상태
     public bool isHitted; // 데미지를 받은 상태
     private bool isKnockbackRun;
     private float invincibleDuration = 3f;
@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
 
         playerObjSpeed = basicSpeed + (playerStat.moveSpeed / 5);
 
-        isShootable = true;
+        isAttackable = true;
         isHitted = false;
         isInvincibleState = false;
         isAbleToMove = true;
@@ -122,7 +122,7 @@ public class PlayerControl : MonoBehaviour
         if (attackingCollider != null)
         {
             isInvincibleState = true;
-            StartCoroutine(invinciblePlayer(invincibleDuration));
+            StartCoroutine(ActiveInvincible(invincibleDuration));
             PlayerKnockBack(attackingCollider);
         }
     }
@@ -170,7 +170,7 @@ public class PlayerControl : MonoBehaviour
         isKnockbackRun = false; // 코루틴 종료 상태 설정
     }
 
-    private IEnumerator invinciblePlayer(float invincible_time)
+    private IEnumerator ActiveInvincible(float invincible_time)
     {
         isInvincibleState = true;
         yield return new WaitForSeconds(invincible_time);

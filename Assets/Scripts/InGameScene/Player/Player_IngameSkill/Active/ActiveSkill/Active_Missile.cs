@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using static UnityEditor.MaterialProperty;
 
-public class Active_Missile : NewActiveSkill
+public class Active_Missile : ActiveSkill
 {
     public bool isInit = false;
 

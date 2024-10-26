@@ -261,7 +261,7 @@ public class ReadyUI : MainUIs
     /* 아이템은 보류
     private void ItemBtnChange(Button item, bool value)
     {
-        item.transform.GetChild(0).GetComponent<Image>().color = value ? Color.yellow : Color.white;
+        item.transform.GetChild(0).GetComponent<Image>().currentColor = value ? Color.yellow : Color.white;
         //item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = quantity - 1;
     }
 

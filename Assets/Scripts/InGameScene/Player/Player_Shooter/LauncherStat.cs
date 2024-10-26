@@ -5,17 +5,21 @@ using UnityEngine.AI;
 
 public class LauncherStat : MonoBehaviour
 {
-    protected const float bulletBaseInterval = 2f;  // 각 기본 발사 주기
-    protected const float MissileBaseInterval = 3f; // 총알은 2초에 한번. 미사일은 3초에 한번. 호밍은 2초에 한번
-    protected const float HomingBaseInterval = 1f;  // 
+    public const float bulletBaseInterval = 2f;  // 각 기본 발사 주기
+    public const float MissileBaseInterval = 3f; // 총알은 2초에 한번. 미사일은 3초에 한번. 호밍은 2초에 한번
+    public const float HomingBaseInterval = 1f;  // 
 
-    protected const int bulletBaseDamageRate = 100;  // 각 기본 데미지 증가율
-    protected const int MissileBaseDamageRate = 150; // 최종 데미지  = 플레이어 공격력 + (플공 * 증가율)
-    protected const int HomingBaseDamageRate  = 30;  
+    public const int bulletBaseDamageRate = 100;  // 각 기본 데미지 증가율
+    public const int MissileBaseDamageRate = 150; // 최종 데미지  = 플레이어 공격력 + (플공 * 증가율)
+    public const int ExplosionBaseDamageRate = 80;
+    public const int HomingBaseDamageRate  = 30;
 
-    protected const int bulletBaseSpeed= 10;  
-    protected const int MissileBaseSpeed = 5; 
-    protected const int HomingBaseSpeed = 15;  
+    public const int bulletBaseSpeed= 10;
+    public const int MissileBaseSpeed = 5;
+    public const int HomingBaseSpeed = 15;
+
+    public const float ExplosionBaseLiveTime = 1; // 1초 고정일듯
+    public const float ExplosionBaseRange = 1; //-> 크기 1 -> 1.5 -> 2
 
     //플레이어의 기본 총알, 미사일, 호밍미사일
     protected PlayerStat pStat;
@@ -29,7 +33,7 @@ public class LauncherStat : MonoBehaviour
 
   
     protected float pAtkSpd => pStat.attackSpeed;
-    protected bool playerReady => pControl.isAttackable; //플레이어에서 쏠 준비가 되었나
+    protected bool playerReady => pStat.CanAttack; //플레이어에서 쏠 준비가 되었나
  
     protected bool isReadyToAttack; //런쳐가 쏠 준비가 되었나
 
@@ -38,8 +42,8 @@ public class LauncherStat : MonoBehaviour
     protected virtual void Awake()
     {
         //컴포넌트 세팅
-        pStat = GameManager.Instance.myPlayerStat;
-        pControl = GameManager.Instance.myPlayerControl;
+        pStat = PlayerMain.pStat;
+        pControl = PlayerMain.pControl;
         projFireDelay = 0;
         attackInterval = 0;
         projSpeed = 0;
@@ -67,7 +71,7 @@ public class LauncherStat : MonoBehaviour
     {
         while (true)
         {
-            if (!pControl.isAttackable || !isReadyToAttack) 
+            if (!pStat.CanAttack || !isReadyToAttack) 
             {
                 yield return null;
             }
@@ -85,4 +89,5 @@ public class LauncherStat : MonoBehaviour
     }
 
     
+
 }

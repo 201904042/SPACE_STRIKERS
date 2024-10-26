@@ -5,19 +5,18 @@ using UnityEngine;
 
 public class Elec_Field : MonoBehaviour
 {
-    private PlayerSpecialSkill specialScript;
+    private PlayerStat pStat => PlayerMain.pStat;
 
     private float damage;
     private bool isDamaging;
     private float damageTik;
     // Start is called before the first frame update
-    private void Awake()
-    {
-        specialScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
-        damage = specialScript.specialDamage;
-        isDamaging = false;
-        damageTik = 0.1f;
-    }
+    //private void Awake()
+    //{
+    //    damage = pStat.specialDamage;
+    //    isDamaging = false;
+    //    damageTik = 0.1f;
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -14,15 +14,11 @@ public class PlayerExplosion : PlayerProjectile
 
     public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
     {
+        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime , _range);
         Debug.Log("메인 파라미터 세팅");
         isParameterSet = true;
 
-        isShootingObj = true;
-        speed = _projSpeed;
-        damageRate = _dmgRate;
-        finalDamage = finalDamage = (int)playerStat.damage * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
-        liveTime = _liveTime; //생성된 발사체가 가 이 시간후에 자동으로 파괴됨
-        StartCoroutine(LiveTimer(liveTime));
+        isShootingObj = true; //true를 하지 않으면 플레이어 위치로 가버리니 주의 speed만 0이 되도록 -> 생성된 위치에 그대로 라이브타임만큼 존재
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

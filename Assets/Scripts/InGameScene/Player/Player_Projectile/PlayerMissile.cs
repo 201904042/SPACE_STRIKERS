@@ -4,63 +4,27 @@ using UnityEngine;
 
 public class PlayerMissile : PlayerProjectile
 {
-    public GameObject splashColliderObject;
+    private int explosionDamageRate;
+    private float explosionRange; // 기본 1 , 1 -> 1.5 -> 2
+    private float explosionLiveTime;
+   
 
-    [Header("기본미사일 스텟")]
-    [SerializeField]
-    private float missileDamage;
-    [SerializeField]
-    private float playerStatDamage;
-    [SerializeField]
-    private float missileDamageRate;
-    [SerializeField]
-    private float explosionRange;
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
+    {
+        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range);
 
-    //protected override void Awake()
-    //{
-    //    base.Awake();
-    //    splashColliderObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/splashRange.prefab");
-    //    missileDamageRate = 1.5f;
-    //    explosionRange = 1.0f;
-    //    playerStatDamage = myPlayerStat.damage;
+        explosionDamageRate = LauncherStat.ExplosionBaseDamageRate; //기본은 80 여기에 레벨별 증가비율 곱해보기
+        explosionRange = LauncherStat.ExplosionBaseRange; //기본은 1 여기에 레벨별 증가비율 곱해보기
+        explosionLiveTime = LauncherStat.ExplosionBaseLiveTime; //기본 1초 고정. 추후 수정사항
+    }
 
-    //    missileDamage = playerStatDamage * missileDamageRate;
-    //}
+    protected override void TriggedEnemy(Collider2D collision)
+    {
+        base.TriggedEnemy(collision);
+        PlayerExplosion proj = GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Explosion, transform.position, transform.rotation).GetComponent<PlayerExplosion>();
+        proj.SetProjParameter(0, explosionDamageRate, explosionLiveTime, explosionRange);
+        SingleEnemyDamage();
+    }
 
-    //protected override void OnEnable()
-    //{
-    //    Init();
-    //}
-
-    //protected override void Init()
-    //{
-    //    base.Init();
-
-    //}
-
-
-
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(isHitOnce)
-    //    {
-    //        return;
-    //    }
-    //    if (collision.gameObject.tag == "Enemy")
-    //    {
-    //        //임시로 적을 맞추면 데미지를 합산
-    //        //적을 만들면 적의 hp를 감소하게끔 바꾸기
-    //        isHitOnce = true;
-    //        if (collision.GetComponent<EnemyObject>() != null)
-    //        {
-    //            collision.GetComponent<EnemyObject>().EnemyDamaged(missileDamage, gameObject);
-    //        }
-            
-    //        PlayerExplosion splashDamage = GameManager.Instance.Pool.GetOtherProj(OtherProjType.Player_SplashRange, transform.position, transform.rotation).GetComponent<PlayerExplosion>();
-    //        splashDamage.explosionRange = explosionRange;
-    //        splashDamage.missileDamage = missileDamage;
-    //        GameManager.Instance.Pool.ReleasePool(gameObject);
-    //    }
-    //}
+    
 }

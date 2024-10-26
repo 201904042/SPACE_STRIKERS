@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerSkillManager : MonoBehaviour
 {
     public List<InGameSkill> ingameSkillList;
-    public List<NewActiveSkill> usingActiveSkills;
+    public List<ActiveSkill> usingActiveSkills;
     public List<InGamePassiveSkill> usingPassiveSkills;
 
     public void Init()
@@ -17,7 +17,7 @@ public class PlayerSkillManager : MonoBehaviour
         ingameSkillList = new List<InGameSkill>();
         SetAllSkill();
 
-        usingActiveSkills = new List<NewActiveSkill>();
+        usingActiveSkills = new List<ActiveSkill>();
         usingPassiveSkills = new List<InGamePassiveSkill>();
 
         Debug.Log("스킬 초기화 완료");
@@ -77,7 +77,7 @@ public class PlayerSkillManager : MonoBehaviour
     {
         if(skill.type == SkillType.Active)
         {
-            AddActiveSkill((NewActiveSkill)skill);
+            AddActiveSkill((ActiveSkill)skill);
         }
         else if(skill.type == SkillType.Passive)
         {
@@ -89,9 +89,9 @@ public class PlayerSkillManager : MonoBehaviour
         }
     }
 
-    public void AddActiveSkill(NewActiveSkill skill)
+    public void AddActiveSkill(ActiveSkill skill)
     {
-        NewActiveSkill existingSkill = usingActiveSkills.Find(s => s.SkillCode == skill.SkillCode);
+        ActiveSkill existingSkill = usingActiveSkills.Find(s => s.SkillCode == skill.SkillCode);
         if (existingSkill != null)
         {
             LevelUpSkill(existingSkill); // 기존 스킬의 레벨업
@@ -132,7 +132,7 @@ public class PlayerSkillManager : MonoBehaviour
         skill.LevelUp();
     }
 
-    public void ActivateSkill(NewActiveSkill skill)
+    public void ActivateSkill(ActiveSkill skill)
     {
         StartCoroutine(skill.ActivateSkillCoroutine());
     }

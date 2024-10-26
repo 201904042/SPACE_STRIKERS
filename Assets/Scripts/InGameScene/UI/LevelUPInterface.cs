@@ -61,7 +61,7 @@ public class LevelUPInterface : UIInterface
     private void Init()
     {
         playerExp = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
-        activatableSkill = GameManager.Instance.psManager.ingameSkillList;
+        activatableSkill = PlayerMain.pSkill.ingameSkillList;
         maxSkillSlotAmount = skillSlot.childCount;
         ResetInterface();
         InstantSkillSlot();
@@ -164,7 +164,7 @@ public class LevelUPInterface : UIInterface
         }
 
         //선택된 스킬을 스킬매니저를 통해 추가
-        GameManager.Instance.psManager.AddSkill(selectedSkill);
+        PlayerMain.pSkill.AddSkill(selectedSkill);
 
         Time.timeScale = 1.0f;
         CloseInterface();

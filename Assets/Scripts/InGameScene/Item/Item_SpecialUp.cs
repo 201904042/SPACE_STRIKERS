@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Item_SpecialUp : Ingame_Item
 {
-    private PlayerSpecialSkill playerSpecial;
+    private PlayerStat pStat => PlayerMain.pStat;
     protected override void Awake()
     {
         base.Awake();
-        playerSpecial = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -17,7 +16,7 @@ public class Item_SpecialUp : Ingame_Item
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.Pool.ReleasePool(gameObject);
-            playerSpecial.specialCount++;
+            pStat.specialCount++;
         }
     }
 }

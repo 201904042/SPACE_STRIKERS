@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Active_ChargeShot : NewActiveSkill
+public class Active_ChargeShot : ActiveSkill
 {
     public override void Init()
     {

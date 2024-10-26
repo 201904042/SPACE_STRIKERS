@@ -31,7 +31,7 @@ public class InGamePassiveSkill : InGameSkill
 
     public void ApplyEffect()
     {
-        PlayerStat playerStats =GameManager.Instance.myPlayerStat;
+        PlayerStat playerStats =PlayerMain.pStat;
         // 현재 레벨의 효과를 플레이어의 스탯에 반영
         switch (SkillCode)
         {

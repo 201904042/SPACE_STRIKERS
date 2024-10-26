@@ -31,49 +31,4 @@ public class PlayerBulletLauncher : LauncherStat
         PlayerBullet proj = GameManager.Instance.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerBullet>();
         proj.SetProjParameter(projSpeed, projDamageRate, 0, 0);
     }
-
-    //[Header("°Ç ½ºÅÝ")]
-    //[SerializeField]
-    //private float bulletSpeed;
-    //[SerializeField]
-    //private float delay;
-
-    //protected override void Awake()
-    //{
-    //    base.Awake();
-    //    projObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Player_Bullets/PlayerBullet.prefab");
-    //    basicSpeed = 1;
-    //    shootSpeed = basicSpeed - (myPlayerStat.attackSpeed/100);
-    //    bulletSpeed = 10f;
-    //}
-    //protected override void Update()
-    //{
-    //    base.Update();
-    //    if (launcherCoroutine == null && LauncherShootable) {
-    //        launcherCoroutine = StartCoroutine(FireCoroutine());
-    //    }
-
-    //    if(launcherCoroutine != null && !LauncherShootable)
-    //    {
-    //        StopCoroutine(launcherCoroutine);
-    //    }
-    //}
-
-    //private IEnumerator FireCoroutine()
-    //{
-    //    while (true)
-    //    {
-    //        Fire();
-    //        yield return new WaitForSeconds(shootSpeed);
-    //    }
-    //}
-
-    //protected override void Fire()
-    //{
-    //    base.Fire();
-    //    GameObject bullet =  GameManager.Instance.Pool.GetOtherProj(OtherProjType.Player_Bullet, transform.position, transform.rotation);
-    //    Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-    //    rigid.velocity = fireDirection * bulletSpeed;
-    //}
-
 }

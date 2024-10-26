@@ -19,9 +19,6 @@ public class GameManager : MonoBehaviour
 
 
     public GameObject myPlayer;
-    public PlayerStat myPlayerStat;
-    public PlayerControl myPlayerControl;
-    public PlayerSkillManager psManager;
 
     public GameObject gameEndUI;
 
@@ -59,10 +56,6 @@ public class GameManager : MonoBehaviour
         Stage.Init();
         Spawn.Init();
         Pool.Init();
-        psManager.Init();
-
-        //플레이어 초기화 => 추후 플레이어도 동적 생성으로 
-        myPlayerStat.Init();
 
         Debug.Log("게임 초기화 완료");
     }
@@ -71,9 +64,6 @@ public class GameManager : MonoBehaviour
     public void GameInit()
     {
         myPlayer = GameObject.FindWithTag("Player");
-        myPlayerStat = myPlayer.GetComponent<PlayerStat>();
-        myPlayerControl = myPlayer.GetComponent<PlayerControl>();
-        psManager = GetComponent<PlayerSkillManager>();
 
         Time.timeScale = 1;
         score = 0;

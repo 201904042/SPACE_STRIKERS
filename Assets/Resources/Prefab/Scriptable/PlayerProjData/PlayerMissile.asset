@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerMissile
   m_EditorClassIdentifier: 
   prefab: {fileID: 6315280985791338441, guid: 73c96d5d317d23547b621510f1b75caa, type: 3}
-  projType: 7
+  projType: 11

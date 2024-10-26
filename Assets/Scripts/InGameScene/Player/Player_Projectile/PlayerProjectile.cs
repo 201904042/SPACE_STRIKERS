@@ -15,7 +15,6 @@ public class PlayerProjectile : MonoBehaviour
     public PlayerStat playerStat; //플레이어의 데미지를 불러올 스텟
     [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
 
-
     [SerializeField] protected int damageRate;
     [SerializeField] protected int speed;
     [SerializeField] protected float liveTime;
@@ -33,9 +32,12 @@ public class PlayerProjectile : MonoBehaviour
     protected Coroutine activated;
     protected Coroutine damaging;
 
+    protected Vector3 projScaleInstance; //발사체의 원래크기
+
     protected virtual void Awake()
     {
-        playerStat =GameManager.Instance.myPlayerStat;
+        playerStat =PlayerMain.pStat;
+        projScaleInstance = transform.localScale;
         ResetProj();
     }
 
@@ -103,6 +105,7 @@ public class PlayerProjectile : MonoBehaviour
         Debug.Log("메인 파라미터 세팅");
         isParameterSet = true;
 
+        //발사체의 속도. 널값(0)이라면 해당 발사체는 플레이어를 따라다닌다. / 예시)에너지 필드, 특수4스킬 등 / 예외: 폭발(isShooting은 true, 속도는 0)
         if (_projSpeed == 0)
         {
             isShootingObj = false;
@@ -113,9 +116,11 @@ public class PlayerProjectile : MonoBehaviour
             speed = _projSpeed;
         }
 
-        if (_dmgRate == 0)
+        //발사체의 데미지 : 필수 파라미터. 없으면 해당 발사체는 성립되지 않음. 추후 예외 : 플레이어 디버프로 dmg감소가 들어왔다
+        if (_dmgRate <= 0)
         {
             Debug.LogError("데미지가 설정되지 않음");
+            finalDamage = 0;
         }
         else
         {
@@ -123,20 +128,22 @@ public class PlayerProjectile : MonoBehaviour
             finalDamage = finalDamage = (int)playerStat.damage * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
         }
 
+        //발사체의 생성시간 : 발사체는 생성시간(초) 후엔 삭제됨. 없다면 발사체는 특정 조건까지 사라지지 않음
         if (_liveTime != 0)
         {
             liveTime = _liveTime; //생성된 발사체가 가 이 시간후에 자동으로 파괴됨
             StartCoroutine(LiveTimer(liveTime));
         }
 
+        //발사체의 크기 : 없다면 프리팹의 기본 크기. 주로 필드에 쓰임. x,y크기가 같은 객체. 예외상황에 대한 조치가 미흡. todo=> 프리팹크기 * range로 바꾸기
         if (_range == 0)
         {
-            Debug.Log("기본 크기");
+            range = 1;
         }
         else
         {
             range = _range;
-            transform.localScale = new Vector3(range, range, 0);
+            transform.localScale = projScaleInstance * range;
         }
     }
 
@@ -159,6 +166,11 @@ public class PlayerProjectile : MonoBehaviour
     //충돌한 적 1체만 데미지 이후 파괴로직 수행
     protected virtual void SingleEnemyDamage()
     {
+        if(hittedEnemyList.Count <= 0)
+        {
+            return;
+        }
+
         GameObject enemy = hittedEnemyList[0];
         enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject);
         hittedEnemyList.RemoveAt(0);
@@ -173,6 +185,11 @@ public class PlayerProjectile : MonoBehaviour
     {
         for (int i = hittedEnemyList.Count - 1; i >= 0; i--)
         {
+            if (hittedEnemyList.Count <= 0)
+            {
+                return;
+
+            }
             GameObject enemy = hittedEnemyList[i];
 
             if (!enemy.activeSelf)

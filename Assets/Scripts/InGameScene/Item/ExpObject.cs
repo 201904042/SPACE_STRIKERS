@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Exp_object : MonoBehaviour
 {
-    private float expAmount;
+    private int expAmount;
     private float expSpeed;
     private void Awake()
     {
-        expAmount = 1f;
+        expAmount = 1;
         expSpeed = 5f;
     }
 
@@ -29,7 +29,7 @@ public class Exp_object : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<PlayerInGameExp>().ExpGet += expAmount;
+            collision.GetComponent <PlayerStat>().GetExp += expAmount;
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }

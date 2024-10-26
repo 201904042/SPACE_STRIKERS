@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Item_LevelUp : Ingame_Item
 {
-    PlayerInGameExp playerExp;
+    PlayerStat pStat;
     protected override void Awake()
     {
         base.Awake();
-        playerExp = GameManager.Instance.myPlayer.GetComponent<PlayerInGameExp>();
+        pStat = PlayerMain.pStat;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -17,7 +17,7 @@ public class Item_LevelUp : Ingame_Item
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.Pool.ReleasePool(gameObject);
-            playerExp.LevelUP();
+            pStat.LevelUP();
         }
     }
 }

@@ -15,7 +15,7 @@ public class Player_HPBar : MonoBehaviour
 
     private void Start()
     {
-        player_stat =GameManager.Instance.myPlayerStat;
+        player_stat =PlayerMain.pStat;
 
     }
 

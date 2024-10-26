@@ -14,7 +14,7 @@ public class Ingame_Item : MonoBehaviour
 
     protected virtual void Awake()
     {
-        playerStat =GameManager.Instance.myPlayerStat;
+        playerStat = PlayerMain.pStat;
         itemRigid = GetComponent<Rigidbody2D>();
         liveTime = 10f;
     }

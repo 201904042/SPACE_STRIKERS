@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Active_Shield : NewActiveSkill
+public class Active_Shield : ActiveSkill
 {
     private Skill_Shield instantShield;
 

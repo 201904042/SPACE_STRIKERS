@@ -10,7 +10,7 @@ public class Skill_InstantHeal : MonoBehaviour
     private float damagedHP;
     private void Awake()
     {
-        playerStat =GameManager.Instance.myPlayerStat;
+        playerStat =PlayerMain.pStat;
         
     }
 

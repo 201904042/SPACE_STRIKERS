@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Active_EnergeField : NewActiveSkill
+public class Active_EnergeField : ActiveSkill
 {
     public override void Init()
     {

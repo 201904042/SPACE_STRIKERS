@@ -6,6 +6,7 @@ public enum SkillType
 {
     Active,
     Passive,
+    Unique,
     Other
 }
 

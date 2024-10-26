@@ -7,12 +7,11 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Skill_Shield : PlayerProjectile
 {
-    PlayerControl playerController;
+    private PlayerStat pStat => PlayerMain.pStat;
 
     protected override void ResetProj()
     {
         base.ResetProj();
-        playerController = GameManager.Instance.myPlayer.GetComponent<PlayerControl>();
     }
 
     public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
@@ -22,19 +21,19 @@ public class Skill_Shield : PlayerProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerController.isInvincibleState)
+        if (pStat.InvincibleState)
         {
             return;
         }
         if (collision.CompareTag("Enemy") || collision.CompareTag("Enemy_Projectile"))
         {
-            playerController.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+            pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
             TriggedEnemy(collision);
         }
 
         if (collision.CompareTag("Enemy_Projectile"))
         {
-            playerController.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+            pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }
@@ -43,6 +42,5 @@ public class Skill_Shield : PlayerProjectile
     {
         base.TriggedEnemy(collision);
         SingleEnemyDamage();
-        
     }
 }

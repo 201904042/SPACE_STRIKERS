@@ -1,95 +1,88 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
 
 public class PlayerHoming : PlayerProjectile
 {
+    private Coroutine homingCoroutine;
+    private GameObject target;
 
-    [Header("기본 총알 스텟")]
-    [SerializeField]
-    private float homingDamage;
-    private float homingSpeed;
-    [SerializeField]
-    private float playerStatDamage;
-    [SerializeField]
-    private float homingDamageRate = 0.5f;
-
-    private Transform target;
-    private bool targetSet;
-
-    protected override void Awake()
+    protected override void ResetProj()
     {
-        base.Awake();
-        
+        base.ResetProj();
+        target = null;
+        if (homingCoroutine != null) 
+        { 
+            StopCoroutine(homingCoroutine);
+            homingCoroutine = null;
+        }
     }
 
-    
-    //protected override void Init()
-    //{
-    //    base.Init();
-    //    targetSet = false;
-    //    playerStatDamage = myPlayerStat.damage;
-    //    homingSpeed = 10;
-    //    homingDamage = playerStatDamage * homingDamageRate;
-    //}
-
-
-    private void FindEnemy()
+    protected override void Update()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float closeastDistance = Mathf.Infinity;
-        Transform neareastEnemy = null;
+        //부모의 Update를 사용하지 않음
+    }
 
-        foreach (GameObject enemy in enemies)
+    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
+    {
+        base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range);
+        if (homingCoroutine == null)
         {
-            float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < closeastDistance)
+            homingCoroutine = StartCoroutine(MoveToTargetEnemy());
+        }
+    }
+
+    private IEnumerator MoveToTargetEnemy()
+    {
+        while (true)
+        {
+            
+
+            if(target == null)
             {
-                closeastDistance = distanceToEnemy;
-                neareastEnemy = enemy.transform;
+                target = SetTarget();
             }
-        }
-        target = neareastEnemy;
-        targetSet = true;
-    }
-
-    private void Update()
-    {
-        if (targetSet != true)
-        {
-            FindEnemy();
-        }
-
-        if(target != null)
-        {
-            Vector2 direction = target.position - transform.position;
-            transform.up = direction;
-
-            Rigidbody2D rigid = transform.GetComponent<Rigidbody2D>();
-            rigid.velocity = direction * homingSpeed;
-        }
-        else
-        {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (isHitOnce)
-        {
-            return;
-        }
-        if (collision.gameObject.tag == "Enemy")
-        {
-            if (collision.GetComponent<EnemyObject>() != null)
+            else
             {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(homingDamage, gameObject);
+                if (!target.activeSelf)
+                {
+                    target = SetTarget();
+                }
             }
-            isHitOnce = true;
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+
+            Vector3 dir = transform.up;
+
+            if (target != null)
+            {
+                dir = (target.transform.position - transform.position).normalized;
+            }
+
+            transform.up = dir;
+            transform.position += transform.up * speed * Time.deltaTime;
+
+            yield return null;
         }
+    }
+
+    protected GameObject SetTarget()
+    {
+        Debug.Log($"현재 활성화된 적의 수: {GameManager.Instance.Spawn.activeEnemyList.Count}");
+
+        if (GameManager.Instance.Spawn.activeEnemyList.Count == 0)
+        {
+            return null;
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, GameManager.Instance.Spawn.activeEnemyList.Count);
+        GameObject target = GameManager.Instance.Spawn.activeEnemyList[randomIndex];
+
+        return target;
+    }
+
+    protected override void TriggedEnemy(Collider2D collision)
+    {
+        base.TriggedEnemy(collision);
+        SingleEnemyDamage();
     }
 }

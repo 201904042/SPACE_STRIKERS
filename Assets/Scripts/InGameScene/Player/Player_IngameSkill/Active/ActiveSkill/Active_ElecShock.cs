@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Active_ElecShock : NewActiveSkill
+public class Active_ElecShock : ActiveSkill
 {
     public bool isInit = false;
 

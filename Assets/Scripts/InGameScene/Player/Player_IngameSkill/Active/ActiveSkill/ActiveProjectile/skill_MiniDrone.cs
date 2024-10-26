@@ -28,7 +28,7 @@ public class skill_MiniDrone : PlayerProjectile
         detectionRange = 0;
         triggedList = new List<EnemyObject>();
         droneBullet = PlayerProjType.Skilll_DroneBullet;
-        Player = GameManager.Instance.myPlayer;
+        Player = PlayerMain.Instance.gameObject;
         isAttacking = false;
 
         if (behaviorCoroutine != null)

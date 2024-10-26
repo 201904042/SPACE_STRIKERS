@@ -81,12 +81,12 @@ using UnityEngine.SceneManagement;
         if (GameManager.Instance.isGameClear)
         {
             ClearText.text = "Stage Clear";
-            ClearText.color = Color.green;
+            ClearText.currentColor = Color.green;
         }
         else
         {
             ClearText.text = "Stage Fail";
-            ClearText.color = Color.red;
+            ClearText.currentColor = Color.red;
         }
 
         StageNameText.text = $"Stage : {GameManager.Instance.Stage.planet.ToString()}" +

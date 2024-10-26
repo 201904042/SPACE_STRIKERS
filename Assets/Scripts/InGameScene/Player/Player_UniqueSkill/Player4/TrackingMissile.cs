@@ -11,50 +11,50 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TrackingMissile : PlayerProjectile
 {
-    private PlayerSpecialSkill speicalScript;
-    private float damage;
+    //private PlayerSpecialSkill speicalScript;
+    //private float damage;
 
-    GameObject[] enemies;
-    GameObject targetEnemy;
-    private Vector2 startPosition;
-    private Vector2 endPosition;
-    private Vector2 basicEndPosition; //적이 없을 경우의 엔드포인트
-    private Vector2 handlePosition; // 한 개의 핸들 포인트
+    //GameObject[] enemies;
+    //GameObject targetEnemy;
+    //private Vector2 startPosition;
+    //private Vector2 endPosition;
+    //private Vector2 basicEndPosition; //적이 없을 경우의 엔드포인트
+    //private Vector2 handlePosition; // 한 개의 핸들 포인트
 
-    public float handleDistanceMultiplier = 1.0f; // 핸들 포인트의 거리를 조절하는 계수
-    //public float speed = 10f;
-    private bool targetSet;
-    private float t = 0.0f;
-    private int random;
-    private bool onHit;
-    protected override void Awake()
-    {
-        base.Awake();
-        onHit = false ;
-        speicalScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
-        damage = speicalScript.specialDamage*2;
+    //public float handleDistanceMultiplier = 1.0f; // 핸들 포인트의 거리를 조절하는 계수
+    ////public float speed = 10f;
+    //private bool targetSet;
+    //private float t = 0.0f;
+    //private int random;
+    //private bool onHit;
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+    //    onHit = false ;
+    //    speicalScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
+    //    damage = speicalScript.specialDamage*2;
 
-        startPosition = GameManager.Instance.myPlayer.transform.position; //시작지점
-        basicEndPosition = startPosition + Vector2.up * 20;
-        handlePosition = startPosition + Vector2.right * Random.Range(-3, 4); //굽어지는 정도
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    //    startPosition = GameManager.Instance.myPlayer.transform.position; //시작지점
+    //    basicEndPosition = startPosition + Vector2.up * 20;
+    //    handlePosition = startPosition + Vector2.right * Random.Range(-3, 4); //굽어지는 정도
+    //    enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        if (enemies.Length != 0) //적이 있음
-        {
-            random = Random.Range(0, enemies.Length);
-            targetEnemy = enemies[random];
-            endPosition = targetEnemy.transform.position; //적이 있다면 적의 위치로
+    //    if (enemies.Length != 0) //적이 있음
+    //    {
+    //        random = Random.Range(0, enemies.Length);
+    //        targetEnemy = enemies[random];
+    //        endPosition = targetEnemy.transform.position; //적이 있다면 적의 위치로
 
-            targetSet = true;
-        }
-        else //생성됬을때 적이 없음
-        {
-            targetEnemy = null;
-            endPosition = basicEndPosition;
-            targetSet = false;
-        }
+    //        targetSet = true;
+    //    }
+    //    else //생성됬을때 적이 없음
+    //    {
+    //        targetEnemy = null;
+    //        endPosition = basicEndPosition;
+    //        targetSet = false;
+    //    }
 
-    }
+    //}
 
     //protected override void OnEnable()
     //{

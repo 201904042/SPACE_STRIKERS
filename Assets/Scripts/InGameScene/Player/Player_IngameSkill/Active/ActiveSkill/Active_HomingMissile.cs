@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Active_HomingMissile : NewActiveSkill
+public class Active_HomingMissile : ActiveSkill
 {
     public bool isInit = false;
 

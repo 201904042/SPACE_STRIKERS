@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class PlayerStat : MonoBehaviour
     public float attackSpeedIncreaseRate;
     public float hpRegenRate;
 
-    private PlayerControl playerController;
+    private PlayerControl pControl => PlayerMain.pControl;
 
     public int weaponLevel;
     public int rewardRate; //아웃게임에서의 보상 증가율(파츠 능력 등) => 미네랄 , 재료 등의 개수 증가
@@ -72,17 +73,6 @@ public class PlayerStat : MonoBehaviour
     public float specialDamageRate; //스페셜 스킬의 데미지 증가율. 파츠나 어빌리티에 의해 증가
 
 
-    private void Awake()
-    {
-        playerController = GameObject.Find("Player").GetComponent<PlayerControl>();
-        
-    }
-
-    private void Start()
-    {
-        
-    }
-
     public void Init()
     {
         
@@ -92,13 +82,15 @@ public class PlayerStat : MonoBehaviour
         attackSpeedIncreaseRate = 1;
         hpRegenRate = 0;
 
-        isFirstSetDone = false; 
+        isFirstSetDone = false;
         int savedPlayerId = DataManager.account.GetChar();
         curPlayerID = savedPlayerId;
         SetStat(curPlayerID);
 
         PlayerSkillManager ps = PlayerMain.pSkill;
         //ps.AddPassiveSkill((InGamePassiveSkill)ps.FindSkillByCode(641));
+
+        weaponLevel = 1;
 
         level = 1;
         nextExp = 5;
@@ -193,6 +185,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    
     //플레이어 넉백
     public void PlayerKnockBack(Collider2D collision)
     {
@@ -244,16 +237,16 @@ public class PlayerStat : MonoBehaviour
     }
     #endregion
 
-    //무적 상태 부여
+    //무적 상태 부여 코루틴
     private IEnumerator ActiveInvincible(float invincible_time)
     {
+        Image playerSprite = GetComponent<Image>();
         InvincibleState = true;
+        playerSprite.color = new Color(1, 1, 1, 0.5f);
         yield return new WaitForSeconds(invincible_time);
         InvincibleState = false;
+        playerSprite.color = new Color(1, 1, 1, 1f);
     }
-
-
-    
 
     public void LevelUP()
     {
@@ -265,59 +258,11 @@ public class PlayerStat : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    //private void MakePlayerTranslucent()
-    //{
-    //    playerSprite.color = isInvincibleState
-    //        ? new Color(1, 1, 1, 0.5f)
-    //        : new Color(1, 1, 1, 1f);
-    //}
+    
 
-    public const float powlv1Max = 5;
-    public const float powlv2Max = 15;
-    public const float powMax = 30;
-    private IEnumerator PowerValueIncrease()
-    {
-        while (true)
-        {
-            if (!GameManager.Instance.BattleSwitch|| curPowerValue >= powMax)
-            {
-                yield return null;
-                continue;
-            }
+    
 
-
-
-            //if ( && !isSkillActivating)
-            //{
-            //    //파워가 맥스치보다 적거나 스페셜이 비활성화일 경우에만 파워가 올라간다.
-                
-            //}
-
-            curPowerValue += Time.deltaTime * powerIncreaseRate;
-            PowerLvSet();
-            yield return null;
-        }
-    }
-
-
-    private void PowerLvSet()
-    {
-        float powerIncrease = curPowerValue;
-        if (powerIncrease > powlv1Max && powerLevel == 0)
-        {
-            powerLevel = 1;
-        }
-        else if (powerIncrease > powlv2Max && powerLevel == 1)
-        {
-            powerLevel = 2;
-        }
-        else if (powerIncrease >= powMax && powerLevel == 2)
-        {
-            powerLevel = 3;
-        }
-    }
-
-
+    
 
     private void OnTriggerStay2D(Collider2D collision)
     {

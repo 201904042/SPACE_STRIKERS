@@ -12,6 +12,7 @@ public abstract class ReadOnlyData<T>
     protected List<int> keysList = new List<int>();
     protected string filePath;
     public DataFieldType fieldType;
+
     public void LoadData(string _filePath)
     {
         filePath = _filePath;
@@ -33,7 +34,6 @@ public abstract class ReadOnlyData<T>
         {
             Debug.Log($"{typeof(T).Name}에 데이터 {dataDict.Count}개가 들어옴");
         }
-        
     }
 
     private static List<T> SetJsonList(string json, List<T> dataList)

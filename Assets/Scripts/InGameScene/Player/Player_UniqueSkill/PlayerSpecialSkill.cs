@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerSpecialSkill : MonoBehaviour
 {
-    
-
     private PlayerStat pStat => PlayerMain.pStat;
     [HideInInspector]
     public int playerId => pStat.curPlayerID;
@@ -12,14 +10,10 @@ public class PlayerSpecialSkill : MonoBehaviour
   
     public bool isSkillActivating; //현재 스패셜 공격이 실행중인가
 
-    private void Awake()
+    public void Init()
     {
         isSkillActivating = false;
     }
-
-
-
-    
 
     //private void SpecialFire(int id ) //컨트롤러의 키입력함수에 사용
     //{

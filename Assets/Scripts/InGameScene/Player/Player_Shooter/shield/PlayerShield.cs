@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PlayerShield : MonoBehaviour
 {
-    private PlayerStat pStat;
-    private PlayerControl pControl;
+    private PlayerStat pStat => PlayerMain.pStat;
+    private PlayerControl pControl => PlayerMain.pControl;
 
     //쉴드의 색
     SpriteRenderer shieldSpriteRenderer;
@@ -19,67 +19,111 @@ public class PlayerShield : MonoBehaviour
 
     
 
-    private Coroutine shieldBehavior;
+    private Coroutine shieldRestoreCoroutine;
 
     private int maxShieldCount;
     private int curShieldCount;
 
+    private float restoreDelay;
+    private float crashDamage;
+
+
     private void Awake()
     {
         shieldSpriteRenderer = GetComponent<SpriteRenderer>();
-
-        
     }
 
     private void Start()
     {
-        pStat = PlayerMain.pStat;
-        pControl = PlayerMain.pControl;
+        ResetShield();
     }
 
-    protected void ResetShield()
+    private void ResetShield()
     {
+        maxShieldCount = pStat.weaponLevel;
+        curShieldCount = maxShieldCount;
+        ShieldColorChange();
 
+        restoreDelay = PlayerMain.ShieldBaseInterval;
+        crashDamage= (PlayerMain.ShieldDamageRate/100) * pStat.damage;
+    }
+
+    private IEnumerator RestoreShield(float delay)
+    {
+        while (curShieldCount <= maxShieldCount)
+        {
+            yield return new WaitForSeconds(delay);
+            curShieldCount++;
+            ShieldColorChange();
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (pStat.InvincibleState)
+        if (curShieldCount == 0)
         {
+            //쉴드 카운트가 0이면 더이상 작동 안함
             return;
         }
+
+        if (pStat.InvincibleState)
+        {
+            //무적 상태라면 넉백만 주고 쉴드 차감 안함
+            pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+            return;
+        }
+
+
         if (collision.CompareTag("Enemy") || collision.CompareTag("Enemy_Projectile"))
         {
-            
-            pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            if (collision.CompareTag("Enemy"))
+            {
+                collision.GetComponent<EnemyObject>().EnemyDamaged(crashDamage, gameObject);
+            }
 
+            if (collision.CompareTag("Enemy_Projectile"))
+            {
+                GameManager.Instance.Pool.ReleasePool(gameObject);
+            }
+
+            curShieldCount -= 1;
+            ShieldColorChange();
+
+            pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
+
+            if(shieldRestoreCoroutine == null) //쉴드 손상시 쉴드 복구 코루틴 시작 => 일정시간뒤 현재 쉴드수를 증가. 최대수까지 반복
+            {
+                shieldRestoreCoroutine = StartCoroutine(RestoreShield(restoreDelay));
+            }
         }
     }
 
-    //public void ShieldColorChange()
-    //{
-    //    if(shieldCurNum == 1)
-    //    {
 
-    //        currentColor = shieldColor_lv1;
-    //    }
-    //    else if(shieldCurNum == 2)
-    //    {
 
-    //        currentColor = shieldColor_lv2;
-    //    }
-    //    else if (shieldCurNum == 3)
-    //    {
+    public void ShieldColorChange()
+    {
+        if (curShieldCount == 1)
+        {
 
-    //        currentColor = shieldColor_lv3;
-    //    }
-    //    else
-    //    {
-    //        currentColor = shieldColor_lv0;
-    //    }
-    //    shieldSpriteRenderer.color = currentColor;
-    //}
+            currentColor = shieldColor_lv1;
+        }
+        else if (curShieldCount == 2)
+        {
+
+            currentColor = shieldColor_lv2;
+        }
+        else if (curShieldCount == 3)
+        {
+
+            currentColor = shieldColor_lv3;
+        }
+        else
+        {
+            currentColor = shieldColor_lv0;
+        }
+        shieldSpriteRenderer.color = currentColor;
+    }
 
     //private void OnTriggerEnter2D(Collider2D collision)
     //{

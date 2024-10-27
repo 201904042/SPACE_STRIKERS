@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -57,13 +58,23 @@ public class GameManager : MonoBehaviour
         Spawn.Init();
         Pool.Init();
 
+        SpawnPlayer();
         Debug.Log("게임 초기화 완료");
+    }
+
+    private void SpawnPlayer()
+    {
+        GameObject Player = Resources.Load<GameObject>("Prefab/Player/Player");
+        Transform SpawnTransform = GameObject.Find("SpawnZone").transform.GetChild(4);
+        myPlayer = Instantiate(Player);
+        myPlayer.transform.position = SpawnTransform.position;
+        myPlayer.transform.rotation = SpawnTransform.rotation;
     }
 
     //게임씬의 init. 플레이어를 등록하고 모든 기물을 초기화함
     public void GameInit()
     {
-        myPlayer = GameObject.FindWithTag("Player");
+        
 
         Time.timeScale = 1;
         score = 0;

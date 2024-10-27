@@ -6,18 +6,20 @@ using UnityEngine;
 
 public class playerShooterUpgrade : MonoBehaviour
 {
-    private PlayerStat pStat;
+    private PlayerStat pStat => PlayerMain.pStat;
     private Transform InstanceTransform;
     public int shooterLevel 
     {
         get => pStat.weaponLevel;
         set
         {
-            pStat.weaponLevel = value;
-            SetShooter(charId, value);
+            if(shooterLevel  < 3)
+            {
+                pStat.weaponLevel = value;
+                SetShooter(charId, value);
+            }
         }
     }
-
     public int charId
     {
         get => pStat.curPlayerID;
@@ -34,11 +36,9 @@ public class playerShooterUpgrade : MonoBehaviour
     private string curLevelPath;
     private string spritePath;
 
-    
 
-    void Start()
+    public void Init()
     {
-        pStat = PlayerMain.pStat;
         InstanceTransform = transform.GetChild(0);
         SetShooter(charId, shooterLevel);
     }
@@ -57,61 +57,19 @@ public class playerShooterUpgrade : MonoBehaviour
 
     private void SetShooter(int playerId, int shooterId)
     {
-        GameObject oldShooter = InstanceTransform.GetChild(0).gameObject;
-        if (oldShooter != null)
+        if (InstanceTransform.childCount != 0)
         {
-            Destroy(oldShooter);
+            Destroy(InstanceTransform.GetChild(0).gameObject);
         }
 
         GameObject shooter = Resources.Load<GameObject>($"Prefab/Player/Shooters/{playerId}/{shooterId}");
         if (shooter == null)
         {
-            Debug.Log("플레이어 슈터 : 잘못된 경로 할당");
+            Debug.Log($"플레이어 슈터 : 잘못된 경로 할당 p : {playerId}/ lv : {shooterId} ");
         }
         else
         {
             Instantiate(shooter, InstanceTransform);
-        }
-    }
-
-    //debug StoreBtns
-    public void ShooterUPBtn()
-    {
-        if (shooterLevel < 3)
-        {
-            shooterLevel += 1;
-        }
-    }
-
-    public void ShooterDownBtn()
-    {
-        if (shooterLevel > 1)
-        {
-            shooterLevel -= 1;
-        }
-
-    }
-
-    public void NextBtn()
-    {
-        if (charId < 104)
-        {
-            charId += 1;
-        }
-        else
-        {
-            charId = 101;
-        }
-    }
-    public void PrevBtn()
-    {
-        if (charId > 101)
-        {
-            charId -= 1;
-        }
-        else
-        {
-            charId = 104;
         }
     }
 }

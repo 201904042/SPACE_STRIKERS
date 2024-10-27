@@ -109,16 +109,6 @@ public class Troop : PlayerProjectile
     {
         return damageRate;
     }
-
-    public float GetFireDelay()
-    {
-        return de;
-    }
-
-    public int GetProjSpeed()
-    {
-        return damageRate;
-    }
 }
 
     //private string rootPath;

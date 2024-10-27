@@ -34,7 +34,7 @@ public class ActiveSkill : InGameSkill
     public override void Init()
     {
         SkillLevels = new List<Skill_LevelValue>();
-        instantPoint = GameManager.Instance.myPlayer.transform;
+        instantPoint = PlayerMain.Instance.gameObject.transform;
         skillCoroutine = null;
         type = SkillType.Active;
         currentLevel = 1;

@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
 {
     private const float playerMoveSpeedBase = 3f;
     private PlayerStat pStat => PlayerMain.pStat;
+
     private SpriteRenderer playerSprite;
 
     private PlayerInput playerInput;
@@ -23,11 +24,9 @@ public class PlayerControl : MonoBehaviour
         set => pStat.CanMove = value;
     }
 
-    private float finalSpeed;
 
     private void Awake()
     {
-        playerSprite = GetComponent<SpriteRenderer>();
         playerInput = new PlayerInput();
     }
 
@@ -45,34 +44,24 @@ public class PlayerControl : MonoBehaviour
         playerInput.Player.Disable();
     }
 
-    private void OnPlayerSkill(InputAction.CallbackContext context)
-    {
-        PlayerSkillOn();
-    }
-
     private void OnPlayerMove(InputAction.CallbackContext context)
     {
         inputVector = context.ReadValue<Vector2>();
     }
 
-    private void Init()
+    private void OnPlayerSkill(InputAction.CallbackContext context)
     {
-        finalSpeed = playerMoveSpeedBase + (pStat.moveSpeed / 5);
+        PlayerSkillOn();
     }
 
-    private void Update()
+    public void Init()
     {
-        finalSpeed = playerMoveSpeedBase + (pStat.moveSpeed / 5);
-
-        if (canMove)
-        {
-            PlayerMove();
-        }
-
-        KeepPlayerInViewport();
+        playerSprite = GetComponent<SpriteRenderer>();
     }
 
-    private void PlayerMove()
+    
+
+    public void PlayerMove()
     {
         float h = inputVector.x;
         float v = inputVector.y;
@@ -81,11 +70,11 @@ public class PlayerControl : MonoBehaviour
         if ((isRightCollide && h > 0) || (isLeftCollide && h < 0)) h = 0;
         if ((isTopCollide && v > 0) || (isBottomCollide && v < 0)) v = 0;
 
-        Vector3 moveDirection = new Vector3(h, v, 0) * finalSpeed * Time.deltaTime;
+        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.moveSpeed / 5)) * Time.deltaTime;
         transform.position += moveDirection;
     }
 
-    private void KeepPlayerInViewport()
+    public void KeepPlayerInViewport()
     {
         Vector3 playerPos = transform.position;
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(playerPos);

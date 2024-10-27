@@ -13,11 +13,13 @@ GameObject:
   - component: {fileID: 3728235402739857524}
   - component: {fileID: 3207158845531938206}
   - component: {fileID: 6746220090009175027}
+  - component: {fileID: 4397077661438785728}
   - component: {fileID: 3276550643570364575}
   - component: {fileID: 2796726503674503060}
   - component: {fileID: 2445714135734172816}
   - component: {fileID: 7517504019188185334}
   - component: {fileID: 2300400968508630886}
+  - component: {fileID: 2402133050514113463}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -195,6 +197,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4397077661438785728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893382809569411333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e155a0ddc9037e4ca611aa7369208f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayerSetDone: 0
 --- !u!114 &3276550643570364575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,10 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea0af35174c798428d9bb5337bbcdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAbleToMove: 0
-  isInvincibleState: 0
-  isAttackable: 0
-  isHitted: 0
+  isTopCollide: 0
+  isBottomCollide: 0
+  isLeftCollide: 0
+  isRightCollide: 0
 --- !u!114 &2796726503674503060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +258,16 @@ MonoBehaviour:
   level: 0
   nextExp: 0
   curExp: 0
+  CanMove: 0
+  CanAttack: 0
+  InvincibleState: 0
+  isKnockbackRun: 0
+  invincibleTime: 3
   specialCount: 0
+  powerLevel: 0
+  powerIncreaseRate: 0
+  curPowerValue: 0
+  specialDamageRate: 0
 --- !u!114 &2445714135734172816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,17 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec1aa4e5e108a6043aa839fdbcc8edfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 0
-  specialCount: 0
-  powerLevel: 0
-  powerIncreaseRate: 0
-  powerIncrease: 0
-  powerIncreaseMax: 0
-  damageIncreaseRate: 0
-  specialDamage: 0
-  specialFireTime: 0
-  specialActive: 0
-  firstSet: 0
+  isSkillActivating: 0
 --- !u!114 &7517504019188185334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +303,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0497a7b1fb37f494c86464e212fac3d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2402133050514113463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893382809569411333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1396784f03c834cac34b68b58a9ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7246103271314267486

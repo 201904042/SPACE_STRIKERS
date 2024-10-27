@@ -48,6 +48,7 @@ public class DataManager : MonoBehaviour
     public static StageDataReader stage = new StageDataReader();
     public static UpgradeDataReader upgrade = new UpgradeDataReader();
     public static GotchaDataReader gotcha = new GotchaDataReader();
+
     public void Init()
     {
         LoadAllData();
@@ -67,5 +68,8 @@ public class DataManager : MonoBehaviour
         character.LoadData("Assets/StreamingAssets/JSON/Writable/CharacterData.json");
         inven.LoadData("Assets/StreamingAssets/JSON/Writable/InvenData.json");
         parts.LoadData("Assets/StreamingAssets/JSON/Writable/PartsAbilityData.json");
+
     }
+
+
 }

@@ -3,24 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public class LauncherLevel
+{
+    public int level; //현재 슈터의 레벨
+    public int DamageRate; //슈터의 레벨별 데미지
+    public float Delay; //슈터의 레벨별 대기시간
+    public int ProjSpeed; //슈터가 발사하는 객체의 속도
+}
+
 public class LauncherStat : MonoBehaviour
 {
-    public const float bulletBaseInterval = 2f;  // 각 기본 발사 주기
-    public const float MissileBaseInterval = 3f; // 총알은 2초에 한번. 미사일은 3초에 한번. 호밍은 2초에 한번
-    public const float HomingBaseInterval = 1f;  // 
-
-    public const int bulletBaseDamageRate = 100;  // 각 기본 데미지 증가율
-    public const int MissileBaseDamageRate = 150; // 최종 데미지  = 플레이어 공격력 + (플공 * 증가율)
-    public const int ExplosionBaseDamageRate = 80;
-    public const int HomingBaseDamageRate  = 30;
-
-    public const int bulletBaseSpeed= 10;
-    public const int MissileBaseSpeed = 5;
-    public const int HomingBaseSpeed = 15;
-
-    public const float ExplosionBaseLiveTime = 1; // 1초 고정일듯
-    public const float ExplosionBaseRange = 1; //-> 크기 1 -> 1.5 -> 2
-
     //플레이어의 기본 총알, 미사일, 호밍미사일
     protected PlayerStat pStat;
     protected PlayerControl pControl;

@@ -21,6 +21,6 @@ public class Player_HPBar : MonoBehaviour
 
     private void Update()
     {
-        hp_bar.value = player_stat.curHp / player_stat.maxHp;
+        hp_bar.value = player_stat.CurHp / player_stat.IG_Hp;
     }
 }

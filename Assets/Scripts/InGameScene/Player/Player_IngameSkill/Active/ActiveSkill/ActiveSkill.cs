@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ActiveSkill : InGameSkill
 {
-    protected Skill_LevelValue CurSkillValue => SkillLevels[currentLevel-1];
+    protected Skill_LevelValue CurSkillValue => SkillLevels[currentLevel];
     public Transform instantPoint;
     public Coroutine skillCoroutine;
     protected PlayerProjType projType;
@@ -33,7 +33,7 @@ public class ActiveSkill : InGameSkill
 
     public override void Init()
     {
-        SkillLevels = new List<Skill_LevelValue>();
+        SkillLevels = new Dictionary<int, Skill_LevelValue>();
         instantPoint = PlayerMain.Instance.gameObject.transform;
         skillCoroutine = null;
         type = SkillType.Active;
@@ -57,7 +57,7 @@ public class ActiveSkill : InGameSkill
 
     protected void SkillParameterSet()
     {
-        Skill_LevelValue skillData = SkillLevels[currentLevel - 1];
+        Skill_LevelValue skillData = SkillLevels[currentLevel];
         projNum = skillData.ProjNum;
         projSpeed = skillData.ProjSpeed;
         cooldown = skillData.Cooldown;

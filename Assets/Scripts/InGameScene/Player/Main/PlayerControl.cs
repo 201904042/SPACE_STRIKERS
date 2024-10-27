@@ -24,20 +24,20 @@ public class PlayerControl : MonoBehaviour
         set => pStat.CanMove = value;
     }
 
-
-    private void Awake()
+    public void Init()
     {
+        playerSprite = GetComponent<SpriteRenderer>();
         playerInput = new PlayerInput();
     }
 
-    private void OnEnable()
+    public void PlayerInputOn()
     {
         playerInput.Player.Enable();
         playerInput.Player.Move.performed += OnPlayerMove;
         playerInput.Player.Skill.performed += OnPlayerSkill;
     }
 
-    private void OnDisable()
+    public void playerInputOff()
     {
         playerInput.Player.Move.performed -= OnPlayerMove;
         playerInput.Player.Skill.performed -= OnPlayerSkill;
@@ -54,12 +54,6 @@ public class PlayerControl : MonoBehaviour
         PlayerSkillOn();
     }
 
-    public void Init()
-    {
-        playerSprite = GetComponent<SpriteRenderer>();
-    }
-
-    
 
     public void PlayerMove()
     {
@@ -70,7 +64,7 @@ public class PlayerControl : MonoBehaviour
         if ((isRightCollide && h > 0) || (isLeftCollide && h < 0)) h = 0;
         if ((isTopCollide && v > 0) || (isBottomCollide && v < 0)) v = 0;
 
-        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.moveSpeed / 5)) * Time.deltaTime;
+        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.IG_MSpd / 5)) * Time.deltaTime;
         transform.position += moveDirection;
     }
 
@@ -91,50 +85,22 @@ public class PlayerControl : MonoBehaviour
 
     public void PlayerSkillOn()
     {
-        if (pStat.specialCount > 0 && pStat.powerLevel != 0) //todo => 스페셜이 작동중이면 불가
+        if(pStat.IG_curPowerLevel <= 0)
         {
-            pStat.specialCount--;
-            //SpecialFire(playerId);
+            Debug.Log("파워레벨이 충분하지 않음");
         }
-        else
+        else if(pStat.USkillCount <= 0)
         {
-            Debug.Log("cant do specialattack");
+            Debug.Log("사용 가능 횟수가 부족");
         }
+        //else if(현재 스킬 사용중일 경우)
+
+        pStat.USkillCount--;
+        pStat.IG_curPowerLevel = 0;
+        pStat.AddPower = 0;
+        PlayerMain.pSpecial.isSkillActivating = true;
+        PlayerMain.pSpecial.SpecialFire();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Border"))
-        {
-            switch (collision.name)
-            {
-                case "Top":
-                    isTopCollide = true; break;
-                case "Bottom":
-                    isBottomCollide = true; break;
-                case "Right":
-                    isRightCollide = true; break;
-                case "Left":
-                    isLeftCollide = false; break;
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Border"))
-        {
-            switch (collision.name)
-            {
-                case "Top":
-                    isTopCollide = false; break;
-                case "Bottom":
-                    isBottomCollide = false; break;
-                case "Right":
-                    isRightCollide = false; break;
-                case "Left":
-                    isLeftCollide = false; break;
-            }
-        }
-    }
+    
 }

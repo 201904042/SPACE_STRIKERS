@@ -12,7 +12,7 @@ using static UnityEngine.GraphicsBuffer;
 public class TrackingMissile : PlayerProjectile
 {
     //private PlayerSpecialSkill speicalScript;
-    //private float damage;
+    //private float IG_Dmg;
 
     //GameObject[] enemies;
     //GameObject targetEnemy;
@@ -32,7 +32,7 @@ public class TrackingMissile : PlayerProjectile
     //    base.Awake();
     //    onHit = false ;
     //    speicalScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
-    //    damage = speicalScript.specialDamage*2;
+    //    IG_Dmg = speicalScript.specialDamage*2;
 
     //    startPosition = GameManager.Instance.myPlayer.transform.position; //시작지점
     //    basicEndPosition = startPosition + Vector2.up * 20;
@@ -134,7 +134,7 @@ public class TrackingMissile : PlayerProjectile
     //{
     //    if(collision.gameObject.tag == "Enemy")
     //    {
-    //        collision.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
+    //        collision.GetComponent<EnemyObject>().EnemyDamaged(IG_Dmg, gameObject);
     //        onHit = true;
     //        GameManager.Instance.Pool.ReleasePool(gameObject);
     //    }

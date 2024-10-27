@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class InGamePassiveSkill : InGameSkill
 {
-    public float CurrentEffectValue => SkillLevels[currentLevel-1].DamageRate; // 현재 효과 값
+    public float CurrentEffectValue => SkillLevels[currentLevel].DamageRate; // 현재 효과 값
     
     public override void Init()
     {
-        SkillLevels = new List<Skill_LevelValue>();
+        SkillLevels = new Dictionary<int, Skill_LevelValue>();
         type = SkillType.Passive;
         currentLevel = 1;
     }
@@ -36,19 +36,19 @@ public class InGamePassiveSkill : InGameSkill
         switch (SkillCode)
         {
             case 641:
-                playerStats.damageIncreaseRate += CurrentEffectValue;
+                playerStats.PS_Dmg += CurrentEffectValue;
                 break;
             case 642:
-                playerStats.defenceIncreaseRate += CurrentEffectValue;
+                playerStats.PS_Dfs += CurrentEffectValue;
                 break;
             case 643:
-                playerStats.moveSpeedIncreaseRate += CurrentEffectValue;
+                playerStats.PS_MSpd += CurrentEffectValue;
                 break;
             case 644:
-                playerStats.attackSpeedIncreaseRate += CurrentEffectValue;
+                playerStats.PS_ASpd += CurrentEffectValue;
                 break;
             case 645:
-                playerStats.hpRegenRate += CurrentEffectValue;
+                playerStats.PS_HpRegen += CurrentEffectValue;
                 break;
         }
         playerStats.ApplyStat();

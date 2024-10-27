@@ -40,6 +40,7 @@ public class Active_ElecShock : ActiveSkill
     {
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
+            level = 1,
             ProjNum = 1,
             ProjSpeed = 1,
             Cooldown = 5,
@@ -49,10 +50,11 @@ public class Active_ElecShock : ActiveSkill
         lv1.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 3));
         lv1.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 30));
 
-        SkillLevels.Add(lv1);
+        SkillLevels.Add(lv1.level, lv1);
 
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
+            level = 2,
             ProjNum = 1,
             ProjSpeed =1,
             Cooldown = 5,
@@ -61,10 +63,11 @@ public class Active_ElecShock : ActiveSkill
         };
         lv2.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 3));
         lv2.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 30));
-        SkillLevels.Add(lv2);
+        SkillLevels.Add(lv2.level, lv2);
 
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
+            level = 3,
             ProjNum = 1,
             ProjSpeed = 1,
             Cooldown = 5,
@@ -73,10 +76,11 @@ public class Active_ElecShock : ActiveSkill
         };
         lv3.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 2.5f));
         lv3.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 50));
-        SkillLevels.Add(lv3);
+        SkillLevels.Add(lv3.level, lv3);
 
         Skill_LevelValue lv4 = new Skill_LevelValue()
         {
+            level = 4,
             ProjNum = 1,
             ProjSpeed = 1,
             Cooldown = 5,
@@ -85,10 +89,11 @@ public class Active_ElecShock : ActiveSkill
         };
         lv4.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 2.5f));
         lv4.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 50));
-        SkillLevels.Add(lv4);
+        SkillLevels.Add(lv4.level, lv4);
 
         Skill_LevelValue lv5 = new Skill_LevelValue()
         {
+            level = 5,
             ProjNum = 1,
             ProjSpeed = 1,
             Cooldown = 5,
@@ -97,10 +102,11 @@ public class Active_ElecShock : ActiveSkill
         };
         lv5.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 2.5f));
         lv5.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 50));
-        SkillLevels.Add(lv5);
+        SkillLevels.Add(lv5.level, lv5);
 
         Skill_LevelValue lv6 = new Skill_LevelValue()
         {
+            level = 6,
             ProjNum = 1,
             ProjSpeed = 1,
             Cooldown = 5,
@@ -109,20 +115,21 @@ public class Active_ElecShock : ActiveSkill
         };
         lv6.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 2f));
         lv6.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 70));
-        SkillLevels.Add(lv6);
+        SkillLevels.Add(lv6.level, lv6);
 
         Skill_LevelValue lv7 = new Skill_LevelValue()
         {
+            level = 7,
             ProjNum = 1,
             ProjSpeed = 1,
             Cooldown = 5,
             DamageRate = 120,
             Range = 3f
         };
-        lv6.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 2f));
+        lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 2f));
         lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 70));
         lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.SlowExtraDamage, 100));
-        SkillLevels.Add(lv7);
+        SkillLevels.Add(lv7.level, lv7);
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 

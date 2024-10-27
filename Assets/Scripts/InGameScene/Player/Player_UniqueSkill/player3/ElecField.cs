@@ -13,7 +13,7 @@ public class Elec_Field : MonoBehaviour
     // Start is called before the first frame update
     //private void Awake()
     //{
-    //    damage = pStat.specialDamage;
+    //    IG_Dmg = pStat.specialDamage;
     //    isDamaging = false;
     //    damageTik = 0.1f;
     //}

@@ -12,7 +12,7 @@ public class PlayerPowBar : MonoBehaviour
     //Image fillImage;
     //TextMeshProUGUI pow_text;
 
-    //private int powerLevel;
+    //private int IG_curPowerLevel;
     //private float maxPlayerTime;
     //private float curPlayerTime;
 
@@ -37,26 +37,26 @@ public class PlayerPowBar : MonoBehaviour
 
     //private void Update()
     //{
-    //    powerLevel = playerSpecialSkill.powerLevel;
+    //    IG_curPowerLevel = playerSpecialSkill.IG_curPowerLevel;
 
     //    hp_bar.value = playerSpecialSkill.powerIncrease / playerSpecialSkill.powerIncreaseMax;
 
-    //    if(powerLevel == 0)
+    //    if(IG_curPowerLevel == 0)
     //    {
     //        fillImage.color = Color.white;
     //        pow_text.text = "POW Lv 0";
     //    }
-    //    else if(powerLevel == 1)
+    //    else if(IG_curPowerLevel == 1)
     //    {
     //        fillImage.color = Color.green;
     //        pow_text.text = "POW Lv 1";
     //    }
-    //    else if (powerLevel == 2)
+    //    else if (IG_curPowerLevel == 2)
     //    {
     //        fillImage.color = Color.yellow;
     //        pow_text.text = "POW Lv 2";
     //    }
-    //    else if (powerLevel == 3)
+    //    else if (IG_curPowerLevel == 3)
     //    {
     //        fillImage.color = Color.red;
     //        pow_text.text = "POW Lv MAX";

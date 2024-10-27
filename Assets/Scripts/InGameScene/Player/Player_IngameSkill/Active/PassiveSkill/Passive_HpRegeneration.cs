@@ -14,37 +14,41 @@ public class Passive_HpRegeneration : InGamePassiveSkill
     public override void SetLevel()
     {
         base.SetLevel();
-
-        Skill_LevelValue hpRegen_lv1 = new Skill_LevelValue()
+        Skill_LevelValue lv1 = new Skill_LevelValue()
         {
+            level = 1,
             DamageRate = 10
         };
-        SkillLevels.Add(hpRegen_lv1);
+        SkillLevels.Add(lv1.level, lv1);
 
-        Skill_LevelValue hpRegen_lv2 = new Skill_LevelValue()
+        Skill_LevelValue lv2 = new Skill_LevelValue()
         {
+            level = 2,
             DamageRate = 20
         };
-        SkillLevels.Add(hpRegen_lv2);
+        SkillLevels.Add(lv2.level, lv2);
 
-        Skill_LevelValue hpRegen_lv3 = new Skill_LevelValue()
+        Skill_LevelValue lv3 = new Skill_LevelValue()
         {
+            level = 3,
             DamageRate = 30
         };
-        SkillLevels.Add(hpRegen_lv3);
+        SkillLevels.Add(lv3.level, lv3);
 
-        Skill_LevelValue hpRegen_lv4 = new Skill_LevelValue()
+        Skill_LevelValue lv4 = new Skill_LevelValue()
         {
+            level = 4,
             DamageRate = 40
         };
-        SkillLevels.Add(hpRegen_lv4);
+        SkillLevels.Add(lv4.level, lv4);
 
 
-        Skill_LevelValue hpRegen_lv5 = new Skill_LevelValue()
+        Skill_LevelValue lv5 = new Skill_LevelValue()
         {
+            level = 5,
             DamageRate = 50
         };
-        SkillLevels.Add(hpRegen_lv5);
+        SkillLevels.Add(lv5.level, lv5);
 
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }

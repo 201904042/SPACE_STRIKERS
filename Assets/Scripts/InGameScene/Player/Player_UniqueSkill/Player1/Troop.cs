@@ -127,7 +127,7 @@ public class Troop : PlayerProjectile
     //{
     //    startTimer = 0;
     //    fireTime = palyerSpecialSkill.specialFireTime;
-    //    skillLevel = palyerSpecialSkill.powerLevel;
+    //    skillLevel = palyerSpecialSkill.IG_curPowerLevel;
     //    curLevelPath = ChangeShooterLevelPath(skillLevel);
     //    InstantShooter();
     //}

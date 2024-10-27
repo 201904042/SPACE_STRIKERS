@@ -1,49 +1,60 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSpecialSkill : MonoBehaviour
 {
+    Dictionary<int, UniqueSkill> uniqueSkills;
+
     private PlayerStat pStat => PlayerMain.pStat;
     [HideInInspector]
     public int playerId => pStat.curPlayerID;
-    public int powLv => pStat.powerLevel;
+    public int powLv => pStat.IG_curPowerLevel;
   
     public bool isSkillActivating; //현재 스패셜 공격이 실행중인가
 
     public void Init()
     {
         isSkillActivating = false;
+        uniqueSkills = new Dictionary<int, UniqueSkill>();
+        SetUniques();
     }
 
-    //private void SpecialFire(int id ) //컨트롤러의 키입력함수에 사용
-    //{
-    //    Debug.Log($"{id}의 스페셜 스킬");
-    //    switch (id) //플레이어의 아이디에 따라 플레이어 별 스페셜스킬 활성
-    //    {
-    //        case 101:
-    //            BalanceSpecial(); break;
-    //        case 102:
-    //            BomberSpecial(); break;
-    //        case 103:
-    //            TankerSpecial(); break;
-    //        case 104:
-    //            SplashSpecial(); break;
-    //        default:
-    //            Debug.Log("can't find id"); break;
-    //    }
+    private void SetUniques()
+    {
+        Unique_Char1 char1 = new Unique_Char1();
+        uniqueSkills.Add(char1.useCharCode, char1);
+    }
 
-    //    //스킬 활성화시 파워레벨 초기화
-    //    powerLevel = 0;
-    //    powerIncrease = 0;
-    //    isSkillActivating = true;
-    //}
+    public UniqueSkill GetUniqueSkill(int charId)
+    {
+        UniqueSkill targetSkill;
+        uniqueSkills.TryGetValue(charId, out targetSkill);
+        if (targetSkill == null) {
+            Debug.LogError("해당 캐릭터의 id가 설정된 스킬이 없음");
+        }
+
+        return targetSkill;
+
+    }
+
+    public void SpecialFire() //컨트롤러의 키입력함수에 사용
+    {
+        Debug.Log($"{pStat.curPlayerID}의 스페셜 스킬");
+
+        UniqueSkill targetSkill = GetUniqueSkill(pStat.curPlayerID);
+        targetSkill.ActivateSkill();
+        //스킬 활성화시 파워레벨 초기화
+
+    }
 
     //public IEnumerator character1SpecialOn()
     //{
 
     //}
 
-    
+
 
     //private void BomberSpecial()
     //{
@@ -61,17 +72,17 @@ public class PlayerSpecialSkill : MonoBehaviour
     //    GameObject field = GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Spcial_Player3, transform.position,transform.rotation);
     //    field.transform.SetParent(transform);
 
-    //    if (powerLevel == 1)
+    //    if (IG_curPowerLevel == 1)
     //    {
     //        field.transform.localScale = new Vector3(7f, 7f, 7f);
     //        specialFireTime = 5;
     //    }
-    //    else if (powerLevel == 2)
+    //    else if (IG_curPowerLevel == 2)
     //    {
     //        field.transform.localScale = new Vector3(10, 10f, 10f);
     //        specialFireTime = 7;
     //    }
-    //    else if (powerLevel == 3)
+    //    else if (IG_curPowerLevel == 3)
     //    {
     //        field.transform.localScale = new Vector3(15, 15f, 15f);
     //        specialFireTime = 10;
@@ -91,15 +102,15 @@ public class PlayerSpecialSkill : MonoBehaviour
     //{
     //    isSkillActivating = true;
     //    int fire_Num = 0;
-    //    if (powerLevel == 1)
+    //    if (IG_curPowerLevel == 1)
     //    {
     //        fire_Num = 10;
     //    }
-    //    else if (powerLevel == 2)
+    //    else if (IG_curPowerLevel == 2)
     //    {
     //        fire_Num = 25;
     //    }
-    //    else if (powerLevel == 3)
+    //    else if (IG_curPowerLevel == 3)
     //    {
     //        fire_Num = 30;
     //    }

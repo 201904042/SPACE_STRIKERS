@@ -7,7 +7,7 @@ public class EnemyObject : MonoBehaviour
     [Header("공통 스텟")]
     public EnemyData enemyStat; // 이 스텟의 id로 처음에 스텟 초기화
     public int curEnemyId; // 임시. 스텟 초기화 후 id를 바꾼경우를 체크하기 위함
-    public float curHp; // 현재의 maxHp. 이것이 0 이되면 파괴
+    public float curHp; // 현재의 IG_Hp. 이것이 0 이되면 파괴
     public GameObject enemyHpBar;
 
     private GameObject canvas;

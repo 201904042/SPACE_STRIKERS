@@ -19,7 +19,7 @@ public class Skill_Missile : PlayerProjectile
         isShootingObj = true;
         speed = _projSpeed;
         damageRate = _dmgRate;
-        finalDamage = finalDamage = (int)playerStat.damage * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
+        finalDamage = finalDamage = (int)playerStat.IG_Dmg * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
         explosionDamageRate = _dmgRate / 2;
         
         explosionRange = _range;

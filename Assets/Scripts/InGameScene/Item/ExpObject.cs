@@ -29,7 +29,7 @@ public class Exp_object : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent <PlayerStat>().GetExp += expAmount;
+            collision.GetComponent <PlayerStat>().CurExp += expAmount;
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }
     }

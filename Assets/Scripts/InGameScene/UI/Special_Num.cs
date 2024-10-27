@@ -11,13 +11,13 @@ public class Special_Num : MonoBehaviour
     private int curNum;
     private void Awake()
     {
-        curNum = pStat.specialCount;
+        curNum = pStat.USkillCount;
         text = GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        curNum = pStat.specialCount;
+        curNum = pStat.USkillCount;
         text.text = curNum.ToString();
     }
 }

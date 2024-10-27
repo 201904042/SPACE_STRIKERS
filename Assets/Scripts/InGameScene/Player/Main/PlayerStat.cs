@@ -7,80 +7,123 @@ using UnityEngine.UI;
 public class PlayerStat : MonoBehaviour
 {
     public const int basicStat = 10; //레벨1의 가장 기본 스텟
-    public GameObject selectSkillUI;// todo => 나중엔 인터페이스 적용
+    public GameObject selectSkillUI;
+
+    private PlayerUI pUI => PlayerMain.pUI;
+    private PlayerControl pControl => PlayerMain.pControl;
 
     [Header("기본 정보")]
     public int curPlayerID;
     public bool isFirstSetDone;
 
-    [Header("초기스텟 + 패시브 스텟 적용 \n 각 요소에 직접 참조됨")]
-    public float damage; //추가스텟 적용 이후 공격 혹은 이동에 직접 쓰일 변수(패시브 스킬이 추가된 스텟)
-    public float defence;
-    public float moveSpeed;
-    public float attackSpeed;
-    public float maxHp;
-    public float curHp;
-
-    [Header("초기스텟(기본+파츠스텟+기체레벨스텟)")]
-    private float initDamage; //추가스텟이 적용되지 않은 기본의 스텟 변수(기체 레벨 추가스텟 + 파츠 레벨이 적용됨)
-    private float initDefence;
-    private float initMoveSpeed;
-    private float initAttackSpeed;
-    private float initHp;
-
-    [Header("패시브 증가율")]
-    public float damageIncreaseRate;
-    public float defenceIncreaseRate;
-    public float moveSpeedIncreaseRate;
-    public float attackSpeedIncreaseRate;
-    public float hpRegenRate;
-
-    private PlayerControl pControl => PlayerMain.pControl;
-
-    public int weaponLevel;
-    public int rewardRate; //아웃게임에서의 보상 증가율(파츠 능력 등) => 미네랄 , 재료 등의 개수 증가
-    public int rewardRateIncrease; //인게임에서의 보상 증가율 => other스킬의 보상 증가
-
-    //레벨 관련
-    public int level; //캐릭터의 레벨이 아닌 인게임에서의 레벨
-    public int nextExp; //목표 exp. curExp >= nextExp 라면 레벨업 판정
-    public int curExp; //현재 가지고 있는 exp
-    public int GetExp
+    [Header("최종 스텟. 다른 스크립트에 참조되는 스텟")]
+    //InGame
+    public float IG_Dmg; //추가스텟 적용 이후 공격 혹은 이동에 직접 쓰일 변수(패시브 스킬이 추가된 스텟)
+    public float IG_Dfs;
+    public float IG_MSpd;
+    public float IG_ASpd;
+    public float IG_Hp;
+    private float IG_CurHp;
+    public float CurHp
     {
-        get => curExp;
+        get => IG_CurHp;
         set
         {
-            curExp += value;
-            if(curExp >= nextExp)
+            IG_CurHp = Mathf.Min(value, IG_Hp);
+            pUI.HpBarChange();
+        }
+    }
+    public float IG_HpRegen;
+    public int IG_WeaponLv; //최종 무기 레벨
+    public int IG_RewardRate; //아웃게임에서의 보상 증가율(파츠 능력 등) => 미네랄 , 재료 등의 개수 증가
+
+    //레벨 관련
+    public int IG_Level; //캐릭터의 레벨이 아닌 인게임에서의 레벨
+    public int IG_NextExp; //목표 exp. IG_CurExp >= IG_NextExp 라면 레벨업 판정
+    private int IG_CurExp; //현재 가지고 있는 exp
+    public int CurExp
+    {
+        get => IG_CurExp;
+        set
+        {
+            IG_CurExp += value;
+            if (IG_CurExp >= IG_NextExp)
             {
                 LevelUP();
             }
+
+            pUI.HpBarChange();
         }
     }
 
+    private int IG_USkillCount;
+    public int USkillCount
+    {
+        get => IG_USkillCount;
+        set
+        {
+            if(value < 0)
+            {
+                IG_USkillCount = 0;
+                return;
+            }
+            IG_USkillCount = value;
+        }
+    }
+    public int IG_curPowerLevel; //스페셜 증가치
+    public float IG_PowIncreaseRate; //초당 파워 증가율
+    private float curPower; //현재까지 모은 power의 양
+    public float AddPower
+    {
+        get => curPower;
+        set
+        {
+            curPower = value;
+        }
+    }
+
+    //무적시간
+    public float invincibleTime = 3f;
+
+    [Header("초기스텟(아웃게임에서 받아온 스텟)")]
+    //OutGame
+    private float OG_Dmg; //추가스텟이 적용되지 않은 기본의 스텟 변수(기체 레벨 추가스텟 + 파츠 레벨이 적용됨)
+    private float OG_Dfs;
+    private float OG_MSpd;
+    private float OG_ASpd;
+    private float OG_Hp;
+    private float OG_HpRegen;
+    public int OS_UDmgUp; //아웃게임에서 받아온 특수스킬 뎀증율
+    
+
+
+    [Header("인게임 증가율(스킬 등)")]
+    // PassiveSkill
+    public float PS_Dmg;
+    public float PS_Dfs;
+    public float PS_MSpd;
+    public float PS_ASpd;
+    public float PS_HpRegen;
+
+    // ExtraSkill
+    public int ES_RewardUp; //인게임에서의 보상 증가율 => other스킬의 보상 증가
+
+
+    [Header("각종 상태")]
     public bool CanMove;
     public bool CanAttack;
     public bool InvincibleState;
     public bool isKnockbackRun;
-    public float invincibleTime = 3f;
-
-    public int specialCount;
-    public int powerLevel; //스페셜 증가치
-    public float powerIncreaseRate; //초당 파워 증가율
-    public float curPowerValue;
-    
-
-    public float specialDamageRate; //스페셜 스킬의 데미지 증가율. 파츠나 어빌리티에 의해 증가
 
 
     public void Init()
     {
         
-        damageIncreaseRate = 1;
-        defenceIncreaseRate = 1;
-        moveSpeedIncreaseRate = 1;
-        attackSpeedIncreaseRate = 1;
-        hpRegenRate = 0;
+        PS_Dmg = 1;
+        PS_Dfs = 1;
+        PS_MSpd = 1;
+        PS_ASpd = 1;
+        PS_HpRegen = 0;
 
         isFirstSetDone = false;
         int savedPlayerId = DataManager.account.GetChar();
@@ -90,17 +133,18 @@ public class PlayerStat : MonoBehaviour
         PlayerSkillManager ps = PlayerMain.pSkill;
         //ps.AddPassiveSkill((InGamePassiveSkill)ps.FindSkillByCode(641));
 
-        weaponLevel = 1;
+        IG_WeaponLv = 1;
 
-        level = 1;
-        nextExp = 5;
-        curExp = 0;
+        IG_Level = 1;
+        IG_NextExp = 5;
+        IG_CurExp = 0;
 
-        specialCount = 3;
-        powerLevel = 0;
-        powerIncreaseRate = 1f;
-        curPowerValue = 0;
-        specialDamageRate = 1f; //증가율
+        IG_USkillCount = 3;
+        IG_curPowerLevel = 0;
+        curPower = 0;
+        IG_PowIncreaseRate = 1f;
+        
+        OS_UDmgUp = 100; //증가율 100 = 기본 스텟 * 1
 
     }
 
@@ -114,10 +158,8 @@ public class PlayerStat : MonoBehaviour
     {
         Debug.Log("플레이어 스텟 설정");
         PlayerSet(playerId);
-        maxHp = initHp;
-        curHp = maxHp;
-
         ApplyStat();
+        CurHp = IG_Hp;
     }
 
     /// <summary>
@@ -128,19 +170,20 @@ public class PlayerStat : MonoBehaviour
         CharData curPlayerChar = DataManager.character.GetData(id);
 
         ////아웃게임에서 받아온 캐릭터의 스텟 todo -> 이부분은 특정 데이터베이스를 통해 받아올예정
-        //level = curPlayerChar.level;
-        //initDamage = curPlayerChar.damage;
-        //initDefence = curPlayerChar.defense;
-        //initMoveSpeed = curPlayerChar.moveSpeed;
-        //initAttackSpeed = curPlayerChar.attackSpeed;
-        //initHp = curPlayerChar.hp;
+        //IG_Level = curPlayerChar.IG_Level;
+        //OG_Dmg = curPlayerChar.IG_Dmg;
+        //OG_Dfs = curPlayerChar.defense;
+        //OG_MSpd = curPlayerChar.IG_MSpd;
+        //OG_ASpd = curPlayerChar.IG_ASpd;
+        //OG_Hp = curPlayerChar.hp;
 
-        level = 1;
-        initDamage = 10;
-        initDefence = 10;
-        initMoveSpeed = 10;
-        initAttackSpeed = 10;
-        initHp = 100;
+        IG_Level = 1;
+        OG_Dmg = 10;
+        OG_Dfs = 10;
+        OG_MSpd = 10;
+        OG_ASpd = 10;
+        OG_Hp = 100;
+        OG_HpRegen = 0;
     }
 
     /// <summary>
@@ -148,10 +191,12 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void ApplyStat()
     {
-        damage = initDamage * damageIncreaseRate;
-        defence = initDefence * defenceIncreaseRate;
-        moveSpeed = initMoveSpeed * moveSpeedIncreaseRate;
-        attackSpeed = initAttackSpeed * attackSpeedIncreaseRate;
+        IG_Dmg = OG_Dmg * PS_Dmg;
+        IG_Dfs = OG_Dfs * PS_Dfs;
+        IG_MSpd = OG_MSpd * PS_MSpd;
+        IG_ASpd = OG_ASpd * PS_ASpd;
+        IG_Hp = OG_Hp;
+        OG_HpRegen = OG_HpRegen * PS_HpRegen;
     }
 
     /// <summary>
@@ -161,9 +206,9 @@ public class PlayerStat : MonoBehaviour
     {
         if (!InvincibleState)
         {
-            float applyDamage = damage * (1 - (0.01f * defence)); //todo => 방어력 로직 다시 체크
+            float applyDamage = damage * (1 - (0.01f * IG_Dfs)); //todo => 방어력 로직 다시 체크
 
-            curHp -= applyDamage;
+            CurHp -= applyDamage;
             Debug.Log(attackObj.name + " 에 의해 " + applyDamage + " 의 데미지를 입음");
             PlayerDamagedAction(attackObj); //넉백 및 무적 부여
         }
@@ -240,7 +285,11 @@ public class PlayerStat : MonoBehaviour
     //무적 상태 부여 코루틴
     private IEnumerator ActiveInvincible(float invincible_time)
     {
-        Image playerSprite = GetComponent<Image>();
+        SpriteRenderer playerSprite = PlayerMain.Instance.GetComponent<SpriteRenderer>();
+        if (playerSprite == null)
+        {
+            Debug.LogError("플레이어의 스프라이트 렌더러를 찾을 수 없음");
+        }
         InvincibleState = true;
         playerSprite.color = new Color(1, 1, 1, 0.5f);
         yield return new WaitForSeconds(invincible_time);
@@ -250,8 +299,8 @@ public class PlayerStat : MonoBehaviour
 
     public void LevelUP()
     {
-        level++;
-        nextExp += 5; //임시 처리. 이후 정확한 공식 대입
+        IG_Level++;
+        IG_NextExp += 5; //임시 처리. 이후 정확한 공식 대입
 
         selectSkillUI.SetActive(true);
 
@@ -259,21 +308,4 @@ public class PlayerStat : MonoBehaviour
     }
 
     
-
-    
-
-    
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (InvincibleState)
-        {
-            return;
-        }
-
-        if (collision.CompareTag("Enemy"))
-        {
-            PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.damage / 2, collision.gameObject);
-        }
-    }
 }

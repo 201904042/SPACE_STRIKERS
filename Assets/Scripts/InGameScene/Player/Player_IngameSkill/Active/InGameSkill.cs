@@ -28,6 +28,7 @@ public class S_EffectValuePair
 
 public class Skill_LevelValue
 {
+    public int level;
     public int ProjNum; // 투사체 수. 수치만큼 반복하여 생성
     public int ProjSpeed; //투사체의 속도. 기준 10(플레이어의 기본속도). 20이면 플레이어 2배속도 5면 플레이어보다 반배 느림
     public float Cooldown; // 쿨타임 (시간 초)
@@ -47,7 +48,7 @@ public abstract class InGameSkill
 {
     public int SkillCode { get; protected set; }
     public SkillType type { get; protected set; }
-    public List<Skill_LevelValue> SkillLevels { get; protected set; }
+    public Dictionary<int, Skill_LevelValue> SkillLevels { get; protected set; }
     public int currentLevel;
     public string description;
     public abstract void Init();

@@ -22,14 +22,14 @@ public class Item_PowUp : Ingame_Item
     }
     void PowUP()
     {
-        switch (pStat.powerLevel)
+        switch (pStat.IG_curPowerLevel)
         {
             case 0:
-                pStat.powerLevel = 1; pStat.curPowerValue = 5; break;
+                pStat.IG_curPowerLevel = 1; pStat.AddPower = 5; break;
             case 1:
-                pStat.powerLevel = 2; pStat.curPowerValue = 15; break;
+                pStat.IG_curPowerLevel = 2; pStat.AddPower = 15; break;
             case 2:
-                pStat.powerLevel = 3; pStat.curPowerValue = 30; break;
+                pStat.IG_curPowerLevel = 3; pStat.AddPower = 30; break;
         }
     }
 }

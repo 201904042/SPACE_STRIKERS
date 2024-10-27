@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckPlayerHp()
     {
-        if (myPlayer.GetComponent<PlayerStat>().curHp <= 0)
+        if (PlayerMain.pStat.CurHp <= 0)
         {
             Time.timeScale = 0;
             gameEndUI.SetActive(true);

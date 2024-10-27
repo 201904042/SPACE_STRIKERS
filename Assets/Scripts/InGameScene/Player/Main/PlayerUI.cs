@@ -7,25 +7,25 @@ public class PlayerUI : MonoBehaviour
 {
     PlayerStat pStat => PlayerMain.pStat;
     private Slider hpSlider;
-    private float maxHp => pStat.maxHp;
-    private float curHp => pStat.curHp;
+    private float maxHp => pStat.IG_Hp;
+    private float curHp => pStat.CurHp;
 
     private Slider expSlider;
-    private int MaxExp =>  pStat.nextExp;
-    private int curExp=> pStat.curExp;
+    private int MaxExp =>  pStat.IG_NextExp;
+    private int curExp=> pStat.CurExp;
 
     private Slider powSlider;
     private float MaxPow => PlayerMain.powMax;
-    private float curPow => pStat.curPowerValue;
+    private float curPow => pStat.AddPower;
 
     private TextMeshProUGUI powLvText;
 
-    private int uSkillcount => pStat.specialCount;
+    private int uSkillcount => pStat.USkillCount;
     private TextMeshProUGUI uSkillCountText;
     private Image uSkillImage;
 
-  
-    public void Init()
+    
+    public void ComponentSet()
     {
         Transform Canvas = FindObjectOfType<Canvas>().transform;
         Transform playerUI = Canvas.Find("PlayerUI").transform;
@@ -34,10 +34,12 @@ public class PlayerUI : MonoBehaviour
         expSlider = playerUI.GetChild(1).GetComponent<Slider>();
         powSlider = playerUI.GetChild(2).GetComponent<Slider>();
         powLvText = powSlider.GetComponentInChildren<TextMeshProUGUI>();
-
         uSkillImage = playerUI.GetChild(3).GetChild(1).GetComponent<Image>();
-
         uSkillCountText = playerUI.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void Init()
+    {
         HpBarChange();
         PowBarChange();
         ExpBarChange();
@@ -47,21 +49,22 @@ public class PlayerUI : MonoBehaviour
 
     public void HpBarChange()
     {
+        
         hpSlider.value = curHp/ maxHp;
-
         //todo => hp %º°·Î »ö±ò³îÀÌ
     }
 
     public void ExpBarChange()
     {
-        expSlider.value = curExp / MaxExp;
+        expSlider.value = curExp / MaxExp; //°è»êÇØ¾ßµÊ
     }
 
     public void PowBarChange()
     {
-        expSlider.value = curPow / MaxPow;
-        Image fillImage = expSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
-        int powLv  = pStat.powerLevel;
+        powSlider.value = curPow / MaxPow;
+
+        Image fillImage = powSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        int powLv  = pStat.IG_curPowerLevel;
         if (powLv == 0)
         {
             fillImage.color = Color.white;
@@ -83,8 +86,6 @@ public class PlayerUI : MonoBehaviour
             powLvText.text = "POW Lv MAX";
         }
     }
-
-   
 
     public void SetUniqueSkillImage()
     {

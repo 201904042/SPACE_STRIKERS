@@ -9,8 +9,8 @@ using UnityEngine;
 public class PlayerSkillManager : MonoBehaviour
 {
     public List<InGameSkill> ingameSkillList;
-    public List<ActiveSkill> usingActiveSkills;
-    public List<InGamePassiveSkill> usingPassiveSkills;
+    public List<ActiveSkill> usingActiveSkills; //획득한 액티브 스킬 리스트
+    public List<InGamePassiveSkill> usingPassiveSkills; //획득한 패시브 스킬 리스트
 
     public void Init()
     {

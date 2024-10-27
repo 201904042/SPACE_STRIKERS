@@ -8,8 +8,8 @@ public class SpecialBomber : MonoBehaviour
     //public GameObject Explosion_range;
     //private PlayerSpecialSkill specialScript;
     //private float speed;
-    //private float damage;
-    //private int level;
+    //private float IG_Dmg;
+    //private int IG_Level;
 
     //private Camera mainCamera;
 
@@ -18,8 +18,8 @@ public class SpecialBomber : MonoBehaviour
     //    mainCamera = Camera.main;
     //    specialScript = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
 
-    //    damage = specialScript.specialDamage;
-    //    level = specialScript.powerLevel;
+    //    IG_Dmg = specialScript.specialDamage;
+    //    IG_Level = specialScript.IG_curPowerLevel;
     //    speed = 5;
     //}
     //private void Update()
@@ -44,8 +44,8 @@ public class SpecialBomber : MonoBehaviour
     //{
     //    ExplosionRangeOfSpecialBomber range = Instantiate(Explosion_range, transform.position, transform.rotation)
     //        .GetComponent<ExplosionRangeOfSpecialBomber>();
-    //    range.damage = damage;
-    //    range.level = level;
+    //    range.IG_Dmg = IG_Dmg;
+    //    range.IG_Level = IG_Level;
     //    GameManager.Instance.Pool.ReleasePool(gameObject);
     //}
 

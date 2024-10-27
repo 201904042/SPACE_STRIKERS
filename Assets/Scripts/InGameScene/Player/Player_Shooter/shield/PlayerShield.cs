@@ -40,12 +40,12 @@ public class PlayerShield : MonoBehaviour
 
     private void ResetShield()
     {
-        maxShieldCount = pStat.weaponLevel;
+        maxShieldCount = pStat.IG_WeaponLv;
         curShieldCount = maxShieldCount;
         ShieldColorChange();
 
         restoreDelay = PlayerMain.ShieldBaseInterval;
-        crashDamage= (PlayerMain.ShieldDamageRate/100) * pStat.damage;
+        crashDamage= (PlayerMain.ShieldDamageRate/100) * pStat.IG_Dmg;
     }
 
     private IEnumerator RestoreShield(float delay)

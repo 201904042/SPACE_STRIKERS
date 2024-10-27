@@ -64,7 +64,10 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         playerInit();
     }
 
-    
+    private void OnDisable()
+    {
+        
+    }
 
     public void playerInit()
     {
@@ -75,12 +78,18 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         pSkill = GetComponent<PlayerSkillManager>();
         pShooter = GetComponent<playerShooterUpgrade>();
 
-        pStat.Init();
-        pControl.Init();
+        pUI.ComponentSet();
+        
+        pStat.Init(); //최우선 스크립트
         pUI.Init();
+
+        pControl.Init();
+        pControl.PlayerInputOn();
+
         pSpecial.Init();
         pSkill.Init();
         pShooter.Init();
+        
 
         SetTestButtons();
         isPlayerSetDone = true;
@@ -91,8 +100,18 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     {
         PlayerMove();
         IncreasePow();
+        RestoreHp();
 
-       
+    }
+
+    private void RestoreHp()
+    {
+        if(pStat.PS_HpRegen <= 0)
+        {
+            return;
+        }
+
+        pStat.CurHp += (pStat.IG_HpRegen * Time.deltaTime); //초당 pStat.IG_HpRegen%만큼 회복 3이면 초당 3회복
     }
 
     private void PlayerMove()
@@ -106,30 +125,81 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     private void IncreasePow()
     {
-        if (pStat.curPowerValue <= powMax)
+        if (pStat.AddPower < powMax)
         {
-            pStat.curPowerValue += Time.deltaTime * pStat.powerIncreaseRate;
+            float addValue = Time.deltaTime * pStat.IG_PowIncreaseRate;
+            pStat.AddPower = Mathf.Min(pStat.AddPower + addValue, powMax); // 초당 지정된 속도로 게이지 누적
         }
-
         PowerLvSet();
+        pUI.PowBarChange();
     }
 
     private void PowerLvSet()
     {
-        float powerIncrease = pStat.curPowerValue;
-        if (powerIncrease > powlv1Max && pStat.powerLevel == 0)
+        float curPow = pStat.AddPower;
+        if (curPow > powlv1Max && pStat.IG_curPowerLevel == 0)
         {
-            pStat.powerLevel = 1;
+            pStat.IG_curPowerLevel = 1;
         }
-        else if (powerIncrease > powlv2Max && pStat.powerLevel == 1)
+        else if (curPow > powlv2Max && pStat.IG_curPowerLevel == 1)
         {
-            pStat.powerLevel = 2;
+            pStat.IG_curPowerLevel = 2;
         }
-        else if (powerIncrease >= powMax && pStat.powerLevel == 2)
+        else if (curPow >= powMax && pStat.IG_curPowerLevel == 2)
         {
-            pStat.powerLevel = 3;
+            pStat.IG_curPowerLevel = 3;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Border"))
+        {
+            switch (collision.name)
+            {
+                case "Top":
+                    pControl.isTopCollide = true; break;
+                case "Bottom":
+                    pControl.isBottomCollide = true; break;
+                case "Right":
+                    pControl.isRightCollide = true; break;
+                case "Left":
+                    pControl.isLeftCollide = false; break;
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (pStat.InvincibleState)
+        {
+            return;
+        }
+
+        if (collision.CompareTag("Enemy"))
+        {
+            pStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.damage / 2, collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Border"))
+        {
+            switch (collision.name)
+            {
+                case "Top":
+                    pControl.isTopCollide = false; break;
+                case "Bottom":
+                    pControl.isBottomCollide = false; break;
+                case "Right":
+                    pControl.isRightCollide = false; break;
+                case "Left":
+                    pControl.isLeftCollide = false; break;
+            }
+        }
+    }
+    
 
 
 

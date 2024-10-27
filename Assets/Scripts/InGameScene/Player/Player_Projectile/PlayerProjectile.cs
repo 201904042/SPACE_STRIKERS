@@ -125,7 +125,7 @@ public class PlayerProjectile : MonoBehaviour
         else
         {
             damageRate = _dmgRate;
-            finalDamage = finalDamage = (int)playerStat.damage * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
+            finalDamage = finalDamage = (int)playerStat.IG_Dmg * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
         }
 
         //발사체의 생성시간 : 발사체는 생성시간(초) 후엔 삭제됨. 없다면 발사체는 특정 조건까지 사라지지 않음

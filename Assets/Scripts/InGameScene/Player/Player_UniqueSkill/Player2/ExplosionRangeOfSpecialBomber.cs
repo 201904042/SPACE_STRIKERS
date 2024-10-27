@@ -8,11 +8,11 @@ using UnityEngine;
 public class ExplosionRangeOfSpecialBomber : MonoBehaviour
 {
     //private PlayerSpecialSkill specialScript;
-    //public float damage; // specialBomber에서 받아옴
+    //public float IG_Dmg; // specialBomber에서 받아옴
     //private float damageTik;//데미지 사이의 간격
     //private float liveTime;
     //private bool isDamaging;
-    //public int level; //specialBomber에서 받아옴
+    //public int IG_Level; //specialBomber에서 받아옴
 
     //private bool time_has_set;
     //private void Awake()
@@ -26,7 +26,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
     //}
     //void Update()
     //{
-    //    if (level == 1)
+    //    if (IG_Level == 1)
     //    {
     //        transform.localScale = new Vector3(2f, 2f, 2f);
     //        if (!time_has_set)
@@ -36,7 +36,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
     //        }
 
     //    }
-    //    else if (level == 2)
+    //    else if (IG_Level == 2)
     //    {
     //        transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
     //        if (!time_has_set)
@@ -45,7 +45,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
     //            specialScript.specialFireTime = liveTime;
     //        }
     //    }
-    //    else if (level == 3)
+    //    else if (IG_Level == 3)
     //    {
     //        transform.localScale = new Vector3(5, 5f, 5f);
     //        if (!time_has_set)
@@ -92,7 +92,7 @@ public class ExplosionRangeOfSpecialBomber : MonoBehaviour
     //        {
     //            if (enemy.gameObject.GetComponent<EnemyObject>() != null)
     //            {
-    //                enemy.gameObject.GetComponent<EnemyObject>().EnemyDamaged(damage, gameObject);
+    //                enemy.gameObject.GetComponent<EnemyObject>().EnemyDamaged(IG_Dmg, gameObject);
     //            }
     //        }
     //        yield return new WaitForSeconds(damageTik); // 데미지 간격만큼 대기

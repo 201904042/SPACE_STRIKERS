@@ -67,59 +67,66 @@ public class Active_Shield : ActiveSkill
     {
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
+            level = 1,
             Cooldown = 20, //재생성 쿨타임
             DamageRate = 200, //충돌시 데미지
             Range = 1
         };
-        SkillLevels.Add(lv1);
+        SkillLevels.Add(lv1.level, lv1);
 
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
+            level = 2,
             Cooldown = 18, //재생성 쿨타임
             DamageRate = 200, //충돌시 데미지
             Range = 1
         };
-        SkillLevels.Add(lv2);
+        SkillLevels.Add(lv2.level, lv2);
 
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
+            level = 3,
             Cooldown = 16, //재생성 쿨타임
             DamageRate = 300, //충돌시 데미지
             Range = 1.2f
         };
-        SkillLevels.Add(lv3);
+        SkillLevels.Add(lv3.level, lv3);
 
         Skill_LevelValue lv4 = new Skill_LevelValue()
         {
+            level = 4,
             Cooldown = 16, //재생성 쿨타임
             DamageRate = 300, //충돌시 데미지
             Range = 1.2f
         };
-        SkillLevels.Add(lv4);
+        SkillLevels.Add(lv4.level, lv4);
 
         Skill_LevelValue lv5 = new Skill_LevelValue()
         {
+            level = 5,
             Cooldown = 14, //재생성 쿨타임
             DamageRate = 400, //충돌시 데미지
             Range = 1.5f
         };
-        SkillLevels.Add(lv5);
+        SkillLevels.Add(lv5.level, lv5);
 
         Skill_LevelValue lv6 = new Skill_LevelValue()
         {
+            level = 6,
             Cooldown = 12, //재생성 쿨타임
             DamageRate = 400, //충돌시 데미지
             Range = 1.5f
         };
-        SkillLevels.Add(lv6);
+        SkillLevels.Add(lv6.level, lv6);
 
         Skill_LevelValue lv7 = new Skill_LevelValue()
         {
+            level = 7,
             Cooldown = 10, //재생성 쿨타임
             DamageRate = 500, //충돌시 데미지
             Range = 2f
         };
-        SkillLevels.Add(lv7);
+        SkillLevels.Add(lv7.level, lv7);
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 }

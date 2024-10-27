@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class UniqueSkill : InGameSkill
 {
-    protected Skill_LevelValue CurSkillValue => SkillLevels[currentLevel - 1];
+    public Skill_LevelValue CurSkillValue => SkillLevels[currentLevel];
     public Transform instantPoint;
     public Coroutine skillCoroutine;
     protected PlayerProjType projType;
+
+    public int useCharCode; //사용하는 캐릭터의 id
 
     protected int projNum;  //발사체 개수
     protected int projSpeed; //발사체의 속도
@@ -18,7 +20,7 @@ public class UniqueSkill : InGameSkill
 
     public override void Init()
     {
-        SkillLevels = new List<Skill_LevelValue>();
+        SkillLevels = new Dictionary<int, Skill_LevelValue>();
         instantPoint = GameManager.Instance.myPlayer.transform;
         skillCoroutine = null;
         type = SkillType.Unique;

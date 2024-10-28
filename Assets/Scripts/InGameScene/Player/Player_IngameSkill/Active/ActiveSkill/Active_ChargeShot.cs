@@ -109,7 +109,7 @@ public class Active_ChargeShot : ActiveSkill
         lv7.AdditionalEffects.Add(new S_EffectValuePair( SkillAddEffect.Penetrate, 3));
         
         SkillLevels.Add(lv7.level, lv7);
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
+        //Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 
 }

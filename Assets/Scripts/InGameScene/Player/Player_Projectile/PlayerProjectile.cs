@@ -103,6 +103,7 @@ public class PlayerProjectile : MonoBehaviour
     public virtual void SetProjParameter(int _projSpeed,int _dmgRate, float _liveTime, float _range)
     {
         Debug.Log("메인 파라미터 세팅");
+        
         isParameterSet = true;
 
         //발사체의 속도. 널값(0)이라면 해당 발사체는 플레이어를 따라다닌다. / 예시)에너지 필드, 특수4스킬 등 / 예외: 폭발(isShooting은 true, 속도는 0)

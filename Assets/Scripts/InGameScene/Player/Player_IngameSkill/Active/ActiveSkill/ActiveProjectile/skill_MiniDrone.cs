@@ -47,6 +47,7 @@ public class skill_MiniDrone : PlayerProjectile
     public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
     {
         Debug.Log("드론 파라미터 세팅");
+        ResetProj();
         isParameterSet = true;
 
         if (_projSpeed == 0)

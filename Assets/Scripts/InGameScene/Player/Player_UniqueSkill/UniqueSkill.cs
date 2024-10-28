@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class UniqueSkill : InGameSkill
 {
-    public Skill_LevelValue CurSkillValue => SkillLevels[currentLevel];
+    public Skill_LevelValue CurSkillValue;
     public Transform instantPoint;
-    public Coroutine skillCoroutine;
     protected PlayerProjType projType;
 
     public int useCharCode; //사용하는 캐릭터의 id
@@ -18,13 +18,16 @@ public class UniqueSkill : InGameSkill
     protected float liveTime; //발동 시간
     protected float range; //크기
 
+    public bool isSkillActive;
+
+    //다른 스킬과 달리 스킬 레벨을 외부에서 받아옴 (주의)
+
     public override void Init()
     {
         SkillLevels = new Dictionary<int, Skill_LevelValue>();
-        instantPoint = GameManager.Instance.myPlayer.transform;
-        skillCoroutine = null;
+        instantPoint = PlayerMain.Instance.transform;
         type = SkillType.Unique;
-        currentLevel = 1;
+        isSkillActive = false;
     }
 
     public override void SetLevel()
@@ -37,29 +40,34 @@ public class UniqueSkill : InGameSkill
         //레벨업의 의미 없음
     }
 
-    protected void SkillParameterSet()
+    protected virtual void SkillParameterSet(int level)
     {
-        Skill_LevelValue skillData = SkillLevels[currentLevel - 1];
-        projNum = skillData.ProjNum;
-        projSpeed = skillData.ProjSpeed;
-        liveTime = skillData.LiveTime;
-        dmgRate = skillData.DamageRate;
-        range = skillData.Range;
+        CurSkillValue = SkillLevels[level];
+        projNum = CurSkillValue.ProjNum;
+        projSpeed = CurSkillValue.ProjSpeed;
+        liveTime = CurSkillValue.LiveTime;
+        dmgRate = CurSkillValue.DamageRate;
+        range = CurSkillValue.Range;
+        
     }
 
 
-    public virtual IEnumerator ActivateSkillCoroutine()
+    public virtual IEnumerator ActivateSkillCoroutine(int level)
     {
-        ActivateSkill(); // 스킬 발동
+        SkillParameterSet(level); //레벨을 받아온 순간 파라미터를 조정
+        ActivateSkill(level); // 스킬 발동
         //스킬 발동중
+        isSkillActive = true;
         yield return new WaitForSeconds(liveTime); // 쿨타임 동안 대기
         //스킬발동 종료
+
+        isSkillActive = false;
     }
 
     /// <summary>
     /// 각 스킬의 실질적인 수행
     /// </summary>
-    public virtual void ActivateSkill()
+    public virtual void ActivateSkill(int level)
     {
         // 발사체 생성 코드
         Debug.Log($"유니크 스킬 발동");

@@ -129,6 +129,6 @@ public class Active_MiniDrone : ActiveSkill
         };
         lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Drone, 0.5f));
         SkillLevels.Add(lv7.level, lv7);
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
+        //Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 }

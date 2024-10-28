@@ -35,7 +35,7 @@ public class Active_Missile : ActiveSkill
             Skill_Missile proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Missile>();
             Vector2 RandomDir = DirectionToRandomEnemy();
             proj.transform.up = RandomDir;
-
+            
             proj.SetProjParameter(projSpeed, dmgRate, liveTime, range);
         }
     }
@@ -50,6 +50,7 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 3,
             DamageRate = 150,
+            LiveTime = 1,
             Range = 5
         };
         SkillLevels.Add(lv1.level, lv1);
@@ -61,6 +62,7 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 3,
             DamageRate = 150,
+            LiveTime = 1,
             Range = 5
         };
         SkillLevels.Add(lv2.level, lv2);
@@ -72,6 +74,7 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 3,
             DamageRate = 170,
+            LiveTime = 1,
             Range = 5
         };
         SkillLevels.Add(lv3.level, lv3);
@@ -83,6 +86,7 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 2,
             DamageRate = 170,
+            LiveTime = 1,
             Range = 5
         };
         SkillLevels.Add(lv4.level, lv4);
@@ -94,6 +98,7 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 2,
             DamageRate = 170,
+            LiveTime = 1,
             Range = 5
         };
         SkillLevels.Add(lv5.level, lv5);
@@ -105,6 +110,7 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 1,
             DamageRate = 200,
+            LiveTime = 1,
             Range = 5
         };
         SkillLevels.Add(lv6.level, lv6);
@@ -116,10 +122,11 @@ public class Active_Missile : ActiveSkill
             ProjSpeed = 15,
             Cooldown = 1,
             DamageRate = 200,
+            LiveTime = 1,
             Range = 10
         };
         SkillLevels.Add(lv7.level, lv7);
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
+        //Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 
 }

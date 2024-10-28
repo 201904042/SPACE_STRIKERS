@@ -23,8 +23,19 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     private void SetUniques()
     {
-        Unique_Char1 char1 = new Unique_Char1();
+        USkill_Char1 char1 = new USkill_Char1();
+        char1.Init();
         uniqueSkills.Add(char1.useCharCode, char1);
+        USkill_Char2 char2 = new USkill_Char2();
+        char2.Init();
+        uniqueSkills.Add(char2.useCharCode, char2);
+        USkill_Char3 char3 = new USkill_Char3();
+        char3.Init();
+        uniqueSkills.Add(char3.useCharCode, char3);
+        USkill_Char4 char4 = new USkill_Char4();
+        char4.Init();
+        uniqueSkills.Add(char4.useCharCode, char4);
+        Debug.Log("유니크 설정 완료");
     }
 
     public UniqueSkill GetUniqueSkill(int charId)
@@ -39,14 +50,14 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     }
 
-    public void SpecialFire() //컨트롤러의 키입력함수에 사용
+    public void SpecialFire(int charId,int powLevel) //컨트롤러의 키입력함수에 사용
     {
-        Debug.Log($"{pStat.curPlayerID}의 스페셜 스킬");
+        Debug.Log($"{pStat.curPlayerID}의 {powLevel}레벨 특수 스킬");
 
-        UniqueSkill targetSkill = GetUniqueSkill(pStat.curPlayerID);
-        targetSkill.ActivateSkill();
+        UniqueSkill targetSkill = GetUniqueSkill(charId);
+        StartCoroutine(targetSkill.ActivateSkillCoroutine(powLevel));
         //스킬 활성화시 파워레벨 초기화
-
+        
     }
 
     //public IEnumerator character1SpecialOn()
@@ -130,19 +141,6 @@ public class PlayerSpecialSkill : MonoBehaviour
     //}
 
     //UI 버튼
-    public void btn1()
-    {
-        //SpecialFire(pStat.curPlayerID);
-    }
-
-    public void btn2()
-    {
-        //SpecialFire(pStat.curPlayerID);
-    }
-
-    public void btn3()
-    {
-        //SpecialFire(pStat.curPlayerID);
-    }
+    
 
 }

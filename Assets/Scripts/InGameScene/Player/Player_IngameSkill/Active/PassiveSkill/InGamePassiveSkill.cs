@@ -17,7 +17,7 @@ public class InGamePassiveSkill : InGameSkill
 
     public override void SetLevel()
     {
-        Debug.Log($"{SkillCode}의 레벨데이터 세팅");
+        //Debug.Log($"{SkillCode}의 레벨데이터 세팅");
     }
 
     public override void LevelUp()

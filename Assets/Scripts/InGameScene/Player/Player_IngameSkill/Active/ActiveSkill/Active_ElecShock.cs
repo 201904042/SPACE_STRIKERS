@@ -130,7 +130,7 @@ public class Active_ElecShock : ActiveSkill
         lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.Slow, 70));
         lv7.AdditionalEffects.Add(new S_EffectValuePair(SkillAddEffect.SlowExtraDamage, 100));
         SkillLevels.Add(lv7.level, lv7);
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
+        //Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 
 }

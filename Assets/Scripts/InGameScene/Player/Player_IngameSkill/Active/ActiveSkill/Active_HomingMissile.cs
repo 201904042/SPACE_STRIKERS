@@ -111,6 +111,6 @@ public class Active_HomingMissile : ActiveSkill
             DamageRate = 80,
         };
         SkillLevels.Add(lv7.level, lv7);
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
+        //Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 }

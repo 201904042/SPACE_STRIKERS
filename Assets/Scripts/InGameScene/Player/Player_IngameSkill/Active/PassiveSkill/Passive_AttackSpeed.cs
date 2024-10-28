@@ -51,7 +51,7 @@ public class Passive_AttackSpeed : InGamePassiveSkill
         };
         SkillLevels.Add(lv5.level, lv5);
 
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
+        //Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
     }
 }
 

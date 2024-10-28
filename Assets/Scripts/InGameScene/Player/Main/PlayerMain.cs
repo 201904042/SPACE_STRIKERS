@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -214,15 +215,24 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
             Debug.LogError("테스트버튼그룹을 찾지 못함");
         }
 
-        for(int i =0; i< TestButtons.childCount; i++)
+        Button[] btns = TestButtons.GetComponentsInChildren<Button>();
+
+        for(int i =0; i< btns.Length; i++)
         {
-            TestButtons.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();
+            btns[i].onClick.RemoveAllListeners();
         }
 
         TestButtons.Find("ShooterUp").GetComponent<Button>().onClick.AddListener(ShooterUPBtn);
         TestButtons.Find("ShooterDown").GetComponent<Button>().onClick.AddListener(ShooterDownBtn);
         TestButtons.Find("NextChar").GetComponent<Button>().onClick.AddListener(NextBtn);
         TestButtons.Find("PrevChar").GetComponent<Button>().onClick.AddListener(PrevBtn);
+        Transform UniqueBtn = TestButtons.Find("UniqueBtn");
+        for(int i = 0; i < UniqueBtn.childCount; i++)
+        {
+            int index = i+1; //1~3
+            UniqueBtn.GetChild(i).GetComponent<Button>().onClick.AddListener(() => USkillBtn(index));
+        }
+
     }
 
     public void ShooterUPBtn()
@@ -264,6 +274,13 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
             pShooter.charId = 104;
         }
     }
+
+
+    public void USkillBtn(int i)
+    {
+        pSpecial.SpecialFire(pStat.curPlayerID, i);
+    }
+
     #endregion
 }
 

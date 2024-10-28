@@ -62,7 +62,7 @@ public class playerShooterUpgrade : MonoBehaviour
             Destroy(InstanceTransform.GetChild(0).gameObject);
         }
 
-        GameObject shooter = Resources.Load<GameObject>($"Prefab/Player/Shooters/{playerId}/{shooterId}");
+        GameObject shooter = Resources.Load<GameObject>($"Prefab/Player/Shooters/{playerId}/Lv{shooterId}");
         if (shooter == null)
         {
             Debug.Log($"플레이어 슈터 : 잘못된 경로 할당 p : {playerId}/ lv : {shooterId} ");

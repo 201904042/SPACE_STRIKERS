@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Passive_HpRegeneration : InGamePassiveSkill
 {
-    public override void Init()
+    public override void SkillReset()
     {
-        base.Init();
+        base.SkillReset();
         SkillCode = 645;
         SetLevel();
-        currentLevel = 1; // 현재 레벨 초기화
+        curSkillLevel = 1; // 현재 레벨 초기화
     }
     public override void SetLevel()
     {
@@ -17,28 +17,28 @@ public class Passive_HpRegeneration : InGamePassiveSkill
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
             level = 1,
-            DamageRate = 10
+            DmgRate = 10
         };
         SkillLevels.Add(lv1.level, lv1);
 
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
             level = 2,
-            DamageRate = 20
+            DmgRate = 20
         };
         SkillLevels.Add(lv2.level, lv2);
 
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
             level = 3,
-            DamageRate = 30
+            DmgRate = 30
         };
         SkillLevels.Add(lv3.level, lv3);
 
         Skill_LevelValue lv4 = new Skill_LevelValue()
         {
             level = 4,
-            DamageRate = 40
+            DmgRate = 40
         };
         SkillLevels.Add(lv4.level, lv4);
 
@@ -46,7 +46,7 @@ public class Passive_HpRegeneration : InGamePassiveSkill
         Skill_LevelValue lv5 = new Skill_LevelValue()
         {
             level = 5,
-            DamageRate = 50
+            DmgRate = 50
         };
         SkillLevels.Add(lv5.level, lv5);
 

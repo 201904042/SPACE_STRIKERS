@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class USkill_Char4 : UniqueSkill
 {
-    public override void Init()
+    public override void SkillReset()
     {
-        base.Init();
+        base.SkillReset();
         SkillCode = 694;
         useCharCode = 104;
         projType = PlayerProjType.Spcial_Player4;
@@ -20,30 +20,28 @@ public class USkill_Char4 : UniqueSkill
 
     public override IEnumerator ActivateSkillCoroutine(int level)
     {
-        isSkillActive = true;
         SkillParameterSet(level); //레벨을 받아온 순간 파라미터를 조정
 
         int projIndex = 0;
-        float projDelay = liveTime / projNum;
+        float projDelay = liveTime / projCount;
 
         ActivateSkill(level); //초탄 발사
         projIndex++;
-        while (projIndex != projNum)
+        while (projIndex != projCount)
         {
             yield return new WaitForSeconds(projDelay);
             ActivateSkill(level); // 스킬 발동
             projIndex++;
         }
         
-        isSkillActive = false;
     }
 
-    public override void ActivateSkill(int level)
+    protected override void ActivateSkill(int level)
     {
         base.ActivateSkill(level);
 
         USkill_TrackingMissile proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<USkill_TrackingMissile>();
-        proj.SetProjParameter(projSpeed, dmgRate, 0, range); //여기선 라이브타임을 다른 방식으로 사용
+        proj.SetProjParameter(projSpd, dmgRate, 0, size); //여기선 라이브타임을 다른 방식으로 사용
     }
 
     public override void SetLevel()
@@ -51,9 +49,9 @@ public class USkill_Char4 : UniqueSkill
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
             level = 1,
-            ProjNum = 10,
-            ProjSpeed = 10,
-            DamageRate = 100,
+            ProjCount = 10,
+            ProjSpd = 10,
+            DmgRate = 100,
             LiveTime = 5f //5초안에 전부발사
         };
 
@@ -62,9 +60,9 @@ public class USkill_Char4 : UniqueSkill
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
             level = 2,
-            ProjNum = 15,
-            ProjSpeed = 10,
-            DamageRate = 120,
+            ProjCount = 15,
+            ProjSpd = 10,
+            DmgRate = 120,
             LiveTime = 5f
         };
         SkillLevels.Add(lv2.level, lv2);
@@ -72,9 +70,9 @@ public class USkill_Char4 : UniqueSkill
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
             level = 3,
-            ProjNum = 25,
-            ProjSpeed = 10,
-            DamageRate = 150,
+            ProjCount = 25,
+            ProjSpd = 10,
+            DmgRate = 150,
             LiveTime = 5f
         };
         SkillLevels.Add(lv3.level, lv3);

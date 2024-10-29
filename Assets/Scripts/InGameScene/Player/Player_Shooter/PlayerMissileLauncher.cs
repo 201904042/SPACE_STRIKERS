@@ -27,12 +27,8 @@ public class PlayerMissileLauncher : LauncherStat
     {
         base.Fire();
         PlayerMissile proj = GameManager.Instance.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerMissile>();
+        proj.SetAddParameter(50, 1, 1);
         proj.SetProjParameter(projSpeed, projDamageRate,  0, 0);
     }
 
-
-
-    #region µð¹ö±ë ¹öÆ°
-
-    #endregion
 }

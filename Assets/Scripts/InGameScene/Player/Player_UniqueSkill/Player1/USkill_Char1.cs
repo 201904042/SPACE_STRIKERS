@@ -3,9 +3,9 @@ using UnityEngine;
 public class USkill_Char1 : UniqueSkill
 {
     
-    public override void Init()
+    public override void SkillReset()
     {
-        base.Init();
+        base.SkillReset();
         SkillCode = 691;
         useCharCode = 101;
         projType = PlayerProjType.Spcial_Player1;
@@ -20,18 +20,18 @@ public class USkill_Char1 : UniqueSkill
 
     private float space = 0.75f;
 
-    public override void ActivateSkill(int level)
+    protected override void ActivateSkill(int level)
     {
         base.ActivateSkill(level);
 
         float spawnXpos = GetInitialSpawnXpos();
         float spawnYpos = -4.5f;
 
-        for (int i = 0; i < projNum; i++)
+        for (int i = 0; i < projCount; i++)
         {
             Vector3 spawnPosition = new Vector3(spawnXpos + (i * space), spawnYpos, 0f);
             Troop troop = GameManager.Instance.Pool.GetPlayerProj(projType, spawnPosition, instantPoint.rotation).GetComponent<Troop>();
-            troop.SetProjParameter(projSpeed, dmgRate, liveTime, range);
+            troop.SetProjParameter(projSpd, dmgRate, liveTime, size);
 
             // 이전 슈터 제거
             Transform instantTransform = troop.transform.GetChild(0);
@@ -49,16 +49,16 @@ public class USkill_Char1 : UniqueSkill
     private float GetInitialSpawnXpos()
     {
 
-        float spawnXpos = instantPoint.position.x - (projNum / 2) * space;
+        float spawnXpos = instantPoint.position.x - (projCount / 2) * space;
 
         // X 위치를 -2.5에서 2.5 사이로 제한
         if (spawnXpos < -2.5f)
         {
             spawnXpos = -2.5f;
         }
-        else if (spawnXpos + (projNum * space) > 2.5f) //생성지점부터 생성개수*오프셋값을 더하여 끝점의 위치를 알아내고 비교
+        else if (spawnXpos + (projCount * space) > 2.5f) //생성지점부터 생성개수*오프셋값을 더하여 끝점의 위치를 알아내고 비교
         {
-            spawnXpos = 2.5f - (projNum * space);
+            spawnXpos = 2.5f - (projCount * space);
         }
 
         return spawnXpos;
@@ -70,10 +70,10 @@ public class USkill_Char1 : UniqueSkill
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
             level = 1,
-            ProjNum = 1,
-            ProjSpeed = 5,
+            ProjCount = 1,
+            ProjSpd = 5,
             LiveTime = 5,
-            DamageRate = 50
+            DmgRate = 50
         };
 
         SkillLevels.Add(lv1.level, lv1);
@@ -81,20 +81,20 @@ public class USkill_Char1 : UniqueSkill
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
             level = 2,
-            ProjNum = 3,
-            ProjSpeed = 5,
+            ProjCount = 3,
+            ProjSpd = 5,
             LiveTime = 7.5f,
-            DamageRate = 75
+            DmgRate = 75
         };
         SkillLevels.Add(lv2.level, lv2);
 
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
             level = 3,
-            ProjNum = 5,
-            ProjSpeed = 5,
+            ProjCount = 5,
+            ProjSpd = 5,
             LiveTime = 10,
-            DamageRate = 100
+            DmgRate = 100
         };
         SkillLevels.Add(lv3.level, lv3);
 

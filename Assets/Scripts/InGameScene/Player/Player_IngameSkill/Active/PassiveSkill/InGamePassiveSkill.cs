@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class InGamePassiveSkill : InGameSkill
 {
-    public float CurrentEffectValue => SkillLevels[currentLevel].DamageRate; // 현재 효과 값
+    public float CurrentEffectValue => SkillLevels[curSkillLevel].DmgRate; // 현재 효과 값
     
-    public override void Init()
+    public override void SkillReset()
     {
         SkillLevels = new Dictionary<int, Skill_LevelValue>();
         type = SkillType.Passive;
-        currentLevel = 1;
+        curSkillLevel = 1;
     }
 
     public override void SetLevel()
@@ -22,9 +22,9 @@ public class InGamePassiveSkill : InGameSkill
 
     public override void LevelUp()
     {
-        if (currentLevel < SkillLevels.Count - 1)
+        if (curSkillLevel < SkillLevels.Count - 1)
         {
-            currentLevel++;
+            curSkillLevel++;
             ApplyEffect();
         }
     }

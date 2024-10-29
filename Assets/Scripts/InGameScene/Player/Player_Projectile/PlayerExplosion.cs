@@ -5,19 +5,27 @@ using UnityEngine;
 
 public class PlayerExplosion : PlayerProjectile
 {
+    // 필요 변수 : 데미지, 생성시간, 크기, 틱
+
+    public float tikDelay;
 
     protected override void Update()
     {
         //부모 업데이트 내용 제거
     }
 
-    /// <summary>
-    /// t: 데미지를 적용하면 리스트에서 제거  f:데미지 적용해도 리스트에서 제거안함
-    /// </summary>
-    /// <param name="tf"></param>
-    public void OnHitOnce(bool tf)
+    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0, float value4 = 0)
     {
-        isHitOnce = tf;
+        base.SetAddParameter(value1, value2, value3, value4);
+        if(value1 != 0) //tik 설정
+        {
+            tikDelay = value1;
+            isHitOnce = false;
+        }
+        else
+        {
+            isHitOnce = true ;
+        }
     }
 
     public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
@@ -48,11 +56,9 @@ public class PlayerExplosion : PlayerProjectile
         {
             if (damaging == null)
             {
-                damaging = StartCoroutine(AreaDamageLogic(0.5f));
+                damaging = StartCoroutine(AreaDamageLogic(tikDelay));
             }
         }
-        
-
     }
 }
 

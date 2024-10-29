@@ -62,7 +62,7 @@ public class EnemyAct : EnemyObject
     public static void BulletAttack(EnemyObject enemy, int projNum, float projAngle, float bulletSpeed = 10f, bool isAimToPlayer = false, float projBasicAngle = -180, bool split = false, int splitCount = 3)
     {
         //Debug.Log($"¼¦ ÁøÀÔ" +
-           // $"projNum {projNum} projAngle {projAngle}  bulletSpeed {bulletSpeed},  isAimToPlayer {isAimToPlayer} , projBasicAngle {projBasicAngle} , split {split}");
+           // $"projCount {projCount} projAngle {projAngle}  bulletSpeed {bulletSpeed},  isAimToPlayer {isAimToPlayer} , projBasicAngle {projBasicAngle} , split {split}");
         float angleStep = projAngle / projNum;
         float angleInit;
         if (projNum % 2 == 0) //Â¦¼ö

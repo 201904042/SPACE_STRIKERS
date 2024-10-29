@@ -18,10 +18,10 @@ public class Skill_EnergyField : PlayerProjectile
         cycleRate = 0;
     }
 
-    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
+    public override void SetAddParameter(float value1, float value2 =0, float value3 = 0, float value4 = 0)
     {
-        base.SetAddParameter(value1, value2, value3);
-        if(value1 == 0)
+        base.SetAddParameter(value1, value2, value3, value4);
+        if (value1 == 0)
         {
             return;
         }
@@ -33,12 +33,13 @@ public class Skill_EnergyField : PlayerProjectile
     {
         base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range);
         isHitOnce = false;
-        isShootingObj = false;
+        isShootingObj = false; 
     }
 
     protected override IEnumerator LiveTimer(float activeTime)
     {
         yield return new WaitForSeconds(activeTime);
+
         if (speed == 0)
         {
             GameManager.Instance.Pool.ReleasePool(gameObject);

@@ -1,0 +1,89 @@
+{
+  "SkillData": [
+  {
+    "id": 601,
+    "type": 1,
+    "levels": [
+      {
+        "level": 1,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 5,
+        "DmgRate": 150
+      },
+      {
+        "level": 2,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 5,
+        "DmgRate": 170
+      },
+      {
+        "level": 3,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 4,
+        "DmgRate": 190,
+        "AddEffect": [
+          {
+            "effect": 3,
+            "value1": 1
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 4,
+        "DmgRate": 210,
+        "AddEffect": [
+          {
+            "effect": 3,
+            "value1": 1
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 3,
+        "DmgRate": 230,
+        "AddEffect": [
+          {
+            "effect": 3,
+            "value1": 2
+          }
+        ]
+      },
+      {
+        "level": 6,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 3,
+        "DmgRate": 250,
+        "AddEffect": [
+          {
+            "effect": 3,
+            "value1": 2
+          }
+        ]
+      },
+      {
+        "level": 7,
+        "ProjCount": 1,
+        "ProjSpd": 10,
+        "CoolTime": 3,
+        "DmgRate": 300,
+        "AddEffect": [
+          {
+            "effect": 3,
+            "value1": 3
+          }
+        ]
+      }
+    ]
+  }
+ ]
+}

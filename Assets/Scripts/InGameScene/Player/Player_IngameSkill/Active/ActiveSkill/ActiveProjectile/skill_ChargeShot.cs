@@ -23,14 +23,15 @@ public class Skill_ChargeShot : PlayerProjectile
         damageCount = 0;
     }
 
-    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
+    public override void SetAddParameter(float value1, float value2 =0, float value3 = 0, float value4 = 0)
     {
-        base.SetAddParameter(value1, value2, value3);
+        base.SetAddParameter(value1, value2, value3,value4);
         if(value1 == 0)
         {
             return;
         }
 
+        isHitOnce = false; //이거 없으면 penetrate 작동안함
         isPenetrate = true;
         penetrateCount = (int)value1;
         Debug.Log($"penetrateCount = {(int)value1}");
@@ -49,10 +50,11 @@ public class Skill_ChargeShot : PlayerProjectile
             return;
         }
 
+        damageCount++;
         if (damageCount == penetrateCount)
         {
             GameManager.Instance.Pool.ReleasePool(gameObject);
         }
-        damageCount++;
+        
     }
 }

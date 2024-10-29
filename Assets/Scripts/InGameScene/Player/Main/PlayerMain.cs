@@ -94,6 +94,14 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
         SetTestButtons();
         isPlayerSetDone = true;
+        PlayerSkillManager ps = PlayerMain.pSkill;
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
     }
 
 

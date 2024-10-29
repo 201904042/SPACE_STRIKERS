@@ -64,6 +64,11 @@ public abstract class ReadOnlyData<T>
             var wrapper = JsonUtility.FromJson<UpgradeDataWrapper>(json);
             dataList = wrapper.UpgradeData as List<T>;
         }
+        else if (typeof(T) == typeof(SkillData))
+        {
+            var wrapper = JsonUtility.FromJson<SkillDataWrapper>(json);
+            dataList = wrapper.SkillData as List<T>;
+        }
         else if (typeof(T) == typeof(AccountData))
         {
             var wrapper = JsonUtility.FromJson<AccountDataWrapper>(json);

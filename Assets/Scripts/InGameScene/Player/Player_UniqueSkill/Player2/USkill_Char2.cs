@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class USkill_Char2 : UniqueSkill
 {
-    public override void Init()
+
+    public override void SkillReset()
     {
-        base.Init();
+        base.SkillReset();
         SkillCode = 692;
         useCharCode = 102;
         projType = PlayerProjType.Spcial_Player2;
@@ -20,12 +21,13 @@ public class USkill_Char2 : UniqueSkill
         //레벨업 개념이 없음
     }
 
-    public override void ActivateSkill(int level)
+    protected override void ActivateSkill(int level)
     {
         base.ActivateSkill(level);
 
         USkill_Bomber proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<USkill_Bomber>();
-        proj.SetProjParameter(projSpeed, dmgRate, liveTime, range); //발사체의 속도와 데미지, 폭발의 시간과 크기
+        proj.SetAddParameter(expDmg, expLiveTime, expSize, cycleDelay);
+        proj.SetProjParameter(projSpd, dmgRate, 0, 0); //발사체의 속도와 데미지, 폭발의 시간과 크기
     }
 
     public override void SetLevel()
@@ -33,35 +35,34 @@ public class USkill_Char2 : UniqueSkill
         Skill_LevelValue lv1 = new Skill_LevelValue()
         {
             level = 1,
-            ProjNum = 1,
-            ProjSpeed = 5,
-            LiveTime = 3,
-            DamageRate = 150,
-            Range = 2
+            ProjCount = 1,
+            ProjSpd = 5,
+            DmgRate = 150
         };
-
+        lv1.AddEffect.Add(new S_EffectValuePair(SkillAddEffect.Explosion, 50, 3, 2));
+        lv1.AddEffect.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));
         SkillLevels.Add(lv1.level, lv1);
 
         Skill_LevelValue lv2 = new Skill_LevelValue()
         {
             level = 2,
-            ProjNum = 1,
-            ProjSpeed = 5,
-            LiveTime = 5f,
-            DamageRate = 300,
-            Range = 4
+            ProjCount = 1,
+            ProjSpd = 5,
+            DmgRate = 300
         };
+        lv2.AddEffect.Add(new S_EffectValuePair(SkillAddEffect.Explosion, 100, 5, 4));
+        lv2.AddEffect.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));
         SkillLevels.Add(lv2.level, lv2);
 
         Skill_LevelValue lv3 = new Skill_LevelValue()
         {
             level = 3,
-            ProjNum = 1,
-            ProjSpeed = 5,
-            LiveTime = 8,
-            DamageRate = 500,
-            Range = 6
+            ProjCount = 1,
+            ProjSpd = 5,
+            DmgRate = 500
         };
+        lv3.AddEffect.Add(new S_EffectValuePair(SkillAddEffect.Explosion, 150, 8, 6));
+        lv3.AddEffect.Add(new S_EffectValuePair(SkillAddEffect.CycleDamage, 0.5f));
         SkillLevels.Add(lv3.level, lv3);
 
         Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");

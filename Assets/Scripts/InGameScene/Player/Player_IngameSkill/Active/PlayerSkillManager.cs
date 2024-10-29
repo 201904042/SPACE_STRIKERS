@@ -21,6 +21,8 @@ public class PlayerSkillManager : MonoBehaviour
         usingPassiveSkills = new List<InGamePassiveSkill>();
 
         Debug.Log("스킬 초기화 완료");
+
+        
     }
 
     //존재하는 모든 스킬들은 인게임 스킬 리스트에 등록 => 여기서 선택된 스킬을 찾아서 using리스트에 등록
@@ -55,7 +57,7 @@ public class PlayerSkillManager : MonoBehaviour
 
         for (int i = 0; i < ingameSkillList.Count; i++) 
         {
-            ingameSkillList[i].Init();
+            ingameSkillList[i].SkillReset();
         }
     }
 
@@ -95,7 +97,7 @@ public class PlayerSkillManager : MonoBehaviour
         if (existingSkill != null)
         {
             LevelUpSkill(existingSkill); // 기존 스킬의 레벨업
-            if(existingSkill.currentLevel == existingSkill.SkillLevels.Count)
+            if(existingSkill.curSkillLevel == existingSkill.SkillLevels.Count)
             {
                 ingameSkillList.Remove(skill); //만약 최대레벨이 되면 인게임 리스트에서는 삭제
             }
@@ -105,7 +107,7 @@ public class PlayerSkillManager : MonoBehaviour
             usingActiveSkills.Add(skill); // 새로운 스킬 추가
             ActivateSkill(skill);
         }
-        Debug.Log($"{skill.SkillCode}은 현제 {skill.currentLevel}레벨");
+        Debug.Log($"{skill.SkillCode}은 현제 {skill.curSkillLevel}레벨");
     }
 
     public void AddPassiveSkill(InGamePassiveSkill skill)
@@ -114,7 +116,7 @@ public class PlayerSkillManager : MonoBehaviour
         if (existingSkill != null)
         {
             existingSkill.LevelUp(); // 기존 스킬의 레벨업
-            if (existingSkill.currentLevel == existingSkill.SkillLevels.Count)
+            if (existingSkill.curSkillLevel == existingSkill.SkillLevels.Count)
             {
                 ingameSkillList.Remove(skill);
             }
@@ -124,7 +126,7 @@ public class PlayerSkillManager : MonoBehaviour
             usingPassiveSkills.Add(skill); // 새로운 스킬 추가
             ApplySkill(skill);
         }
-        Debug.Log($"{skill.SkillCode}은 현제 {skill.currentLevel}레벨");
+        Debug.Log($"{skill.SkillCode}은 현제 {skill.curSkillLevel}레벨");
     }
 
     public void LevelUpSkill(InGameSkill skill)

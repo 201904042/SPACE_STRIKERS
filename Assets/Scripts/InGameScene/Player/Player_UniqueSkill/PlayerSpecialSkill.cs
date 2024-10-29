@@ -24,16 +24,16 @@ public class PlayerSpecialSkill : MonoBehaviour
     private void SetUniques()
     {
         USkill_Char1 char1 = new USkill_Char1();
-        char1.Init();
+        char1.SkillReset();
         uniqueSkills.Add(char1.useCharCode, char1);
         USkill_Char2 char2 = new USkill_Char2();
-        char2.Init();
+        char2.SkillReset();
         uniqueSkills.Add(char2.useCharCode, char2);
         USkill_Char3 char3 = new USkill_Char3();
-        char3.Init();
+        char3.SkillReset();
         uniqueSkills.Add(char3.useCharCode, char3);
         USkill_Char4 char4 = new USkill_Char4();
-        char4.Init();
+        char4.SkillReset();
         uniqueSkills.Add(char4.useCharCode, char4);
         Debug.Log("유니크 설정 완료");
     }

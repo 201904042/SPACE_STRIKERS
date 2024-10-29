@@ -6,38 +6,50 @@ using UnityEngine;
 
 public class ActiveSkill : InGameSkill
 {
-    protected Skill_LevelValue CurSkillValue => SkillLevels[currentLevel];
+    protected Skill_LevelValue CurSkillValue => SkillLevels[curSkillLevel];
     public Transform instantPoint;
-    public Coroutine skillCoroutine;
     protected PlayerProjType projType;
 
-    protected int projNum;
-    protected int projSpeed;
+    //기본 파라미터
+    protected int projCount;
+    protected int projSpd;
     protected int dmgRate;
-    protected float cooldown;
+    protected float coolTime;
     protected float liveTime;
-    protected float range;
+    protected float size;
 
+    #region 특수 파라미터
     protected bool isSlow;
     protected float slowRate;
+
     protected bool isSlowExtraDmg;
     protected float slowDmgRate;
+
     protected bool isPenetrate;
     protected float penetrateCount;
+
     protected bool isCycleDmg;
     protected float cycleDelay;
+
     protected bool isDrone;
-    protected float droneAtkSpd;
+    protected float dAtkSpd;
+    protected float dAtkRange;
+
     protected bool isShield;
     protected float shieldCount;
 
-    public override void Init()
+    protected bool isExplosion;
+    protected float expDmg;
+    protected float expLiveTime;
+    protected float expSize;
+    #endregion
+
+    public override void SkillReset()
     {
         SkillLevels = new Dictionary<int, Skill_LevelValue>();
         instantPoint = PlayerMain.Instance.gameObject.transform;
-        skillCoroutine = null;
         type = SkillType.Active;
-        currentLevel = 1;
+        curSkillLevel = 1;
     }
 
     public override void SetLevel()
@@ -47,22 +59,23 @@ public class ActiveSkill : InGameSkill
 
     public override void LevelUp()
     {
-        if (currentLevel < SkillLevels.Count)
+        if (curSkillLevel < SkillLevels.Count)
         {
-            currentLevel++;
+            curSkillLevel++;
         }
 
-        SkillParameterSet();
+        SkillParameterSet(curSkillLevel);
     }
 
-    protected void SkillParameterSet()
+    //기본스킬에서는 레벨업시 적용, 유니크스킬은 발동 전 적용
+    protected virtual void SkillParameterSet(int level)
     {
-        Skill_LevelValue skillData = SkillLevels[currentLevel];
-        projNum = skillData.ProjNum;
-        projSpeed = skillData.ProjSpeed;
-        cooldown = skillData.Cooldown;
-        dmgRate = skillData.DamageRate;
-        range = skillData.Range;
+        Skill_LevelValue skillData = SkillLevels[level];
+        projCount = skillData.ProjCount;
+        projSpd = skillData.ProjSpd;
+        coolTime = skillData.CoolTime;
+        dmgRate = skillData.DmgRate;
+        size = skillData.Size;
         liveTime = skillData.LiveTime;
 
         isSlow = false;
@@ -71,35 +84,54 @@ public class ActiveSkill : InGameSkill
         isCycleDmg = false;
         isDrone = false;
         isShield = false;
+        isExplosion = false;
 
-        foreach (S_EffectValuePair effectValue in skillData.AdditionalEffects)
+        foreach (S_EffectValuePair effectValue in skillData.AddEffect)
         {
             switch (effectValue.effect)
             {
-                case SkillAddEffect.Slow: isSlow = true; slowRate = effectValue.value; break;
-                case SkillAddEffect.SlowExtraDamage: isSlowExtraDmg = true; slowDmgRate = effectValue.value; break;
-                case SkillAddEffect.Penetrate: isPenetrate = true; penetrateCount = effectValue.value; break;
-                case SkillAddEffect.CycleDamage: isCycleDmg = true; cycleDelay = effectValue.value; break;
-                case SkillAddEffect.Drone: isDrone = true; droneAtkSpd = effectValue.value; break;
-                case SkillAddEffect.Shield: isShield = true; shieldCount = effectValue.value; break;
+                case SkillAddEffect.Slow: isSlow = true; 
+                    slowRate = effectValue.value1; 
+                    break;
+                case SkillAddEffect.SlowExtraDamage: isSlowExtraDmg = true; 
+                    slowDmgRate = effectValue.value1; 
+                    break;
+                case SkillAddEffect.Penetrate: isPenetrate = true; 
+                    penetrateCount = effectValue.value1; 
+                    break;
+                case SkillAddEffect.CycleDamage: isCycleDmg = true; 
+                    cycleDelay = effectValue.value1; 
+                    break;
+                case SkillAddEffect.Drone: isDrone = true; 
+                    dAtkSpd = effectValue.value1;
+                    dAtkRange = effectValue.value2;
+                    break;
+                case SkillAddEffect.Shield: isShield = true; 
+                    shieldCount = effectValue.value1; 
+                    break;
+                case SkillAddEffect.Explosion: isExplosion = true; 
+                    expDmg = effectValue.value1; 
+                    expLiveTime = effectValue.value2; 
+                    expSize = effectValue.value3; 
+                    break;
             }
         }
 }
 
-    //반복 스킬 발동 코루틴
-    public virtual IEnumerator ActivateSkillCoroutine()
+    //반복 스킬 발동 코루틴. 기본스킬은 파라미터의 level사용안하며 curSkillLevel을 사용
+    public virtual IEnumerator ActivateSkillCoroutine(int level = 0)
     {
         while (true)
         {
-            ActivateSkill(); // 스킬 발동
-            yield return new WaitForSeconds(CurSkillValue.Cooldown); // 쿨타임 동안 대기
+            ActivateSkill(level); // 스킬 발동
+            yield return new WaitForSeconds(CurSkillValue.CoolTime); // 쿨타임 동안 대기
         }
     }
 
     /// <summary>
     /// 각 스킬의 실질적인 수행
     /// </summary>
-    public virtual void ActivateSkill()
+    protected virtual void ActivateSkill(int level)
     {
         // 발사체 생성 코드
         Debug.Log($"액티브스킬 {SkillCode}의 발사체 생성");

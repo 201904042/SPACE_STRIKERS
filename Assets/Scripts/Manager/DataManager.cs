@@ -11,6 +11,7 @@ public enum DataFieldType
     StoreData,
     StageData,
     UpgradeData,
+    SkillData,
     AccountData,
     CharData,
     PartsAbilityData,
@@ -29,6 +30,7 @@ public class DataManager : MonoBehaviour
     { DataFieldType.StoreData, "StoreData" },
     { DataFieldType.StageData, "StageData" },
     { DataFieldType.UpgradeData, "UpgradeData" },
+    { DataFieldType.SkillData, "SkillData" },
     { DataFieldType.AccountData, "AccountData" },
     { DataFieldType.CharData, "CharacterData" },
     { DataFieldType.PartsAbilityData, "PartsAbilityData" },
@@ -37,17 +39,18 @@ public class DataManager : MonoBehaviour
     { DataFieldType.GotchaData, "GotchaData" }
 };
 
-    public static AccountJsonReader account = new AccountJsonReader();
-    public static MasterDataReader master = new MasterDataReader();
-    public static InventoryDataReader inven = new InventoryDataReader();
-    public static EnemyDataReader enemy = new EnemyDataReader();
-    public static CharacterDataReader character = new CharacterDataReader();
-    public static PartsAbilityDataReader parts = new PartsAbilityDataReader();
-    public static AbilityDataReader ability = new AbilityDataReader();
-    public static StoreItemReader store = new StoreItemReader();
-    public static StageDataReader stage = new StageDataReader();
-    public static UpgradeDataReader upgrade = new UpgradeDataReader();
-    public static GotchaDataReader gotcha = new GotchaDataReader();
+    public static AccountJsonReader account = new();
+    public static MasterDataReader master = new();
+    public static InventoryDataReader inven = new();
+    public static EnemyDataReader enemy = new ();
+    public static SkillDataReader skill = new ();
+    public static CharacterDataReader character = new ();
+    public static PartsAbilityDataReader parts = new ();
+    public static AbilityDataReader ability = new ();
+    public static StoreItemReader store = new ();
+    public static StageDataReader stage = new ();
+    public static UpgradeDataReader upgrade = new ();
+    public static GotchaDataReader gotcha = new ();
 
     public void Init()
     {
@@ -62,6 +65,7 @@ public class DataManager : MonoBehaviour
         upgrade.LoadData("Assets/StreamingAssets/JSON/ReadOnly/UpgradeData.json");
         enemy.LoadData("Assets/StreamingAssets/JSON/ReadOnly/EnemyData.json");
         gotcha.LoadData("Assets/StreamingAssets/JSON/ReadOnly/GotchaData.json");
+        skill.LoadData("Assets/StreamingAssets/JSON/ReadOnly/SkillData.json");
 
         store.LoadData("Assets/StreamingAssets/JSON/Writable/StoreData.json");
         account.LoadData("Assets/StreamingAssets/JSON/Writable/AccountData.json");

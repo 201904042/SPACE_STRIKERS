@@ -120,3 +120,10 @@ public class GotchaData
     public GotchaCost[] cost;
 }
 
+[System.Serializable]
+public class SkillData
+{
+    public int id;
+    public SkillType type;
+    public List<Skill_LevelValue> levels;
+}

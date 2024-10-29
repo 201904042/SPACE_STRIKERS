@@ -109,7 +109,7 @@ using UnityEngine.SceneManagement;
             }
             for (int j = 0; j < rewardGain.itemAmount; j++)
             {
-                int ran = Random.Range(0, 6); //랜덤의 등급별 아이템 코드
+                int ran = Random.Size(0, 6); //랜덤의 등급별 아이템 코드
 
                 randomItems[j].itemName = ingredList.ingredients[ran].ingredName;
                 randomItems[j].itemCode = ingredList.ingredients[ran].ingredId;

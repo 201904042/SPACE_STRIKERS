@@ -30,9 +30,9 @@ public class Skill_ElecShock : PlayerProjectile
     private bool isSlowExtraDamage;
     private int extraDamageRate;
 
-    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0)
+    public override void SetAddParameter(float value1, float value2 =0, float value3 = 0, float value4 = 0)
     {
-        base.SetAddParameter(value1, value2, value3);
+        base.SetAddParameter(value1, value2, value3, value4);
         if (value1 == 0)
         {
             return;

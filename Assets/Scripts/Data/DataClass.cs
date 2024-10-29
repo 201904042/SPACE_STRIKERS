@@ -120,3 +120,58 @@ public enum MasterType
     Enemy 
 }
 
+public enum SkillType
+{
+    None = 0,
+    Active = 1,
+    Passive = 2,
+    Other = 3,
+    Unique = 4
+}
+
+[System.Serializable]
+public class Skill_LevelValue
+{
+    public int level;
+    public int ProjCount;
+    public int ProjSpd;
+    public float CoolTime;
+    public int DmgRate;
+    public float Size;
+    public float LiveTime;
+    public List<S_EffectValuePair> AddEffect;
+
+    public Skill_LevelValue()
+    {
+        AddEffect = new List<S_EffectValuePair>();
+    }
+}
+
+[System.Serializable]
+public class S_EffectValuePair
+{
+    public SkillAddEffect effect;
+    public float value1;
+    public float value2;
+    public float value3;
+
+    public S_EffectValuePair(SkillAddEffect effect, float value1, float value2 = 0, float value3 = 0)
+    {
+        this.effect = effect;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.value3 = value3;
+    }
+}
+
+public enum SkillAddEffect
+{
+    None = 0,
+    Slow = 1,
+    SlowExtraDamage = 2,
+    Penetrate = 3,
+    CycleDamage = 4,
+    Drone = 5,
+    Shield = 6,
+    Explosion = 7
+}

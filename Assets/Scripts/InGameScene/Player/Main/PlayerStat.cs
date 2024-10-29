@@ -130,9 +130,7 @@ public class PlayerStat : MonoBehaviour
         curPlayerID = savedPlayerId;
         SetStat(curPlayerID);
 
-        PlayerSkillManager ps = PlayerMain.pSkill;
-        //ps.AddPassiveSkill((InGamePassiveSkill)ps.FindSkillByCode(641));
-
+        
         IG_WeaponLv = 1;
 
         IG_Level = 1;

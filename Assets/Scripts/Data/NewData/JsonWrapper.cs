@@ -34,9 +34,16 @@ public class AbilityDataWrapper
     public List<AbilityData> AbilityData;
 }
 
+[System.Serializable]
 public class GotchaDataWrapper
 {
     public List<GotchaData> GotchaData;
+}
+
+[System.Serializable]
+public class SkillDataWrapper
+{
+    public List<SkillData> SkillData;
 }
 
 
@@ -71,9 +78,10 @@ public class StageDataWrapper
 {
     public List<StageData> StageData;
 }
-
+[System.Serializable]
 public class EnemyDataWrapper
 {
     public List<EnemyData> EnemyData;
 }
+
 

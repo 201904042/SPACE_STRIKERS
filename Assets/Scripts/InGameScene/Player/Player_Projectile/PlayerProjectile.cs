@@ -12,9 +12,10 @@ using UnityEngine.Timeline;
 
 public class PlayerProjectile : MonoBehaviour
 {
-    public PlayerStat playerStat; //플레이어의 데미지를 불러올 스텟
-    [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
+    public PlayerStat playerStat => PlayerMain.pStat; //플레이어의 데미지를 불러올 스텟
+    [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
 
+    //todo -> 적리뉴얼후 적 스크립트로 바꿔보기
     [SerializeField] protected int damageRate;
     [SerializeField] protected int speed;
     [SerializeField] protected float liveTime;
@@ -22,22 +23,20 @@ public class PlayerProjectile : MonoBehaviour
 
     protected int finalDamage; //플레이어의 스텟과 발사체의 데미지증폭을 곱하여 최종적으로 적용할 데미지
 
-    [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행
-
-    [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
-    //todo -> 적리뉴얼후 적 스크립트로 바꿔보기
-
-    protected bool isShootingObj; //발사되는지 아니면 플레이어를 따라다니는지
-
     protected Coroutine activated;
     protected Coroutine damaging;
 
     protected Vector3 projScaleInstance; //발사체의 원래크기
 
+    [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
+    [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행
+    protected bool isShootingObj; //발사되는지 아니면 플레이어를 따라다니는지
+
+
     protected virtual void Awake()
     {
-        playerStat =PlayerMain.pStat;
-        projScaleInstance = transform.localScale;
+        projScaleInstance = transform.localScale; //발사체의 원래 크기를 저장
+        
         ResetProj();
     }
 
@@ -50,20 +49,32 @@ public class PlayerProjectile : MonoBehaviour
     protected virtual void ResetProj()
     {
         hittedEnemyList = new List<GameObject>();
-        isParameterSet = false;
 
         damageRate = 0;
         speed = 0;
         liveTime = 0;
         range = 0;
-        finalDamage = 0; 
+        finalDamage = 0;
+
+        if(activated != null)
+        {
+            StopCoroutine(activated);
+            activated = null;
+        }
+        if (damaging != null)
+        {
+            StopCoroutine(damaging);
+            damaging = null;
+        }
+
+        transform.localScale = projScaleInstance;
+
+        isParameterSet = false;
         isHitOnce = true;
-        isShootingObj = false;
-        activated = null;
-        damaging= null;
+        isShootingObj = true; 
     }
 
-    protected virtual void Update()
+protected virtual void Update()
     {
         if (!isParameterSet)
         {
@@ -94,7 +105,7 @@ public class PlayerProjectile : MonoBehaviour
         }
     }
 
-    public virtual void SetAddParameter(float value1, float value2 =0, float value3 = 0)
+    public virtual void SetAddParameter(float value1, float value2 =0, float value3 = 0, float value4 = 0)
     {
         Debug.Log("서브 파라미터 세팅");
     }
@@ -104,9 +115,6 @@ public class PlayerProjectile : MonoBehaviour
     {
         Debug.Log("메인 파라미터 세팅");
         
-        isParameterSet = true;
-
-        //발사체의 속도. 널값(0)이라면 해당 발사체는 플레이어를 따라다닌다. / 예시)에너지 필드, 특수4스킬 등 / 예외: 폭발(isShooting은 true, 속도는 0)
         if (_projSpeed == 0)
         {
             isShootingObj = false;
@@ -120,7 +128,7 @@ public class PlayerProjectile : MonoBehaviour
         //발사체의 데미지 : 필수 파라미터. 없으면 해당 발사체는 성립되지 않음. 추후 예외 : 플레이어 디버프로 dmg감소가 들어왔다
         if (_dmgRate <= 0)
         {
-            Debug.LogError("데미지가 설정되지 않음");
+            Debug.Log("데미지가 0임");
             finalDamage = 0;
         }
         else
@@ -146,6 +154,8 @@ public class PlayerProjectile : MonoBehaviour
             range = _range;
             transform.localScale = projScaleInstance * range;
         }
+
+        isParameterSet = true;
     }
 
     //범위형 데미지 로직. 범위내 적 1회씩 타격을 사이클 시간마다 반복

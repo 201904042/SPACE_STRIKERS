@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Skill_Missile
   m_EditorClassIdentifier: 
   prefab: {fileID: 3227319426088898931, guid: 83567ad91eec7e24e9a8d8075cde1d34, type: 3}
-  projType: 11
+  projType: 7

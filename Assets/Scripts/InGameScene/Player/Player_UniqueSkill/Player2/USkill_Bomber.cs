@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class USkill_Bomber : PlayerProjectile
-{
-    private float explosionRange;
-    private float explosionDamageRate;
+{ // 필요 변수 : 데미지, 생성시간, 크기, 틱
+    private int expDmgRate;
+    private float expLiveTime;
+    private float expRange;
+    private float expDamageTik;
 
-    public override void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
+    public override void SetAddParameter(float value1, float value2 = 0, float value3 = 0,float value4 = 0)
     {
-        ResetProj();
-        Debug.Log("메인 파라미터 세팅");
-        isParameterSet = true;
-        isHitOnce = true;
-        isShootingObj = true;
-        speed = _projSpeed;
-        damageRate = _dmgRate;
-        finalDamage = finalDamage = (int)playerStat.IG_Dmg * damageRate / 100; //기본 최종 데미지 구조. 수정사항은 개인 덮어쓰기로
-        explosionDamageRate = _dmgRate / 2;
-
-        liveTime = _liveTime;
-        explosionRange = _range;
+        base.SetAddParameter(value1, value2, value3,value4);
+        expDmgRate = (int)value1;
+        expLiveTime = value2;
+        expRange = value3;
+        expDamageTik = value4;
     }
 
+    
     protected override void TriggedEnemy(Collider2D collision)
     {
         base.TriggedEnemy(collision);
         PlayerExplosion proj = GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Explosion, transform.position, transform.rotation).GetComponent<PlayerExplosion>();
-        proj.OnHitOnce(false);
-
-        proj.SetProjParameter(0, (int)explosionDamageRate, liveTime, explosionRange);
+        proj.SetAddParameter(expDamageTik);
+        proj.SetProjParameter(0, expDmgRate, expLiveTime, expRange);
         
         SingleEnemyDamage();
 

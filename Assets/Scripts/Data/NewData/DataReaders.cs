@@ -54,6 +54,15 @@ public class StageDataReader : ReadOnlyData<StageData>
 
 }
 
+public class SkillDataReader : ReadOnlyData<SkillData>
+{
+    protected override int GetId(SkillData data)
+    {
+        fieldType = DataFieldType.SkillData;
+        return data.id;
+    }
+}
+
 public class UpgradeDataReader : ReadOnlyData<UpgradeData>
 {
     protected override int GetId(UpgradeData data)

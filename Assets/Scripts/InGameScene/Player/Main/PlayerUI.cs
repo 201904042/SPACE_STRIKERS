@@ -11,7 +11,7 @@ public class PlayerUI : MonoBehaviour
     private float curHp => pStat.CurHp;
 
     private Slider expSlider;
-    private int MaxExp =>  pStat.IG_NextExp;
+    private int MaxExp =>  pStat.IG_MaxExp;
     private int curExp=> pStat.CurExp;
 
     private Slider powSlider;

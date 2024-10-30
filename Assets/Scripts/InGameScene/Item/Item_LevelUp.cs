@@ -17,7 +17,7 @@ public class Item_LevelUp : Ingame_Item
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.Pool.ReleasePool(gameObject);
-            pStat.LevelUP();
+            pStat.LevelUp();
         }
     }
 }

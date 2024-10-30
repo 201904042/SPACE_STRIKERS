@@ -65,40 +65,4 @@ public class USkill_Char1 : UniqueSkill
     }
 
 
-    public override void SetLevel()
-    {
-        Skill_LevelValue lv1 = new Skill_LevelValue()
-        {
-            level = 1,
-            ProjCount = 1,
-            ProjSpd = 5,
-            LiveTime = 5,
-            DmgRate = 50
-        };
-
-        SkillLevels.Add(lv1.level, lv1);
-
-        Skill_LevelValue lv2 = new Skill_LevelValue()
-        {
-            level = 2,
-            ProjCount = 3,
-            ProjSpd = 5,
-            LiveTime = 7.5f,
-            DmgRate = 75
-        };
-        SkillLevels.Add(lv2.level, lv2);
-
-        Skill_LevelValue lv3 = new Skill_LevelValue()
-        {
-            level = 3,
-            ProjCount = 5,
-            ProjSpd = 5,
-            LiveTime = 10,
-            DmgRate = 100
-        };
-        SkillLevels.Add(lv3.level, lv3);
-
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
-    }
-
 }

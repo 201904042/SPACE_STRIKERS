@@ -95,12 +95,14 @@ public class PlayerControl : MonoBehaviour
         }
         //else if(현재 스킬 사용중일 경우)
 
-        pStat.USkillCount--;
-        pStat.IG_curPowerLevel = 0;
-        pStat.AddPower = 0;
+        
 
         //PlayerMain.pSpecial.isSkillActivating = true;
         PlayerMain.pSpecial.SpecialFire(pStat.curPlayerID, pStat.IG_curPowerLevel);
+
+        pStat.USkillCount--;
+        pStat.IG_curPowerLevel = 0;
+        pStat.AddPower = 0;
     }
 
     

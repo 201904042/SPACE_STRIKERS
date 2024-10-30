@@ -40,6 +40,14 @@ public class GameManager : MonoBehaviour
         get => isBattleStart;
         set => isBattleStart = value;
     }
+
+    //게임에서 사용될 인터페이스
+    public Interface_GetSkill IGetSkill;
+    public Interface_GameEnd IGameEnd;
+    public Interface_Option IOption;
+
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -74,7 +82,11 @@ public class GameManager : MonoBehaviour
     //게임씬의 init. 플레이어를 등록하고 모든 기물을 초기화함
     public void GameInit()
     {
-        
+        Transform Canvas = FindObjectOfType<Canvas>().transform;
+        Transform Interfaces = Canvas.Find("Interfaces").transform;
+        IGetSkill = Interfaces.GetChild(0).GetComponent<Interface_GetSkill>();
+        IGameEnd = Interfaces.GetChild(1).GetComponent<Interface_GameEnd>();
+        IOption = Interfaces.GetChild(2).GetComponent<Interface_Option>();
 
         Time.timeScale = 1;
         score = 0;

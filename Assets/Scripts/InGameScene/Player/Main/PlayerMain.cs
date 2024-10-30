@@ -18,6 +18,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     public static PlayerStat pStat;
     public static PlayerControl pControl;
     public static PlayerUI pUI;
+
     public static playerShooterUpgrade pShooter;
     public static PlayerSpecialSkill pSpecial;
     public static PlayerSkillManager pSkill;
@@ -95,13 +96,13 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         SetTestButtons();
         isPlayerSetDone = true;
         PlayerSkillManager ps = PlayerMain.pSkill;
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddActiveSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
     }
 
 
@@ -109,18 +110,21 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     {
         PlayerMove();
         IncreasePow();
-        RestoreHp();
-
+        HpRegeneration();
     }
 
-    private void RestoreHp()
+    private void HpRegeneration()
     {
         if(pStat.PS_HpRegen <= 0)
         {
             return;
         }
+        HpRestore(pStat.IG_HpRegen * Time.deltaTime);
+    }
 
-        pStat.CurHp += (pStat.IG_HpRegen * Time.deltaTime); //초당 pStat.IG_HpRegen%만큼 회복 3이면 초당 3회복
+    public void HpRestore(float healAmount)
+    {
+        pStat.CurHp += healAmount;
     }
 
     private void PlayerMove()
@@ -159,6 +163,10 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
             pStat.IG_curPowerLevel = 3;
         }
     }
+
+   
+    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

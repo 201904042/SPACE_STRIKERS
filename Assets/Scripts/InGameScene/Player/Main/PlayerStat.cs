@@ -39,17 +39,18 @@ public class PlayerStat : MonoBehaviour
 
     //레벨 관련
     public int IG_Level; //캐릭터의 레벨이 아닌 인게임에서의 레벨
-    public int IG_NextExp; //목표 exp. IG_CurExp >= IG_NextExp 라면 레벨업 판정
+    public int IG_MaxExp; //목표 exp. IG_CurExp >= IG_MaxExp 라면 레벨업 판정
     private int IG_CurExp; //현재 가지고 있는 exp
+    public float MaxExpInceaseRate = 1.5f;
     public int CurExp
     {
         get => IG_CurExp;
         set
         {
             IG_CurExp += value;
-            if (IG_CurExp >= IG_NextExp)
+            if (IG_CurExp >= IG_MaxExp)
             {
-                LevelUP();
+                LevelUp();
             }
 
             pUI.HpBarChange();
@@ -68,6 +69,7 @@ public class PlayerStat : MonoBehaviour
                 return;
             }
             IG_USkillCount = value;
+            pUI.SetUniquSkillCount();
         }
     }
     public int IG_curPowerLevel; //스페셜 증가치
@@ -134,7 +136,7 @@ public class PlayerStat : MonoBehaviour
         IG_WeaponLv = 1;
 
         IG_Level = 1;
-        IG_NextExp = 5;
+        IG_MaxExp = 5;
         IG_CurExp = 0;
 
         IG_USkillCount = 3;
@@ -167,7 +169,7 @@ public class PlayerStat : MonoBehaviour
     {
         CharData curPlayerChar = DataManager.character.GetData(id);
 
-        ////아웃게임에서 받아온 캐릭터의 스텟 todo -> 이부분은 특정 데이터베이스를 통해 받아올예정
+        ////아웃게임에서 받아온 캐릭터의 스텟 todo -> 캐릭터 스텟 + 장착파트의 스텟
         //IG_Level = curPlayerChar.IG_Level;
         //OG_Dmg = curPlayerChar.IG_Dmg;
         //OG_Dfs = curPlayerChar.defense;
@@ -197,6 +199,17 @@ public class PlayerStat : MonoBehaviour
         OG_HpRegen = OG_HpRegen * PS_HpRegen;
     }
 
+    [ContextMenu("레벨업")]
+    public void LevelUp()
+    {
+        IG_Level++;
+        IG_MaxExp = (int)((float)IG_MaxExp * MaxExpInceaseRate);
+        CurExp = 0;
+
+        GameManager.Instance.IGetSkill.OpenInterface();
+        Time.timeScale = 0f;
+    }
+
     /// <summary>
     /// 플레이어가 데미지를 받을 경우 데미지 적용 및 데미지액션 실행
     /// </summary>
@@ -211,6 +224,8 @@ public class PlayerStat : MonoBehaviour
             PlayerDamagedAction(attackObj); //넉백 및 무적 부여
         }
     }
+
+    
 
     /// <summary>
     /// 무적상태 돌입 및 뒤로 밀림
@@ -241,6 +256,7 @@ public class PlayerStat : MonoBehaviour
             StartCoroutine(PushbackLerp(curPosition, targetPosition));
         }
     }
+
     #region 넉백 계산
     private Vector2 CalculateTargetPos(Vector3 curpos, Collider2D col)
     {
@@ -295,15 +311,8 @@ public class PlayerStat : MonoBehaviour
         playerSprite.color = new Color(1, 1, 1, 1f);
     }
 
-    public void LevelUP()
-    {
-        IG_Level++;
-        IG_NextExp += 5; //임시 처리. 이후 정확한 공식 대입
-
-        selectSkillUI.SetActive(true);
-
-        Time.timeScale = 0f;
-    }
-
     
+
+
+
 }

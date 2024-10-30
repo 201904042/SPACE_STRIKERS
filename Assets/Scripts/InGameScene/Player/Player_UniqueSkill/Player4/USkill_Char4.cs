@@ -44,40 +44,5 @@ public class USkill_Char4 : UniqueSkill
         proj.SetProjParameter(projSpd, dmgRate, 0, size); //여기선 라이브타임을 다른 방식으로 사용
     }
 
-    public override void SetLevel()
-    {
-        Skill_LevelValue lv1 = new Skill_LevelValue()
-        {
-            level = 1,
-            ProjCount = 10,
-            ProjSpd = 10,
-            DmgRate = 100,
-            LiveTime = 5f //5초안에 전부발사
-        };
-
-        SkillLevels.Add(lv1.level, lv1);
-
-        Skill_LevelValue lv2 = new Skill_LevelValue()
-        {
-            level = 2,
-            ProjCount = 15,
-            ProjSpd = 10,
-            DmgRate = 120,
-            LiveTime = 5f
-        };
-        SkillLevels.Add(lv2.level, lv2);
-
-        Skill_LevelValue lv3 = new Skill_LevelValue()
-        {
-            level = 3,
-            ProjCount = 25,
-            ProjSpd = 10,
-            DmgRate = 150,
-            LiveTime = 5f
-        };
-        SkillLevels.Add(lv3.level, lv3);
-
-        Debug.Log($"{SkillCode}의 레벨 {SkillLevels.Count}개 등록");
-    }
 }
 

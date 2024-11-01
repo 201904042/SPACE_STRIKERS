@@ -28,7 +28,7 @@ public class PlayerHomingLauncher : LauncherStat
     {
         base.Fire();
         
-        PlayerHoming proj = GameManager.Instance.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerHoming>();
+        PlayerHoming proj = GameManager.Game.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerHoming>();
         proj.SetProjParameter(projSpeed, projDamageRate, 0, 0);
     }
 }

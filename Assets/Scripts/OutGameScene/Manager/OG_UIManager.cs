@@ -1,9 +1,9 @@
 using UnityEngine;
 
 
-public class UIManager : MonoBehaviour
+public class OG_UIManager : MonoBehaviour
 {
-    public static UIManager UIInstance;
+    public static OG_UIManager UIInstance;
 
     //UIs
     private Transform mainUIs;

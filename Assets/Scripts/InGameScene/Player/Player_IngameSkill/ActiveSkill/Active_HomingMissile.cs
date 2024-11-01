@@ -29,7 +29,7 @@ public class Active_HomingMissile : ActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjCount; i++)
         {
-            Skill_Homing proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Homing>();
+            Skill_Homing proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Homing>();
             Vector2 RandomDir = DirectionToRandomEnemy();
             proj.transform.up = RandomDir;
             proj.SetProjParameter(projSpd, dmgRate, liveTime, size);

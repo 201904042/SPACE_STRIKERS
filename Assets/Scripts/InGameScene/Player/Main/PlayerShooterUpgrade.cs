@@ -45,7 +45,7 @@ public class playerShooterUpgrade : MonoBehaviour
 
     private void SetCharSprite(int id)
     {
-        SpriteRenderer playerSprite = GameManager.Instance.myPlayer.GetComponent<SpriteRenderer>();
+        SpriteRenderer playerSprite = PlayerMain.Instance.GetComponent<SpriteRenderer>();
         Sprite charSprite = Resources.Load<Sprite>($"Sprite/Player/Character/{id}");
         if(charSprite== null)
         {

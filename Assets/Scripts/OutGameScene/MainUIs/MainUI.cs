@@ -61,16 +61,16 @@ public class MainUI : MainUIs
 
     public void GotoPlanetBtn()
     {
-        ChangeUI(UIManager.UIInstance.planetUI);
+        ChangeUI(OG_UIManager.UIInstance.planetUI);
     }
 
     public void GotoStoreBtn()
     {
-        ChangeUI(UIManager.UIInstance.storeUI);
+        ChangeUI(OG_UIManager.UIInstance.storeUI);
 
     }
     public void GotoInvenBtn()
     {
-        ChangeUI(UIManager.UIInstance.invenUI);
+        ChangeUI(OG_UIManager.UIInstance.invenUI);
     }
 }

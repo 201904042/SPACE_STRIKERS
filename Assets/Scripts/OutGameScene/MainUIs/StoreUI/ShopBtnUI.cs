@@ -66,12 +66,12 @@ public class ShopBtnUI : MonoBehaviour
     private void PurchaseBtnHandler()
     {
         StartCoroutine(ConfiremPurchase());
-        UIManager.purchaseInterface.SetPurchaseData(tradeData);
+        OG_UIManager.purchaseInterface.SetPurchaseData(tradeData);
     }
 
     private IEnumerator ConfiremPurchase()
     {
-        PurchaseInterface purchaseInterface = UIManager.purchaseInterface;
+        PurchaseInterface purchaseInterface = OG_UIManager.purchaseInterface;
 
         yield return StartCoroutine(purchaseInterface.GetValue());
 
@@ -88,13 +88,13 @@ public class ShopBtnUI : MonoBehaviour
 
     private void DoubleCheck()
     {
-        UIManager.tfInterface.SetTFContent("정말로 구매하시겠습니까?");
+        OG_UIManager.tfInterface.SetTFContent("정말로 구매하시겠습니까?");
         StartCoroutine(TFCheck());
     }
 
     private IEnumerator TFCheck()
     {
-        TFInterface tFInterface = UIManager.tfInterface;
+        TFInterface tFInterface = OG_UIManager.tfInterface;
 
         yield return StartCoroutine(tFInterface.GetValue());
 
@@ -106,11 +106,11 @@ public class ShopBtnUI : MonoBehaviour
             { 
                 button.interactable = false;
             }
-            UIManager.alertInterface.SetAlert($"구매가 완료되었습니다");
+            OG_UIManager.alertInterface.SetAlert($"구매가 완료되었습니다");
         }
         else
         {
-            UIManager.alertInterface.SetAlert($"구매가 취소되었습니다");
+            OG_UIManager.alertInterface.SetAlert($"구매가 취소되었습니다");
         }
     }
 }

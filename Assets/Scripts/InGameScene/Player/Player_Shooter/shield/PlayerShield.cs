@@ -84,7 +84,7 @@ public class PlayerShield : MonoBehaviour
 
             if (collision.CompareTag("Enemy_Projectile"))
             {
-                GameManager.Instance.Pool.ReleasePool(gameObject);
+                GameManager.Game.Pool.ReleasePool(gameObject);
             }
 
             curShieldCount -= 1;

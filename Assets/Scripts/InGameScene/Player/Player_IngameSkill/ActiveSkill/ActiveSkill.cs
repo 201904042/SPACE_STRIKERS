@@ -150,15 +150,15 @@ public class ActiveSkill : InGameSkill
     /// <returns></returns>
     protected Vector2 DirectionToRandomEnemy()
     {
-        Debug.Log($"현재 활성화된 적의 수: {GameManager.Instance.Spawn.activeEnemyList.Count}");
+        Debug.Log($"현재 활성화된 적의 수: {GameManager.Game.Spawn.activeEnemyList.Count}");
 
-        if (GameManager.Instance.Spawn.activeEnemyList.Count == 0)
+        if (GameManager.Game.Spawn.activeEnemyList.Count == 0)
         {
             return Vector2.up; // 적이 없을 경우 기본 방향
         }
 
-        int randomIndex = Random.Range(0, GameManager.Instance.Spawn.activeEnemyList.Count);
-        GameObject target = GameManager.Instance.Spawn.activeEnemyList[randomIndex];
+        int randomIndex = Random.Range(0, GameManager.Game.Spawn.activeEnemyList.Count);
+        GameObject target = GameManager.Game.Spawn.activeEnemyList[randomIndex];
 
         Vector2 direction = (target.transform.position - instantPoint.position).normalized;
         Debug.Log($"방향: {direction}");

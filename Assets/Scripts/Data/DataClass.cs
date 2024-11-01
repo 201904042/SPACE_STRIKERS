@@ -46,7 +46,7 @@ public class StageEnemyData
 }
 
 [Serializable]
-public class StageItemReward
+public class StageReward
 {
     public int itemId;
     public int quantity;

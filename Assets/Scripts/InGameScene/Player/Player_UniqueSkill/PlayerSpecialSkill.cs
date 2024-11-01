@@ -69,7 +69,7 @@ public class PlayerSpecialSkill : MonoBehaviour
 
     //private void BomberSpecial()
     //{
-    //    GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Spcial_Player2, transform.position, transform.rotation);
+    //    GameManager.Game.Pool.GetPlayerProj(PlayerProjType.Spcial_Player2, transform.position, transform.rotation);
     //}
 
     //private void TankerSpecial()
@@ -80,7 +80,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     //    //shield.ShieldColorChange();
     //    //shield.shieldIsActive = true;
 
-    //    GameObject field = GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Spcial_Player3, transform.position,transform.rotation);
+    //    GameObject field = GameManager.Game.Pool.GetPlayerProj(PlayerProjType.Spcial_Player3, transform.position,transform.rotation);
     //    field.transform.SetParent(transform);
 
     //    if (IG_curPowerLevel == 1)
@@ -106,7 +106,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     //private IEnumerator Bomber_End(float timer, GameObject field)
     //{
     //    yield return new WaitForSeconds(timer);
-    //    GameManager.Instance.Pool.ReleasePool(field);
+    //    GameManager.Game.Pool.ReleasePool(field);
     //}
 
     //private void SplashSpecial()
@@ -133,7 +133,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     //{
     //    while (num!=0)
     //    {
-    //        GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Spcial_Player4, transform.position, transform.rotation);
+    //        GameManager.Game.Pool.GetPlayerProj(PlayerProjType.Spcial_Player4, transform.position, transform.rotation);
     //        num--;
     //        yield return new WaitForSeconds(0.1f);
     //    }

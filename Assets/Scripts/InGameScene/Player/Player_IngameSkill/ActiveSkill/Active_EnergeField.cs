@@ -24,7 +24,7 @@ public class Active_EnergeField : ActiveSkill
         base.ActivateSkill(level);
 
         Skill_EnergyField energyField =
-                GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_EnergyField>();
+                GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_EnergyField>();
         energyField.SetAddParameter(cycleDelay);
         energyField.SetProjParameter(projSpd, dmgRate, liveTime, size);
     }

@@ -40,7 +40,7 @@ public class GotchaStore : MonoBehaviour
 
     private void OpenGotchaUI(int tier)
     {
-        UIManager.gotchaInterface.SetGotchaInterface(tier);
+        OG_UIManager.gotchaInterface.SetGotchaInterface(tier);
         ActiveGotchaInterface();
     }
 
@@ -52,7 +52,7 @@ public class GotchaStore : MonoBehaviour
     //가챠 인터페이스의 결과를 대기하다가 해당 결과로 다음 루트 실행
     private IEnumerator GetGotchaInterface()
     {
-        GotchaInterface gotcha = UIManager.gotchaInterface;
+        GotchaInterface gotcha = OG_UIManager.gotchaInterface;
         // TF 인터페이스에서 결과를 기다림
         yield return StartCoroutine(gotcha.GetValue());
 
@@ -69,14 +69,14 @@ public class GotchaStore : MonoBehaviour
     //정말 진행할지 이중체크
     private void DoubleCheck(int tier, int costId, int costAmount)
     {
-        UIManager.tfInterface.SetTFContent("정말로 가챠를 진행하시겠습니까?");
+        OG_UIManager.tfInterface.SetTFContent("정말로 가챠를 진행하시겠습니까?");
         StartCoroutine(TFCheck(tier, costId, costAmount));
     }
 
     //이중체크의 결과 대기 및 다음루트 실행
     private IEnumerator TFCheck(int tier, int costId, int costAmount)
     {
-        TFInterface tFInterface = UIManager.tfInterface;
+        TFInterface tFInterface = OG_UIManager.tfInterface;
 
         yield return StartCoroutine(tFInterface.GetValue());
 
@@ -87,7 +87,7 @@ public class GotchaStore : MonoBehaviour
         }
         else
         {
-            UIManager.alertInterface.SetAlert($"가챠가 취소되었습니다");
+            OG_UIManager.alertInterface.SetAlert($"가챠가 취소되었습니다");
         }
     }
 
@@ -102,7 +102,7 @@ public class GotchaStore : MonoBehaviour
         //대가 아이템(미네랄 혹은 쿠폰)이 충분한지 체크하고 없으면 인터페이스를 띄우며 가챠 취소
         if(!DataManager.inven.IsEnoughItem(DataManager.inven.GetDataWithMasterId(costMasterId).id, costAmount))
         {
-            UIManager.alertInterface.SetAlert($"{DataManager.master.GetData(costMasterId).name}이 부족합니다");
+            OG_UIManager.alertInterface.SetAlert($"{DataManager.master.GetData(costMasterId).name}이 부족합니다");
             return;
         }
         else

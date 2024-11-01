@@ -96,13 +96,13 @@ public class ItemInformInterface : UIInterface
 
     public void SellBtnHandler()
     {
-        UIManager.tfInterface.SetTFContent("정말로 판매하시겠습니까?");
+        OG_UIManager.tfInterface.SetTFContent("정말로 판매하시겠습니까?");
         StartCoroutine(DoubleCheck());
     }
 
     private IEnumerator DoubleCheck()
     {
-        TFInterface tfInterface = UIManager.tfInterface.GetComponent<TFInterface>();
+        TFInterface tfInterface = OG_UIManager.tfInterface.GetComponent<TFInterface>();
         // TF 인터페이스에서 결과를 기다림
         yield return StartCoroutine(tfInterface.GetValue());
 
@@ -121,7 +121,7 @@ public class ItemInformInterface : UIInterface
         }
         else
         {
-            UIManager.alertInterface.SetAlert($"판매가 취소되었습니다");
+            OG_UIManager.alertInterface.SetAlert($"판매가 취소되었습니다");
         }
     }
 
@@ -153,8 +153,8 @@ public class ItemInformInterface : UIInterface
         };
         
         StoreUI.TradeItem(sellData);
-        UIManager.alertInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
-        UIManager.UIInstance.invenUI.FetchContent();
+        OG_UIManager.alertInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
+        OG_UIManager.UIInstance.invenUI.FetchContent();
 
         CloseInterface();
     }

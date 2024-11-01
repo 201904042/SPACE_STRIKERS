@@ -42,7 +42,7 @@ public class Skill_EnergyField : PlayerProjectile
 
         if (speed == 0)
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
         else
         {

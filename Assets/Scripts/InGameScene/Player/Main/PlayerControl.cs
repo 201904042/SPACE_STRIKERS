@@ -102,7 +102,7 @@ public class PlayerControl : MonoBehaviour
 
         pStat.USkillCount--;
         pStat.IG_curPowerLevel = 0;
-        pStat.AddPower = 0;
+        pStat.CurPow = 0;
     }
 
     

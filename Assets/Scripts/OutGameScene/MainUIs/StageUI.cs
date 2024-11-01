@@ -138,12 +138,12 @@ public class StageUI : MainUIs
     {
         curPlanet = 0;
         curStage = 0;
-        ChangeUI(UIManager.UIInstance.planetUI);
+        ChangeUI(OG_UIManager.UIInstance.planetUI);
     }
 
     public void GotoReady()
     {
-        ChangeUI(UIManager.UIInstance.readyUI);
+        ChangeUI(OG_UIManager.UIInstance.readyUI);
     }
 
     private void OnStageButtonClicked(int stageNumber)
@@ -157,12 +157,12 @@ public class StageUI : MainUIs
     public void StageBtnHandler()
     {
         StartCoroutine(OpenStargeInterface());
-        UIManager.stageInteface.SetInterface((curPlanet-1)*10 + curStage);
+        OG_UIManager.stageInteface.SetInterface((curPlanet-1)*10 + curStage);
     }
 
     private IEnumerator OpenStargeInterface()
     {
-        StageInterface stageInterface = UIManager.stageInteface;
+        StageInterface stageInterface = OG_UIManager.stageInteface;
 
         yield return StartCoroutine(stageInterface.GetValue());
 

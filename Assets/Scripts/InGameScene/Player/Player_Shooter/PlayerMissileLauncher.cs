@@ -26,7 +26,7 @@ public class PlayerMissileLauncher : LauncherStat
     protected override void Fire()
     {
         base.Fire();
-        PlayerMissile proj = GameManager.Instance.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerMissile>();
+        PlayerMissile proj = GameManager.Game.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerMissile>();
         proj.SetAddParameter(50, 1, 1);
         proj.SetProjParameter(projSpeed, projDamageRate,  0, 0);
     }

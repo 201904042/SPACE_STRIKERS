@@ -60,8 +60,8 @@ public class InvenUI : MainUIs
         invenBtn.onClick.AddListener(() => ChangeContent(ingredContent));
         consumeBtn.onClick.AddListener(() => ChangeContent(consumeContent));
 
-        backBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.mainUI));
-        laboBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.labotoryUI));
+        backBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.mainUI));
+        laboBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.labotoryUI));
     }
 
     public void Init()

@@ -15,7 +15,7 @@ public class Item_SpecialUp : Ingame_Item
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
             pStat.USkillCount++;
         }
     }

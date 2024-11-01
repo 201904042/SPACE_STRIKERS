@@ -113,8 +113,8 @@ public class LabotoryUI : MainUIs
         partsSlot.onClick.AddListener(GetPartsId);
 
         upgradeBtn.onClick.AddListener(UpgradeBtn);
-        mainBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.mainUI));
-        storeBtn.onClick.AddListener(() => ChangeUI(UIManager.UIInstance.stageUI));
+        mainBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.mainUI));
+        storeBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.stageUI));
     }
 
     //모든 버튼의 리스터 제거
@@ -157,7 +157,7 @@ public class LabotoryUI : MainUIs
 
     private IEnumerator GetCharIdCoroutine()
     {
-        SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
+        SelectCharInterface selecteCharInterface = OG_UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
 
         yield return StartCoroutine(selecteCharInterface.GetValue());
         if(selecteCharInterface.result == true)
@@ -193,7 +193,7 @@ public class LabotoryUI : MainUIs
         foreach (UpgradeIngred cost in ingredientList)
         {
             // 재료 UI들 생성
-            ItemAmountPref itemAmountPref = Instantiate(UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
+            ItemAmountPref itemAmountPref = Instantiate(OG_UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
             itemAmountPref.SetAmountUI(cost.ingredMasterId, cost.quantity);
         }
         upgradeInformText.text = MakeSBText(curLevel, resultAbility, beforeAbility);
@@ -209,7 +209,7 @@ public class LabotoryUI : MainUIs
 
     private IEnumerator GetPartsIdCoroutine()
     {
-        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface.GetComponent<SelectPartsInterface>();
+        SelectPartsInterface selectPartsInterface = OG_UIManager.selectPartsInterface.GetComponent<SelectPartsInterface>();
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
         if(selectPartsInterface.result == true)
@@ -252,7 +252,7 @@ public class LabotoryUI : MainUIs
 
         foreach (var cost in ingredientList)
         {
-            var itemAmountPref = Instantiate(UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
+            var itemAmountPref = Instantiate(OG_UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
             itemAmountPref.SetAmountUI(cost.ingredMasterId, cost.quantity);
         }
     }
@@ -325,11 +325,11 @@ public class LabotoryUI : MainUIs
         //강화 가능 여부 체크 및 강화실행
         if (!CheckAbleToUpgrade(ingredientList))
         {
-            UIManager.alertInterface.SetAlert("재료가 부족합니다");
+            OG_UIManager.alertInterface.SetAlert("재료가 부족합니다");
             return;
         }
 
-        UIManager.tfInterface.SetTFContent("정말로 강화를 진행하시겠습니까?");
+        OG_UIManager.tfInterface.SetTFContent("정말로 강화를 진행하시겠습니까?");
         StartCoroutine(UpgradeCheck());
     }
 
@@ -349,7 +349,7 @@ public class LabotoryUI : MainUIs
 
     private IEnumerator UpgradeCheck()
     {
-        TFInterface tFInterface = UIManager.tfInterface;
+        TFInterface tFInterface = OG_UIManager.tfInterface;
 
         yield return StartCoroutine(tFInterface.GetValue());
 
@@ -361,7 +361,7 @@ public class LabotoryUI : MainUIs
         }
         else
         {
-            UIManager.alertInterface.SetAlert($"강화가 취소되었습니다");
+            OG_UIManager.alertInterface.SetAlert($"강화가 취소되었습니다");
         }
     }
 
@@ -416,7 +416,7 @@ public class LabotoryUI : MainUIs
         Debug.Log("캐릭터 강화 완료");
         DataManager.character.UpdateData(DataManager.inven.GetData(targetInvenCode).masterId, targetChar);
         DataManager.character.SaveData();
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(CharData),DataManager.character.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(CharData),DataManager.character.GetFilePath());
     }
 
     private void ChangePartsAbilityData()
@@ -426,6 +426,6 @@ public class LabotoryUI : MainUIs
         targetParts.mainAbility.value += 5;
         DataManager.parts.UpdateData(targetInvenCode, targetParts);
         DataManager.parts.SaveData();
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(PartsAbilityData),DataManager.parts.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(PartsAbilityData),DataManager.parts.GetFilePath());
     }
 }

@@ -14,14 +14,12 @@ public class Interface_GetSkill : UIInterface
     public Button selectBtn;
     public Button returnBtn;
 
-    public List<InGameSkill> activatableSkill => PlayerMain.pSkill.ingameSkillList; //스킬매니저의 Ingame스킬 리스트 복사
+    public List<InGameSkill> activatableSkill; //스킬매니저의 Ingame스킬 리스트 복사
 
     [Header("선택된 버튼 정보")]
     public InGameSkill selectedSkill;
 
     public int maxSkillSlotAmount; //생성될 스킬슬롯의 수
-
-    private int exp_increase = 5;
 
     protected override void Awake()
     {
@@ -36,7 +34,13 @@ public class Interface_GetSkill : UIInterface
         buttons = transform.GetChild(4);
         selectBtn = buttons.GetChild(0).GetComponent<Button>();
         returnBtn = buttons.GetChild(1).GetComponent<Button>();
+
+        selectBtn.onClick.RemoveAllListeners();
+        returnBtn.onClick.RemoveAllListeners();
+        selectBtn.onClick.AddListener(SelectBtn);
+        returnBtn.onClick.AddListener(ReturnBtn);
     }
+
     protected override void OnConfirm(bool isConfirmed)
     {
         base.OnConfirm(isConfirmed);
@@ -50,14 +54,13 @@ public class Interface_GetSkill : UIInterface
 
     private void Init()
     {
+        if (PlayerMain.Instance == null)
+        {
+            return;
+        }
         maxSkillSlotAmount = skillSlot.childCount;
         ResetInterface();
         InstantSkillSlot();
-
-        selectBtn.onClick.RemoveAllListeners();
-        returnBtn.onClick.RemoveAllListeners();
-        selectBtn.onClick.AddListener(SelectBtn);
-        returnBtn.onClick.AddListener(ReturnBtn);
     }
 
     private void ResetInterface()
@@ -73,6 +76,7 @@ public class Interface_GetSkill : UIInterface
 
     private void InstantSkillSlot()
     {
+        activatableSkill = PlayerMain.pSkill.ingameSkillList;
         List<InGameSkill> apSkillList = new List<InGameSkill>();
         List<InGameSkill> extraSkillList = new List<InGameSkill>();
         int skillSlotCount = maxSkillSlotAmount;
@@ -89,7 +93,7 @@ public class Interface_GetSkill : UIInterface
             }
         }
 
-        apSkillList.Clear(); //extra test용
+       // apSkillList.Clear(); //extra test용
         if (apSkillList.Count == 0)
         {
             //extra스킬 랜덤출력 및 스킬슬롯 생성
@@ -154,7 +158,6 @@ public class Interface_GetSkill : UIInterface
 
         //선택된 스킬을 스킬매니저를 통해 추가
         PlayerMain.pSkill.AddSkill(selectedSkill);
-
         Time.timeScale = 1.0f;
         CloseInterface();
     }
@@ -163,8 +166,8 @@ public class Interface_GetSkill : UIInterface
     public void ReturnBtn()
     {
         PlayerStat pStat = PlayerMain.pStat;
-        pStat.IG_Level--;
-        pStat.IG_MaxExp -= exp_increase;
+        pStat.IG_Level -= 1;
+        pStat.IG_MaxExp = pStat.MaxExpInstance;
         pStat.CurExp = pStat.IG_MaxExp / 2;
         Time.timeScale = 1.0f;
         CloseInterface();

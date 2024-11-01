@@ -37,7 +37,7 @@ public class USkill_EnergyField : PlayerProjectile
         yield return new WaitForSeconds(activeTime);
         if (speed == 0)
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
         else
         {

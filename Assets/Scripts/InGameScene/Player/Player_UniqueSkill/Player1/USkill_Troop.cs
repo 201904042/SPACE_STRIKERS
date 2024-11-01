@@ -9,7 +9,6 @@ using static UnityEngine.GraphicsBuffer;
 public class Troop : PlayerProjectile
 {
     GameObject player;
-    private float troopAtkDelay = 0;
     private Coroutine behaviorCoroutine;
     private bool isSkillEnd;
     private bool isAttack;
@@ -99,7 +98,7 @@ public class Troop : PlayerProjectile
     {
         if (collision.gameObject.tag == "TroopBorder")
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
 
         if (collision.CompareTag("Enemy_Projectile"))
@@ -108,7 +107,7 @@ public class Troop : PlayerProjectile
             EnemySplitBullet enemySplitBullet = collision.GetComponent<EnemySplitBullet>();
             if (enemyBullet != null || enemySplitBullet != null)
             {
-                GameManager.Instance.Pool.ReleasePool(collision.gameObject);
+                GameManager.Game.Pool.ReleasePool(collision.gameObject);
             }
         }
     }
@@ -125,81 +124,3 @@ public class Troop : PlayerProjectile
         return damageRate;
     }
 }
-
-    //private string rootPath;
-    //private string curLevelPath;
-    //public float slowYPos = -2f;
-    //public float speed = 5f;
-    //private int skillLevel;
-
-    //private void Awake()
-    //{
-    //    rootPath = "Assets/Prefabs/Player/Player_UniqueSkill/player1/shooter_";
-    //    palyerSpecialSkill = GameManager.Instance.myPlayer.GetComponent<PlayerSpecialSkill>();
-    //}
-
-    //private void OnEnable()
-    //{
-    //    startTimer = 0;
-    //    fireTime = palyerSpecialSkill.specialFireTime;
-    //    skillLevel = palyerSpecialSkill.IG_curPowerLevel;
-    //    curLevelPath = ChangeShooterLevelPath(skillLevel);
-    //    InstantShooter();
-    //}
-
-    //private void Update()
-    //{
-
-    //    if (transform.position.y > slowYPos) //속도 감소
-    //    {
-    //        speed = 0.2f;
-    //    }
-    //    startTimer += Time.deltaTime;
-    //    if(startTimer > fireTime)
-    //    {
-    //        //특수공격 종료
-    //        speed = 5f;
-    //        palyerSpecialSkill.isSkillActivating = false;
-    //    }
-    //    transform.Translate(Vector3.up* speed * Time.deltaTime); //이동
-    //}
-    //private string ChangeShooterLevelPath(int shooter_level)
-    //{
-    //    switch (shooter_level)
-    //    {
-    //        case 1:
-    //            return "lv1";
-    //        case 2:
-    //            return "lv2";
-    //        case 3:
-    //            return "lvMax";
-    //        default:
-    //            return "lvMax";
-    //    }
-    //}
-    //private void InstantShooter()
-    //{
-    //    GameObject shooter = AssetDatabase.LoadAssetAtPath<GameObject>(rootPath + curLevelPath + ".prefab");
-    //    if (shooter == null)
-    //    {
-    //        Debug.Log("load fail");
-    //    }
-    //    else
-    //    {
-    //        Instantiate(shooter, transform);
-    //    }
-    //}
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag =="Enemy_Projectile")
-    //    {
-    //        GameManager.Instance.Pool.ReleasePool(collision.gameObject);
-    //    }
-
-    //    if (collision.gameObject.tag == "TroopBorder")
-    //    {
-    //        GameManager.Instance.Pool.ReleasePool(gameObject);
-    //    }
-
-    //}

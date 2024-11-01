@@ -26,7 +26,7 @@ public class EnemySplitBullet : EnemyProjectile
     {
         for(int i = 0; i < splitCount; i++)
         {
-            GameObject newBullet = GameManager.Instance.Pool.GetOtherProj(OtherProjType.Enemy_Bullet, 
+            GameObject newBullet = GameManager.Game.Pool.GetOtherProj(OtherProjType.Enemy_Bullet, 
                 transform.position, Quaternion.identity);
             float angle = i * (360f / splitCount);
             Rigidbody2D rigid = newBullet.GetComponent<Rigidbody2D>();
@@ -41,12 +41,12 @@ public class EnemySplitBullet : EnemyProjectile
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerStat>().PlayerDamaged(damage, gameObject);
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
         else if (collision.CompareTag("Border"))
         {
             SplitBullet();
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
     }
 }

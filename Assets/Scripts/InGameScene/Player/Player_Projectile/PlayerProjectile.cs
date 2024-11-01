@@ -94,7 +94,7 @@ protected virtual void Update()
 
     protected void FollowPlayer()
     {
-        transform.position = GameManager.Instance.myPlayer.transform.position;
+        transform.position = PlayerMain.Instance.transform.position;
     }
 
     protected void MoveUp()
@@ -187,7 +187,7 @@ protected virtual void Update()
         hittedEnemyList.RemoveAt(0);
         if (isHitOnce)
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
     }
 
@@ -223,7 +223,7 @@ protected virtual void Update()
     {
         yield return new WaitForSeconds(activeTime);
         
-        GameManager.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Game.Pool.ReleasePool(gameObject);
     }
 
 
@@ -231,7 +231,7 @@ protected virtual void Update()
     {
         if (collision.gameObject.tag == "BulletBorder")
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
 
         if (collision.gameObject.tag == "Enemy")

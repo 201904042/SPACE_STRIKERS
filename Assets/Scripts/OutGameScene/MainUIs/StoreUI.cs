@@ -110,7 +110,7 @@ public class StoreUI : MainUIs
 
     public void GotoMain()
     {
-        ChangeUI(UIManager.UIInstance.mainUI);
+        ChangeUI(OG_UIManager.UIInstance.mainUI);
     }
 
     public void GotoWebStore()
@@ -134,19 +134,19 @@ public class StoreUI : MainUIs
             if (!DataManager.inven.IsEnoughItem(tradeCostItem.id, data.costAmount)) //미네랄의 양 검사
             {
                 //구매 불가 할경우. 알림 인터페이스 오픈
-                UIManager.alertInterface.SetAlert("구매 불가/ 비용 아이템이 부족합니다");
+                OG_UIManager.alertInterface.SetAlert("구매 불가/ 비용 아이템이 부족합니다");
                 return;
             }
         }
         else if (data.tradeCost == TradeType.Cash)
         {
             //현금 결재는 보류
-            UIManager.alertInterface.SetAlert("아직 캐쉬구매는 불가합니다");
+            OG_UIManager.alertInterface.SetAlert("아직 캐쉬구매는 불가합니다");
             return;
         }
         else
         {
-            UIManager.alertInterface.SetAlert("올바르지 않은 구매입니다");
+            OG_UIManager.alertInterface.SetAlert("올바르지 않은 구매입니다");
             return;
         }
 
@@ -164,10 +164,10 @@ public class StoreUI : MainUIs
             DataManager.parts.SaveData();
 
         //완료시 파이어베이스로 보냄
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Instance.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
 
         //구매 성공시 알림 인터페이스 오픈
-        UIManager.alertInterface.SetAlert("아이템을 구매하였습니다");
+        OG_UIManager.alertInterface.SetAlert("아이템을 구매하였습니다");
     }
 }
  

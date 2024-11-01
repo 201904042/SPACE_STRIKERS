@@ -28,7 +28,7 @@ public class Active_ElecShock : ActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjCount; i++)
         {
-            Skill_ElecShock elecShock = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_ElecShock>();
+            Skill_ElecShock elecShock = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_ElecShock>();
             elecShock.SetAddParameter(cycleDelay, slowRate, slowDmgRate);
             elecShock.SetProjParameter(projSpd, dmgRate, 0, size);
         }

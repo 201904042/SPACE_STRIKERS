@@ -79,8 +79,6 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         pSpecial = GetComponent<PlayerSpecialSkill>();
         pSkill = GetComponent<PlayerSkillManager>();
         pShooter = GetComponent<playerShooterUpgrade>();
-
-        pUI.ComponentSet();
         
         pStat.Init(); //최우선 스크립트
         pUI.Init();
@@ -124,7 +122,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     public void HpRestore(float healAmount)
     {
-        pStat.CurHp += healAmount;
+        pStat.CurHp = pStat.CurHp + healAmount;
     }
 
     private void PlayerMove()
@@ -136,12 +134,22 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         pControl.KeepPlayerInViewport();
     }
 
+    public IEnumerator PlayerDeadAnim()
+    {
+        yield return null;
+    }
+
+    public IEnumerator PlayerClearAnim()
+    {
+        yield return null;
+    }
+
     private void IncreasePow()
     {
-        if (pStat.AddPower < powMax)
+        if (pStat.CurPow < powMax)
         {
             float addValue = Time.deltaTime * pStat.IG_PowIncreaseRate;
-            pStat.AddPower = Mathf.Min(pStat.AddPower + addValue, powMax); // 초당 지정된 속도로 게이지 누적
+            pStat.CurPow = Mathf.Min(pStat.CurPow + addValue, powMax); // 초당 지정된 속도로 게이지 누적
         }
         PowerLvSet();
         pUI.PowBarChange();
@@ -149,7 +157,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     private void PowerLvSet()
     {
-        float curPow = pStat.AddPower;
+        float curPow = pStat.CurPow;
         if (curPow > powlv1Max && pStat.IG_curPowerLevel == 0)
         {
             pStat.IG_curPowerLevel = 1;

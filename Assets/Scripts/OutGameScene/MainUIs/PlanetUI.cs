@@ -91,12 +91,12 @@ public class PlanetUI : MainUIs
     public void GotoStage()
     {
         DataManager.account.SetPlanetValue(planetId);
-        ChangeUI(UIManager.UIInstance.stageUI);
+        ChangeUI(OG_UIManager.UIInstance.stageUI);
     }
 
     public void GotoMain()
     {
-        ChangeUI(UIManager.UIInstance.mainUI);
+        ChangeUI(OG_UIManager.UIInstance.mainUI);
     }
 
 

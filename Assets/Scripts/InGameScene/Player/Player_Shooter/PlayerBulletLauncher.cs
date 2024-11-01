@@ -28,7 +28,7 @@ public class PlayerBulletLauncher : LauncherStat
     protected override void Fire()
     {
         base.Fire();
-        PlayerBullet proj = GameManager.Instance.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerBullet>();
+        PlayerBullet proj = GameManager.Game.Pool.GetPlayerProj(projType, transform.position, transform.rotation).GetComponent<PlayerBullet>();
         proj.SetProjParameter(projSpeed, projDamageRate, 0, 0);
     }
 }

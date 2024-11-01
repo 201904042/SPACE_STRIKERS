@@ -160,22 +160,22 @@ public class EnemyObject : MonoBehaviour
     {
         for (int i = 0; i < enemyStat.expAmount; i++)
         {
-            GameManager.Instance.Pool.GetOtherProj(OtherProjType.Item_Exp, transform.position, transform.rotation);
+            GameManager.Game.Pool.GetOtherProj(OtherProjType.Item_Exp, transform.position, transform.rotation);
         }
     }
 
     public void EnemyEliminate()
     {
         hpBar.gameObject.SetActive(false);
-        GameManager.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Game.Pool.ReleasePool(gameObject);
     }
 
     public void EnemyDeath()
     {
-        if (enemyStat.type == 4)
+        if (enemyStat.type == EnemyType.Boss)
         {
-            GameManager.Instance.Spawn.isBossDown = true;
-            GameManager.Instance.Spawn.isBossSpawned = false;
+            GameManager.Game.Spawn.isBossDown = true;
+            GameManager.Game.Spawn.isBossSpawned = false;
         }
 
         DropExp();
@@ -187,7 +187,7 @@ public class EnemyObject : MonoBehaviour
         }
 
         hpBar.gameObject.SetActive(false);
-        GameManager.Instance.Pool.ReleasePool(gameObject);
+        GameManager.Game.Pool.ReleasePool(gameObject);
     }
 
     //public Coroutine EnemySlow(int slowRate, float SlowTime)
@@ -203,11 +203,11 @@ public class EnemyObject : MonoBehaviour
 
     private void DropItem()
     {
-        var projType = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>().shooterLevel < 3
+        var projType = PlayerMain.pStat.IG_WeaponLv < 3
             ? OtherProjType.Item_ShooterUP
             : GetRandomItemType();
 
-        GameManager.Instance.Pool.GetOtherProj(projType, transform.position, transform.rotation);
+        GameManager.Game.Pool.GetOtherProj(projType, transform.position, transform.rotation);
     }
 
     private OtherProjType GetRandomItemType()
@@ -224,7 +224,7 @@ public class EnemyObject : MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        GameManager.Instance.score += enemyStat.socreAmount;
+        GameManager.Game.score += enemyStat.socreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)
@@ -237,7 +237,7 @@ public class EnemyObject : MonoBehaviour
     {
         if (collision.CompareTag("BulletBorder") && isEliminatable)
         {
-            if (enemyStat.type == 1 || enemyStat.type == 2)
+            if (enemyStat.type == EnemyType.CommonType1 || enemyStat.type == EnemyType.CommonType2 || enemyStat.type == EnemyType.EliteType1|| enemyStat.type == EnemyType.EliteType2)
             {
                 EnemyEliminate();
             }

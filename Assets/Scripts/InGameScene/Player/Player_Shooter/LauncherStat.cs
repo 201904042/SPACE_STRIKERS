@@ -77,7 +77,7 @@ public class LauncherStat : MonoBehaviour
     protected virtual void Fire()
     {
         Debug.Log($"{nameof(projType)}°¡ ¹ß»çµÊ");
-        //GameManager.Instance.Pool.GetPlayerProj(projType, transform.position, transform.rotation);
+        //GameManager.Game.Pool.GetPlayerProj(projType, transform.position, transform.rotation);
     }
 
     

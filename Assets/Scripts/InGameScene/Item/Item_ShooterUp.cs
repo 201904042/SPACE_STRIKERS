@@ -9,7 +9,7 @@ public class Item_ShooterUp : Ingame_Item
     protected override void Awake()
     {
         base.Awake();
-        playerShooter = GameManager.Instance.myPlayer.transform.GetChild(0).GetComponent<playerShooterUpgrade>();
+        playerShooter = PlayerMain.pShooter;
     }
     
 
@@ -18,7 +18,7 @@ public class Item_ShooterUp : Ingame_Item
         base.OnTriggerEnter2D(collision);
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
             playerShooter.shooterLevel++;
         }
     }

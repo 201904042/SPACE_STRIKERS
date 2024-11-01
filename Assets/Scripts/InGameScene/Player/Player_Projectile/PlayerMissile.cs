@@ -28,7 +28,7 @@ public class PlayerMissile : PlayerProjectile
     protected override void TriggedEnemy(Collider2D collision)
     {
         base.TriggedEnemy(collision);
-        PlayerExplosion proj = GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Explosion, transform.position, transform.rotation).GetComponent<PlayerExplosion>();
+        PlayerExplosion proj = GameManager.Game.Pool.GetPlayerProj(PlayerProjType.Explosion, transform.position, transform.rotation).GetComponent<PlayerExplosion>();
         proj.SetProjParameter(0, expDmgRate, expLiveTime, expRange);
         SingleEnemyDamage();
     }

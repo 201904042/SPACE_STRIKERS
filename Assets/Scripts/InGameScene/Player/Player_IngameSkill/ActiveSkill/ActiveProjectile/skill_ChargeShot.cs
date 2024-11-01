@@ -46,14 +46,14 @@ public class Skill_ChargeShot : PlayerProjectile
 
         if (!isPenetrate)
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
             return;
         }
 
         
         if (damageCount == penetrateCount)
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
         damageCount++;
 

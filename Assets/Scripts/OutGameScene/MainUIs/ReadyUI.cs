@@ -226,7 +226,7 @@ public class ReadyUI : MainUIs
 
     private IEnumerator GetCharacterIdCoroutine()
     {
-        SelectCharInterface selecteCharInterface = UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
+        SelectCharInterface selecteCharInterface = OG_UIManager.selectCharInterface.GetComponent<SelectCharInterface>();
 
         yield return StartCoroutine(selecteCharInterface.GetValue());
 
@@ -245,7 +245,7 @@ public class ReadyUI : MainUIs
 
     private IEnumerator GetPartsIdCoroutine(int partsSlotId)
     {
-        SelectPartsInterface selectPartsInterface = UIManager.selectPartsInterface;
+        SelectPartsInterface selectPartsInterface = OG_UIManager.selectPartsInterface;
 
         yield return StartCoroutine(selectPartsInterface.GetValue());
 
@@ -279,7 +279,7 @@ public class ReadyUI : MainUIs
 
     public void GotoStage()
     {
-        ChangeUI(UIManager.UIInstance.stageUI);
+        ChangeUI(OG_UIManager.UIInstance.stageUI);
     }
     public void GameStart()
     {

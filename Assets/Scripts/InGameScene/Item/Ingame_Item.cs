@@ -62,7 +62,7 @@ public class Ingame_Item : MonoBehaviour
         {
             if (liveTimeOut)
             {
-                GameManager.Instance.Pool.ReleasePool(gameObject);
+                GameManager.Game.Pool.ReleasePool(gameObject);
             }
             else
             {

@@ -40,7 +40,7 @@ public class USkill_Char4 : UniqueSkill
     {
         base.ActivateSkill(level);
 
-        USkill_TrackingMissile proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<USkill_TrackingMissile>();
+        USkill_TrackingMissile proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<USkill_TrackingMissile>();
         proj.SetProjParameter(projSpd, dmgRate, 0, size); //여기선 라이브타임을 다른 방식으로 사용
     }
 

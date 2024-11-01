@@ -59,6 +59,8 @@ public class Skill_ElecShock : PlayerProjectile
     {
         base.SetProjParameter(_projSpeed, _dmgRate, _liveTime, _range);
         isHitOnce = false;
+
+        
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -68,6 +70,10 @@ public class Skill_ElecShock : PlayerProjectile
         if (collision.gameObject.tag == "Enemy")
         {
             //적 리뉴얼 후 슬로우 효과 추가
+            if (isSlow)
+            {
+                //
+            }
         }
     }
 
@@ -79,6 +85,55 @@ public class Skill_ElecShock : PlayerProjectile
         if (damaging == null)
         {
             damaging = StartCoroutine(AreaDamageLogic(cycleRate));
+        }
+    }
+
+    protected override IEnumerator AreaDamageLogic(float _cycleRate)
+    {
+        while (true)
+        {
+            if (hittedEnemyList.Count == 0)
+            {
+                yield return new WaitForSeconds(_cycleRate);
+                continue;
+            }
+            MultiEnemyDamage(); // 기존 데미지 로직 호출
+
+            yield return new WaitForSeconds(_cycleRate); // 주기적으로 데미지 적용
+        }
+    }
+
+    protected override void MultiEnemyDamage()
+    {
+        for (int i = hittedEnemyList.Count - 1; i >= 0; i--)
+        {
+            if (hittedEnemyList.Count <= 0)
+            {
+                return;
+
+            }
+            GameObject enemy = hittedEnemyList[i];
+
+            if (!enemy.activeSelf)
+            {
+                hittedEnemyList.RemoveAt(i); // 비활성화된 적 제거
+            }
+            else
+            {
+                if (isSlowExtraDamage ) //해당 적이 슬로우 상태라면? 추가뎀
+                {
+                    enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage + (finalDamage*(extraDamageRate / 100)) , gameObject); // 적에게 데미지
+                }
+                else
+                {
+                    enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject); // 적에게 데미지
+                }
+                
+                if (isHitOnce)
+                {
+                    hittedEnemyList.RemoveAt(i);
+                }
+            }
         }
     }
 

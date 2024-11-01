@@ -40,6 +40,7 @@ public class PlayerStat : MonoBehaviour
     //레벨 관련
     public int IG_Level; //캐릭터의 레벨이 아닌 인게임에서의 레벨
     public int IG_MaxExp; //목표 exp. IG_CurExp >= IG_MaxExp 라면 레벨업 판정
+    public int MaxExpInstance; //레벨업을 할때 기존 목표exp값을 복사. 스킬을 고르지 않고 반환할경우 해당 값을 목표exp로 삼음
     private int IG_CurExp; //현재 가지고 있는 exp
     public float MaxExpInceaseRate = 1.5f;
     public int CurExp
@@ -47,7 +48,7 @@ public class PlayerStat : MonoBehaviour
         get => IG_CurExp;
         set
         {
-            IG_CurExp += value;
+            IG_CurExp = value;
             if (IG_CurExp >= IG_MaxExp)
             {
                 LevelUp();
@@ -75,12 +76,14 @@ public class PlayerStat : MonoBehaviour
     public int IG_curPowerLevel; //스페셜 증가치
     public float IG_PowIncreaseRate; //초당 파워 증가율
     private float curPower; //현재까지 모은 power의 양
-    public float AddPower
+    
+    public float CurPow
     {
         get => curPower;
         set
         {
             curPower = value;
+            pUI.ExpBarChange();
         }
     }
 
@@ -203,10 +206,11 @@ public class PlayerStat : MonoBehaviour
     public void LevelUp()
     {
         IG_Level++;
-        IG_MaxExp = (int)((float)IG_MaxExp * MaxExpInceaseRate);
+        MaxExpInstance = IG_MaxExp; //기존 목표exp 복사
+        IG_MaxExp = (int)((float)IG_MaxExp * MaxExpInceaseRate); //목표 exp 증가
         CurExp = 0;
 
-        GameManager.Instance.IGetSkill.OpenInterface();
+        GameManager.Game.UI.IGetSkill.OpenInterface();
         Time.timeScale = 0f;
     }
 
@@ -219,7 +223,7 @@ public class PlayerStat : MonoBehaviour
         {
             float applyDamage = damage * (1 - (0.01f * IG_Dfs)); //todo => 방어력 로직 다시 체크
 
-            CurHp -= applyDamage;
+            CurHp = CurHp - applyDamage;
             Debug.Log(attackObj.name + " 에 의해 " + applyDamage + " 의 데미지를 입음");
             PlayerDamagedAction(attackObj); //넉백 및 무적 부여
         }

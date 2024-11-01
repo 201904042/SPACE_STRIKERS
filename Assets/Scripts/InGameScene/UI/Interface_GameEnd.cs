@@ -27,13 +27,13 @@ using UnityEngine.SceneManagement;
     {
         stageTextSet();
 
-        if (GameManager.Instance.isGameClear)
+        if (GameManager.Game.IG_Clear)
         {
-            if (GameManager.Instance.Stage.openStage == ((GameManager.Instance.Stage.planet - 1) * 10) + GameManager.Instance.Stage.stage)
+            if (GameManager.Game.Stage.openStage == ((GameManager.Game.Stage.planet - 1) * 10) + GameManager.Game.Stage.stage)
             {
-                rewardInit(GameManager.Instance.Stage.curStagefirstGain.Length);
+                rewardInit(GameManager.Game.Stage.curStagefirstGain.Length);
                 int n = 0;
-                foreach (Item firstGain in GameManager.Instance.Stage.curStagefirstGain)
+                foreach (Item firstGain in GameManager.Game.Stage.curStagefirstGain)
                 {
                     rewardItemSet(firstGain, n);
                     n++;
@@ -41,17 +41,17 @@ using UnityEngine.SceneManagement;
             }
             else
             {
-                rewardInit(GameManager.Instance.Stage.curStageDefaultGain.Length + GameManager.Instance.Stage.curDefaultFullGain.Length);
+                rewardInit(GameManager.Game.Stage.curStageDefaultGain.Length + GameManager.Game.Stage.curDefaultFullGain.Length);
                 int n = 0;
-                foreach (Item defaultGain in GameManager.Instance.Stage.curStageDefaultGain)
+                foreach (Item defaultGain in GameManager.Game.Stage.curStageDefaultGain)
                 {
                     rewardItemSet(defaultGain, n);
                     n++;
                 }
                 //중복퍼펙트 추가보상
-                if (GameManager.Instance.isPerfectClear)
+                if (GameManager.Game.IG_PerfectClear)
                 {
-                    foreach (Item perfectClear in GameManager.Instance.Stage.curDefaultFullGain)
+                    foreach (Item perfectClear in GameManager.Game.Stage.curDefaultFullGain)
                     {
                         rewardItemSet(perfectClear, n);
                         n++;
@@ -78,7 +78,7 @@ using UnityEngine.SceneManagement;
     }
 
     private void stageTextSet() {
-        if (GameManager.Instance.isGameClear)
+        if (GameManager.Game.IG_Clear)
         {
             ClearText.text = "Stage Clear";
             ClearText.currentColor = Color.green;
@@ -89,8 +89,8 @@ using UnityEngine.SceneManagement;
             ClearText.currentColor = Color.red;
         }
 
-        StageNameText.text = $"Stage : {GameManager.Instance.Stage.planet.ToString()}" +
-            $"- { GameManager.Instance.Stage.stage.ToString()}";
+        StageNameText.text = $"Stage : {GameManager.Game.Stage.planet.ToString()}" +
+            $"- { GameManager.Game.Stage.stage.ToString()}";
     }
 
     private void rewardItemSet(Item rewardGain, int i)
@@ -131,7 +131,7 @@ using UnityEngine.SceneManagement;
 
     private void jsonDataWrite()
     {
-        if (GameManager.Instance.isGameClear)
+        if (GameManager.Game.IG_Clear)
         {
             for (int i = 0; i < rewardItems.Length; i++) //리워드 아이템의 순회
             {

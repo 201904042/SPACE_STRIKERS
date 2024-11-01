@@ -6,37 +6,24 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     PlayerStat pStat => PlayerMain.pStat;
-    private Slider hpSlider;
+    GameManager gm => GameManager.Game;
+    private Slider hp => gm.UI.p_hpSlider;
     private float maxHp => pStat.IG_Hp;
     private float curHp => pStat.CurHp;
 
-    private Slider expSlider;
+    private Slider exp => gm.UI.p_expSlider;
     private int MaxExp =>  pStat.IG_MaxExp;
     private int curExp=> pStat.CurExp;
 
-    private Slider powSlider;
+    private Slider pow => gm.UI.p_powSlider;
     private float MaxPow => PlayerMain.powMax;
-    private float curPow => pStat.AddPower;
+    private float curPow => pStat.CurPow;
 
-    private TextMeshProUGUI powLvText;
-
-    private int uSkillcount => pStat.USkillCount;
-    private TextMeshProUGUI uSkillCountText;
-    private Image uSkillImage;
-
-    
-    public void ComponentSet()
-    {
-        Transform Canvas = FindObjectOfType<Canvas>().transform;
-        Transform playerUI = Canvas.Find("PlayerUI").transform;
-
-        hpSlider = playerUI.GetChild(0).GetComponent<Slider>();
-        expSlider = playerUI.GetChild(1).GetComponent<Slider>();
-        powSlider = playerUI.GetChild(2).GetComponent<Slider>();
-        powLvText = powSlider.GetComponentInChildren<TextMeshProUGUI>();
-        uSkillImage = playerUI.GetChild(3).GetChild(1).GetComponent<Image>();
-        uSkillCountText = playerUI.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
-    }
+   
+    private Image USImage => gm.UI.p_uSkillImage;
+    private TextMeshProUGUI US_CountText => gm.UI.p_uSkillCountText;
+    private int USCount => pStat.USkillCount;
+    private TextMeshProUGUI powText => gm.UI.p_powLvText;
 
     public void Init()
     {
@@ -50,40 +37,40 @@ public class PlayerUI : MonoBehaviour
     public void HpBarChange()
     {
         
-        hpSlider.value = curHp/ maxHp;
+        hp.value = curHp/ maxHp;
         //todo => hp %별로 색깔놀이
     }
 
     public void ExpBarChange()
     {
-        expSlider.value = curExp / MaxExp; //계산해야됨
+        exp.value = curExp / MaxExp; //계산해야됨
     }
 
     public void PowBarChange()
     {
-        powSlider.value = curPow / MaxPow;
+        pow.value = curPow / MaxPow;
 
-        Image fillImage = powSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        Image fillImage = pow.transform.GetChild(1).GetChild(0).GetComponent<Image>();
         int powLv  = pStat.IG_curPowerLevel;
         if (powLv == 0)
         {
             fillImage.color = Color.white;
-            powLvText.text = "POW Lv 0";
+            powText.text = "POW Lv 0";
         }
         else if (powLv == 1)
         {
             fillImage.color = Color.green;
-            powLvText.text = "POW Lv 1";
+            powText.text = "POW Lv 1";
         }
         else if (powLv == 2)
         {
             fillImage.color = Color.yellow;
-            powLvText.text = "POW Lv 2";
+            powText.text = "POW Lv 2";
         }
         else if (powLv == 3)
         {
             fillImage.color = Color.red;
-            powLvText.text = "POW Lv MAX";
+            powText.text = "POW Lv MAX";
         }
     }
 
@@ -95,12 +82,12 @@ public class PlayerUI : MonoBehaviour
             Debug.Log("유니크 스킬의 경로명이 잘못됨");
             return;
         }
-        uSkillImage.sprite = image;
+        USImage.sprite = image;
     }
 
     public void SetUniquSkillCount()
     {
-        uSkillCountText.text = uSkillcount.ToString();
+        US_CountText.text = USCount.ToString();
     }
 
 }

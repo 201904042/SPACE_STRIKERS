@@ -26,7 +26,7 @@ public class Active_Missile : ActiveSkill
         
         for (int i = 0; i < CurSkillValue.ProjCount; i++)
         {
-            Skill_Missile proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Missile>();
+            Skill_Missile proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Missile>();
            
             Vector2 RandomDir = DirectionToRandomEnemy();
             proj.transform.up = RandomDir;

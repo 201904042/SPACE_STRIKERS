@@ -25,7 +25,7 @@ public class USkill_Char2 : UniqueSkill
     {
         base.ActivateSkill(level);
 
-        USkill_Bomber proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<USkill_Bomber>();
+        USkill_Bomber proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<USkill_Bomber>();
         proj.SetAddParameter(expDmg, expLiveTime, expSize, cycleDelay);
         proj.SetProjParameter(projSpd, dmgRate, 0, 0); //발사체의 속도와 데미지, 폭발의 시간과 크기
     }

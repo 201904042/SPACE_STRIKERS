@@ -84,7 +84,7 @@ public class Enemy_Boss : EnemyAct
             case 1: attackCoroutine = StartCoroutine(Pattern2()); break;
             case 2: attackCoroutine = StartCoroutine(Pattern3()); break;
             case 3: attackCoroutine = StartCoroutine(Pattern4()); break;
-            case 4: attackCoroutine = StartCoroutine(Pattern5()); break;
+            //case 4: attackCoroutine = StartCoroutine(Pattern5()); break;
         }
     }
 
@@ -140,18 +140,18 @@ public class Enemy_Boss : EnemyAct
         isAttack = false;
     }
 
-    private IEnumerator Pattern5()
-    {
-        isAttack = true;
-        curPattern = "pattern5";
-        SpawnPattern selectedPattern = GameManager.Instance.Spawn.spawnPatterns[1]; //内靛2锅 利 3付府
-        foreach (Vector2 pos in selectedPattern.positions)
-        {
-            GameManager.Instance.Pool.GetEnemy(selectedPattern.enemyId, pos, selectedPattern.spawnZone.rotation);
-        }
-        yield return new WaitForSeconds(3f);
-        isAttack = false;
-    }
+    //private IEnumerator Pattern5()
+    //{
+    //    isAttack = true;
+    //    curPattern = "pattern5";
+    //    SpawnPattern selectedPattern = GameManager.Game.Spawn.spawnPatterns[1]; //内靛2锅 利 3付府
+    //    foreach (Vector2 pos in selectedPattern.positions)
+    //    {
+    //        GameManager.Game.Pool.GetEnemy(selectedPattern.enemyId, pos, selectedPattern.spawnZone.rotation);
+    //    }
+    //    yield return new WaitForSeconds(3f);
+    //    isAttack = false;
+    //}
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

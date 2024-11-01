@@ -25,7 +25,7 @@ public class Active_MiniDrone : ActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjCount; i++)
         {
-            skill_MiniDrone proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_MiniDrone>();
+            skill_MiniDrone proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<skill_MiniDrone>();
             proj.SetAddParameter(dAtkSpd,dAtkRange);
             proj.SetProjParameter(projSpd, dmgRate, liveTime, 0);
         }

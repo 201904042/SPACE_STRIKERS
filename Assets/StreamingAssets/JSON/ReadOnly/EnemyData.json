@@ -14,7 +14,7 @@
     },
     {
       "id": 502,
-      "type": 1,
+      "type": 2,
       "hp": 30,
       "damage": 10,
       "moveSpeed": 1,
@@ -26,7 +26,7 @@
     },
     {
       "id": 511,
-      "type": 2,
+      "type": 3,
       "hp": 100,
       "damage": 10,
       "moveSpeed": 3,
@@ -38,7 +38,7 @@
     },
     {
       "id": 512,
-      "type": 2,
+      "type": 4,
       "hp": 50,
       "damage": 10,
       "moveSpeed": 1,
@@ -50,7 +50,7 @@
     },
     {
       "id": 531,
-      "type": 4,
+      "type": 6,
       "hp": 10000,
       "damage": 10,
       "moveSpeed": 10,
@@ -62,7 +62,7 @@
     },
     {
       "id": 600,
-      "type": 0,
+      "type": 7,
       "hp": 1000000,
       "damage": 0,
       "moveSpeed": 0,

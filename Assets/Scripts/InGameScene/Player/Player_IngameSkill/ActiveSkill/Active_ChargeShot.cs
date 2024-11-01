@@ -25,7 +25,7 @@ public class Active_ChargeShot : ActiveSkill
 
         for (int i = 0; i < CurSkillValue.ProjCount; i++)
        {
-            Skill_ChargeShot proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_ChargeShot>();
+            Skill_ChargeShot proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_ChargeShot>();
             proj.SetAddParameter(penetrateCount);
             proj.SetProjParameter(projSpd, dmgRate, liveTime, size);
         }

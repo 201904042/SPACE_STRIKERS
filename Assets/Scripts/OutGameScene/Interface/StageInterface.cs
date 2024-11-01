@@ -92,7 +92,7 @@ public class StageInterface : UIInterface
         MasterData item = new MasterData();
         if (isFirstClear)
         {
-            foreach (StageItemReward reward in curStageData.firstReward)
+            foreach (StageReward reward in curStageData.firstReward)
             {
                 item = DataManager.master.GetData(reward.itemId);
                 rewardText += $"{item.name} x {reward.quantity}\n";
@@ -100,7 +100,7 @@ public class StageInterface : UIInterface
         }
         else
         {
-            foreach (StageItemReward reward in curStageData.defaultReward)
+            foreach (StageReward reward in curStageData.defaultReward)
             {
                 item = DataManager.master.GetData(reward.itemId);
                 rewardText += $"{item.name} x {reward.quantity}\n";

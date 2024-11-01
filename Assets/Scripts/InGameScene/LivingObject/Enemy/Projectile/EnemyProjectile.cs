@@ -31,11 +31,11 @@ public class EnemyProjectile : MonoBehaviour
         if (collision.transform.tag == "Player")
         {
            PlayerMain.pStat.PlayerDamaged(damage, gameObject);
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
         if (collision.transform.tag == "BulletBorder")
         {
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
     }
 }

@@ -4,17 +4,18 @@ using UnityEngine;
 
 public enum EnemyType
 {
-    None,
-    SandBag,
-    Common,
-    Elite,
-    MidBoss,
-    Boss
+    None = 0,
+    CommonType1 =1,
+    CommonType2 =2,
+    EliteType1 =3,
+    EliteType2 =4,
+    MidBoss =5,
+    Boss = 6,
+    SandBag = 7
 }
 
 [CreateAssetMenu(fileName = "New EnemyInfo", menuName = "DataAsset/EnemyInfo")]
-public class EnemyInfo : ScriptableObject
+public class EnemyInfo : PoolData
 {
-    public GameObject prefab;
     public EnemyType enemyType = EnemyType.None;
 }

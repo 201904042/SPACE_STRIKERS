@@ -76,7 +76,7 @@ public class skill_MiniDrone : PlayerProjectile
 
     private void DroneAttack()
     {
-        skill_MiniDroneBullet proj = GameManager.Instance.Pool.GetPlayerProj(PlayerProjType.Skilll_DroneBullet, transform.position, transform.rotation).GetComponent<skill_MiniDroneBullet>();
+        skill_MiniDroneBullet proj = GameManager.Game.Pool.GetPlayerProj(PlayerProjType.Skilll_DroneBullet, transform.position, transform.rotation).GetComponent<skill_MiniDroneBullet>();
         proj.SetProjParameter(droneBulletSpd, damageRate, 0, 0);
     }
 

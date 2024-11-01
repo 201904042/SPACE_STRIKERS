@@ -82,10 +82,10 @@ public class InvenData
 public class StageData
 {
     public int stageCode;
-    public string stageType;
+    public GameMode stageType;
     public StageEnemyData[] stageEnemy;
-    public StageItemReward[] firstReward;
-    public StageItemReward[] defaultReward;
+    public StageReward[] firstReward;
+    public StageReward[] defaultReward;
 }
 
 
@@ -100,7 +100,7 @@ public class UpgradeData
 public class EnemyData
 {
     public int id;
-    public int type; //적의 등급 common,elite,midBoss, Boss, Obstacle
+    public EnemyType type; //적의 등급 common,elite,midBoss, Boss, Obstacle
     public float hp;
     public float damage;
     public float moveSpeed;

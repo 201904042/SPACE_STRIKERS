@@ -34,7 +34,7 @@ public class Skill_Shield : PlayerProjectile
         if (collision.CompareTag("Enemy_Projectile"))
         {
             pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과
-            GameManager.Instance.Pool.ReleasePool(gameObject);
+            GameManager.Game.Pool.ReleasePool(gameObject);
         }
     }
 

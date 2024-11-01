@@ -25,8 +25,7 @@ public enum PlayerProjType
 }
 
 [CreateAssetMenu(fileName = "New PlayerProjData", menuName = "DataAsset/PlayerProjData")]
-public class PlayerProjData : ScriptableObject
+public class PlayerProjData : PoolData
 {
-    public GameObject prefab;
     public PlayerProjType projType = PlayerProjType.None;
 }

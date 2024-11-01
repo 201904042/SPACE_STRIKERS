@@ -23,7 +23,7 @@ public class Active_Shield : ActiveSkill
     {
         base.LevelUp(); // 부모 클래스의 LevelUp 호출
         if (instantShield != null) {
-            GameManager.Instance.Pool.ReleasePool(instantShield.gameObject); // 레벨업시 기존 스킬 파괴 및 바로 재생성
+            GameManager.Game.Pool.ReleasePool(instantShield.gameObject); // 레벨업시 기존 스킬 파괴 및 바로 재생성
             instantShield = null;
         }
         
@@ -56,7 +56,7 @@ public class Active_Shield : ActiveSkill
         {
             return;
         }
-        Skill_Shield proj = GameManager.Instance.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Shield>();
+        Skill_Shield proj = GameManager.Game.Pool.GetPlayerProj(projType, instantPoint.position, instantPoint.rotation).GetComponent<Skill_Shield>();
         instantShield = proj;
         proj.SetProjParameter(0, dmgRate, 0, size);
     }

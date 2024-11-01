@@ -30,7 +30,7 @@ public class USkill_Char1 : UniqueSkill
         for (int i = 0; i < projCount; i++)
         {
             Vector3 spawnPosition = new Vector3(spawnXpos + (i * space), spawnYpos, 0f);
-            Troop troop = GameManager.Instance.Pool.GetPlayerProj(projType, spawnPosition, instantPoint.rotation).GetComponent<Troop>();
+            Troop troop = GameManager.Game.Pool.GetPlayerProj(projType, spawnPosition, instantPoint.rotation).GetComponent<Troop>();
             troop.SetProjParameter(projSpd, dmgRate, liveTime, size);
 
             // 이전 슈터 제거

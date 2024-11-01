@@ -2,7 +2,7 @@
   "StageData": [
     {
       "stageCode": 1,
-      "stageType": "일반",
+      "stageType": 1,
       "stageEnemy": [
         {"enemyId": 501, "quantity": 50},
         {"enemyId": 502, "quantity": 50}
@@ -19,7 +19,7 @@
     },
     {
       "stageCode": 2,
-      "stageType": "일반",
+      "stageType": 1,
       "stageEnemy": [
         {"enemyId": 501, "quantity": 50},
         {"enemyId": 502, "quantity": 50}
@@ -36,7 +36,7 @@
     },
     {
       "stageCode": 3,
-      "stageType": "일반",
+      "stageType": 1,
       "stageEnemy": [
         {"enemyId": 501, "quantity": 50},
         {"enemyId": 502, "quantity": 50},
@@ -55,7 +55,7 @@
     },
     {
       "stageCode": 4,
-      "stageType": "일반",
+      "stageType": 1,
       "stageEnemy": [
         {"enemyId": 501, "quantity": 50},
         {"enemyId": 502, "quantity": 50},
@@ -74,7 +74,7 @@
     },
     {
       "stageCode": 5,
-      "stageType": "보스",
+      "stageType": 2,
       "stageEnemy": [
         {"enemyId": 501, "quantity": 50},
         {"enemyId": 502, "quantity": 50},

@@ -67,15 +67,15 @@ public class PlayerHoming : PlayerProjectile
 
     protected GameObject SetTarget()
     {
-        Debug.Log($"현재 활성화된 적의 수: {GameManager.Instance.Spawn.activeEnemyList.Count}");
+        Debug.Log($"현재 활성화된 적의 수: {GameManager.Game.Spawn.activeEnemyList.Count}");
 
-        if (GameManager.Instance.Spawn.activeEnemyList.Count == 0)
+        if (GameManager.Game.Spawn.activeEnemyList.Count == 0)
         {
             return null;
         }
 
-        int randomIndex = UnityEngine.Random.Range(0, GameManager.Instance.Spawn.activeEnemyList.Count);
-        GameObject target = GameManager.Instance.Spawn.activeEnemyList[randomIndex];
+        int randomIndex = UnityEngine.Random.Range(0, GameManager.Game.Spawn.activeEnemyList.Count);
+        GameObject target = GameManager.Game.Spawn.activeEnemyList[randomIndex];
 
         return target;
     }

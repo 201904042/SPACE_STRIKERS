@@ -16,8 +16,7 @@ public enum OtherProjType
 }
 
 [CreateAssetMenu(fileName = "New OtherProjData", menuName = "DataAsset/OtherProjData")]
-public class OtherProjData : ScriptableObject
+public class OtherProjData : PoolData
 {
-    public GameObject prefab;
     public OtherProjType projType = OtherProjType.None;
 }

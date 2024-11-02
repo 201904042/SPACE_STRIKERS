@@ -14,7 +14,7 @@ public struct SpawnPattern
     public Quaternion rotation;
 }
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager
 {
     private const float initialSpawnTimer = 10f;
     private const float minimumSpawnTimer = 1f;
@@ -298,13 +298,8 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnBoss(int bossId)
     {
-        
-        if (GameManager.Game.SpawnCoroutine != null)
-        {
-            
-            StopCoroutine(GameManager.Game.SpawnCoroutine);
-            GameManager.Game.SpawnCoroutine = null; // 코루틴 참조를 null로 설정
-        }
+
+        GameManager.Game.StopSpawnTroop();
 
         isBossSpawned = true;
         isBossDown = false;

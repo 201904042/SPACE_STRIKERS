@@ -6,7 +6,7 @@ using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class StageManager : MonoBehaviour
+public class StageManager
 {
     [Header("스테이지 관련")]
     public GameMode curMode;

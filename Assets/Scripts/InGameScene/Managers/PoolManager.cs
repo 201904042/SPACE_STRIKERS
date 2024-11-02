@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.MaterialProperty;
 
-public class PoolManager : MonoBehaviour
+
+public class PoolManager 
 {
     private const string EnemyDataPath = "Prefab/Scriptable/EnemyData";
     private const string PlayerDataPath = "Prefab/Scriptable/PlayerProjData";
@@ -101,7 +97,7 @@ public class PoolManager : MonoBehaviour
         {
             if(projType == proj.projType)
             {
-                GameObject newObject = Instantiate(proj.prefab, playerProjPool);
+                GameObject newObject = GameManager.InstantObject(proj.prefab, playerProjPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -136,7 +132,7 @@ public class PoolManager : MonoBehaviour
         {
             if (projType == projData.projType)
             {
-                GameObject newObject = Instantiate(projData.prefab, otherProjPool);
+                GameObject newObject = GameManager.InstantObject(projData.prefab, otherProjPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -171,7 +167,7 @@ public class PoolManager : MonoBehaviour
         {
             if (type == enemyData.enemyType)
             {
-                GameObject newObject = Instantiate(enemyData.prefab, enemyPool);
+                GameObject newObject = GameManager.InstantObject(enemyData.prefab, enemyPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -199,7 +195,7 @@ public class PoolManager : MonoBehaviour
     //필요없는 오브젝트 제거
     public void DestroyPool(GameObject gameObject)
     {
-        Destroy(gameObject);
+        GameManager.DestroyObject(gameObject);
     }
 
 

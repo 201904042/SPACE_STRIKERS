@@ -5,7 +5,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IG_UIManager : MonoBehaviour
+public class IG_UIManager
 {
     //게임 UI
     //헤더UI
@@ -32,7 +32,7 @@ public class IG_UIManager : MonoBehaviour
 
     private void ComponentSet()
     {
-        Transform Canvas = FindObjectOfType<Canvas>().transform;
+        Transform Canvas = GameObject.Find("Canvas").transform;
         HeaderUI = Canvas.Find("HeaderUI").transform;
         timeText = HeaderUI.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         scoreText = HeaderUI.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();

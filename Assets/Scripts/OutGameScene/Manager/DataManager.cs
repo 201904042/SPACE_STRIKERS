@@ -21,7 +21,7 @@ public enum DataFieldType
 }
 
 
-public class DataManager : MonoBehaviour
+public class DataManager
 {
     public static Dictionary<DataFieldType, string> dataFieldNames = new Dictionary<DataFieldType, string>
 {

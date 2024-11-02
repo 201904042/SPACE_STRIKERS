@@ -1,11 +1,6 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.EditorTools;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public enum GameMode
 {
@@ -128,9 +123,23 @@ public class GameManager : MonoBehaviour
         {
             GameCoroutine = StartCoroutine(CheckInGameBehavior());
         }
+        StartSpawnTroop();
+    }
+
+    public void StartSpawnTroop()
+    {
         if (SpawnCoroutine == null)
         {
             SpawnCoroutine = StartCoroutine(Spawn.SpawnEnemyTroops());
+        }
+    }
+    public void StopSpawnTroop()
+    {
+        if (SpawnCoroutine != null)
+        {
+
+            StopCoroutine(SpawnCoroutine);
+            SpawnCoroutine = null; // 코루틴 참조를 null로 설정
         }
     }
 
@@ -268,4 +277,36 @@ public class GameManager : MonoBehaviour
     {
         Game.Spawn.SpawnBoss(31);
     }
+
+
+    //매니저 전용 생성 삭제 루트
+    public static GameObject InstantObject(GameObject target, Transform parent = null)
+    {
+        if (target == null)
+        {
+            Debug.LogError("InstantObject: target is null.");
+            return null;
+        }
+
+        // parent가 null일 경우 씬의 루트에 생성됨
+        return Instantiate(target, parent);
+    }
+
+    public static void DestroyObject(GameObject target)
+    {
+        Destroy(target.gameObject);
+    }
+
+
+    public static T LoadFromResources<T>(string path) where T : Object
+    {
+        T instance = Resources.Load<T>(path);
+        if (instance == null)
+        {
+            Debug.LogError($"LoadFromResources: No asset found at path '{path}'.");
+        }
+        return instance;
+    }
+
+    
 }

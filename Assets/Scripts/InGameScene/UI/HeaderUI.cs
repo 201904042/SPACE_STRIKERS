@@ -8,10 +8,6 @@ public class HeaderUI : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI timeText;
     public GameObject optionUI;
-
-
-    private float saveScore;
-
     private void Awake()
     {
         timeText.text = "00:00";
@@ -20,12 +16,6 @@ public class HeaderUI : MonoBehaviour
     void Update()
     {
         timeText.text = GameManager.Game.minutes.ToString()+" : "+ GameManager.Game.seconds.ToString();
-
-        if (GameManager.Game.score != saveScore)
-        {
-            ScoreText.text = GameManager.Game.score.ToString();
-            saveScore = GameManager.Game.score;
-        }
     }
 
     public void optionBtn()

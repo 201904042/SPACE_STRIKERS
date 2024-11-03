@@ -54,28 +54,28 @@
       "name": "캐릭터1",
       "type": 2,  
       "description": "캐릭터1 설명",
-      "spritePath": "Sprite/Player/Basic"
+      "spritePath": "Sprite/Player/Character/101"
     },
     {
       "id": 102,
       "name": "캐릭터2",
       "type": 2,  
       "description": "캐릭터2 설명",
-      "spritePath": "Sprite/Player/Bomber"
+      "spritePath": "Sprite/Player/Character/102"
     },
     {
       "id": 103,
       "name": "캐릭터3",
       "type": 2,  
       "description": "캐릭터3 설명",
-      "spritePath": "Sprite/Player/Splash"
+      "spritePath": "Sprite/Player/Character/103"
     },
     {
       "id": 103,
       "name": "캐릭터4",
       "type": 2, 
       "description": "캐릭터4 설명",
-      "spritePath": "Sprite/Player/Tanker"
+      "spritePath": "Sprite/Player/Character/104"
     },
     {
       "id": 201,

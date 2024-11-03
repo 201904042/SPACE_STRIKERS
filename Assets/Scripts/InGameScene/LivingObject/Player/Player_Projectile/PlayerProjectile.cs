@@ -16,7 +16,7 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
 
     //todo -> 적리뉴얼후 적 스크립트로 바꿔보기
-    [SerializeField] protected int damageRate;
+    [SerializeField] protected int damageRate; 
     [SerializeField] protected int speed;
     [SerializeField] protected float liveTime;
     [SerializeField] protected float range;
@@ -40,6 +40,7 @@ public class PlayerProjectile : MonoBehaviour
         ResetProj();
     }
 
+    
     protected virtual void OnDisable()
     {
         //비활성화 시 초기화
@@ -74,7 +75,7 @@ public class PlayerProjectile : MonoBehaviour
         isShootingObj = true; 
     }
 
-protected virtual void Update()
+    protected virtual void Update()
     {
         if (!isParameterSet)
         {

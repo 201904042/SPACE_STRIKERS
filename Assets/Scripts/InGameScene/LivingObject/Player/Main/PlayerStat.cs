@@ -23,7 +23,7 @@ public class PlayerStat : MonoBehaviour
     public float IG_MSpd;
     public float IG_ASpd;
     public float IG_Hp;
-    private float IG_CurHp;
+    [SerializeField]private float IG_CurHp;
     public float CurHp
     {
         get => IG_CurHp;
@@ -41,7 +41,7 @@ public class PlayerStat : MonoBehaviour
     public int IG_Level; //캐릭터의 레벨이 아닌 인게임에서의 레벨
     public int IG_MaxExp; //목표 exp. IG_CurExp >= IG_MaxExp 라면 레벨업 판정
     public int MaxExpInstance; //레벨업을 할때 기존 목표exp값을 복사. 스킬을 고르지 않고 반환할경우 해당 값을 목표exp로 삼음
-    private int IG_CurExp; //현재 가지고 있는 exp
+    [SerializeField] private int IG_CurExp; //현재 가지고 있는 exp
     public float MaxExpInceaseRate = 1.5f;
     public int CurExp
     {
@@ -54,7 +54,7 @@ public class PlayerStat : MonoBehaviour
                 LevelUp();
             }
 
-            pUI.HpBarChange();
+            pUI.ExpBarChange();
         }
     }
 
@@ -83,7 +83,7 @@ public class PlayerStat : MonoBehaviour
         set
         {
             curPower = value;
-            pUI.ExpBarChange();
+            pUI.PowBarChange();
         }
     }
 
@@ -171,14 +171,14 @@ public class PlayerStat : MonoBehaviour
     public void PlayerSet(int id)
     {
         CharData curPlayerChar = DataManager.character.GetData(id);
-
+        PlayerMain.Instance.SetCharSprite(id);
         ////아웃게임에서 받아온 캐릭터의 스텟 todo -> 캐릭터 스텟 + 장착파트의 스텟
         //IG_Level = curPlayerChar.IG_Level;
         //OG_Dmg = curPlayerChar.IG_Dmg;
         //OG_Dfs = curPlayerChar.defense;
         //OG_MSpd = curPlayerChar.IG_MSpd;
         //OG_ASpd = curPlayerChar.IG_ASpd;
-        //OG_Hp = curPlayerChar.hp;
+        //OG_Hp = curPlayerChar.maxHp;
 
         IG_Level = 1;
         OG_Dmg = 10;

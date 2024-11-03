@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PoolManager 
 {
-    private const string EnemyDataPath = "Prefab/Scriptable/EnemyData";
-    private const string PlayerDataPath = "Prefab/Scriptable/PlayerProjData";
-    private const string OtherDataPath = "Prefab/Scriptable/OtherProjData";
+    private const string EnemyDataPath = "Scriptable/EnemyData";
+    private const string PlayerDataPath = "Scriptable/PlayerProjData";
+    private const string OtherDataPath = "Scriptable/OtherProjData";
 
     private const string PoolObjName = "Pools";
     private const string EnemyPoolName = "EnemyPool";

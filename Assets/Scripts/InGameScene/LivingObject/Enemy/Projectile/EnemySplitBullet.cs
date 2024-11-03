@@ -40,7 +40,7 @@ public class EnemySplitBullet : EnemyProjectile
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerStat>().PlayerDamaged(damage, gameObject);
+            collision.GetComponent<PlayerStat>().PlayerDamaged(finalDamage, gameObject);
             GameManager.Game.Pool.ReleasePool(gameObject);
         }
         else if (collision.CompareTag("Border"))

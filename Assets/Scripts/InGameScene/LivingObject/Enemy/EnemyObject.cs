@@ -114,7 +114,7 @@ public class EnemyObject : MonoBehaviour
         enemyStat.moveSpeed = enemy.moveSpeed;
         enemyStat.attackSpeed = enemy.attackSpeed;
         enemyStat.expAmount = enemy.expAmount;
-        enemyStat.socreAmount = enemy.socreAmount;
+        enemyStat.scoreAmount = enemy.scoreAmount;
         enemyStat.isStop = enemy.isStop;
         enemyStat.isAim = enemy.isAim;
         curEnemyId = enemy.id;
@@ -142,7 +142,7 @@ public class EnemyObject : MonoBehaviour
         hpBar = hpBarInstance.GetComponent<RectTransform>();
         hpSlider = hpBarInstance.GetComponent<Slider>();
 
-        hpBarInstance.name = $"{gameObject.name}'s hp";
+        hpBarInstance.name = $"{gameObject.name}'s maxHp";
         hpBarInstance.transform.SetParent(canvas.transform.GetChild(0));
         
         hpBar.sizeDelta = new Vector2(transform.localScale.x * 200, hpBar.sizeDelta.y);
@@ -160,7 +160,8 @@ public class EnemyObject : MonoBehaviour
     {
         for (int i = 0; i < enemyStat.expAmount; i++)
         {
-            GameManager.Game.Pool.GetOtherProj(OtherProjType.Item_Exp, transform.position, transform.rotation);
+            Exp_object exp = GameManager.Game.Pool.GetOtherProj(OtherProjType.Item_Exp, transform.position, transform.rotation).GetComponent<Exp_object>();
+            exp.OnExp();
         }
     }
 
@@ -172,11 +173,11 @@ public class EnemyObject : MonoBehaviour
 
     public void EnemyDeath()
     {
-        if (enemyStat.type == EnemyType.Boss)
-        {
-            GameManager.Game.Spawn.isBossDown = true;
-            GameManager.Game.Spawn.isBossSpawned = false;
-        }
+        //if (enemyStat.type == EnemyType.Boss)
+        //{
+        //    GameManager.Game.Spawn.isBossDown = true;
+        //    GameManager.Game.Spawn.isBossSpawned = false;
+        //} 이건 보스의 스크립트로 옮기기
 
         DropExp();
         AddEnemyScoreToStageScore();
@@ -224,7 +225,7 @@ public class EnemyObject : MonoBehaviour
 
     private void AddEnemyScoreToStageScore()
     {
-        GameManager.Game.score += enemyStat.socreAmount;
+        GameManager.Game.Score += enemyStat.scoreAmount;
     }
 
     public void EnemyDamaged(float damage, GameObject attackObj)
@@ -235,7 +236,7 @@ public class EnemyObject : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("BulletBorder") && isEliminatable)
+        if (collision.CompareTag("EnemyEliminate") && isEliminatable)
         {
             if (enemyStat.type == EnemyType.CommonType1 || enemyStat.type == EnemyType.CommonType2 || enemyStat.type == EnemyType.EliteType1|| enemyStat.type == EnemyType.EliteType2)
             {

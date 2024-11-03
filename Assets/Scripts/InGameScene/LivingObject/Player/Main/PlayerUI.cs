@@ -12,8 +12,8 @@ public class PlayerUI : MonoBehaviour
     private float curHp => pStat.CurHp;
 
     private Slider exp => gm.UI.p_expSlider;
-    private int MaxExp =>  pStat.IG_MaxExp;
-    private int curExp=> pStat.CurExp;
+    private float MaxExp =>  pStat.IG_MaxExp;
+    private float curExp => pStat.CurExp;
 
     private Slider pow => gm.UI.p_powSlider;
     private float MaxPow => PlayerMain.powMax;
@@ -38,12 +38,13 @@ public class PlayerUI : MonoBehaviour
     {
         
         hp.value = curHp/ maxHp;
-        //todo => hp %º°·Î »ö±ò³îÀÌ
+        //todo => maxHp %º°·Î »ö±ò³îÀÌ
     }
 
     public void ExpBarChange()
     {
         exp.value = curExp / MaxExp; //°è»êÇØ¾ßµÊ
+        Debug.Log(exp.value);
     }
 
     public void PowBarChange()

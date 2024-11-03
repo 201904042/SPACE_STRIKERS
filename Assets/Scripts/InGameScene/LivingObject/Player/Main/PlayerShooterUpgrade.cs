@@ -26,7 +26,6 @@ public class playerShooterUpgrade : MonoBehaviour
         set{ 
             pStat.curPlayerID = value;
             pStat.ChangePlayer(value);
-            SetCharSprite(value);
             SetShooter(value, shooterLevel);
         }
     }
@@ -43,17 +42,7 @@ public class playerShooterUpgrade : MonoBehaviour
         SetShooter(charId, shooterLevel);
     }
 
-    private void SetCharSprite(int id)
-    {
-        SpriteRenderer playerSprite = PlayerMain.Instance.GetComponent<SpriteRenderer>();
-        Sprite charSprite = Resources.Load<Sprite>($"Sprite/Player/Character/{id}");
-        if(charSprite== null)
-        {
-            Debug.Log("캐릭터 스프라이트 : 잘못된 경로 할당");
-        }
-
-        playerSprite.sprite = charSprite;
-    }
+    
 
     private void SetShooter(int playerId, int shooterId)
     {

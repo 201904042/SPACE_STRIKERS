@@ -18,7 +18,7 @@ public class Extra_RewardUp : ExtraSkill
     {
         PlayerStat playerStats = PlayerMain.pStat;
         //// 현재 레벨의 효과를 플레이어의 스탯에 반영
-        //hp 즉시회복, 재화 증가율
+        //maxHp 즉시회복, 재화 증가율
         playerStats.IG_RewardRate += value;
         Debug.Log($"Extra_RewardUp : reward증가 현재증가율 : {playerStats.IG_RewardRate}");
     }

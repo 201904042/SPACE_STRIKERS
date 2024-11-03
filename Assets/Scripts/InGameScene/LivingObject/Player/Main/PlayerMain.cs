@@ -79,7 +79,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         pSpecial = GetComponent<PlayerSpecialSkill>();
         pSkill = GetComponent<PlayerSkillManager>();
         pShooter = GetComponent<playerShooterUpgrade>();
-        
+
         pStat.Init(); //최우선 스크립트
         pUI.Init();
 
@@ -93,14 +93,14 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
         SetTestButtons();
         isPlayerSetDone = true;
-        PlayerSkillManager ps = PlayerMain.pSkill;
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-        ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //PlayerSkillManager ps = PlayerMain.pSkill;
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
+        //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
     }
 
 
@@ -109,6 +109,18 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         PlayerMove();
         IncreasePow();
         HpRegeneration();
+    }
+
+    public void SetCharSprite(int id)
+    {
+        SpriteRenderer playerSprite = GetComponent<SpriteRenderer>();
+        Sprite charSprite = Resources.Load<Sprite>(DataManager.master.GetData(id).spritePath);
+        if (charSprite == null)
+        {
+            Debug.Log("캐릭터 스프라이트 : 잘못된 경로 할당");
+        }
+
+        playerSprite.sprite = charSprite;
     }
 
     private void HpRegeneration()

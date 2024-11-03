@@ -13,6 +13,7 @@ public enum GameMode
 public class GameManager : MonoBehaviour
 {
     public static GameManager Game;
+    public static Transform canvas;
 
     private readonly PoolManager _pool = new();
     private readonly SpawnManager _spawn = new();
@@ -30,7 +31,16 @@ public class GameManager : MonoBehaviour
     public float stageTime;
     public int minutes;
     public int seconds;
-    public int score;
+    private int score;
+    public int Score
+    {
+        get => score;
+        set
+        {
+            score = value;
+            UI.SetScoreText(score);
+        }
+    }
 
     private bool IG_GameStart; //게임이 시작되었는가 -> 적들의 스폰을 시작
     public bool IG_Clear; //클리어 조건을 만족하였는가
@@ -74,7 +84,7 @@ public class GameManager : MonoBehaviour
     public void GameInit()
     {
         Time.timeScale = 1;
-        
+        canvas = GameObject.Find("Canvas").transform; //없으면 로드해서 생성
         score = 0;
         stageTime = 0;
         minutes = 0;

@@ -35,7 +35,7 @@ public class EnemyAct : EnemyObject
         }
         else
         {
-            enemyProj.GetComponent<EnemyBullet>().setDamage(enemy.enemyStat.damage);
+            enemyProj.GetComponent<EnemyBullet>().SetDamage(enemy.enemyStat.damage);
         }
 
         rigid.velocity = new Vector2(velocity.x, velocity.y); //fireDirection * bulletSpeed;
@@ -119,7 +119,7 @@ public class EnemyAct : EnemyObject
     public static void Laser(EnemyObject enemy,float multiAngle = 0, bool isAimtoPlayer = false)
     {
         EnemyLaser laserObject = GameManager.Game.Pool.GetOtherProj(OtherProjType.Enemy_Laser, enemy.transform.position, Quaternion.identity).GetComponent<EnemyLaser>();
-        laserObject.setDamage(enemy.enemyStat.damage);
+        laserObject.SetDamage(enemy.enemyStat.damage);
         if (isAimtoPlayer)
         {
             Transform player = PlayerMain.Instance.transform;

@@ -12,6 +12,7 @@ TagManager:
   - Enemy_Projectile
   - Enemy_StopZone
   - TroopBorder
+  - EnemyEliminate
   layers:
   - Default
   - TransparentFX

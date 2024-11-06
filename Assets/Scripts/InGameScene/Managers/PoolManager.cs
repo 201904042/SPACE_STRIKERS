@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PoolManager 
 {
-    private const string EnemyDataPath = "Scriptable/EnemyData";
     private const string PlayerDataPath = "Scriptable/PlayerProjData";
     private const string OtherDataPath = "Scriptable/OtherProjData";
 
@@ -15,7 +14,7 @@ public class PoolManager
     private const string OtherPoolName = "OtherProjs";
 
     //등록할 데이터, 타입과 프리팹을 연결
-    public List<EnemyInfo> EnemyDataList;
+    public Dictionary<int, int> useEnemyList => GameManager.Game.Stage.enemyCodeAmountFair;
     public List<PlayerProjData> playerProjDataList;
     public List<OtherProjData> OtherProjDataList;
 
@@ -23,21 +22,23 @@ public class PoolManager
     public Transform enemyPool;
     public Transform playerProjPool;
 
-    public Dictionary<EnemyType, List<GameObject>> enemyDic = new Dictionary<EnemyType, List<GameObject>>();
+    public Dictionary<int , List<GameObject>> enemyDic = new Dictionary<int, List<GameObject>>();
     public Dictionary<PlayerProjType, List<GameObject>> playerProjDic = new Dictionary<PlayerProjType, List<GameObject>>();
     public Dictionary<OtherProjType, List<GameObject>> otherProjDic = new Dictionary<OtherProjType, List<GameObject>>();
 
     public void Init()
     {
-        EnemyDataList = new List<EnemyInfo>();
         playerProjDataList = new List<PlayerProjData>();
         OtherProjDataList = new List<OtherProjData>();
 
-        FindDataObject(EnemyDataPath, EnemyDataList);
         FindDataObject(PlayerDataPath, playerProjDataList);
         FindDataObject(OtherDataPath, OtherProjDataList);
 
-        InitializeDictionary(enemyDic);
+        foreach (int id in useEnemyList.Values)
+        {
+            enemyDic[id] = new List<GameObject>();
+        }
+
         InitializeDictionary(playerProjDic);
         InitializeDictionary(otherProjDic);
 
@@ -147,9 +148,9 @@ public class PoolManager
     /// <summary>
     /// 적 오브젝트를 생성
     /// </summary>
-    public GameObject GetEnemy(EnemyType type, Vector2 position, Quaternion rotation)
+    public GameObject GetEnemy(int id, Vector2 position, Quaternion rotation)
     {
-        List<GameObject> objectList = enemyDic[type]; //해당 타입의 리스트를 지정
+        List<GameObject> objectList = enemyDic[id]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
             if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
@@ -163,15 +164,15 @@ public class PoolManager
         }
 
         // 사용가능한 오브젝트가 없다면 리스트에 해당 오브젝트 추가
-        foreach (EnemyInfo enemyData in EnemyDataList)
+        foreach (int enemyId in useEnemyList.Keys)
         {
-            if (type == enemyData.enemyType)
+            if (id == enemyId)
             {
-                GameObject newObject = GameManager.InstantObject(enemyData.prefab, enemyPool);
+                GameObject newObject = GameManager.InstantObject(GameManager.LoadFromResources<GameObject>(DataManager.enemy.GetData(id).path), enemyPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
-                enemyDic[type].Add(newObject);
+                enemyDic[id].Add(newObject);
                 GameManager.Game.Spawn.activeEnemyList.Add(newObject);
                 return newObject;
             }

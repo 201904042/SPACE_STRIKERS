@@ -61,6 +61,18 @@ public class SkillDataReader : ReadOnlyData<SkillData>
         fieldType = DataFieldType.SkillData;
         return data.id;
     }
+
+    public int? GetUSkillIdFromCharId(int charId)
+    {  
+        SkillData data = dataDict.Values.First(skill => skill.useChar ==  charId && skill.type == SkillType.Unique);
+        if(data == null)
+        {
+            Debug.LogError("유니크 스킬중 해당 캐릭터의 스킬이 없음");
+            return null;
+        }
+
+        return data.id;
+    }
 }
 
 public class UpgradeDataReader : ReadOnlyData<UpgradeData>

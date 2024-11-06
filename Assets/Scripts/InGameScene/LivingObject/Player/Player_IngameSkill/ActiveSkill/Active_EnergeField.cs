@@ -11,7 +11,7 @@ public class Active_EnergeField : ActiveSkill
         projType = PlayerProjType.Skill_EnergyField;
         SetLevel();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        Debug.Log("Active_EnergeField 초기화 완료");
+        //Debug.Log("Active_EnergeField 초기화 완료");
     }
 
     public override void LevelUp()

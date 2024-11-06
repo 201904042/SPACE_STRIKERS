@@ -13,7 +13,7 @@ public class USkill_Char2 : UniqueSkill
         useCharCode = 102;
         projType = PlayerProjType.Spcial_Player2;
         SetLevel();
-        Debug.Log("USkill_Char2 초기화 완료");
+        //Debug.Log("USkill_Char2 초기화 완료");
     }
 
     public override void LevelUp()

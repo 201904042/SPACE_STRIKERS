@@ -155,6 +155,7 @@ public class PlayerStat : MonoBehaviour
     {
         curPlayerID = id;
         SetStat(curPlayerID);
+        
     }
 
     public void SetStat(int playerId)
@@ -163,6 +164,7 @@ public class PlayerStat : MonoBehaviour
         PlayerSet(playerId);
         ApplyStat();
         CurHp = IG_Hp;
+        PlayerMain.pUI.SetUniqueSkillImage(playerId);
     }
 
     /// <summary>

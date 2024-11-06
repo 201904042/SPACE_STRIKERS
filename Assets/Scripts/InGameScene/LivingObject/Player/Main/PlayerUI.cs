@@ -27,11 +27,7 @@ public class PlayerUI : MonoBehaviour
 
     public void Init()
     {
-        HpBarChange();
-        PowBarChange();
-        ExpBarChange();
-        SetUniqueSkillImage();
-        SetUniquSkillCount();
+        //초기화 필요 발생시 기입
     }
 
     public void HpBarChange()
@@ -75,9 +71,16 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    public void SetUniqueSkillImage()
+    public void SetUniqueSkillImage(int pId)
     {
-        Sprite image = Resources.Load<Sprite>("Sprite/default");
+        int? code = DataManager.skill.GetUSkillIdFromCharId(pId);
+        if(code == null)
+        {
+            return;
+        }
+        int id = code.Value;
+        MasterData data = DataManager.master.GetData(id);
+        Sprite image = Resources.Load<Sprite>(data.spritePath);
         if(image == null)
         {
             Debug.Log("유니크 스킬의 경로명이 잘못됨");

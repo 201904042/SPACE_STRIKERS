@@ -18,7 +18,7 @@ public class UniqueSkill : ActiveSkill
 
     public override void SetLevel()
     {
-        Debug.Log($"{SkillCode}의 레벨데이터 세팅");
+        //Debug.Log($"{SkillCode}의 레벨데이터 세팅");
         foreach (Skill_LevelValue skill in DataManager.skill.GetData(SkillCode).levels)
         {
             SkillLevels.Add(skill.level, skill);

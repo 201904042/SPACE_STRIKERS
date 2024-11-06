@@ -19,7 +19,7 @@ public class UIInterface : MonoBehaviour
 
     public virtual void SetComponent()
     {
-        Debug.Log($"{gameObject.name}의 컴포넌트를 설정");
+        //Debug.Log($"{gameObject.name}의 컴포넌트를 설정");
     }
 
     public virtual IEnumerator GetValue()

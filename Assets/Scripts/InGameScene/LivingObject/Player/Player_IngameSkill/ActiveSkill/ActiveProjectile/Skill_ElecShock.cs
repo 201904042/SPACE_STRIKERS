@@ -122,11 +122,11 @@ public class Skill_ElecShock : PlayerProjectile
             {
                 if (isSlowExtraDamage ) //해당 적이 슬로우 상태라면? 추가뎀
                 {
-                    enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage + (finalDamage*(extraDamageRate / 100)) , gameObject); // 적에게 데미지
+                    enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject, finalDamage + (finalDamage*(extraDamageRate / 100))); // 적에게 데미지
                 }
                 else
                 {
-                    enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject); // 적에게 데미지
+                    enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject,finalDamage); // 적에게 데미지
                 }
                 
                 if (isHitOnce)

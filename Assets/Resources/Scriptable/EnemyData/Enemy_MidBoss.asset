@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Enemy_MidBoss
   m_EditorClassIdentifier: 
   prefab: {fileID: 4935361975481495958, guid: 789b6b4a559ae3a4eac50b76c740c5b0, type: 3}
-  enemyType: 5
+  enemyType: 3

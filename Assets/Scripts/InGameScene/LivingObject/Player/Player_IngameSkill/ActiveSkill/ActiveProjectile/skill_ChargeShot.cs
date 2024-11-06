@@ -21,6 +21,7 @@ public class Skill_ChargeShot : PlayerProjectile
         isPenetrate = false;
         penetrateCount = 0;
         damageCount = 0;
+        
     }
 
     public override void SetAddParameter(float value1, float value2 =0, float value3 = 0, float value4 = 0)

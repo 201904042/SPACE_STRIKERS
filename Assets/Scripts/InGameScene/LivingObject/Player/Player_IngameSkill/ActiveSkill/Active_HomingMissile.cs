@@ -14,7 +14,7 @@ public class Active_HomingMissile : ActiveSkill
         projType = PlayerProjType.Skill_Homing;
         SetLevel();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        Debug.Log("Active_HomingMissile 초기화 완료");
+        //Debug.Log("Active_HomingMissile 초기화 완료");
         isInit = true;
     }
 

@@ -2,28 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile : MonoBehaviour
+public class EnemyProjectile : Projectile
 {
     //이건 고정값 총알 100% , 분열총알 200%, 레이저 150%
-    private const int BulletDmgRate = 100;
-    private const int SplitBulletDmgRate = 200;
-    private const int LaserDmgRate = 150;
+    protected const int BulletDmgRate = 100;
+    protected const int SplitBulletDmgRate = 200;
+    protected const int LaserDmgRate = 150;
 
-    //필요 파라미터 = 적오브젝트의 데미지 스텟, 속도, 발동시간, 크기
+    protected const int BulletSpeed = 5;
+    protected const int SplitBulletSpeed = 3;
+    protected const int LaserSpeed = 0;
+
+    //개인 필요 파라미터 = 적오브젝트의 데미지 스텟, 속도, 발동시간, 크기
     public int enemyDmg;
-    [SerializeField] protected int defaultDmgRate; //페이즈별 증가량 => 120% : 본 데미지가 10이라면 12의 데미지
-    [SerializeField] protected int damageRate; //페이즈별 증가량 => 120% : 본 데미지가 10이라면 12의 데미지
-    [SerializeField] protected int speed;
-    [SerializeField] protected float liveTime;
-    [SerializeField] protected float range;
-    protected int finalDamage;
 
-    protected Coroutine activated;
 
-    protected Vector3 projScaleInstance; //발사체의 원래크기
+    //[SerializeField] protected int defaultDmgRate; //페이즈별 증가량 => 120% : 본 데미지가 10이라면 12의 데미지
+    //[SerializeField] protected int damageRate; //페이즈별 증가량 => 120% : 본 데미지가 10이라면 12의 데미지
 
-    [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
-    [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 ex) 총알은 한번 충돌하면 사라지고 레이저는 한번 충돌해도 사라지지 않음
+
+
+    //[SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
 
     protected virtual void Awake()
     {
@@ -44,7 +43,18 @@ public class EnemyProjectile : MonoBehaviour
         ResetProj();
     }
 
-    protected virtual void ResetProj()
+    protected virtual void Update()
+    {
+        if (!isParameterSet)
+        {
+            //Debug.Log("파라미터가 설정되지 않음");
+            return;
+        }
+
+        MoveUp();
+    }
+
+    protected override void ResetProj()
     {
         damageRate = 0;
         speed = 0;
@@ -61,30 +71,13 @@ public class EnemyProjectile : MonoBehaviour
         transform.localScale = projScaleInstance;
 
         isParameterSet = false;
-        isHitOnce = true;
-    }
-    
-
-    protected virtual void Update()
-    {
-        if (!isParameterSet)
-        {
-            Debug.Log("파라미터가 설정되지 않음");
-            return;
-        }
-
-        MoveUp();
     }
 
-    public virtual void SetDamage(int enemyDmgStat)
-    {
-        enemyDmg = enemyDmgStat;
-    }
 
-    public virtual void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime = 0, float _range = 0)
+    public virtual void SetProjParameter(int _dmgRate, float _liveTime = 0, float _range = 0) //스피드, 적데미지스텟, 생존시간, 크기
     {
-        speed = _projSpeed;
-        damageRate = _dmgRate;
+        
+        enemyDmg = _dmgRate;
         finalDamage = (enemyDmg * defaultDmgRate / 100) + (enemyDmg * damageRate / 100);  //damageRate = 발사체별 증폭률 + 페이즈 증폭률
     
         //레이저 같이 일정 시간동안 사라지지 않는 발사체에 쓰임

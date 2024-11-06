@@ -79,7 +79,7 @@ public class PlayerShield : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                collision.GetComponent<EnemyObject>().EnemyDamaged(crashDamage, gameObject);
+                collision.GetComponent<EnemyObject>().EnemyDamaged(gameObject, (int)crashDamage);
             }
 
             if (collision.CompareTag("Enemy_Projectile"))

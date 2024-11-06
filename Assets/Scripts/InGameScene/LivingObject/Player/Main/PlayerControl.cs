@@ -97,10 +97,11 @@ public class PlayerControl : MonoBehaviour
 
         
 
-        //PlayerMain.pSpecial.isSkillActivating = true;
-        PlayerMain.pSpecial.SpecialFire(pStat.curPlayerID, pStat.IG_curPowerLevel);
+        //PlayerMain.pUSkill.isSkillActivating = true;
+        PlayerMain.pUSkill.SpecialFire(pStat.curPlayerID, pStat.IG_curPowerLevel);
 
         pStat.USkillCount--;
+        PlayerMain.pUI.SetUniquSkillCount();
         pStat.IG_curPowerLevel = 0;
         pStat.CurPow = 0;
     }

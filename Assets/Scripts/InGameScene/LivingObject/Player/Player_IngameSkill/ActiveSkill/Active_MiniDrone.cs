@@ -11,7 +11,7 @@ public class Active_MiniDrone : ActiveSkill
         projType = PlayerProjType.Skill_MiniDrone;
         SetLevel();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        Debug.Log("Active_MiniDrone 초기화 완료");
+        //Debug.Log("Active_MiniDrone 초기화 완료");
     }
 
     public override void LevelUp()

@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public float stageTime;
     public int minutes;
     public int seconds;
+    public int phase; // 5분단위로 페이즈 변화. 증폭량 : 1:100, 2:150, 3:200, 4:250, 5:300, 6:500
     private int score;
     public int Score
     {
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         SpawnPlayer();
 
-        StartCoroutine(CountAndStart());
+        //StartCoroutine(CountAndStart()); todo -> 다시 시작
     }
 
     //게임씬의 init. 플레이어를 등록하고 모든 기물을 초기화함

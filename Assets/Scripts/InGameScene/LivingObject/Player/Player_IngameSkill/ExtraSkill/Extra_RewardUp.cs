@@ -11,7 +11,7 @@ public class Extra_RewardUp : ExtraSkill
         SkillCode = 662;
         SetLevel();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        Debug.Log("Extra_RewardUp 초기화 완료");
+        //Debug.Log("Extra_RewardUp 초기화 완료");
     }
 
     public override void ApplyEffect()

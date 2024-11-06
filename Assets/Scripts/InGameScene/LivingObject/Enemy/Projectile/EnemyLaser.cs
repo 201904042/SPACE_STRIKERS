@@ -35,8 +35,22 @@ public class EnemyLaser : EnemyProjectile
     protected override void OnEnable()
     {
         base.OnEnable();
+    }
 
-        // √ ±‚»≠
+    protected override void OnDisable()
+    {
+        if (laserCoroutine != null)
+        {
+            StopCoroutine(laserCoroutine);
+            isLaserCoroutineRunning = false;
+        }
+
+        base.OnDisable();
+    }
+
+    protected override void ResetProj()
+    {
+        base.ResetProj();
         dangerMark.gameObject.SetActive(true);
         coreLaser.gameObject.SetActive(false);
         outLineLaser.gameObject.SetActive(false);
@@ -47,15 +61,6 @@ public class EnemyLaser : EnemyProjectile
         endPoint = Vector2.zero;
         laserCoroutine = null;
         isLaserCoroutineRunning = false;
-    }
-
-    private void OnDisable()
-    {
-        if (laserCoroutine != null)
-        {
-            StopCoroutine(laserCoroutine);
-            isLaserCoroutineRunning = false;
-        }
     }
 
     public void LaserActive(GameObject AttackObj, float LaserTime = 3f, float ChargingTime = 1f, float LaserWidthRate = 1, GameObject EndObj = null)

@@ -55,7 +55,7 @@ public class ActiveSkill : InGameSkill
     //사용전 스킬코드가 정의되어있는지 체크
     public override void SetLevel()
     {
-        Debug.Log($"{SkillCode}의 레벨데이터 세팅");
+        //Debug.Log($"{SkillCode}의 레벨데이터 세팅");
         foreach (Skill_LevelValue skill in DataManager.skill.GetData(SkillCode).levels)
         {
             SkillLevels.Add(skill.level, skill);

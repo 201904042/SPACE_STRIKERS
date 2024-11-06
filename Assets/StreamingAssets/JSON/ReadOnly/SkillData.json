@@ -3,6 +3,7 @@
     {
       "id": 601,
       "type": 1,
+      "description": "",
       "levels": [
         {
           "level": 1,
@@ -87,6 +88,7 @@
     },
     {
       "id": 602,
+      "description": "",
       "type": 1,
       "levels": [
         {
@@ -216,6 +218,7 @@
     },
     {
       "id": 603,
+      "description": "",
       "type": 1,
       "levels": [
         {
@@ -313,6 +316,7 @@
     },
     {
       "id": 604,
+      "description": "",
       "type": 1,
       "levels": [
         {
@@ -368,6 +372,7 @@
     },
     {
       "id": 605,
+      "description": "",
       "type": 1,
       "levels": [
         {
@@ -479,6 +484,7 @@
     },
     {
       "id": 606,
+      "description": "",
       "type": 1,
       "levels": [
         {
@@ -590,6 +596,7 @@
     },
     {
       "id": 607,
+      "description": "",
       "type": 1,
       "levels": [
         {
@@ -638,6 +645,7 @@
     },
     {
       "id": 641,
+      "description": "",
       "type": 2,
       "levels": [
         {
@@ -664,6 +672,7 @@
     },
     {
       "id": 642,
+      "description": "",
       "type": 2,
       "levels": [
         {
@@ -690,6 +699,7 @@
     },
     {
       "id": 643,
+      "description": "",
       "type": 2,
       "levels": [
         {
@@ -716,6 +726,7 @@
     },
     {
       "id": 644,
+      "description": "",
       "type": 2,
       "levels": [
         {
@@ -742,6 +753,7 @@
     },
     {
       "id": 645,
+      "description": "",
       "type": 2,
       "levels": [
         {
@@ -768,6 +780,7 @@
     },
     {
       "id": 661,
+      "description": "",
       "type": 3,
       "levels": [
         {
@@ -778,6 +791,7 @@
     },
     {
       "id": 662,
+      "description": "",
       "type": 3,
       "levels": [
         {
@@ -788,6 +802,8 @@
     },
     {
       "id": 691,
+      "description": "",
+      "useChar": 101,
       "type": 4,
       "levels": [
         {
@@ -833,6 +849,8 @@
     },
     {
       "id": 692,
+      "description": "",
+      "useChar": 102,
       "type": 4,
       "levels": [
         {
@@ -896,6 +914,8 @@
     },
     {
       "id": 693,
+      "description": "",
+      "useChar": 103,
       "type": 4,
       "levels": [
         {
@@ -944,6 +964,8 @@
     },
     {
       "id": 694,
+      "description": "",
+      "useChar": 104,
       "type": 4,
       "levels": [
         {

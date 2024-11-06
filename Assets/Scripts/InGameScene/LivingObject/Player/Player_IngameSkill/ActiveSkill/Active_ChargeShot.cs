@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Active_ChargeShot : ActiveSkill
@@ -10,8 +11,8 @@ public class Active_ChargeShot : ActiveSkill
         SkillCode = 601;
         projType = PlayerProjType.Skill_ChageShot;
         SetLevel();
-
-        Debug.Log("Active_ChargeShot 초기화 완료");
+        description = "";
+        //Debug.Log("Active_ChargeShot 초기화 완료");
     }
 
     public override void LevelUp()

@@ -19,9 +19,9 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     public static PlayerControl pControl;
     public static PlayerUI pUI;
 
-    public static playerShooterUpgrade pShooter;
-    public static PlayerSpecialSkill pSpecial;
-    public static PlayerSkillManager pSkill;
+    public static PlayerShooter pShooter;
+    public static PlayerUSkill pUSkill;
+    public static PlayerSkill pSkill;
 
 
     //무기 레벨별로 정리할것
@@ -76,9 +76,9 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         pStat = GetComponent<PlayerStat>();
         pControl = GetComponent<PlayerControl>();
         pUI = GetComponent<PlayerUI>();
-        pSpecial = GetComponent<PlayerSpecialSkill>();
-        pSkill = GetComponent<PlayerSkillManager>();
-        pShooter = GetComponent<playerShooterUpgrade>();
+        pUSkill = GetComponent<PlayerUSkill>();
+        pSkill = GetComponent<PlayerSkill>();
+        pShooter = GetComponent<PlayerShooter>();
 
         pStat.Init(); //최우선 스크립트
         pUI.Init();
@@ -86,14 +86,14 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         pControl.Init();
         pControl.PlayerInputOn();
 
-        pSpecial.Init();
+        pUSkill.Init();
         pSkill.Init();
         pShooter.Init();
         
 
         SetTestButtons();
         isPlayerSetDone = true;
-        //PlayerSkillManager ps = PlayerMain.pSkill;
+        //PlayerSkill ps = PlayerMain.pSkill;
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
@@ -215,7 +215,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
         if (collision.CompareTag("Enemy"))
         {
-            pStat.PlayerDamaged(collision.GetComponent<EnemyObject>().enemyStat.damage / 2, collision.gameObject);
+            pStat.PlayerDamaged(collision.GetComponent<EnemyObject>().GetCollisionDamage() / 2, collision.gameObject);
         }
     }
 
@@ -314,7 +314,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     public void USkillBtn(int i)
     {
-        pSpecial.SpecialFire(pStat.curPlayerID, i);
+        pUSkill.SpecialFire(pStat.curPlayerID, i);
     }
 
     #endregion

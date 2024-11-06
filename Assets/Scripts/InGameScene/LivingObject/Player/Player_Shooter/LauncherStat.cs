@@ -76,7 +76,7 @@ public class LauncherStat : MonoBehaviour
     //필수 상속
     protected virtual void Fire()
     {
-        Debug.Log($"{nameof(projType)}가 발사됨");
+        //Debug.Log($"{nameof(projType)}가 발사됨");
         //GameManager.Game.Pool.GetPlayerProj(projType, transform.position, transform.rotation);
     }
 

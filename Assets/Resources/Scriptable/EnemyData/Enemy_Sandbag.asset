@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Enemy_Sandbag
   m_EditorClassIdentifier: 
   prefab: {fileID: 3737570111088939941, guid: 729a58cb211776f40b12331ab119cda8, type: 3}
-  enemyType: 7
+  enemyType: 5

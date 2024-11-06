@@ -10,7 +10,7 @@ public class Extra_InstantHeal : ExtraSkill
         SkillCode = 661;
         SetLevel();
         // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        Debug.Log("Extra_InstantHeal 초기화 완료");
+        //Debug.Log("Extra_InstantHeal 초기화 완료");
     }
 
     public override void ApplyEffect()

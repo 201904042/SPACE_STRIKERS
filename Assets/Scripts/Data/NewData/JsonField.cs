@@ -107,8 +107,7 @@ public class EnemyData
     public int attackSpeed;
     public int expAmount;
     public int scoreAmount;
-    public bool isStop; //false면 멈춰서 공격 true면 이동하면서 공격
-    public bool isAim; //true면 조준하여 사격 false면 그냥 앞으로 직선 사격
+    public string path;
 }
 
 
@@ -124,6 +123,7 @@ public class GotchaData
 public class SkillData
 {
     public int id;
+    public int useChar;
     public SkillType type;
     public List<Skill_LevelValue> levels;
 }

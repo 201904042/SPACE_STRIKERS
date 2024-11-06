@@ -20,7 +20,13 @@ public class CharacterImageBtn : MonoBehaviour
     public void SetImageByMasterCode(int masterId)
     {
         MasterData masterChar = DataManager.master.GetData(masterId);
-        charImage.sprite = Resources.Load<Sprite>(masterChar.spritePath);
+        Sprite charSprite = Resources.Load<Sprite>(masterChar.spritePath);
+        if (charSprite == null) 
+        {
+            Debug.LogError($"경로의 스프라이트를 찾을수 없음 {masterChar.spritePath}");
+            return;
+        }
+        charImage.sprite = charSprite;
     }
 
     public void ResetData()

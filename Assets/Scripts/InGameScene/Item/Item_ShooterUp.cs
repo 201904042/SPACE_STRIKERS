@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Item_ShooterUp : Ingame_Item
 {
-    private playerShooterUpgrade playerShooter;
+    private PlayerShooter playerShooter;
     protected override void Awake()
     {
         base.Awake();

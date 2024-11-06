@@ -10,25 +10,27 @@ using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public class PlayerProjectile : MonoBehaviour
+public class PlayerProjectile : Projectile 
 {
     public PlayerStat playerStat => PlayerMain.pStat; //플레이어의 데미지를 불러올 스텟
     [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
 
-    //todo -> 적리뉴얼후 적 스크립트로 바꿔보기
-    [SerializeField] protected int damageRate; 
-    [SerializeField] protected int speed;
-    [SerializeField] protected float liveTime;
-    [SerializeField] protected float range;
+    ////todo -> 적리뉴얼후 적 스크립트로 바꿔보기
+    //[SerializeField] protected int damageRate; 
+    //[SerializeField] protected int speed;
+    //[SerializeField] protected float liveTime;
+    //[SerializeField] protected float range;
 
-    protected int finalDamage; //플레이어의 스텟과 발사체의 데미지증폭을 곱하여 최종적으로 적용할 데미지
+    //protected int finalDamage; //플레이어의 스텟과 발사체의 데미지증폭을 곱하여 최종적으로 적용할 데미지
 
-    protected Coroutine activated;
+    //protected Coroutine activated;
+
+    //protected Vector3 projScaleInstance; //발사체의 원래크기
+
+    //[SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
+
     protected Coroutine damaging;
 
-    protected Vector3 projScaleInstance; //발사체의 원래크기
-
-    [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
     [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행
     protected bool isShootingObj; //발사되는지 아니면 플레이어를 따라다니는지
 
@@ -40,14 +42,31 @@ public class PlayerProjectile : MonoBehaviour
         ResetProj();
     }
 
-    
     protected virtual void OnDisable()
     {
         //비활성화 시 초기화
         ResetProj();
     }
+    protected virtual void Update()
+    {
+        if (!isParameterSet)
+        {
+            Debug.Log("파라미터가 설정되지 않음");
+            return;
+        }
 
-    protected virtual void ResetProj()
+        if (isShootingObj)
+        {
+            MoveUp();
+        }
+        else
+        {
+            FollowPlayer();
+        }
+    }
+
+    #region 설정 및 초기화
+    protected override void ResetProj()
     {
         hittedEnemyList = new List<GameObject>();
 
@@ -75,47 +94,16 @@ public class PlayerProjectile : MonoBehaviour
         isShootingObj = true; 
     }
 
-    protected virtual void Update()
+    public virtual void SetAddParameter(float value1, float value2 = 0, float value3 = 0, float value4 = 0)
     {
-        if (!isParameterSet)
-        {
-            Debug.Log("파라미터가 설정되지 않음");
-            return;
-        }
-
-        if (isShootingObj) 
-        {
-            MoveUp();
-        }
-        else
-        {
-            FollowPlayer();
-        }
-    }
-
-    protected void FollowPlayer()
-    {
-        transform.position = PlayerMain.Instance.transform.position;
-    }
-
-    protected void MoveUp()
-    {
-        if (isParameterSet)
-        {
-            transform.position += transform.up * speed * Time.deltaTime;
-        }
-    }
-
-    public virtual void SetAddParameter(float value1, float value2 =0, float value3 = 0, float value4 = 0)
-    {
-        Debug.Log("서브 파라미터 세팅");
+        //Debug.Log("서브 파라미터 세팅");
     }
 
     // -> 필수 상속
-    public virtual void SetProjParameter(int _projSpeed,int _dmgRate, float _liveTime, float _range)
+    public virtual void SetProjParameter(int _projSpeed, int _dmgRate, float _liveTime, float _range)
     {
-        Debug.Log("메인 파라미터 세팅");
-        
+        //Debug.Log("메인 파라미터 세팅");
+
         if (_projSpeed == 0)
         {
             isShootingObj = false;
@@ -159,6 +147,30 @@ public class PlayerProjectile : MonoBehaviour
         isParameterSet = true;
     }
 
+    protected virtual IEnumerator LiveTimer(float activeTime)
+    {
+        yield return new WaitForSeconds(activeTime);
+
+        GameManager.Game.Pool.ReleasePool(gameObject);
+    }
+    #endregion
+
+    #region 발사체 이동
+    protected void FollowPlayer()
+    {
+        transform.position = PlayerMain.Instance.transform.position;
+    }
+
+    protected void MoveUp()
+    {
+        if (isParameterSet)
+        {
+            transform.position += transform.up * speed * Time.deltaTime;
+        }
+    }
+    #endregion
+
+    #region 타격 방식
     //범위형 데미지 로직. 범위내 적 1회씩 타격을 사이클 시간마다 반복
     protected virtual IEnumerator AreaDamageLogic(float _cycleRate)
     {
@@ -184,7 +196,7 @@ public class PlayerProjectile : MonoBehaviour
         }
 
         GameObject enemy = hittedEnemyList[0];
-        enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject);
+        enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject, (int)finalDamage);
         hittedEnemyList.RemoveAt(0);
         if (isHitOnce)
         {
@@ -210,34 +222,12 @@ public class PlayerProjectile : MonoBehaviour
             }
             else
             {
-                enemy.GetComponent<EnemyObject>().EnemyDamaged(finalDamage, gameObject); // 적에게 데미지
+                enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject, finalDamage); // 적에게 데미지
                 if (isHitOnce)
                 {
                     hittedEnemyList.RemoveAt(i);
                 }
             }
-        }
-    }
-
-
-    protected virtual IEnumerator LiveTimer(float activeTime)
-    {
-        yield return new WaitForSeconds(activeTime);
-        
-        GameManager.Game.Pool.ReleasePool(gameObject);
-    }
-
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "BulletBorder")
-        {
-            GameManager.Game.Pool.ReleasePool(gameObject);
-        }
-
-        if (collision.gameObject.tag == "Enemy")
-        {
-            TriggedEnemy(collision);
         }
     }
 
@@ -254,7 +244,24 @@ public class PlayerProjectile : MonoBehaviour
         {
             hittedEnemyList.Add(collision.gameObject);
         }
-        
+
+    }
+    #endregion
+
+
+
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "BulletBorder")
+        {
+            GameManager.Game.Pool.ReleasePool(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            TriggedEnemy(collision);
+        }
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision) //영역 밖으로 나갔다면 리스트에서 적 제거

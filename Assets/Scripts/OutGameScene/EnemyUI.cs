@@ -20,7 +20,9 @@ public class EnemyUI : MonoBehaviour
     {
         //enemy코드를 통해 적 데이터베이스에서 찾아서 이미지 설정
         //해당 적의 수만큼 텍스트 설정
-
+        MasterData master = DataManager.master.GetData(enemyCode);
+        Sprite image = Resources.Load<Sprite>(master.spritePath);
+        enemyImage.sprite = image;
         amountText.text = amount.ToString();
     }
 

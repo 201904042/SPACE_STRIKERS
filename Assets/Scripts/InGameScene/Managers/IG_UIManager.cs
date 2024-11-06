@@ -78,4 +78,6 @@ public class IG_UIManager
     {
         scoreText.text = string.Format("{0000000}", score);
     }
+
+   
 }

@@ -1,119 +1,119 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class Enemy_Elite : EnemyAct
-{
-    [SerializeField] private int curProjNum;
-    [SerializeField] private float curProjAngle;
-    private int stopTrigCount;
-    private float enemyAttackTime;
-    private float enemyAttackDealy;
+//public class Enemy_Elite : EnemyAct
+//{
+//    [SerializeField] private int curProjNum;
+//    [SerializeField] private float curProjAngle;
+//    private int stopTrigCount;
+//    private float enemyAttackTime;
+//    private float enemyAttackDealy;
 
-    private bool isAttackCoroutineActive = false;
+//    private bool isAttackCoroutineActive = false;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+//    protected override void Awake()
+//    {
+//        base.Awake();
+//    }
 
-    protected override void Start()
-    {
-        base.Start();
-        Init();
-    }
+//    protected override void Start()
+//    {
+//        base.Start();
+//        Init();
+//    }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        Init();
-    }
+//    protected override void OnEnable()
+//    {
+//        base.OnEnable();
+//        Init();
+//    }
 
-    private void Init()
-    {
-        isMove = true;
-        stopTrigCount = 0;
-        enemyAttackTime = 10;
-        enemyAttackDealy = 2;
-        SetAttackPref();
-        if (enemyStat.isStop == true)
-        {
-            isAttackReady = true;
-        }
-    }
+//    private void Init()
+//    {
+//        isMove = true;
+//        stopTrigCount = 0;
+//        enemyAttackTime = 10;
+//        enemyAttackDealy = 2;
+//        SetAttackPref();
+//        if (enemyStat.isStop == true)
+//        {
+//            isAttackReady = true;
+//        }
+//    }
 
-    protected override void Update()
-    {
-        base.Update();
+//    protected override void Update()
+//    {
+//        base.Update();
 
-        if (enemyStat.isStop)
-        {
-            //¿òÁ÷ÀÌ¸ç °ø°ÝÇÏ´Â ¸÷
-            EnemyMoveForward(gameObject);
-            if (!isAttackCoroutineActive)
-            {
-                StartCoroutine(AttackRepeatly(100f, 2f));
-                isAttackCoroutineActive = true;
-            }
-        }
-        else
-        {
-            if (isMove)
-            {
-                EnemyMoveForward(gameObject);
-            }
-            else
-            {
-                if (!isAttackCoroutineActive)
-                {
-                    StartCoroutine(AttackRepeatly(enemyAttackTime, enemyAttackTime / enemyAttackDealy));
-                    isAttackCoroutineActive = true;
-                }
-            }
-        }
-    }
+//        if (enemyStat.isStop)
+//        {
+//            //¿òÁ÷ÀÌ¸ç °ø°ÝÇÏ´Â ¸÷
+//            EnemyMoveForward(gameObject);
+//            if (!isAttackCoroutineActive)
+//            {
+//                StartCoroutine(AttackRepeatly(100f, 2f));
+//                isAttackCoroutineActive = true;
+//            }
+//        }
+//        else
+//        {
+//            if (isMove)
+//            {
+//                EnemyMoveForward(gameObject);
+//            }
+//            else
+//            {
+//                if (!isAttackCoroutineActive)
+//                {
+//                    StartCoroutine(AttackRepeatly(enemyAttackTime, enemyAttackTime / enemyAttackDealy));
+//                    isAttackCoroutineActive = true;
+//                }
+//            }
+//        }
+//    }
 
-    private void SetAttackPref()
-    {
-        //ÀÏ¹Ý ÀûÀÌ ½ò ÅºÈ¯ÀÌ ÀÏ¹ÝÅºÀÎÁö ºÐ¿­ÅºÀÎÁö °áÁ¤
-        //ºÐ¿­ÅºÀÌ¸é ¸î°ÔÀÇ ºÐ¿­ÅºÀÎÁö
-        curProjNum = 3;
-        curProjAngle = 45;
-    }
+//    private void SetAttackPref()
+//    {
+//        //ÀÏ¹Ý ÀûÀÌ ½ò ÅºÈ¯ÀÌ ÀÏ¹ÝÅºÀÎÁö ºÐ¿­ÅºÀÎÁö °áÁ¤
+//        //ºÐ¿­ÅºÀÌ¸é ¸î°ÔÀÇ ºÐ¿­ÅºÀÎÁö
+//        curProjNum = 3;
+//        curProjAngle = 45;
+//    }
 
-    private void Attack()
-    {
-        Debug.Log("°ø°Ý");
-        BulletAttack(this, curProjNum, curProjAngle, enemyStat.attackSpeed, enemyStat.isAim);
-    }
+//    private void Attack()
+//    {
+//        Debug.Log("°ø°Ý");
+//        BulletAttack(this, curProjNum, curProjAngle, enemyStat.attackSpeed, enemyStat.isAim);
+//    }
 
-    private IEnumerator AttackRepeatly(float attackTime, float attackDelay)
-    {
-        float timer = 0f;
-        while (timer < attackTime)
-        {
-            if (isAttackReady)
-            {
-                Attack();
-            }
-            yield return new WaitForSeconds(attackDelay);
-            timer += attackDelay;
-        }
-        isMove = true;
-        isAttackCoroutineActive = false;
-    }
+//    private IEnumerator AttackRepeatly(float attackTime, float attackDelay)
+//    {
+//        float timer = 0f;
+//        while (timer < attackTime)
+//        {
+//            if (isAttackReady)
+//            {
+//                Attack();
+//            }
+//            yield return new WaitForSeconds(attackDelay);
+//            timer += attackDelay;
+//        }
+//        isMove = true;
+//        isAttackCoroutineActive = false;
+//    }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-        if (collision.CompareTag("Enemy_StopZone"))
-        {
-            stopTrigCount++;
-            if (stopCount == stopTrigCount)
-            {
-                isMove = false;
-                EnemyMoveStop(gameObject);
-            }
-        }
-    }
-}
+//    protected override void OnTriggerEnter2D(Collider2D collision)
+//    {
+//        base.OnTriggerEnter2D(collision);
+//        if (collision.CompareTag("Enemy_StopZone"))
+//        {
+//            stopTrigCount++;
+//            if (stopCount == stopTrigCount)
+//            {
+//                isMove = false;
+//                EnemyMoveStop(gameObject);
+//            }
+//        }
+//    }
+//}

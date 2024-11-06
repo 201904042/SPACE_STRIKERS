@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 2796726503674503060}
   - component: {fileID: 2445714135734172816}
   - component: {fileID: 7517504019188185334}
-  - component: {fileID: 2300400968508630886}
   - component: {fileID: 2402133050514113463}
+  - component: {fileID: 9162895263138301628}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &3728235402739857524
@@ -241,33 +241,34 @@ MonoBehaviour:
   selectSkillUI: {fileID: 0}
   curPlayerID: 0
   isFirstSetDone: 0
-  damage: 0
-  defence: 0
-  moveSpeed: 0
-  attackSpeed: 0
-  maxHp: 0
-  curHp: 0
-  damageIncreaseRate: 0
-  defenceIncreaseRate: 0
-  moveSpeedIncreaseRate: 0
-  attackSpeedIncreaseRate: 0
-  hpRegenRate: 0
-  weaponLevel: 0
-  rewardRate: 0
-  rewardRateIncrease: 0
-  level: 0
-  nextExp: 0
-  curExp: 0
+  IG_Dmg: 0
+  IG_Dfs: 0
+  IG_MSpd: 0
+  IG_ASpd: 0
+  IG_Hp: 0
+  IG_CurHp: 0
+  IG_HpRegen: 0
+  IG_WeaponLv: 0
+  IG_RewardRate: 0
+  IG_Level: 0
+  IG_MaxExp: 0
+  MaxExpInstance: 0
+  IG_CurExp: 0
+  MaxExpInceaseRate: 1.5
+  IG_curPowerLevel: 0
+  IG_PowIncreaseRate: 0
+  invincibleTime: 3
+  OS_UDmgUp: 0
+  PS_Dmg: 0
+  PS_Dfs: 0
+  PS_MSpd: 0
+  PS_ASpd: 0
+  PS_HpRegen: 0
+  ES_RewardUp: 0
   CanMove: 0
   CanAttack: 0
   InvincibleState: 0
   isKnockbackRun: 0
-  invincibleTime: 3
-  specialCount: 0
-  powerLevel: 0
-  powerIncreaseRate: 0
-  curPowerValue: 0
-  specialDamageRate: 0
 --- !u!114 &2445714135734172816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1893382809569411333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1aa4e5e108a6043aa839fdbcc8edfa, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ebdffbeb229d58409c29a5957ed75ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isSkillActivating: 0
@@ -293,18 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebf4e86e6d83844196e5fcbdc7eee8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2300400968508630886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893382809569411333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0497a7b1fb37f494c86464e212fac3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2402133050514113463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +304,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f1396784f03c834cac34b68b58a9ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9162895263138301628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893382809569411333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055526fc6c0abcc41949e98826b31fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7246103271314267486

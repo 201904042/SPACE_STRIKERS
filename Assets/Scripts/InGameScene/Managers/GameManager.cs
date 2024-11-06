@@ -73,12 +73,12 @@ public class GameManager : MonoBehaviour
 
         Stage.Init();
         Spawn.Init();
-        Pool.Init();
         UI.Init();
 
+        Pool.Init();
         SpawnPlayer();
 
-        //StartCoroutine(CountAndStart()); todo -> 다시 시작
+        StartCoroutine(CountAndStart());
     }
 
     //게임씬의 init. 플레이어를 등록하고 모든 기물을 초기화함
@@ -319,5 +319,8 @@ public class GameManager : MonoBehaviour
         return instance;
     }
 
-    
+    public void StartGameCoroutine(IEnumerator target)
+    {
+        StartCoroutine(target);
+    }
 }

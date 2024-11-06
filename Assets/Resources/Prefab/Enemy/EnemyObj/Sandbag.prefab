@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 790285341441865430}
   - component: {fileID: 9118003235103689142}
   - component: {fileID: 5635618670956767347}
-  - component: {fileID: 8419977345515811547}
+  - component: {fileID: 8246578400839935051}
   m_Layer: 0
   m_Name: Sandbag
   m_TagString: Enemy
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.0459208, y: 1.3486402}
   m_EdgeRadius: 0
---- !u!114 &8419977345515811547
+--- !u!114 &8246578400839935051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,26 +140,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 3737570111088939941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d9f53970115a0d48ac646f9ba1cb47e, type: 3}
+  m_Script: {fileID: 11500000, guid: d9a4bd1872c2c6e46baa1948bdc17c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyStat:
-    id: 1
-    type: 0
-    hp: 100000
-    damage: 0
-    moveSpeed: 0
-    attackSpeed: 0
-    expAmount: 0
-    socreAmount: 0
-    isStop: 0
-    isAim: 0
-  curEnemyId: 1
+  id: 600
+  type: 7
+  maxHp: 0
   curHp: 0
-  enemyHpBar: {fileID: 0}
-  isAttackReady: 0
+  damage: 0
+  moveSpeed: 0
+  attackSpeed: 0
+  expAmount: 0
+  scoreAmount: 0
+  curProjNum: 0
+  curAtkDelay: 0
   isEliminatable: 0
+  isDropItem: 0
+  isStop: 0
   isAttack: 0
-  isMove: 0
-  stopCount: 0
-  isEnemyDropItem: 0
+  isShocked: 0

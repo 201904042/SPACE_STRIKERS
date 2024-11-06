@@ -9,7 +9,7 @@
       "attackSpeed": 3,
       "expAmount": 3,
       "scoreAmount": 100,
-      "path" : ""
+      "path" : "Prefab/Enemy/EnemyObj/E_501"
     },
     {
       "id": 502,
@@ -20,7 +20,7 @@
       "attackSpeed": 2,
       "expAmount": 3,
       "scoreAmount": 100,
-      "path" : ""
+      "path" : "Prefab/Enemy/EnemyObj/E_502"
     },
     {
       "id": 511,
@@ -31,7 +31,7 @@
       "attackSpeed": 3,
       "expAmount": 3,
       "scoreAmount": 300,
-      "path" : ""
+      "path" : "Prefab/Enemy/EnemyObj/E_511"
     },
     {
       "id": 512,
@@ -42,7 +42,7 @@
       "attackSpeed": 2,
       "expAmount": 3,
       "scoreAmount": 300,
-      "path" : ""
+      "path" :"Prefab/Enemy/EnemyObj/E_512"
     },
     {
       "id": 531,
@@ -53,7 +53,7 @@
       "attackSpeed": 5,
       "expAmount": 3,
       "scoreAmount": 1000,
-      "path" : ""
+      "path" : "Prefab/Enemy/EnemyObj/E_531"
     },
     {
       "id": 600,
@@ -64,7 +64,7 @@
       "attackSpeed": 0,
       "expAmount": 0,
       "scoreAmount": 0,
-      "path" : ""
+      "path" : "Prefab/Enemy/EnemyObj/E_600"
     }
   ]
 }

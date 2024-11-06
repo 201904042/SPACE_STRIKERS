@@ -18,6 +18,13 @@ public class E_502 : E_TroopBase
         SetEnemy();
     }
 
+    public override void ResetObject()
+    {
+        base.ResetObject();
+        curProjNum = C_DefaultProjNum;
+        curAtkDelay = C_DefaultAtkDelay;
+    }
+
     protected override IEnumerator EnemyBehavior()
     {
         while (true)
@@ -30,14 +37,16 @@ public class E_502 : E_TroopBase
     protected override void SetStat()
     {
         base.SetStat();
+        curProjNum = C_DefaultProjNum * (increaseRate / 100);
+        curAtkDelay = C_DefaultAtkDelay / attackSpeed;
         projAngleOffset = 5;
+        curProjAngle = curProjNum * projAngleOffset;
         atkCount = 3; //기본 3번 increaseRate에 따라 더 많아짐
     }
 
 
     protected override void FireProjectile()
     {
-        curProjAngle = curProjNum * projAngleOffset;
         FireMulti(OtherProjType.Enemy_Bullet, damage, 0, 0, curProjNum, curProjAngle,true);
     }
 }

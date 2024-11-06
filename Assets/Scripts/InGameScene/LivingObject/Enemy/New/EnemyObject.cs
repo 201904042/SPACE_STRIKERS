@@ -9,10 +9,12 @@ using Random = UnityEngine.Random;
 public class EnemyObject : MonoBehaviour
 {
     private const string HpBarPath = "UI/Ingame/Enemy/E_HpBar";
-    private Slider hpBar; //해당 적에게 할당된 HPBar UI객체. 반드시 소유하고 있어야함
+    public Slider hpBar; //해당 적에게 할당된 HPBar UI객체. 반드시 소유하고 있어야함
 
-    protected const int defaultAtkDelay = 10;
-    protected const int defaultProjNum = 1;
+    protected const int C_DefaultAtkDelay = 10;
+    protected const int C_DefaultProjNum = 1;
+    protected const int E_DefaultAtkDelay = 6;
+    protected const int E_DefaultProjNum = 3;
 
     protected int increaseRate => SetIncreaseRate(GameManager.Game.phase);
     protected int SetIncreaseRate(int phase) //페이즈 증가량은 무한모드에만 적용
@@ -57,10 +59,13 @@ public class EnemyObject : MonoBehaviour
     [SerializeField] protected bool isShocked; //플레이어의 스킬에 의한 상태, 속도 및 공속 감소
 
     protected virtual void OnDisable() => ResetObject();
-    protected virtual void OnBecameVisible() => isEliminatable = true; //카메라에 보인 시점부터 파괴 가능
 
-    
-    
+  
+    private void Start()
+    {
+        SetEnemy();
+    }
+
     #region 초기화 및 설정
     /// <summary>
     /// 적의 시작 함수. 이 함수를 기점으로 적의 스텟 설정 및 행동 시작
@@ -77,8 +82,7 @@ public class EnemyObject : MonoBehaviour
     private void InitializeEnemyData()
     {
         SetStat(); //스텟을 설정
-        SetHpBar(); //적 개체에 대한 HP바를 할당 
-        SetItemDrop();
+        SetHpBar();
     }
 
     
@@ -96,8 +100,7 @@ public class EnemyObject : MonoBehaviour
         //isAimAttack = data.isAim;
         curHp = maxHp;
 
-        curProjNum = defaultProjNum * (increaseRate / 100);
-        curAtkDelay = defaultAtkDelay / attackSpeed;
+        
         gameObject.name = DataManager.master.GetData(id).name;
 
         //상태 초기화
@@ -107,10 +110,10 @@ public class EnemyObject : MonoBehaviour
         isAttack = false;
         isShocked = false; 
     }
-    private void SetItemDrop()
+
+    public void SetItemDrop()
     {
-        bool isItemEnemySpawn = Random.Range(0, 100) < 20; // 20% 확률로 아이템 생성 적 생성
-        isDropItem = Random.Range(0, 100) < 10 ? true : false;
+        isDropItem = true;
     }
 
 
@@ -122,6 +125,7 @@ public class EnemyObject : MonoBehaviour
             hpBar = GameManager.InstantObject(GameManager.LoadFromResources<GameObject>(HpBarPath), hpBarParent).GetComponent<Slider>();
 
             RectTransform hpRect = hpBar.GetComponent<RectTransform>();
+            hpRect.position = 
             hpRect.sizeDelta = new Vector2(transform.localScale.x * 200, hpRect.sizeDelta.y);
             hpBar.value = 1;
             hpBar.name = $"{gameObject.name}'s maxHp";
@@ -166,6 +170,10 @@ public class EnemyObject : MonoBehaviour
         ActiveHitEffect();
         curHp = Mathf.Max(curHp - damage, 0);
         UpdateHpBarValue();
+        if(curHp == 0)
+        {
+            EnemyDeath();
+        }
         Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
     }
 
@@ -175,7 +183,9 @@ public class EnemyObject : MonoBehaviour
         {
             hpBar.gameObject.SetActive(true);
         }
-        hpBar.value = (float)curHp / maxHp;
+        var hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - transform.localScale.y, 0));
+        hpBar.GetComponent<RectTransform>().position = hpBarPos;
+        hpBar.value = (float)curHp / (float)maxHp;
     }
 
     //프레임마다 체크
@@ -269,7 +279,22 @@ public class EnemyObject : MonoBehaviour
     protected virtual IEnumerator EnemyBehavior() 
     {
         UpdateHpBarPos();
+        if (IsVisibleFrom()) //화면 안에 들어오면 삭제가 가능함
+        {
+            isEliminatable = true;
+            Debug.Log($"{gameObject.name} 삭제준비");
+        }
         yield return null;
+    }
+
+    private bool IsVisibleFrom()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer == null)
+            return false;
+
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
     }
 
     /// <summary>

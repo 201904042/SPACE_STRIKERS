@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class E_501 : E_TroopBase
+public class E_511 : E_TroopBase
 {
     protected float curProjAngle;
     private float projAngleOffset;
 
     private void Awake() //최초 아이디 부여
     {
-        id = 501;
+        id = 511;
     }
-    
+
     private void OnEnable()
     {
         SetEnemy();
@@ -21,8 +21,8 @@ public class E_501 : E_TroopBase
     public override void ResetObject()
     {
         base.ResetObject();
-        curProjNum = C_DefaultProjNum;
-        curAtkDelay = C_DefaultAtkDelay;
+        curProjNum = E_DefaultProjNum;
+        curAtkDelay = E_DefaultAtkDelay;
     }
 
     protected override IEnumerator EnemyBehavior()
@@ -37,8 +37,8 @@ public class E_501 : E_TroopBase
     protected override void SetStat()
     {
         base.SetStat();
-        curProjNum = C_DefaultProjNum * (increaseRate / 100);
-        curAtkDelay = C_DefaultAtkDelay / attackSpeed;
+        curProjNum = E_DefaultProjNum * (increaseRate / 100);
+        curAtkDelay = E_DefaultAtkDelay / attackSpeed;
         projAngleOffset = 5;
         curProjAngle = curProjNum * projAngleOffset;
         atkCount = 3; //기본 3번 increaseRate에 따라 더 많아짐

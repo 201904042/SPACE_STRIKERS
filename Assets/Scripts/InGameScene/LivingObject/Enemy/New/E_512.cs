@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class E_501 : E_TroopBase
+public class E_512 : E_TroopBase
 {
     protected float curProjAngle;
     private float projAngleOffset;
 
     private void Awake() //최초 아이디 부여
     {
-        id = 501;
+        id = 512;
     }
-    
+
     private void OnEnable()
     {
         SetEnemy();
-        SetStopLine(3);
     }
+
     public override void ResetObject()
     {
         base.ResetObject();
-        curProjNum = C_DefaultProjNum;
-        curAtkDelay = C_DefaultAtkDelay;
+        curProjNum = E_DefaultProjNum;
+        curAtkDelay = E_DefaultAtkDelay;
     }
 
     protected override IEnumerator EnemyBehavior()
@@ -30,15 +30,15 @@ public class E_501 : E_TroopBase
         while (true)
         {
             yield return StartCoroutine(base.EnemyBehavior()); // 부모 클래스의 기본 행동 호출
-            yield return StartCoroutine(StopEnemyPattern());   // 추가 행동 패턴 호출
+            yield return StartCoroutine(NonStopEnemyPattern()); // 추가 행동 패턴 호출
         }
     }
 
     protected override void SetStat()
     {
         base.SetStat();
-        curProjNum = C_DefaultProjNum * (increaseRate / 100);
-        curAtkDelay = C_DefaultAtkDelay / attackSpeed;
+        curProjNum = E_DefaultProjNum * (increaseRate / 100);
+        curAtkDelay = E_DefaultAtkDelay / attackSpeed;
         projAngleOffset = 5;
         curProjAngle = curProjNum * projAngleOffset;
         atkCount = 3; //기본 3번 increaseRate에 따라 더 많아짐
@@ -47,6 +47,6 @@ public class E_501 : E_TroopBase
 
     protected override void FireProjectile()
     {
-        FireMulti(OtherProjType.Enemy_Bullet, damage, 0, 0, curProjNum, curProjAngle);
+        FireMulti(OtherProjType.Enemy_Bullet, damage, 0, 0, curProjNum, curProjAngle, true);
     }
 }

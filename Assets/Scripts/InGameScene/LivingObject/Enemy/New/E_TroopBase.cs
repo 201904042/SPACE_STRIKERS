@@ -20,8 +20,6 @@ public class E_TroopBase : EnemyObject
     public override void ResetObject()
     {
         base.ResetObject();
-        curProjNum = defaultProjNum;
-        curAtkDelay = defaultAtkDelay;
         stopLine = 0;
         stopInstance = 0;
         isStop = false;

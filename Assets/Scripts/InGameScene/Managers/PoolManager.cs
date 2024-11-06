@@ -34,7 +34,7 @@ public class PoolManager
         FindDataObject(PlayerDataPath, playerProjDataList);
         FindDataObject(OtherDataPath, OtherProjDataList);
 
-        foreach (int id in useEnemyList.Values)
+        foreach (int id in useEnemyList.Keys)
         {
             enemyDic[id] = new List<GameObject>();
         }

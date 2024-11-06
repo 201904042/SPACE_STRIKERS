@@ -5,11 +5,13 @@ using UnityEngine;
 public enum EnemyType
 {
     None = 0,
-    Common = 1,
-    Elite =2,
-    MidBoss =3,
-    Boss = 4,
-    SandBag = 5
+    CommonS = 1,
+    CommonN = 2,
+    EliteS =3,
+    EliteN = 4,
+    MidBoss =5,
+    Boss = 6,
+    SandBag = 7
 }
 
 [CreateAssetMenu(fileName = "New EnemyInfo", menuName = "DataAsset/EnemyInfo")]

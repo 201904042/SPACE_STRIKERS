@@ -17,6 +17,7 @@ public class ExtraSkill : InGameSkill
         //Debug.Log($"{SkillCode}의 레벨데이터 세팅");
         
         value = DataManager.skill.GetData(SkillCode).levels[0].DmgRate;
+        description = DataManager.skill.GetData(SkillCode).levels[0].Description;
     }
 
     public override void LevelUp()

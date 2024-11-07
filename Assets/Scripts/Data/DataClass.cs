@@ -139,6 +139,7 @@ public class Skill_LevelValue
     public int DmgRate;
     public float Size;
     public float LiveTime;
+    public string Description;
     public List<S_EffectValuePair> AddEffect;
 
     public Skill_LevelValue()

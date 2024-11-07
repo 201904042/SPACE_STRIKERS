@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Active_Shield : ActiveSkill
@@ -11,10 +12,8 @@ public class Active_Shield : ActiveSkill
         base.SkillReset();
         SkillCode = 607;
         projType = PlayerProjType.Skill_Shield;
-        SetLevel();
+        SetLevel(); 
         instantShield = null;
-        // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        //Debug.Log("Active_Shield 초기화 완료");
     }
 
     //쉴드는 다른 것과 달리 1개만 생성하며 쉴드가 파괴되었을때를 기점으로 쿨타임이 돌아감

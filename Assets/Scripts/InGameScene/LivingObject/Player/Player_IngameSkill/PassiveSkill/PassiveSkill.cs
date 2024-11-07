@@ -23,7 +23,7 @@ public class PassiveSkill : InGameSkill
         {
             SkillLevels.Add(skill.level, skill);
         }
-
+        description = SkillLevels[curSkillLevel + 1].Description;
     }
 
     public override void LevelUp()
@@ -33,6 +33,8 @@ public class PassiveSkill : InGameSkill
             curSkillLevel++;
             ApplyEffect();
         }
+
+        description = SkillLevels[curSkillLevel + 1].Description;
     }
 
     public virtual void ApplyEffect()

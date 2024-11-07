@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [System.Serializable]
 public struct SpawnPattern
@@ -20,16 +23,17 @@ public class SpawnManager
     private const float minimumSpawnTimer = 1f;  //최소 1초에 한번 웨이브 발생
     private const float maxTime = 30f;           //최대 게임시간 30분
     private const float phaseDuration = 5f;      //페이즈가 바뀌는시간 5분
+    private const int DefaultItemDropRate =  10;
     private StageManager G_Stage => GameManager.Game.Stage;
 
     public Transform mainSpawnZone;
     public Transform sideSpawnZoneL;
     public Transform sideSpawnZoneR;
 
-    public List<SpawnPattern> AllPatterns = new List<SpawnPattern>();
-
-    public List<SpawnPattern> stopEnemyPatterns = new List<SpawnPattern>();
-    public List<SpawnPattern> nonStopEnemyPatterns = new List<SpawnPattern>();
+    public List<SpawnPattern> CommonSPattern = new List<SpawnPattern>();
+    public List<SpawnPattern> CommonNPattern = new List<SpawnPattern>();
+    public List<SpawnPattern> EliteSPattern = new List<SpawnPattern>();
+    public List<SpawnPattern> EliteNPattern = new List<SpawnPattern>();
 
 
     public List<GameObject> activeEnemyList = new List<GameObject>(); //현재 활성 상태인 적들의 리스트
@@ -43,10 +47,11 @@ public class SpawnManager
    
     public bool isBossSpawned; //보스가 생성되었는지
     public bool isBossDown; //생성된 보스가 처치되었는지
+   
 
     private void SpawnPatternSet()
     {
-        stopEnemyPatterns = new List<SpawnPattern>()
+        CommonSPattern = new List<SpawnPattern>()
         {
             new SpawnPattern() {
                 type = EnemyType.CommonS,
@@ -84,32 +89,36 @@ public class SpawnManager
                 },
                 rotation = mainSpawnZone.rotation,
                 delay = 0f,
-            },
-            new SpawnPattern
-            {
-                type = EnemyType.EliteS,
-                positions = new Vector2[]
-                {
-                    new Vector2(mainSpawnZone.position.x-2f, mainSpawnZone.position.y),
-                    new Vector2(mainSpawnZone.position.x+2f, mainSpawnZone.position.y)
-                },
-                rotation = mainSpawnZone.rotation,
-                delay = 0f,
-            },
-            new SpawnPattern
-            {
-                type = EnemyType.EliteS,
-                positions = new Vector2[]
-                {
-                    new Vector2(mainSpawnZone.position.x-2f, mainSpawnZone.position.y),
-                    new Vector2(mainSpawnZone.position.x+2f, mainSpawnZone.position.y)
-                },
-                rotation = mainSpawnZone.rotation,
-                delay = 0f,
             }
         };
 
-        nonStopEnemyPatterns = new List<SpawnPattern>()
+        EliteSPattern = new List<SpawnPattern>()
+        {
+             new SpawnPattern
+             {
+                type = EnemyType.EliteS,
+                positions = new Vector2[]
+                {
+                    new Vector2(mainSpawnZone.position.x-2f, mainSpawnZone.position.y),
+                    new Vector2(mainSpawnZone.position.x+2f, mainSpawnZone.position.y)
+                },
+                rotation = mainSpawnZone.rotation,
+                delay = 0f,
+             },
+             new SpawnPattern
+             {
+                type = EnemyType.EliteS,
+                positions = new Vector2[]
+                {
+                    new Vector2(mainSpawnZone.position.x-2f, mainSpawnZone.position.y),
+                    new Vector2(mainSpawnZone.position.x+2f, mainSpawnZone.position.y)
+                },
+                rotation = mainSpawnZone.rotation,
+                delay = 0f,
+             }
+        };
+
+        CommonNPattern = new List<SpawnPattern>()
         {
             new SpawnPattern() {
                 type = EnemyType.CommonN,
@@ -121,7 +130,7 @@ public class SpawnManager
                     new Vector2(mainSpawnZone.position.x+1.5f, mainSpawnZone.position.y),
                 },
                 rotation = mainSpawnZone.rotation,
-                 delay = 0.5f
+                 delay = 0.3f
             },
             new SpawnPattern
             {
@@ -133,7 +142,7 @@ public class SpawnManager
                     new Vector2(sideSpawnZoneL.position.x+1, sideSpawnZoneL.position.y),
                 },
                 rotation = sideSpawnZoneL.rotation,
-                delay = 0.5f
+                delay = 0.3f
             },
              new SpawnPattern
             {
@@ -145,43 +154,44 @@ public class SpawnManager
                     new Vector2(sideSpawnZoneR.position.x+1, sideSpawnZoneR.position.y),
                 },
                 rotation = sideSpawnZoneR.rotation,
-                delay = 0.5f
-            },
-            new SpawnPattern
-            {
+                delay = 0.3f
+            }
+        };
+
+        EliteNPattern = new List<SpawnPattern>
+        {
+             new SpawnPattern
+             {
                 type = EnemyType.EliteN,
                 positions = new Vector2[]
                 {
                     new Vector2(mainSpawnZone.position.x, mainSpawnZone.position.y),
                 },
                 rotation = mainSpawnZone.rotation,
-                delay = 0.5f
-            },
+                delay = 0f
+             },
 
              new SpawnPattern
-            {
+             {
                 type = EnemyType.EliteN,
                 positions = new Vector2[]
                 {
                     new Vector2(sideSpawnZoneL.position.x, sideSpawnZoneL.position.y),
                 },
                 rotation = sideSpawnZoneL.rotation,
-                 delay = 0.5f
-            },
+                 delay = 0f
+             },
              new SpawnPattern
-            {
+             {
                 type = EnemyType.EliteN,
                 positions = new Vector2[]
                 {
                     new Vector2(sideSpawnZoneR.position.x, sideSpawnZoneR.position.y),
                 },
                 rotation = sideSpawnZoneR.rotation,
-                 delay = 0.5f
-            }
+                delay = 0f
+             }
         };
-
-        AllPatterns.AddRange(stopEnemyPatterns);
-        AllPatterns.AddRange(nonStopEnemyPatterns);
     }
 
     public void Init()
@@ -204,51 +214,61 @@ public class SpawnManager
 
     public IEnumerator SpawnEnemyTroops()
     {
-        GameManager.Game.StartGameCoroutine(SpawnStopEnemies());
-        GameManager.Game.StartGameCoroutine(SpawnNonStopEnemies());
-
-        yield return null;
+        GameManager.Game.StartGameCoroutine(RouteTimeSpawn());
+        GameManager.Game.StartGameCoroutine(RandomTimeSpawn());
+        yield return true;
     }
 
-    private IEnumerator SpawnStopEnemies()
+    
+    private IEnumerator RouteTimeSpawn() //정해진 시간에의한 패턴시간( 10 -> 5)초에 한번씩 패턴 실행
     {
+        float spanwTime = 10;
         while (true)
         {
-            SpawnEnemiesFromPattern(stopEnemyPatterns);
-            yield return new WaitForSeconds(10f); 
+            Debug.Log("정기 스폰");
+            GameManager.Game.StartGameCoroutine(SpawnRandomPattern(true));
+            yield return new WaitForSeconds(spanwTime);
         }
     }
-
-    private IEnumerator SpawnNonStopEnemies()
+    private IEnumerator RandomTimeSpawn() //랜덤한 시간에 의한 패턴시간/2 (5-> 2.5)초를 기준으로 +- 1초의 스폰시간을 가짐
     {
+        float spanwTime = 5;
+        float randomDelay = 0;
         while (true)
         {
-            SpawnEnemiesFromPattern(nonStopEnemyPatterns);
-            yield return new WaitForSeconds(3f);
+            randomDelay = Random.Range(-1, 2); //-1에서 1초 사이의 랜덤한 딜레이를 줌
+            spanwTime += randomDelay;
+            yield return new WaitForSeconds(spanwTime);
+            Debug.Log("랜덤 스폰");
+            GameManager.Game.StartGameCoroutine(SpawnRandomPattern(false));
         }
     }
 
     // 주어진 패턴 리스트에서 적 스폰 로직을 처리하는
-    private void SpawnEnemiesFromPattern(List<SpawnPattern> patterns)
+    private IEnumerator SpawnRandomPattern(bool isStopPattern)
     {
-        int randomId = GetRandomEnemyId();
-        SpawnPattern? selectedPattern = GetRandomSpawnPattern(randomId);
+        int randomId = GetRandomEnemyId(isStopPattern); //스테이지의 적중 랜덤한 아이디 정하기
+        SpawnPattern? selectedPattern = GetRandomSpawnPattern(randomId); //정해진 아이디가 갈수 있는 패턴 정함
 
         if (selectedPattern.HasValue)
         {
-            foreach (Vector2 position in selectedPattern.Value.positions)
-            {
+            bool isItemEnemySpawn = Random.Range(0, 100) < DefaultItemDropRate;
+
+            for (int i = 0; i < selectedPattern.Value.positions.Length; i++) {
                 E_TroopBase enemy = GameManager.Game.Pool
-                    .GetEnemy(randomId, position, selectedPattern.Value.rotation)
-                    .GetComponent<E_TroopBase>();
+                        .GetEnemy(randomId, selectedPattern.Value.positions[i], selectedPattern.Value.rotation)
+                        .GetComponent<E_TroopBase>();
                 enemy.SetStopLine(stopIndex);
-                bool isItemEnemySpawn = Random.Range(0, 100) < 20;
-                if (isItemEnemySpawn)
+
+                if (isItemEnemySpawn && i == selectedPattern.Value.positions.Length- 1) //패턴의 마지막 적에게만
                 {
                     enemy.SetItemDrop();
                 }
-            }
 
+                yield return new WaitForSeconds(selectedPattern.Value.delay);
+            }
+           
+            //스탑위치 조정
             stopIndex++;
             if (stopIndex > 3)
             {
@@ -268,30 +288,26 @@ public class SpawnManager
 
         EnemyType enemyType = enemyData.type;
         List<SpawnPattern> matchingPatterns = new List<SpawnPattern>();
-        if (enemyType == EnemyType.CommonN || enemyType == EnemyType.CommonS)
+        if (enemyType == EnemyType.CommonS)
         {
-            foreach (var pattern in stopEnemyPatterns)
-            {
-                if (pattern.type == enemyType)
-                {
-                    matchingPatterns.Add(pattern);
-                }
-            }
+            matchingPatterns = CommonSPattern;
         }
-        else if (enemyType == EnemyType.EliteN || enemyType == EnemyType.EliteS)
+        else if ( enemyType == EnemyType.EliteS)
         {
-            foreach (var pattern in nonStopEnemyPatterns)
-            {
-                if (pattern.type == enemyType)
-                {
-                    matchingPatterns.Add(pattern);
-                }
-            }
+            matchingPatterns = EliteSPattern;
+        }
+        else if(enemyType == EnemyType.CommonN)
+        {
+            matchingPatterns = CommonNPattern;
+        }
+        else if(enemyType == EnemyType.EliteN)
+        {
+            matchingPatterns = EliteNPattern;
         }
 
         if (matchingPatterns.Count == 0)
         {
-
+            Debug.Log("가능한 패턴이 없음");
             return null;
         }
 
@@ -299,24 +315,54 @@ public class SpawnManager
         return selectedPattern;
     }
 
-
-    private int GetRandomEnemyId()
+    //현 스테이지의 모드에 따른 적 아이디 랜덤 반환
+    private int GetRandomEnemyId(bool isStopPattern)
     {
         List<int> validEnemyIds = new List<int>();
         if (G_Stage.curMode == GameMode.Infinite) //무한모드에는 제한없음
         {
             foreach (var entry in G_Stage.enemyCodeAmountFair)
             {
-                validEnemyIds.Add(entry.Key);
+                EnemyData enemy = DataManager.enemy.GetData(entry.Key);
+                if (isStopPattern)
+                {
+                    if (enemy.type == EnemyType.EliteS || enemy.type == EnemyType.CommonS)
+                    {
+                        validEnemyIds.Add(entry.Key);
+                    }
+                }
+                else
+                {
+                    if (enemy.type == EnemyType.EliteN || enemy.type == EnemyType.CommonN)
+                    {
+                        validEnemyIds.Add(entry.Key);
+                    }
+                }
             }
         }
         else
         {
             foreach (var entry in G_Stage.enemyCodeAmountFair) //일반이나 보스에서는 적의 개채수 따짐
             {
-                if (entry.Value > 0) // 양이 0보다 큰 경우
+                if (entry.Value <= 0) // 양이 0보다 큰 경우
                 {
-                    validEnemyIds.Add(entry.Key);
+                    continue;
+                }
+
+                EnemyData enemy = DataManager.enemy.GetData(entry.Key);
+                if (isStopPattern)
+                {
+                    if (enemy.type == EnemyType.EliteS || enemy.type == EnemyType.CommonS)
+                    {
+                        validEnemyIds.Add(entry.Key);
+                    }
+                }
+                else
+                {
+                    if (enemy.type == EnemyType.EliteN || enemy.type == EnemyType.CommonN)
+                    {
+                        validEnemyIds.Add(entry.Key);
+                    }
                 }
             }
         }
@@ -325,6 +371,7 @@ public class SpawnManager
         return validEnemyIds[Random.Range(0, validEnemyIds.Count)];
     }
     
+    //현 스테이지의 보스를 생성
     public void SpawnBoss(int bossId)
     {
         GameManager.Game.StopSpawnTroop();

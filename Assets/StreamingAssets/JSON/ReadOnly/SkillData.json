@@ -3,21 +3,22 @@
     {
       "id": 601,
       "type": 1,
-      "description": "",
       "levels": [
         {
           "level": 1,
           "ProjCount": 1,
           "ProjSpd": 10,
           "CoolTime": 5,
-          "DmgRate": 150
+          "DmgRate": 150,
+          "Description" : "에너지를 응집하여 사출합니다. 데미지 : 170%, 쿨타임 5초"
         },
         {
           "level": 2,
           "ProjCount": 1,
           "ProjSpd": 10,
           "CoolTime": 5,
-          "DmgRate": 170
+          "DmgRate": 170,
+          "Description" : "데미지+20% (170%)"
         },
         {
           "level": 3,
@@ -25,6 +26,7 @@
           "ProjSpd": 10,
           "CoolTime": 4,
           "DmgRate": 190,
+          "Description" : "데미지+20%(190%), 쿨타임-1초(4), 관통+1(1)",
           "AddEffect": [
             {
               "effect": 3,
@@ -38,6 +40,7 @@
           "ProjSpd": 10,
           "CoolTime": 4,
           "DmgRate": 210,
+          "Description" : "데미지+20%(210%)",
           "AddEffect": [
             {
               "effect": 3,
@@ -51,6 +54,7 @@
           "ProjSpd": 10,
           "CoolTime": 3,
           "DmgRate": 230,
+          "Description" : "데미지+20%(230%), 쿨타임-1초(3), 관통+1(2)",
           "AddEffect": [
             {
               "effect": 3,
@@ -64,6 +68,7 @@
           "ProjSpd": 10,
           "CoolTime": 3,
           "DmgRate": 250,
+          "Description" : "데미지+20%(250%)",
           "AddEffect": [
             {
               "effect": 3,
@@ -77,6 +82,7 @@
           "ProjSpd": 10,
           "CoolTime": 3,
           "DmgRate": 300,
+          "Description" : "데미지+50%(300%), 관통+1(3)",
           "AddEffect": [
             {
               "effect": 3,
@@ -88,7 +94,6 @@
     },
     {
       "id": 602,
-      "description": "",
       "type": 1,
       "levels": [
         {
@@ -97,6 +102,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 30,
+          "Description" : "적을 느리게 만드는 범위충격탄을 사출. 범위에 들어온 적은 1초에 30% 피해를 입으며 30%둔화된다. 쿨타임 : 5초",
           "AddEffect": [
             {
               "effect": 4,
@@ -114,6 +120,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 45,
+          "Description" : "데미지+15%(45%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -131,6 +138,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 60,
+          "Description" : "데미지+15%(60%), 타격딜레이 -0.25(0.75초), 둔화율 +20%(50%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -148,6 +156,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 75,
+          "Description" : "데미지+15%(75%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -165,6 +174,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 90,
+          "Description" : "데미지+15%(90%), 타격딜레이 -0.25(0.5초), 둔화율 +20%(70%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -182,6 +192,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 105,
+          "Description" : "데미지+15%(105%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -199,6 +210,7 @@
           "ProjSpd": 1,
           "CoolTime": 5,
           "DmgRate": 120,
+          "Description" : "데미지+15%(120%), 타격딜레이 -0.25(0.25초), 둔화율 +20%(50%), 둔화된 적에게 100% 피해증가",
           "AddEffect": [
             {
               "effect": 4,
@@ -218,15 +230,17 @@
     },
     {
       "id": 603,
-      "description": "",
-      "type": 1,
+       "type": 1,
       "levels": [
         {
           "level": 1,
           "ProjCount": 1,
           "ProjSpd": 0,
           "CoolTime": 10,
+          "LiveTime" : 5,
           "DmgRate": 20,
+          "Size" : 2,
+          "Description" : "주변 적에게 20%의 피해를 주는 필드를 형성. 쿨타임10초, 유지시간 5초 , 타격딜레이 1초",
           "AddEffect": [
             {
               "effect": 4,
@@ -239,7 +253,10 @@
           "ProjCount": 1,
           "ProjSpd": 0,
           "CoolTime": 10,
+          "LiveTime" : 5,
           "DmgRate": 30,
+          "Size" : 2,
+          "Description" : "데미지+10%(30%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -252,7 +269,10 @@
           "ProjCount": 1,
           "ProjSpd": 0,
           "CoolTime": 10,
+          "LiveTime" : 6,
           "DmgRate": 40,
+          "Size" : 3,
+          "Description" : "데미지+10%(40%),유지시간+1(6초), 크기+1, 타격딜레이 -0.25(0.75)",
           "AddEffect": [
             {
               "effect": 4,
@@ -265,7 +285,10 @@
           "ProjCount": 1,
           "ProjSpd": 0,
           "CoolTime": 10,
+          "LiveTime" : 6,
           "DmgRate": 50,
+          "Size" : 3,
+          "Description" : "데미지+10%(50%), 관통+1(3)",
           "AddEffect": [
             {
               "effect": 4,
@@ -278,7 +301,10 @@
           "ProjCount": 1,
           "ProjSpd": 0,
           "CoolTime": 10,
+          "LiveTime" : 7,
           "DmgRate": 60,
+          "Size" : 4,
+          "Description" : "데미지+10%(60%),유지시간+1(7초), 크기+1, 타격딜레이 -0.25(0.5)",
           "AddEffect": [
             {
               "effect": 4,
@@ -291,7 +317,10 @@
           "ProjCount": 1,
           "ProjSpd": 0,
           "CoolTime": 10,
+          "LiveTime" : 7,
           "DmgRate": 70,
+          "Size" : 4,
+          "Description" : "데미지+10%(70%)",
           "AddEffect": [
             {
               "effect": 4,
@@ -304,7 +333,10 @@
           "ProjCount": 10,
           "ProjSpd": 10,
           "CoolTime": 10,
+          "LiveTime" : 8,
           "DmgRate": 80,
+          "Size" : 5,
+          "Description" : "데미지+10%(80%),유지시간+1(8초), 크기+1, 타격딜레이 -0.25(0.25), 스킬이 끝나면 전방에 사출",
           "AddEffect": [
             {
               "effect": 4,
@@ -316,7 +348,6 @@
     },
     {
       "id": 604,
-      "description": "",
       "type": 1,
       "levels": [
         {
@@ -324,55 +355,61 @@
           "ProjCount": 2,
           "ProjSpd": 20,
           "CoolTime": 3,
-          "DmgRate": 80
+          "DmgRate": 80,
+          "Description" : "적을 추적하여 80%의 피해를 주는 미사일을 2회 발사. 쿨타임 3초"
         },
         {
           "level": 2,
           "ProjCount": 4,
           "ProjSpd": 20,
           "CoolTime": 3,
-          "DmgRate": 80
+          "DmgRate": 80,
+          "Description" : "개수 +2(4)"
         },
         {
           "level": 3,
           "ProjCount": 6,
           "ProjSpd": 20,
           "CoolTime": 2.5,
-          "DmgRate": 80
+          "DmgRate": 80,
+          "Description" : "개수 +2(6), 쿨타임 -0.5(2.5초)"
         },
         {
           "level": 4,
           "ProjCount": 8,
           "ProjSpd": 20,
           "CoolTime": 2.5,
-          "DmgRate": 90
+          "DmgRate": 90,
+          "Description" : "개수 +2(8), 데미지 +10(90%)"
         },
         {
           "level": 5,
           "ProjCount": 10,
           "ProjSpd": 20,
           "CoolTime": 2,
-          "DmgRate": 90
+          "DmgRate": 90,
+          "Description" : "개수 +2(10), 쿨타임 -0.5(2초)"
         },
         {
           "level": 6,
           "ProjCount": 12,
           "ProjSpd": 20,
           "CoolTime": 2,
-          "DmgRate": 90
+          "DmgRate": 90,
+          "Description" : "개수 +2(12)"
         },
         {
           "level": 7,
           "ProjCount": 15,
           "ProjSpd": 20,
           "CoolTime": 1.5,
-          "DmgRate": 100
+          "DmgRate": 100,
+          "Description" : "개수 +3(15), 데미지 +10(100%), 쿨타임 -0.5(1.5초)"
         }
       ]
     },
     {
       "id": 605,
-      "description": "",
       "type": 1,
       "levels": [
         {
@@ -382,6 +419,7 @@
           "CoolTime": 30,
           "DmgRate": 50,
           "LiveTime": 10,
+          "Description" : "범위 내 적을 자동 공격하는 드론을 1개 생성. 드론은 10초 동안 50%의 데미지를 가지며 1.2초의 속도로 공격. 쿨타임 30초",
           "AddEffect": [
             {
               "effect": 5,
@@ -397,6 +435,7 @@
           "CoolTime": 30,
           "DmgRate": 75,
           "LiveTime": 10,
+          "Description" : "데미지+25%(75%)",
           "AddEffect": [
             {
               "effect": 5,
@@ -412,6 +451,7 @@
           "CoolTime": 30,
           "DmgRate": 100,
           "LiveTime": 10,
+          "Description" : "생성개수 +1(2),데미지+25%(100%),드론 공격속도 -0.2(1초)",
           "AddEffect": [
             {
               "effect": 5,
@@ -427,6 +467,7 @@
           "CoolTime": 25,
           "DmgRate": 125,
           "LiveTime": 15,
+          "Description" : "데미지+25%(125%), 유지시간+5(15), 감지범위+1",
           "AddEffect": [
             {
               "effect": 5,
@@ -442,6 +483,7 @@
           "CoolTime": 25,
           "DmgRate": 150,
           "LiveTime": 15,
+          "Description" : "생성 개수 +1(3) 데미지+25%(150%), 드론 공격속도 -0.2(0.8)",
           "AddEffect": [
             {
               "effect": 5,
@@ -457,6 +499,7 @@
           "CoolTime": 25,
           "DmgRate": 175,
           "LiveTime": 15,
+          "Description" : "데미지+25%(175%)",
           "AddEffect": [
             {
               "effect": 5,
@@ -472,6 +515,7 @@
           "CoolTime": 20,
           "DmgRate": 200,
           "LiveTime": 20,
+          "Description" : "생성 개수 +1(4) 데미지+25%(200%), 드론 공격속도 -0.3(0.5), 드론감지범위 + 1",
           "AddEffect": [
             {
               "effect": 5,
@@ -484,7 +528,6 @@
     },
     {
       "id": 606,
-      "description": "",
       "type": 1,
       "levels": [
         {
@@ -493,10 +536,11 @@
           "ProjSpd": 15,
           "CoolTime": 3,
           "DmgRate": 150,
+          "Description" : "적을 향해 150%의 데미지를 주는 미사일을 발사. 적 타격시 폭발하며 폭발데미지 50%, 폭발유지시간 1초 ",
           "AddEffect": [
             {
               "effect": 7,
-              "value1": 150,
+              "value1": 50,
               "value2": 1,
               "value3": 1
             }
@@ -508,10 +552,11 @@
           "ProjSpd": 15,
           "CoolTime": 3,
           "DmgRate": 150,
+          "Description" : "생성개수 +1, 폭발크기+0.2",
           "AddEffect": [
             {
               "effect": 7,
-              "value1": 150,
+              "value1": 50,
               "value2": 1,
               "value3": 1.2
             }
@@ -523,10 +568,11 @@
           "ProjSpd": 15,
           "CoolTime": 3,
           "DmgRate": 170,
+          "Description" : "데미지+20%(170), 폭발데미지 +50(100), 폭발크기+0.2 ",
           "AddEffect": [
             {
               "effect": 7,
-              "value1": 170,
+              "value1": 100,
               "value2": 1,
               "value3": 1.4
             }
@@ -534,14 +580,15 @@
         },
         {
           "level": 4,
-          "ProjCount": 2,
+          "ProjCount": 3,
           "ProjSpd": 15,
           "CoolTime": 2,
           "DmgRate": 170,
+          "Description" : "생성개수 +1, 폭발크기+0.2",
           "AddEffect": [
             {
               "effect": 7,
-              "value1": 170,
+              "value1": 100,
               "value2": 1,
               "value3": 1.6
             }
@@ -549,14 +596,15 @@
         },
         {
           "level": 5,
-          "ProjCount": 4,
+          "ProjCount": 3,
           "ProjSpd": 15,
           "CoolTime": 2,
-          "DmgRate": 170,
+          "DmgRate": 190,
+          "Description" :  "데미지+20%(190), 폭발데미지 +50(150), 폭발크기+0.2 ",
           "AddEffect": [
             {
               "effect": 7,
-              "value1": 170,
+              "value1": 150,
               "value2": 1,
               "value3": 1.8
             }
@@ -568,10 +616,11 @@
           "ProjSpd": 15,
           "CoolTime": 1,
           "DmgRate": 200,
+          "Description" : "생성개수 +1, 폭발크기+0.2",
           "AddEffect": [
             {
               "effect": 7,
-              "value1": 200,
+              "value1": 150,
               "value2": 1,
               "value3": 2
             }
@@ -583,6 +632,7 @@
           "ProjSpd": 15,
           "CoolTime": 1,
           "DmgRate": 200,
+          "Description" : "데미지+50%(200%), 폭발크기+0.5",
           "AddEffect": [
             {
               "effect": 7,
@@ -596,213 +646,238 @@
     },
     {
       "id": 607,
-      "description": "",
       "type": 1,
       "levels": [
         {
           "level": 1,
           "CoolTime": 20,
           "DmgRate": 200,
-          "Size": 1
+          "Size": 1,
+          "Description" : "캐릭터를 보호하는 쉴드를 1회 전개. 충돌시 충돌한 적에게 200%의 피해를 주고 자신이 받는 피해1회 무시. 파괴되며 파괴이후 20초후 재생성"
         },
         {
           "level": 2,
           "CoolTime": 18,
           "DmgRate": 250,
-          "Size": 1
+          "Size": 1,
+          "Description" : "데미지+50%(250%), 재생성시간 -2(18)"
         },
         {
           "level": 3,
           "CoolTime": 16,
           "DmgRate": 300,
-          "Size": 1.2
+          "Size": 1.2,
+          "Description" : "데미지+50%(300%), 재생성시간 -2(16), 크기+0.2"
         },
         {
           "level": 4,
           "CoolTime": 14,
           "DmgRate": 350,
-          "Size": 1.2
+          "Size": 1.2,
+          "Description" :  "데미지+50%(350%), 재생성시간 -2(14)"
         },
         {
           "level": 5,
           "CoolTime": 12,
           "DmgRate": 400,
-          "Size": 1.5
+          "Size": 1.5,
+          "Description" : "데미지+50%(400%), 재생성시간 -2(12), 크기+0.3"
         },
         {
           "level": 6,
           "CoolTime": 10,
           "DmgRate": 450,
-          "Size": 1.5
+          "Size": 1.5,
+          "Description" : "데미지+50%(450%), 재생성시간 -2(10)"
         },
         {
           "level": 7,
           "CoolTime": 8,
           "DmgRate": 500,
-          "Size": 2
+          "Size": 2,
+          "Description" : "데미지+50%(500%), 재생성시간 -2(8), 크기+0.5"
         }
       ]
     },
     {
       "id": 641,
-      "description": "",
       "type": 2,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 10
+          "DmgRate": 10,
+          "Description" : "캐릭터의 공격력 10%증폭(10%))"
         },
         {
           "level": 2,
-          "DmgRate": 20
+          "DmgRate": 20,
+          "Description" :"캐릭터의 공격력 10%증폭(20%))"
         },
         {
           "level": 3,
-          "DmgRate": 30
+          "DmgRate": 30,
+          "Description" : "캐릭터의 공격력 10%증폭(30%))"
         },
         {
           "level": 4,
-          "DmgRate": 40
+          "DmgRate": 40,
+          "Description" : "캐릭터의 공격력 10%증폭(40%))"
         },
         {
           "level": 5,
-          "DmgRate": 50
+          "DmgRate": 50,
+          "Description" : "캐릭터의 공격력 10%증폭(50%))"
         }
       ]
     },
     {
       "id": 642,
-      "description": "",
       "type": 2,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 10
+          "DmgRate": 10,
+          "Description" : "캐릭터의 방어력 10%증폭(10%))"
         },
         {
           "level": 2,
-          "DmgRate": 20
+          "DmgRate": 20,
+          "Description" :"캐릭터의 방어력 10%증폭(20%))"
         },
         {
           "level": 3,
-          "DmgRate": 30
+          "DmgRate": 30,
+          "Description" : "캐릭터의 방어력 10%증폭(30%))"
         },
         {
           "level": 4,
-          "DmgRate": 40
+          "DmgRate": 40,
+          "Description" : "캐릭터의 방어력 10%증폭(40%))"
         },
         {
           "level": 5,
-          "DmgRate": 50
+          "DmgRate": 50,
+          "Description" : "캐릭터의 방어력 10%증폭(50%))"
         }
       ]
     },
     {
       "id": 643,
-      "description": "",
       "type": 2,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 10
+          "DmgRate": 10,
+          "Description" : "캐릭터의 이동속도 10%증폭(10%))"
         },
         {
           "level": 2,
-          "DmgRate": 20
+          "DmgRate": 20,
+          "Description" :"캐릭터의 이동속도 10%증폭(20%))"
         },
         {
           "level": 3,
-          "DmgRate": 30
+          "DmgRate": 30,
+          "Description" : "캐릭터의 이동속도 10%증폭(30%))"
         },
         {
           "level": 4,
-          "DmgRate": 40
+          "DmgRate": 40,
+          "Description" : "캐릭터의 이동속도 10%증폭(40%))"
         },
         {
           "level": 5,
-          "DmgRate": 50
+          "DmgRate": 50,
+          "Description" : "캐릭터의 이동속도 10%증폭(50%))"
         }
       ]
     },
     {
       "id": 644,
-      "description": "",
       "type": 2,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 10
+          "DmgRate": 10,
+          "Description" : "캐릭터의 공격속도 10%증폭(10%))"
         },
         {
           "level": 2,
-          "DmgRate": 20
+          "DmgRate": 20,
+          "Description" :"캐릭터의 공격속도 10%증폭(20%))"
         },
         {
           "level": 3,
-          "DmgRate": 30
+          "DmgRate": 30,
+          "Description" : "캐릭터의 공격속도 10%증폭(30%))"
         },
         {
           "level": 4,
-          "DmgRate": 40
+          "DmgRate": 40,
+          "Description" : "캐릭터의 공격속도 10%증폭(40%))"
         },
         {
           "level": 5,
-          "DmgRate": 50
+          "DmgRate": 50,
+          "Description" : "캐릭터의 공격속도 10%증폭(50%))"
         }
       ]
     },
     {
       "id": 645,
-      "description": "",
       "type": 2,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 10
+          "DmgRate": 10,
+          "Description" : "캐릭터의 체력재생 +10(10%))"
         },
         {
           "level": 2,
-          "DmgRate": 20
+          "DmgRate": 20,
+          "Description" :"캐릭터의 체력재생 +10(20%))"
         },
         {
           "level": 3,
-          "DmgRate": 30
+          "DmgRate": 30,
+          "Description" : "캐릭터의 체력재생 +10(30%))"
         },
         {
           "level": 4,
-          "DmgRate": 40
+          "DmgRate": 40,
+          "Description" : "캐릭터의 체력재생 +10(40%))"
         },
         {
           "level": 5,
-          "DmgRate": 50
+          "DmgRate": 50,
+          "Description" : "캐릭터의 체력재생 +10(50%))"
         }
       ]
     },
     {
       "id": 661,
-      "description": "",
       "type": 3,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 25
+          "DmgRate": 25,
+          "Description" : "체력을 즉시 25% 회복"
         }
       ]
     },
     {
       "id": 662,
-      "description": "",
       "type": 3,
       "levels": [
         {
           "level": 1,
-          "DmgRate": 25
+          "DmgRate": 25,
+          "Description" : "스테이지 보상 비율 25%증가"
         }
       ]
     },
     {
       "id": 691,
-      "description": "",
       "useChar": 101,
       "type": 4,
       "levels": [
@@ -849,7 +924,6 @@
     },
     {
       "id": 692,
-      "description": "",
       "useChar": 102,
       "type": 4,
       "levels": [
@@ -914,7 +988,6 @@
     },
     {
       "id": 693,
-      "description": "",
       "useChar": 103,
       "type": 4,
       "levels": [
@@ -964,7 +1037,6 @@
     },
     {
       "id": 694,
-      "description": "",
       "useChar": 104,
       "type": 4,
       "levels": [

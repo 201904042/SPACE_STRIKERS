@@ -50,6 +50,7 @@ public class ActiveSkill : InGameSkill
         instantPoint = PlayerMain.Instance.gameObject.transform;
         type = SkillType.Active;
         curSkillLevel = 0;
+
     }
 
     //사용전 스킬코드가 정의되어있는지 체크
@@ -60,7 +61,7 @@ public class ActiveSkill : InGameSkill
         {
             SkillLevels.Add(skill.level, skill);
         }
-
+        description = SkillLevels[curSkillLevel+1].Description;
     }
 
     public override void LevelUp()
@@ -71,6 +72,7 @@ public class ActiveSkill : InGameSkill
         }
 
         SkillParameterSet(curSkillLevel);
+        description = SkillLevels[curSkillLevel + 1].Description;
     }
 
     //기본스킬에서는 레벨업시 적용, 유니크스킬은 발동 전 적용
@@ -123,7 +125,7 @@ public class ActiveSkill : InGameSkill
                     break;
             }
         }
-}
+    }
 
     //반복 스킬 발동 코루틴. 기본스킬은 파라미터의 level사용안하며 curSkillLevel을 사용
     public virtual IEnumerator ActivateSkillCoroutine(int level = 0)

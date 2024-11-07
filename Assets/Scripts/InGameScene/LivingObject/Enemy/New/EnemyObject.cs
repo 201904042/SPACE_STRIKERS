@@ -198,8 +198,14 @@ public class EnemyObject : MonoBehaviour
         }
         hpBar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - transform.localScale.y, 0));
     }
-
-    protected void ActiveHitEffect() => StartCoroutine(HitEffect());
+    private Coroutine hit;
+    protected void ActiveHitEffect() {
+        if(hit == null)
+        {
+            hit = StartCoroutine(HitEffect());
+        }
+       
+    }
 
     private Color hitColor = new Color(1, 184 / 255f, 184 / 255f);
     private IEnumerator HitEffect()
@@ -208,6 +214,8 @@ public class EnemyObject : MonoBehaviour
         spriteRenderer.color = hitColor;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = Color.white;
+
+        hit = null;
     }
 
     //시스템에 의한 보상이 주어지지 않는 제거

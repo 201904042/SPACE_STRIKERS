@@ -197,7 +197,6 @@ public class PlayerProjectile : Projectile
 
         GameObject enemy = hittedEnemyList[0];
         enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject, (int)finalDamage);
-        hittedEnemyList.RemoveAt(0);
         if (isHitOnce)
         {
             GameManager.Game.Pool.ReleasePool(gameObject);
@@ -225,7 +224,7 @@ public class PlayerProjectile : Projectile
                 enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject, finalDamage); // 적에게 데미지
                 if (isHitOnce)
                 {
-                    hittedEnemyList.RemoveAt(i);
+                    GameManager.Game.Pool.ReleasePool(gameObject);
                 }
             }
         }

@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class Active_ChargeShot : ActiveSkill
 {
+    private string mainDescription;
+    private string subDescription;
     public override void SkillReset()
     {
         base.SkillReset();
         SkillCode = 601;
         projType = PlayerProjType.Skill_ChageShot;
         SetLevel();
-        description = "";
         //Debug.Log("Active_ChargeShot 초기화 완료");
     }
 

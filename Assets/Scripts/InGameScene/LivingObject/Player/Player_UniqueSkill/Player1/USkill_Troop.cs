@@ -85,7 +85,9 @@ public class Troop : PlayerProjectile
             {
                 transform.position += transform.up * slowSpeed * Time.deltaTime;
             }
-            else
+            
+
+            if(liveTime <= 0)
             {
                 transform.position += transform.up * normalSpeed * Time.deltaTime;
             }

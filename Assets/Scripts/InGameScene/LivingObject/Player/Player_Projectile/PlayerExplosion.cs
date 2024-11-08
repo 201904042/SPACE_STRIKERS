@@ -6,8 +6,11 @@ using UnityEngine;
 public class PlayerExplosion : PlayerProjectile
 {
     // 필요 변수 : 데미지, 생성시간, 크기, 틱
-
     public float tikDelay;
+    protected override void Awake()
+    {
+         base.Awake();
+    }
 
     protected override void Update()
     {
@@ -34,8 +37,10 @@ public class PlayerExplosion : PlayerProjectile
         Debug.Log("메인 파라미터 세팅");
         isParameterSet = true;
         isShootingObj = true; //true를 하지 않으면 플레이어 위치로 가버리니 주의 speed만 0이 되도록 -> 생성된 위치에 그대로 라이브타임만큼 존재
-    }
+        
 
+    }
+   
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")

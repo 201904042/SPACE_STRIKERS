@@ -200,7 +200,7 @@ public class SpawnManager
         mainSpawnZone = SpawnZone.GetChild(0);
         sideSpawnZoneL = SpawnZone.GetChild(1);
         sideSpawnZoneR = SpawnZone.GetChild(2);
-
+        bossSpawnZone = SpawnZone.GetChild(3);
         SpawnPatternSet();
 
         isBossSpawned = false;

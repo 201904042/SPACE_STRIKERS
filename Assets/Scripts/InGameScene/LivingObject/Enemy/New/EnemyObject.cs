@@ -32,27 +32,28 @@ public class EnemyObject : MonoBehaviour
         return 100;
     }
 
-    [Header("최종 스텟")]
     public int id;
     public EnemyType type;
 
+    //각 에너미 데이터의 스텟 * 게임페이즈의 증폭률 반영된 스텟
     [SerializeField] protected int maxHp;
     [SerializeField] protected int curHp;
-
     [SerializeField] protected int damage;
     [SerializeField] protected int moveSpeed;
     [SerializeField] protected int attackSpeed;
     [SerializeField] protected int expAmount;
     [SerializeField] protected int scoreAmount;
 
-    [SerializeField] protected int curProjNum; //해당 적이 한번 공격할때 발사하는 발사체 양
+    //상속정의되는 현재 공격에 사용될 발사체 수와 공격 사이의 딜레이
+    [SerializeField] protected int curProjNum; //해당 적이 한번 공격할때 발사하는 발사체 양 -> 상속 정의
+    [SerializeField] protected float curAtkDelay; //최종 계산된 어택 딜레이(초) -> 상속 정의
 
-    [SerializeField] protected float curAtkDelay; //최종 계산된 어택 딜레이(초)
-
+    //활성화와 동시에 실행되는 적의 행동(업데이트의 역할)
     [SerializeField] protected Coroutine enemyBehavior; //적의 행동 코루틴을 저장
 
     [Header("상태 스텟")]
     [SerializeField] protected bool isEliminatable; //시스템적 삭제가 가능
+    [SerializeField] protected bool isDamageable; //시스템적 삭제가 가능
     [SerializeField] protected bool isDropItem; //죽으면 아이템을 드롭
     [SerializeField] protected bool isStop; //움직임을 정지한 상태
     [SerializeField] protected bool isAttack; //공격중인 상태
@@ -96,15 +97,13 @@ public class EnemyObject : MonoBehaviour
         attackSpeed = data.attackSpeed* (increaseRate / 100);
         expAmount = data.expAmount * (increaseRate / 100);
         scoreAmount = data.scoreAmount * (increaseRate / 100); //기본 스텟에 증가치를 곱함
-        //isStopByLine = data.isStop;
-        //isAimAttack = data.isAim;
         curHp = maxHp;
 
-        
         gameObject.name = DataManager.master.GetData(id).name;
 
         //상태 초기화
         isEliminatable = false;
+        isDamageable = false;
         isDropItem = false;
         isStop = false;
         isAttack = false;
@@ -165,8 +164,12 @@ public class EnemyObject : MonoBehaviour
     /// </summary>
     /// <param name="hitObject"></param>
     /// <param name="damage"></param>
-    public void EnemyDamaged(GameObject hitObject, int damage)
+    public virtual void EnemyDamaged(GameObject hitObject, int damage)
     {
+        if (!isDamageable)
+        {
+            return;
+        }
         ActiveHitEffect();
         curHp = Mathf.Max(curHp - damage, 0);
         UpdateHpBarValue();
@@ -287,11 +290,14 @@ public class EnemyObject : MonoBehaviour
     protected virtual IEnumerator EnemyBehavior() 
     {
         UpdateHpBarPos();
-        if (IsVisibleFrom()) //화면 안에 들어오면 삭제가 가능함
+        
+        if ((!isEliminatable || !isDamageable) && IsVisibleFrom() ) //화면 안에 들어오면 삭제가 가능함
         {
             isEliminatable = true;
+            isDamageable = true;
             Debug.Log($"{gameObject.name} 삭제준비");
         }
+
         yield return null;
     }
 
@@ -313,50 +319,53 @@ public class EnemyObject : MonoBehaviour
         transform.position += transform.up * moveSpeed * Time.deltaTime;
     }
 
-    public EnemyProjectile FireSingle(OtherProjType _proj, int _dmgRate, int _liveTime = 0, int _size = 0, bool _isAim = false)
+    protected IEnumerator MoveToPosition(Vector3 targetPosition, float speed)
+    {
+        // 대상 위치에 도달할 때까지 이동
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    public EnemyProjectile FireSingle(OtherProjType _proj, float angle = 0, bool _isAim = false)
     {
         EnemyProjectile proj = GameManager.Game.Pool.GetOtherProj(_proj, transform.position, transform.rotation).GetComponent<EnemyProjectile>();
 
         if (_isAim)
         {
+            // 플레이어를 향한 방향을 계산하고 angle만큼 회전시킴
             Vector3 dir = (PlayerMain.Instance.transform.position - transform.position).normalized;
-            proj.transform.up = dir;
+            proj.transform.up = Quaternion.Euler(0, 0, angle) * dir;
         }
         else
         {
-            proj.transform.up = transform.up;
+            // transform.up 방향에서 angle만큼 회전시킴
+            proj.transform.up = Quaternion.Euler(0, 0, angle) * transform.up;
         }
 
-        proj.SetProjParameter(_dmgRate, _liveTime, _size);
         return proj;
     }
 
-    public void FireMulti(OtherProjType _proj, int _dmgRate, int _liveTime = 0, int _size = 0, int _projectileCount = 1, float _spreadAngle = 0, bool _isAim = false)
-    {
-        // _isAim이 false이면 전방을 기준, true이면 플레이어의 방향을 기준으로 함
-        Vector3 pDir = Vector3.zero;
-        if (_isAim)
-        {
-            // 플레이어의 위치를 기준으로 방향을 계산
-            pDir = (PlayerMain.Instance.transform.position - transform.position).normalized;
-        }
 
-        // 발사되는 각도 범위 설정
+    public EnemyProjectile[] FireMulti(OtherProjType _proj, int _projectileCount = 1, float _spreadAngle = 0, bool _isAim = false)
+    {
+        EnemyProjectile[] proj = new EnemyProjectile[_projectileCount];
         float startAngle = -_spreadAngle / 2;
         for (int i = 0; i < _projectileCount; i++)
         {
-            // 각 발사체가 발사되는 각도 계산(단 발사체가 한개라면 angle을 0으로 초기화)
+            // 각 발사체가 발사되는 각도 계산
             float angle = startAngle + (i * (_spreadAngle / (_projectileCount - 1)));
             if (_projectileCount == 1)
             {
                 angle = 0;
             }
 
-            Vector3 dir = _isAim ? Quaternion.Euler(0, 0, angle) * pDir : Quaternion.Euler(0, 0, angle) * transform.up;
-            dir.Normalize();
-            EnemyProjectile proj = FireSingle(_proj, _dmgRate, _liveTime, _size, _isAim);
-            proj.transform.up = dir;
+            proj[i] = FireSingle(_proj, angle, _isAim);
         }
+
+        return proj;
     }
 
     ////일정 시간마다 반복 하여 발사함

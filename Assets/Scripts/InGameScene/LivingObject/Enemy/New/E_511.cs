@@ -47,6 +47,10 @@ public class E_511 : E_TroopBase
 
     protected override void FireProjectile()
     {
-        FireMulti(OtherProjType.Enemy_Bullet, damage, 0, 0, curProjNum, curProjAngle);
+        EnemyProjectile[] proj = FireMulti(OtherProjType.Enemy_Bullet, curProjNum, curProjAngle);
+        foreach(EnemyProjectile p in proj)
+        {
+            p.SetProjParameter(damage, 0);
+        }
     }
 }

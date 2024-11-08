@@ -132,7 +132,7 @@
 //            laserObject.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, multiAngle));
 //        }
 
-//        laserObject.LaserActive(enemy.gameObject);
+//        laserObject.SetLaser(enemy.gameObject);
 //    }
 
 //    //발사개수, 발사 최대범위, 조준여부 , 기본레이저앵글(기본 0)

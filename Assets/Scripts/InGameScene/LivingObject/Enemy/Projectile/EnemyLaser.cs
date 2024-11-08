@@ -10,16 +10,12 @@ public class EnemyLaser : EnemyProjectile
     [SerializeField]
     private LineRenderer outLineLaser;
 
-    public GameObject startPointObj;
-    private Vector2 startPoint;
-    public GameObject endPointObj;
-    private Vector2 endPoint;
+    private GameObject startObj;
 
     public float chargingTime = 1f;
-    public float laserTime = 3f;
-    [SerializeField]
     private float laserWidthRate = 1f;
     private float defaultLaserWidth = 0.3f;
+    private float laserTime = 1f;
 
     private Coroutine laserCoroutine;
     private bool isLaserCoroutineRunning = false;
@@ -30,104 +26,106 @@ public class EnemyLaser : EnemyProjectile
         dangerMark = transform.GetChild(0).GetComponent<LineRenderer>();
         coreLaser = transform.GetChild(1).GetComponent<LineRenderer>();
         outLineLaser = transform.GetChild(2).GetComponent<LineRenderer>();
+
+       
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-    }
-
-    protected override void OnDisable()
-    {
-        if (laserCoroutine != null)
-        {
-            StopCoroutine(laserCoroutine);
-            isLaserCoroutineRunning = false;
-        }
-
-        base.OnDisable();
+        defaultDmgRate = LaserDmgRate;
     }
 
     protected override void ResetProj()
     {
         base.ResetProj();
-        dangerMark.gameObject.SetActive(true);
-        coreLaser.gameObject.SetActive(false);
-        outLineLaser.gameObject.SetActive(false);
-
-        startPointObj = null;
-        endPointObj = null;
-        startPoint = Vector2.zero;
-        endPoint = Vector2.zero;
         laserCoroutine = null;
+        startObj = null;
         isLaserCoroutineRunning = false;
     }
 
-    public void LaserActive(GameObject AttackObj, float LaserTime = 3f, float ChargingTime = 1f, float LaserWidthRate = 1, GameObject EndObj = null)
+    public override void SetLaser(GameObject _startObj, bool isAim, float angle = 0, float _laserTime = 1, float chargingTime = 1f, float laserWidthRate = 1)
     {
-        if (AttackObj == null)
+        if (_startObj == null)
         {
-            Debug.LogError("LaserActive: AttackObj is null.");
+            Debug.LogError("SetLaser: startObj is null.");
             return;
         }
 
-        // 이미 코루틴이 실행 중이면 중단
-        if (laserCoroutine != null && isLaserCoroutineRunning)
+        this.startObj = _startObj;
+        this.laserTime = _laserTime;
+        this.chargingTime = chargingTime;
+        this.laserWidthRate = laserWidthRate;
+
+        coreLaser.startWidth = defaultLaserWidth * laserWidthRate;
+        outLineLaser.startWidth = defaultLaserWidth * laserWidthRate * 1.2f;
+
+
+        StartLaserCoroutine();
+    }
+
+    private void StartLaserCoroutine()
+    {
+        if (isLaserCoroutineRunning)
         {
             StopCoroutine(laserCoroutine);
             isLaserCoroutineRunning = false;
         }
-
-        // 초기화
-        startPointObj = AttackObj;
-        if (EndObj != null)
-        {
-            endPointObj = EndObj;
-        }
-        laserTime = LaserTime;
-        chargingTime = ChargingTime;
-        laserWidthRate = LaserWidthRate;
-
-        startPoint = startPointObj.transform.position;
-        if (endPointObj != null)
-        {
-            endPoint = endPointObj.transform.position;
-        }
-
-        // 새로운 코루틴 시작
-        laserCoroutine = StartCoroutine(LaserAttackCoroutine());
+        laserCoroutine = StartCoroutine(LaserBehavior());
+        isLaserCoroutineRunning = true;
     }
 
-    private IEnumerator LaserAttackCoroutine()
+    private Vector2 RotateVector(Vector2 v, float angle)
     {
-        isLaserCoroutineRunning = true;
+        float radian = angle * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(radian);
+        float sin = Mathf.Sin(radian);
+        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
+    }
 
-        float chargingTimer = 0f;
+    private IEnumerator LaserBehavior()
+    {
+        dangerMark.gameObject.SetActive(true);
+        coreLaser.gameObject.SetActive(false);
+        outLineLaser.gameObject.SetActive(false);
 
-        dangerMark.startWidth = defaultLaserWidth;
+        yield return StartCoroutine(LaserCharging());
 
-        // Charging phase
-        while (chargingTimer < chargingTime)
-        {
-            chargingTimer += Time.deltaTime;
-            dangerMark.startWidth = defaultLaserWidth * laserWidthRate * (chargingTime - chargingTimer);
-            yield return null;
-        }
-
-        // Activate laser
         dangerMark.gameObject.SetActive(false);
         coreLaser.gameObject.SetActive(true);
         outLineLaser.gameObject.SetActive(true);
 
-        // Laser phase
-        yield return new WaitForSeconds(laserTime);
+        yield return StartCoroutine(LiveTimer(laserTime));
         isLaserCoroutineRunning = false;
-        // Release laser
-        GameManager.Game.Pool.ReleasePool(gameObject);
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator LaserCharging()
     {
-        
+        float chargingTimer = 0f;
+        while (chargingTimer < chargingTime)
+        {
+            if (startObj.activeSelf == false || startObj == null)
+            {
+                StopLaser();
+                yield break;
+            }
+
+            chargingTimer += Time.deltaTime;
+            float width = defaultLaserWidth * laserWidthRate * (chargingTime - chargingTimer);
+            dangerMark.startWidth = width;
+            dangerMark.endWidth = width;
+            yield return null;
+        }
+    }
+
+    private void StopLaser()
+    {
+        if (laserCoroutine != null)
+        {
+            StopCoroutine(laserCoroutine);
+            laserCoroutine = null;
+        }
+        isLaserCoroutineRunning = false;
+        GameManager.Game.Pool.ReleasePool(gameObject);
     }
 }

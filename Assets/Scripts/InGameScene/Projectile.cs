@@ -9,7 +9,7 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField] protected int speed;
     [SerializeField] protected float liveTime;
     [SerializeField] protected float range;
-    protected int finalDamage;
+    public int finalDamage;
 
     [SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false4
 

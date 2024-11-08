@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9d2b632f4f354f84e8512abbb68a6024, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -161,11 +161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea58ec5beadf9445a47f8b002967d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStat: {fileID: 0}
-  isParameterSet: 0
+  defaultDmgRate: 0
   damageRate: 0
   speed: 0
   liveTime: 0
   range: 0
-  isHitOnce: 0
+  finalDamage: 0
+  isParameterSet: 0
   hittedEnemyList: []
+  isHitOnce: 0

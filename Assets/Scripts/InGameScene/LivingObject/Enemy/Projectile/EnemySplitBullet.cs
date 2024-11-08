@@ -4,26 +4,30 @@ using UnityEngine;
 
 public class EnemySplitBullet : EnemyProjectile
 {
-    private const int splitRate = 10;
+    private const int defaultSplitCount = 3;
     int splitCount;
-
-    protected override void Awake()
+    protected override void OnEnable()
     {
-        base.Awake();
+        base.OnEnable();
         speed = SplitBulletSpeed;
         defaultDmgRate = SplitBulletDmgRate;
+        splitCount = defaultSplitCount;
     }
+
+    public override void SetSplitCount(int count)
+    {
+        splitCount = count;
+    }
+
     private void SplitBullet()
     {
-        splitCount = Mathf.Max(5,(finalDamage / splitRate)); //최소 5개의 분리를 보장
-        
-
         for (int i = 0; i < splitCount; i++)
         {
-            GameObject newBullet = GameManager.Game.Pool.GetOtherProj(OtherProjType.Enemy_Bullet, 
-                transform.position, Quaternion.identity);
+            EnemyProjectile proj = GameManager.Game.Pool.GetOtherProj(OtherProjType.Enemy_Bullet, 
+                transform.position, Quaternion.identity).GetComponent<EnemyProjectile>();
             float angle = i * (360f / splitCount);
-            transform.up = Quaternion.Euler(0, 0, angle) * transform.up; //todo => 이부분 정상작동하는지 체크할것
+            proj.transform.up = Quaternion.Euler(0, 0, angle) * transform.up;
+            proj.SetProjParameter(damageRate, 0);
         }
     }
 

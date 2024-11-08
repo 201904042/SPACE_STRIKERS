@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5187782934482967286}
   - component: {fileID: -2768266258289629381}
   - component: {fileID: 4781705549109108140}
+  - component: {fileID: 8943009954979845356}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -781453473, guid: fd26dce8fd3123648ad041da375f8c1f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.43137255}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,11 +162,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6405b74d2fd6b47b6b356dec6b65ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStat: {fileID: 0}
-  isParameterSet: 0
+  defaultDmgRate: 0
   damageRate: 0
   speed: 0
   liveTime: 0
   range: 0
-  isHitOnce: 0
+  finalDamage: 0
+  isParameterSet: 0
   hittedEnemyList: []
+  isHitOnce: 0
+  tikDelay: 0
+--- !u!95 &8943009954979845356
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7671727333348972235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 39a905d01998c7646a81e098cace7cce, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

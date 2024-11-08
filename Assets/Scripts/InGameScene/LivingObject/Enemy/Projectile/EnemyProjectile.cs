@@ -16,14 +16,6 @@ public class EnemyProjectile : Projectile
     //개인 필요 파라미터 = 적오브젝트의 데미지 스텟, 속도, 발동시간, 크기
     public int enemyDmg;
 
-
-    //[SerializeField] protected int defaultDmgRate; //페이즈별 증가량 => 120% : 본 데미지가 10이라면 12의 데미지
-    //[SerializeField] protected int damageRate; //페이즈별 증가량 => 120% : 본 데미지가 10이라면 12의 데미지
-
-
-
-    //[SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
-
     protected virtual void Awake()
     {
         projScaleInstance = transform.localScale; //발사체의 원래 크기를 저장
@@ -73,19 +65,10 @@ public class EnemyProjectile : Projectile
         isParameterSet = false;
     }
 
-
-    public virtual void SetProjParameter(int _dmgRate, float _liveTime = 0, float _range = 0) //스피드, 적데미지스텟, 생존시간, 크기
+    public virtual void SetProjParameter(int _dmgRate, float _range = 0) //스피드, 적데미지스텟, 생존시간, 크기
     {
-        
         enemyDmg = _dmgRate;
         finalDamage = (enemyDmg * defaultDmgRate / 100) + (enemyDmg * damageRate / 100);  //damageRate = 발사체별 증폭률 + 페이즈 증폭률
-    
-        //레이저 같이 일정 시간동안 사라지지 않는 발사체에 쓰임
-        if (_liveTime != 0)
-        {
-            liveTime = _liveTime; 
-            StartCoroutine(LiveTimer(liveTime));
-        }
 
         //이것도 페이즈의 증폭량에 따라 조금씩 커지게 할듯, 혹은 레이저 크기를 조절하거나
         if (_range == 0)
@@ -99,6 +82,16 @@ public class EnemyProjectile : Projectile
         }
 
         isParameterSet = true;
+    }
+
+    public virtual void SetSplitCount(int count)
+    {
+        //임시
+    }
+
+    public virtual void SetLaser(GameObject _startObj, bool isAim, float angle = 0, float _laserTime = 1, float chargingTime = 1f, float laserWidthRate = 1)
+    {
+        //임시
     }
 
     protected virtual IEnumerator LiveTimer(float activeTime)

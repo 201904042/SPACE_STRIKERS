@@ -5,8 +5,20 @@ using UnityEngine.U2D;
 
 public class AttackTest : MonoBehaviour
 {
-    public int projCount = 1;
+    [Header("멀티샷 전용")]
+    public int projCount = 3;
     public int spreadAngel = 30;
+
+    [Header("싱글샷 전용")]
+    public int singleAngle = 0;
+
+    [Header("분열탄 전용")]
+    public int splitCount = 5;
+
+    [Header("레이저 전용")]
+    
+
+    [Header("공통 전용")]
     public bool isAim;
     public OtherProjType type = OtherProjType.Enemy_Bullet;
 
@@ -19,46 +31,67 @@ public class AttackTest : MonoBehaviour
     {
         while (true)
         {
-            FireMulti(type, 10, 0, 0, projCount, spreadAngel, isAim);
+            FireMulti(type, projCount, spreadAngel, isAim);
             yield return new WaitForSeconds(1f);
         }
     }
 
-    [ContextMenu("공격")]
-    public void Attack()
+    [ContextMenu("멀티 공격")]
+    public void MultiAttack()
     {
-        FireMulti(type, 10, 0, 0, projCount, spreadAngel, isAim);
+        EnemyProjectile[] projs = FireMulti(type, projCount, spreadAngel, isAim);
+        foreach (EnemyProjectile proj in projs)
+        {
+            proj.SetProjParameter(10, 0);
+            if (type == OtherProjType.Enemy_Split)
+            {
+                proj.SetSplitCount(splitCount);
+            }
+            else if (type == OtherProjType.Enemy_Laser)
+            {
+                proj.SetLaser(gameObject, isAim);
+            }
+        }
     }
 
-    public EnemyProjectile FireSingle(OtherProjType _proj, int _dmgRate, int _liveTime = 0, int _size = 0, bool _isAim = false)
+    [ContextMenu("싱글 공격")]
+    public void SingleAttack()
+    {
+        EnemyProjectile proj = FireSingle(type, singleAngle, isAim);
+        proj.SetProjParameter(10, 0);
+        if (type == OtherProjType.Enemy_Split)
+        {
+            proj.SetSplitCount(splitCount);
+        }
+        else if (type == OtherProjType.Enemy_Laser)
+        {
+            proj.SetLaser(gameObject, isAim);
+        }
+    }
+
+    public EnemyProjectile FireSingle(OtherProjType _proj,float angle = 0, bool _isAim = false)
     {
         EnemyProjectile proj = GameManager.Game.Pool.GetOtherProj(_proj, transform.position, transform.rotation).GetComponent<EnemyProjectile>();
 
         if (_isAim)
         {
+            // 플레이어를 향한 방향을 계산하고 angle만큼 회전시킴
             Vector3 dir = (PlayerMain.Instance.transform.position - transform.position).normalized;
-            proj.transform.up = dir; 
+            proj.transform.up = Quaternion.Euler(0, 0, angle) * dir;
         }
         else
         {
-            proj.transform.up = transform.up;
+            // transform.up 방향에서 angle만큼 회전시킴
+            proj.transform.up = Quaternion.Euler(0, 0, angle) * transform.up;
         }
-
-        proj.SetProjParameter(_dmgRate, _liveTime, _size);
+        
         return proj;
     }
 
-    public void FireMulti(OtherProjType _proj, int _dmgRate, int _liveTime = 0, int _size = 0, int _projectileCount = 1, float _spreadAngle = 0, bool _isAim = false)
-    {
-        // _isAim이 false이면 전방을 기준, true이면 플레이어의 방향을 기준으로 함
-        Vector3 pDir = Vector3.zero;
-        if (_isAim)
-        {
-            // 플레이어의 위치를 기준으로 방향을 계산
-            pDir = (PlayerMain.Instance.transform.position - transform.position).normalized;
-        }
 
-        // 발사되는 각도 범위 설정
+    public EnemyProjectile[] FireMulti(OtherProjType _proj, int _projectileCount = 1, float _spreadAngle = 0, bool _isAim = false)
+    {
+        EnemyProjectile[] proj = new EnemyProjectile[_projectileCount];
         float startAngle = -_spreadAngle / 2;
         for (int i = 0; i < _projectileCount; i++)
         {
@@ -68,15 +101,11 @@ public class AttackTest : MonoBehaviour
             {
                 angle = 0;
             }
-            //// isAim이 true이면 pDir을 기준으로 회전, false이면 transform.up을 기준으로 회전
-            Vector3 dir = _isAim ? Quaternion.Euler(0, 0, angle) * pDir : Quaternion.Euler(0, 0, angle) * transform.up;
 
-            // Ensure the direction is normalized
-            dir.Normalize();
-
-            EnemyProjectile proj = FireSingle(_proj, _dmgRate, _liveTime, _size, _isAim);
-            proj.transform.up = dir;
+            proj[i] = FireSingle(_proj, angle, _isAim);
         }
+
+        return proj;
     }
 
 }

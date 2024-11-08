@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EnemyLaser_Core : MonoBehaviour
 {
+    private float damage => GetComponentInParent<EnemyLaser>().finalDamage;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    collision.GetComponent<PlayerStat>().PlayerDamaged(GetComponentInParent<EnemyLaser>().damage, gameObject);
-        //}
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerStat>().PlayerDamaged(damage, gameObject);
+        }
     }
 }

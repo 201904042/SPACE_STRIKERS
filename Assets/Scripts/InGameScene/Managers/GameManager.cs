@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         Pool.Init();
         SpawnPlayer();
 
-        StartCoroutine(CountAndStart());
+        //StartCoroutine(CountAndStart());
     }
 
     //게임씬의 init. 플레이어를 등록하고 모든 기물을 초기화함
@@ -284,12 +284,6 @@ public class GameManager : MonoBehaviour
         UI.SetTimeText(minutes, seconds);
     }
 
-    public void SpawnBossBtn()
-    {
-        Game.Spawn.SpawnBoss(31);
-    }
-
-
     //매니저 전용 생성 삭제 루트
     public static GameObject InstantObject(GameObject target, Transform parent = null)
     {
@@ -323,4 +317,11 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(target);
     }
+
+    [ContextMenu("보스스폰")]
+    public void SpawnBossBtn()
+    {
+        Game.Spawn.SpawnBoss(531);
+    }
+
 }

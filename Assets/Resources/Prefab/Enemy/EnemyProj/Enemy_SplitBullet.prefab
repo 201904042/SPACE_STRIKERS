@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.06, y: -0.13288161, z: 0}
-  m_LocalScale: {x: 0.55806, y: 0.55806, z: 0.55806}
+  m_LocalScale: {x: 0.31143096, y: 0.31143096, z: 0.31143096}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d2b632f4f354f84e8512abbb68a6024, type: 3}
   m_Color: {r: 0.8207547, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,9 +119,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1.29}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.97
 --- !u!50 &8139920606400289545
 Rigidbody2D:
   serializedVersion: 4
@@ -161,6 +161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4256454f8bf1240b11b14d99758dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBullet: {fileID: 1921941541285907538, guid: 04221b9da28e3064ba3d6b024322a244, type: 3}
-  splitCount: 3
-  damage: 0
+  defaultDmgRate: 0
+  damageRate: 0
+  speed: 0
+  liveTime: 0
+  range: 0
+  finalDamage: 0
+  isParameterSet: 0
+  enemyDmg: 0

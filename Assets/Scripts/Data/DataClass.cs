@@ -50,6 +50,12 @@ public class StageReward
 {
     public int itemId;
     public int quantity;
+
+    public StageReward(int itemId, int quantity)
+    {
+        this.itemId = itemId;
+        this.quantity = quantity;
+    }
 }
 
 [Serializable]

@@ -21,7 +21,7 @@ public class Skill_Shield : PlayerProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (pStat.InvincibleState)
+        if (PlayerMain.Instance.isInvincibleState)
         {
             return;
         }

@@ -16,8 +16,7 @@ public class StageManager
     public Dictionary<int, int> enemyCodeAmountFair = new Dictionary<int, int>(); //적의 코드, 양
     public List<StageReward> ClearReward = new List<StageReward>();
     public int curEnemyAmount;
-
-    public int stageBossId; //디버깅용
+    public int stageBossId;
 
     public void Init()
     {

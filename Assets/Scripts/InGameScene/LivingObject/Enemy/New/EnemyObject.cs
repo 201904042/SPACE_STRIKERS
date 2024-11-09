@@ -118,18 +118,17 @@ public class EnemyObject : MonoBehaviour
 
     private void SetHpBar()
     {
-        if (hpBar == null)
+        if (hpBar == null )
         {
-            Transform hpBarParent = GameManager.canvas.Find("E_HpBars");
-            hpBar = GameManager.InstantObject(GameManager.LoadFromResources<GameObject>(HpBarPath), hpBarParent).GetComponent<Slider>();
-
-            RectTransform hpRect = hpBar.GetComponent<RectTransform>();
-            hpRect.position = 
-            hpRect.sizeDelta = new Vector2(transform.localScale.x * 200, hpRect.sizeDelta.y);
-            hpBar.value = 1;
+            Transform hpBarParent = GameManager.Canvas.Find("E_HpBars");
+            hpBar = GameManager.InstantiateObject(GameManager.LoadFromResources<GameObject>(HpBarPath), hpBarParent).GetComponent<Slider>();
             hpBar.name = $"{gameObject.name}'s maxHp";
-            hpBar.gameObject.SetActive(false);
+            RectTransform hpRect = hpBar.GetComponent<RectTransform>();
+            hpRect.sizeDelta = new Vector2(transform.localScale.x * 200, hpRect.sizeDelta.y);
         }
+
+        hpBar.value = 1;
+        hpBar.gameObject.SetActive(false);
     }
 
     public virtual void ResetObject()
@@ -238,7 +237,7 @@ public class EnemyObject : MonoBehaviour
     {
         DropExp();
         AddEnemyScoreToStageScore();
-
+        hpBar.gameObject.SetActive(false);
         if (isDropItem) DropItem();
 
         GameManager.Game.Pool.ReleasePool(gameObject);

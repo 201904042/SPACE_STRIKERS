@@ -9,20 +9,10 @@ using UnityEngine.UI;
 
 public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 {
+    //파워 게이지 상수
     public const float powlv1Max = 5;
     public const float powlv2Max = 15;
     public const float powMax = 30;
-
-    public static PlayerMain Instance;
-
-    public static PlayerStat pStat;
-    public static PlayerControl pControl;
-    public static PlayerUI pUI;
-
-    public static PlayerShooter pShooter;
-    public static PlayerUSkill pUSkill;
-    public static PlayerSkill pSkill;
-
 
     //무기 레벨별로 정리할것
     public const float bulletBaseInterval = 1f;  // 각 기본 발사 주기
@@ -42,14 +32,30 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     public const int MissileBaseSpeed = 5;
     public const int HomingBaseSpeed = 15;
     public const int TroopBaseSpeed = 10;
-    
 
     public const float ExplosionBaseLiveTime = 1; // 1초 고정일듯
     public const float ExplosionBaseRange = 1; //-> 크기 1 -> 1.5 -> 2
 
 
+    public static PlayerMain Instance;
 
-    public bool isPlayerSetDone;
+    public static PlayerStat pStat;
+    public static PlayerControl pControl;
+    public static PlayerUI pUI;
+
+    public static PlayerShooter pShooter;
+    public static PlayerUSkill pUSkill;
+    public static PlayerSkill pSkill;
+
+
+    
+    [Header("각종 상태")]
+    public bool isControllable; //플레이어 조작가능?
+    public bool isPlayerSetDone; //
+    public bool isOnMove => GameManager.Game.BattleSwitch; //플레이어의 이동 가능
+    public bool isOnAttack => GameManager.Game.BattleSwitch; //플레이어의 공격 가능
+    public bool isInvincibleState; // 
+    public bool isKnockbackRun;
 
     private void Awake()
     {
@@ -92,6 +98,8 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         
 
         SetTestButtons();
+
+        isControllable = true;
         isPlayerSetDone = true;
         //PlayerSkill ps = PlayerMain.pSkill;
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
@@ -101,8 +109,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
         //ps.AddSkill((ActiveSkill)ps.FindSkillByCode(605));
-    }
-
+    } 
 
     private void Update()
     {
@@ -139,7 +146,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     private void PlayerMove()
     {
-        if (isPlayerSetDone || pStat.CanMove)
+        if (isPlayerSetDone || isOnMove)
         {
             pControl.PlayerMove();
         }
@@ -148,11 +155,13 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     public IEnumerator PlayerDeadAnim()
     {
+        //폭발 애니메이션 작동
         yield return null;
     }
 
     public IEnumerator PlayerClearAnim()
     {
+        //앞으로 전진
         yield return null;
     }
 
@@ -208,7 +217,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (pStat.InvincibleState)
+        if (isInvincibleState)
         {
             return;
         }

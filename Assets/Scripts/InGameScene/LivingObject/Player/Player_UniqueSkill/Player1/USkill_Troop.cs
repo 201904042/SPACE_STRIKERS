@@ -78,19 +78,21 @@ public class Troop : PlayerProjectile
 
     private IEnumerator TroopBehavior()
     {
+        float speed = normalSpeed;
         while (true)
         {
             // 일정 위치(y = -2)에 도달하면 속도를 느리게 함
-            if (transform.position.y >= slowPointY && !isSkillEnd)
+            if (transform.position.y >= slowPointY)
             {
-                transform.position += transform.up * slowSpeed * Time.deltaTime;
+                speed = slowSpeed;
             }
-            
 
-            if(liveTime <= 0)
+            if(isSkillEnd) //스킬이 끝나면 원래속도로
             {
-                transform.position += transform.up * normalSpeed * Time.deltaTime;
+                speed = normalSpeed;
             }
+
+            transform.position += transform.up * speed * Time.deltaTime;
 
             yield return null;
         }

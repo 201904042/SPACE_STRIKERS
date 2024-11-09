@@ -424,7 +424,7 @@
             {
               "effect": 5,
               "value1": 1.2,
-              "value2": 3
+              "value2": 1.5
             }
           ]
         },
@@ -440,7 +440,7 @@
             {
               "effect": 5,
               "value1": 1.2,
-              "value2": 3
+              "value2": 1.5
             }
           ]
         },
@@ -456,7 +456,7 @@
             {
               "effect": 5,
               "value1": 1,
-              "value2": 3
+              "value2": 1.5
             }
           ]
         },
@@ -472,7 +472,7 @@
             {
               "effect": 5,
               "value1": 1,
-              "value2": 4
+              "value2": 1.75
             }
           ]
         },
@@ -488,7 +488,7 @@
             {
               "effect": 5,
               "value1": 0.8,
-              "value2": 4
+              "value2":1.75
             }
           ]
         },
@@ -504,7 +504,7 @@
             {
               "effect": 5,
               "value1": 0.8,
-              "value2": 4
+              "value2": 1.75
             }
           ]
         },
@@ -520,7 +520,7 @@
             {
               "effect": 5,
               "value1": 0.5,
-              "value2": 5
+              "value2": 2
             }
           ]
         }

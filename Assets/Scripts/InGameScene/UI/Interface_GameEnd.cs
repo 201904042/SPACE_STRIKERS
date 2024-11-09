@@ -1,227 +1,145 @@
-using System.IO;
+using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 
-    public class Interface_GameEnd : UIInterface
+
+public class Interface_GameEnd : UIInterface
 {
-    /* todo -> 데이터베이스 업데이트 이후 새로 만들것
-    public TextAsset account;
+    public Transform ResultTexts;
+    public Transform Context;
+    public TextMeshProUGUI StageText;
+    public ScrollRect RewardScroll;
+    public TextMeshProUGUI RewardText;
+    public Transform Buttons;
+    public Button GotoMainSceneBtn;
+    public Button RestartBtn;
+    private GameManager Game => GameManager.Game;
+    private StageManager Stage => GameManager.Game.Stage;
 
-    public TextMeshProUGUI ClearText;
-    public TextMeshProUGUI StageNameText;
-    public TextMeshProUGUI GainItemText; //아이템의 데이터
-    public string itemText;
-    public Item[] rewardItems;
-    public Item[] randomItems;
+    private int RewardRate;
 
-
-    private string accountFilePath = "Assets/JSON_Data/account_data.json";
-    private string modifiedJson;
-    private void Awake()
+    public override void SetComponent()
     {
-        rewardInit(5);
+        ResultTexts = transform.GetChild(2);
+        Context = transform.GetChild(3);
+        StageText = Context.GetChild(0).GetComponent<TextMeshProUGUI>();
+        RewardScroll =  Context.GetComponentInChildren<ScrollRect>();
+        RewardText = RewardScroll.content.GetComponentInChildren<TextMeshProUGUI>();
+        Buttons = Context.GetChild(2);
+        GotoMainSceneBtn = Buttons.GetChild(0).GetComponent<Button>();
+        RestartBtn = Buttons.GetChild(1).GetComponent<Button>();
+    }
+
+    private void SetButtons()
+    {
+        GotoMainSceneBtn.onClick.RemoveAllListeners();
+        RestartBtn.onClick.RemoveAllListeners();
+
+        GotoMainSceneBtn.onClick.AddListener(GotoMainScene);
+        RestartBtn.onClick.AddListener(ReStartGame);
     }
 
     private void OnEnable()
     {
-        stageTextSet();
+        GetRewards();
+        SetInterface();
+    }
 
-        if (GameManager.Game.IG_Clear)
+    private void GetRewards()
+    {
+        if (!Game.IsClear)
         {
-            if (GameManager.Game.Stage.openStage == ((GameManager.Game.Stage.planet - 1) * 10) + GameManager.Game.Stage.stage)
+            return;
+        }
+
+        RewardRate = PlayerMain.pStat.IG_RewardRate;
+
+        if (Stage.curMode == GameMode.Infinite)
+        {
+            float increase = 100;
+            switch(Game.phase)
             {
-                rewardInit(GameManager.Game.Stage.curStagefirstGain.Length);
-                int n = 0;
-                foreach (Item firstGain in GameManager.Game.Stage.curStagefirstGain)
-                {
-                    rewardItemSet(firstGain, n);
-                    n++;
-                }
+                case 1:  break;
+                case 2: increase = 150; break;
+                case 3: increase = 250; break;
+                case 4: increase = 400; break;
+                case 5: increase = 650; break;
+                case 6: increase = 1000; break;
             }
-            else
-            {
-                rewardInit(GameManager.Game.Stage.curStageDefaultGain.Length + GameManager.Game.Stage.curDefaultFullGain.Length);
-                int n = 0;
-                foreach (Item defaultGain in GameManager.Game.Stage.curStageDefaultGain)
-                {
-                    rewardItemSet(defaultGain, n);
-                    n++;
-                }
-                //중복퍼펙트 추가보상
-                if (GameManager.Game.IG_PerfectClear)
-                {
-                    foreach (Item perfectClear in GameManager.Game.Stage.curDefaultFullGain)
-                    {
-                        rewardItemSet(perfectClear, n);
-                        n++;
-                    }
-                }
-            }
+
+            RewardRate = (int)(RewardRate * (increase/100));
         }
         else
         {
-            itemText = "스테이지 실패";
+            if (Game.IsPerfectClear)
+            {
+                RewardRate = (int)(RewardRate * 1.5f); //퍼펙트 클리어시 1.5배
+            }
+
         }
-        GainItemText.text = itemText;
-        //데이터 저장
-        jsonDataWrite();
+
+        foreach (StageReward reward in Stage.ClearReward)
+        {
+            DataManager.inven.DataAddOrUpdate(reward.itemId, reward.quantity * (RewardRate / 100));
+        }
+        DataManager.inven.SaveData();
     }
 
-    private void rewardInit(int size)
+    public void SetInterface()
     {
-        rewardItems = new Item[size];
-        for (int i = 0; i < rewardItems.Length; i++)
-        {
-            rewardItems[i] = new Item();
-        }
+        SetStageText();
+        SetResultText();
+        SetRewardText();
     }
 
-    private void stageTextSet() {
-        if (GameManager.Game.IG_Clear)
+    private void SetStageText()
+    {
+        StageText.text = $"Stage : {Stage.planet}-{Stage.stage}";
+    }
+
+    private void SetResultText()
+    {
+        if (Game.IsClear)
         {
-            ClearText.text = "Stage Clear";
-            ClearText.currentColor = Color.green;
+            ResultTexts.GetChild(0).gameObject.SetActive(false);
+            ResultTexts.GetChild(1).gameObject.SetActive(true);
         }
         else
         {
-            ClearText.text = "Stage Fail";
-            ClearText.currentColor = Color.red;
-        }
-
-        StageNameText.text = $"Stage : {GameManager.Game.Stage.planet.ToString()}" +
-            $"- { GameManager.Game.Stage.stage.ToString()}";
-    }
-
-    private void rewardItemSet(Item rewardGain, int i)
-    {
-        rewardItems[i].itemName = rewardGain.itemName;
-        rewardItems[i].itemType = rewardGain.itemType;
-        rewardItems[i].itemCode = rewardGain.itemCode;
-        rewardItems[i].itemAmount = rewardGain.itemAmount;
-
-        if (rewardGain.itemType == "randomIngred")
-        {
-            randomItems = new Item[rewardGain.itemAmount];  
-            for (int init = 0; init < randomItems.Length; init++)
-            {
-                randomItems[init] = new Item();
-            }
-            for (int j = 0; j < rewardGain.itemAmount; j++)
-            {
-                int ran = Random.Size(0, 6); //랜덤의 등급별 아이템 코드
-
-                randomItems[j].itemName = ingredList.ingredients[ran].ingredName;
-                randomItems[j].itemCode = ingredList.ingredients[ran].ingredId;
-                randomItems[j].itemType = "ingredients";
-                randomItems[j].itemAmount = 1;
-
-                itemText += randomItems[j].itemName + " : " + randomItems[j].itemAmount.ToString() + "\n";
-            }
-
-        }
-        else
-        {
-            itemText += rewardGain.itemName + " : " + rewardGain.itemAmount.ToString() + "\n";
+            ResultTexts.GetChild(0).gameObject.SetActive(true);
+            ResultTexts.GetChild(1).gameObject.SetActive(false);
         }
     }
 
-    
 
-
-    private void jsonDataWrite()
+    private void SetRewardText()
     {
-        if (GameManager.Game.IG_Clear)
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("획득 아이템");
+
+        foreach (StageReward reward in Stage.ClearReward)
         {
-            for (int i = 0; i < rewardItems.Length; i++) //리워드 아이템의 순회
-            {
-                switch (rewardItems[i].itemType)
-                {
-                    case "money":
-                        invenData.Account[0].mineral += rewardItems[i].itemAmount;
-                        break;
-                    case "randomIngred":
-                        for (int j = 0; j < randomItems.Length; j++) //랜덤아이템 순회
-                        {
-                            int ingredInvenId = ingredDataFind(j);
-                            if(ingredInvenId != 0)
-                            {
-                                invenData.ingredients[ingredInvenId - 1].ingredAmount += randomItems[j].itemAmount;
-                            }
-                            else
-                            {
-                                Ingredients newIngred = new Ingredients();
-                                newIngred.ingredId = invenData.ingredients.Length+1;
-                                newIngred.ingredCode = randomItems[j].itemCode;
-                                newIngred.ingredName = randomItems[j].itemName;
-                                newIngred.ingredAmount = randomItems[j].itemAmount;
-
-                                System.Array.Resize(ref invenData.ingredients, invenData.ingredients.Length + 1);
-                                invenData.ingredients[invenData.ingredients.Length - 1] = newIngred;
-                            }
-                        }
-                        break;
-                    case "cons":
-                        int invenId = consDataFind(i);
-                        if (invenId != 0)
-                        {
-                            invenData.consumables[invenId - 1].consAmount += rewardItems[i].itemAmount;
-                        }
-                        else
-                        {
-                            Consumables newCons = new Consumables();
-                            newCons.consId = invenData.consumables.Length + 1;
-                            newCons.consCode = rewardItems[i].itemCode;
-                            newCons.consName = rewardItems[i].itemName;
-                            newCons.consAmount = rewardItems[i].itemAmount;
-
-                            System.Array.Resize(ref invenData.consumables, invenData.consumables.Length + 1);
-                            invenData.consumables[invenData.consumables.Length - 1] = newCons;
-                        }
-                        break;
-                }
-            }
-
-            // 전체 데이터를 JSON 문자열로 변환
-            modifiedJson = JsonUtility.ToJson(invenData, true);
-
-            // 파일에 쓰기
-            File.WriteAllText(accountFilePath, modifiedJson);
-            PlayerPrefs.SetInt("isAccountDataChanged", 1);
-        }
-    }
-
-    private int ingredDataFind(int randomItemIndex) //인벤토리에 해당 아이템이 있다면 id 반환 없으면 0
-    {
-        //보상아이템의 코드와 인벤데이터의 재료의 코드를 비교하여 ingredid를 알아내는 코드
-        for (int i = 0; i < invenData.ingredients.Length; i++)
-        {
-            if (invenData.ingredients[i].ingredCode == randomItems[randomItemIndex].itemCode)
-            {
-                return invenData.ingredients[i].ingredId;
-            }
+            MasterData data = DataManager.master.GetData(reward.itemId);
+            sb.AppendLine($"{data.name} : {reward.quantity * (RewardRate / 100)}");
         }
 
-        return 0;
+        RewardText.text = sb.ToString();
     }
-    private int consDataFind(int randomItemIndex) //인벤토리에 해당 아이템이 있다면 id 반환 없으면 0
-    {
-        //보상아이템의 코드와 인벤데이터의 재료의 코드를 비교하여 ingredid를 알아내는 코드
-        for (int i = 0; i < invenData.consumables.Length; i++)
-        {
-            if (invenData.consumables[i].consCode == rewardItems[randomItemIndex].itemCode)
-            {
-                return invenData.consumables[i].consId;
-            }
-        }
 
-        return 0;
+    private void ReStartGame()
+    {
+        GameManager.Game.RestartGame();
     }
-    */
 
-    public void toMainmenuBtn()
+    public void GotoMainScene()
     {
-
         SceneManager.LoadScene("MainMenu");
     }
     

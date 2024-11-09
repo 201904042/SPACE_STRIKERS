@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a4bd1872c2c6e46baa1948bdc17c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpBar: {fileID: 0}
   id: 600
   type: 7
   maxHp: 0
@@ -155,6 +156,7 @@ MonoBehaviour:
   curProjNum: 0
   curAtkDelay: 0
   isEliminatable: 0
+  isDamageable: 0
   isDropItem: 0
   isStop: 0
   isAttack: 0

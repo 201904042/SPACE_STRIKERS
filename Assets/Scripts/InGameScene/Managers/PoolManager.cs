@@ -98,7 +98,7 @@ public class PoolManager
         {
             if(projType == proj.projType)
             {
-                GameObject newObject = GameManager.InstantObject(proj.prefab, playerProjPool);
+                GameObject newObject = GameManager.InstantiateObject(proj.prefab, playerProjPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -133,7 +133,7 @@ public class PoolManager
         {
             if (projType == projData.projType)
             {
-                GameObject newObject = GameManager.InstantObject(projData.prefab, otherProjPool);
+                GameObject newObject = GameManager.InstantiateObject(projData.prefab, otherProjPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);
@@ -168,7 +168,7 @@ public class PoolManager
         {
             if (id == enemyId)
             {
-                GameObject newObject = GameManager.InstantObject(GameManager.LoadFromResources<GameObject>(DataManager.enemy.GetData(id).path), enemyPool);
+                GameObject newObject = GameManager.InstantiateObject(GameManager.LoadFromResources<GameObject>(DataManager.enemy.GetData(id).path), enemyPool);
                 newObject.transform.position = position;
                 newObject.transform.rotation = rotation;
                 newObject.SetActive(true);

@@ -208,27 +208,24 @@ public class PlayerProjectile : Projectile
     {
         for (int i = hittedEnemyList.Count - 1; i >= 0; i--)
         {
-            if (hittedEnemyList.Count <= 0)
+            if (hittedEnemyList.Count == 0)
             {
-                return;
-
+                break; // 리스트가 비어 있으면 반복문 종료
             }
+
             GameObject enemy = hittedEnemyList[i];
 
             if (!enemy.activeSelf)
             {
-                hittedEnemyList.RemoveAt(i); // 비활성화된 적 제거
+                continue;
             }
             else
             {
                 enemy.GetComponent<EnemyObject>().EnemyDamaged(gameObject, finalDamage); // 적에게 데미지
-                if (isHitOnce)
-                {
-                    GameManager.Game.Pool.ReleasePool(gameObject);
-                }
             }
         }
     }
+
 
     //실행할 데미지루틴의 코루틴을 시작시킬것 -> 필수 상속
     protected virtual void TriggedEnemy(Collider2D collision)

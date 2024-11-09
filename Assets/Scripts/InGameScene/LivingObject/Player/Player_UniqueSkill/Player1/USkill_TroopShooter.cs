@@ -44,7 +44,7 @@ public class TroopShooter : LauncherStat
     {
         while (true)
         {
-            if (!pStat.CanAttack || !isReadyToAttack)
+            if (!PlayerMain.Instance.isOnAttack || !isReadyToAttack)
             {
                 yield return null;
             }

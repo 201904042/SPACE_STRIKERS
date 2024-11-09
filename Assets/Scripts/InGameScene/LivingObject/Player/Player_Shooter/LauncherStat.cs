@@ -25,7 +25,7 @@ public class LauncherStat : MonoBehaviour
 
   
     protected float pAtkSpd => pStat.IG_ASpd;
-    protected bool playerReady => pStat.CanAttack; //플레이어에서 쏠 준비가 되었나
+    protected bool playerReady => PlayerMain.Instance.isOnAttack; //플레이어에서 쏠 준비가 되었나
  
     protected bool isReadyToAttack; //런쳐가 쏠 준비가 되었나
 
@@ -63,7 +63,7 @@ public class LauncherStat : MonoBehaviour
     {
         while (true)
         {
-            if (!pStat.CanAttack || !isReadyToAttack) 
+            if (!PlayerMain.Instance.isOnAttack) 
             {
                 yield return null;
             }

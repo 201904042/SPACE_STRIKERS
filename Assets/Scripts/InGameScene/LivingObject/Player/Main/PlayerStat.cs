@@ -114,11 +114,7 @@ public class PlayerStat : MonoBehaviour
     public int ES_RewardUp; //인게임에서의 보상 증가율 => other스킬의 보상 증가
 
 
-    [Header("각종 상태")]
-    public bool CanMove;
-    public bool CanAttack;
-    public bool InvincibleState;
-    public bool isKnockbackRun;
+    
 
 
     public void Init()
@@ -221,7 +217,7 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     public void PlayerDamaged(float damage, GameObject attackObj)
     {
-        if (!InvincibleState)
+        if (!PlayerMain.Instance.isInvincibleState)
         {
             float applyDamage = damage * (1 - (0.01f * IG_Dfs)); //todo => 방어력 로직 다시 체크
 
@@ -239,7 +235,7 @@ public class PlayerStat : MonoBehaviour
     /// <param name="attack_obj"></param>
     public void PlayerDamagedAction(GameObject attack_obj)
     {
-        if (InvincibleState) return;
+        if (PlayerMain.Instance.isInvincibleState) return;
 
         Collider2D attackingCollider = attack_obj.GetComponent<Collider2D>();
         if (attackingCollider != null)
@@ -257,7 +253,7 @@ public class PlayerStat : MonoBehaviour
         Vector2 targetPosition = CalculateTargetPos(curPosition, collision);
 
         // 코루틴이 실행 중이 아니면 실행
-        if (!isKnockbackRun)
+        if (!PlayerMain.Instance.isKnockbackRun)
         {
             StartCoroutine(PushbackLerp(curPosition, targetPosition));
         }
@@ -272,7 +268,7 @@ public class PlayerStat : MonoBehaviour
 
     private IEnumerator PushbackLerp(Vector3 startPos, Vector3 endPos)
     {
-        isKnockbackRun = true; // 코루틴 실행 상태 설정
+        PlayerMain.Instance.isKnockbackRun = true; // 코루틴 실행 상태 설정
         float startTime = Time.time;
         float elapseTime = 0f;
 
@@ -291,7 +287,7 @@ public class PlayerStat : MonoBehaviour
             yield return null;
         }
 
-        isKnockbackRun = false; // 코루틴 종료 상태 설정
+        PlayerMain.Instance.isKnockbackRun = false; // 코루틴 종료 상태 설정
     }
 
     private bool CheckCollide()
@@ -310,10 +306,10 @@ public class PlayerStat : MonoBehaviour
         {
             Debug.LogError("플레이어의 스프라이트 렌더러를 찾을 수 없음");
         }
-        InvincibleState = true;
+        PlayerMain.Instance.isInvincibleState = true;
         playerSprite.color = new Color(1, 1, 1, 0.5f);
         yield return new WaitForSeconds(invincible_time);
-        InvincibleState = false;
+        PlayerMain.Instance.isInvincibleState = false;
         playerSprite.color = new Color(1, 1, 1, 1f);
     }
 

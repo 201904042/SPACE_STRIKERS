@@ -67,7 +67,7 @@ public class PlayerShield : MonoBehaviour
             return;
         }
 
-        if (pStat.InvincibleState)
+        if (PlayerMain.Instance.isInvincibleState)
         {
             //무적 상태라면 넉백만 주고 쉴드 차감 안함
             pStat.PlayerKnockBack(collision); //쉴드가 손상될경우 플레이어에게 넉백효과

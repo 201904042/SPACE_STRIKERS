@@ -95,6 +95,12 @@
             "masterId": 202,
             "name": "추진체",
             "quantity": 1
+        },
+        {
+            "id": 20,
+            "masterId": 7,
+            "name": "랜덤재료1",
+            "quantity": 0
         }
     ]
 }

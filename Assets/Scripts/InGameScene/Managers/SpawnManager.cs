@@ -29,25 +29,25 @@ public class SpawnManager
     public Transform mainSpawnZone;
     public Transform sideSpawnZoneL;
     public Transform sideSpawnZoneR;
+    public Transform bossSpawnZone;
 
     public List<SpawnPattern> CommonSPattern = new List<SpawnPattern>();
     public List<SpawnPattern> CommonNPattern = new List<SpawnPattern>();
     public List<SpawnPattern> EliteSPattern = new List<SpawnPattern>();
     public List<SpawnPattern> EliteNPattern = new List<SpawnPattern>();
 
-
     public List<GameObject> activeEnemyList = new List<GameObject>(); //현재 활성 상태인 적들의 리스트
 
-    public Transform bossSpawnZone;
-    
-    private int stopIndex; // 패턴 간 번갈아 가는 stopCount 값을 저장하는 변수
-    private int spawnPhase;
+    private int stopIndex;
+    private int spawnPhase => GameManager.Game.phase;
     private float spawnTimer;
     private float currentMinutes => GameManager.Game.minutes;
    
     public bool isBossSpawned; //보스가 생성되었는지
     public bool isBossDown; //생성된 보스가 처치되었는지
-   
+
+    private Coroutine RouteSpawn;
+    private Coroutine RandomSpawn;
 
     private void SpawnPatternSet()
     {
@@ -207,26 +207,29 @@ public class SpawnManager
         isBossDown = false;
         stopIndex = 1;
         spawnTimer = initialSpawnTimer;
-        spawnPhase = 0;
 
         Debug.Log("스폰 초기화 완료");
     }
 
-    public IEnumerator SpawnEnemyTroops()
+    public void StartSpawnEnemy()
     {
-        GameManager.Game.StartGameCoroutine(RouteTimeSpawn());
-        GameManager.Game.StartGameCoroutine(RandomTimeSpawn());
-        yield return true;
+        RouteSpawn = StartCoroutine(RouteTimeSpawn());
+        RandomSpawn = StartCoroutine(RandomTimeSpawn());
     }
 
-    
+    public void StopSpawnEnemy()
+    {
+        StopCoroutine(RouteSpawn);
+        StopCoroutine(RandomSpawn);
+    }
+
     private IEnumerator RouteTimeSpawn() //정해진 시간에의한 패턴시간( 10 -> 5)초에 한번씩 패턴 실행
     {
         float spanwTime = 10;
         while (true)
         {
             Debug.Log("정기 스폰");
-            GameManager.Game.StartGameCoroutine(SpawnRandomPattern(true));
+            StartCoroutine(SpawnRandomPattern(true));
             yield return new WaitForSeconds(spanwTime);
         }
     }
@@ -240,18 +243,19 @@ public class SpawnManager
             spanwTime += randomDelay;
             yield return new WaitForSeconds(spanwTime);
             Debug.Log("랜덤 스폰");
-            GameManager.Game.StartGameCoroutine(SpawnRandomPattern(false));
+            StartCoroutine(SpawnRandomPattern(false));
         }
     }
 
-    // 주어진 패턴 리스트에서 적 스폰 로직을 처리하는
+    //등장할 적 설정 -> 해당 적의 등장패턴 설정 -> 아이템 스폰률 설정 -> 스폰
     private IEnumerator SpawnRandomPattern(bool isStopPattern)
     {
         int randomId = GetRandomEnemyId(isStopPattern); //스테이지의 적중 랜덤한 아이디 정하기
         SpawnPattern? selectedPattern = GetRandomSpawnPattern(randomId); //정해진 아이디가 갈수 있는 패턴 정함
-
+        
         if (selectedPattern.HasValue)
         {
+            bool isStop = selectedPattern.Value.type == EnemyType.EliteS || selectedPattern.Value.type == EnemyType.CommonS;
             bool isItemEnemySpawn = Random.Range(0, 100) < DefaultItemDropRate;
 
             for (int i = 0; i < selectedPattern.Value.positions.Length; i++) {
@@ -267,19 +271,21 @@ public class SpawnManager
 
                 yield return new WaitForSeconds(selectedPattern.Value.delay);
             }
-           
+
             //스탑위치 조정
-            stopIndex++;
-            if (stopIndex > 3)
+            if (isStop)
             {
-                stopIndex = 1;
+                stopIndex++;
+                if (stopIndex > 3)
+                {
+                    stopIndex = 1;
+                }
             }
         }
     }
 
     private SpawnPattern? GetRandomSpawnPattern(int randomEnemyId)
     {
-
         EnemyData enemyData = DataManager.enemy.GetData(randomEnemyId);
         if (enemyData == null)
         {
@@ -340,9 +346,9 @@ public class SpawnManager
                 }
             }
         }
-        else
+        else //일반이나 보스에서는 적의 개채수 따짐
         {
-            foreach (var entry in G_Stage.enemyCodeAmountFair) //일반이나 보스에서는 적의 개채수 따짐
+            foreach (var entry in G_Stage.enemyCodeAmountFair)
             {
                 if (entry.Value <= 0) // 양이 0보다 큰 경우
                 {
@@ -372,22 +378,35 @@ public class SpawnManager
     }
     
     //현 스테이지의 보스를 생성
-    public void SpawnBoss(int bossId)
+    public void SpawnStageBoss()
     {
-        GameManager.Game.StopSpawnTroop();
+        SpawnBossById(G_Stage.stageBossId);
+    }
 
+    //아이디를 통해 보스를 생성
+    public void SpawnBossById(int id)
+    {
+        GameManager.Game.Pool.GetEnemy(id, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation).GetComponent<E_TroopBase>();
         isBossSpawned = true;
         isBossDown = false;
-        GameManager.Game.Pool.GetEnemy(531, bossSpawnZone.transform.position, bossSpawnZone.transform.rotation).GetComponent<E_TroopBase>();
     }
 
     //모든 적들을 시스템으로 사망(보상없음)
-    public void DeleteEnemy()
+    public void DeleteAllEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < activeEnemyList.Count; i++)
         {
-            enemies[i].GetComponent<EnemyObject>().EliminateEnemy();
+            activeEnemyList[i].GetComponent<EnemyObject>().EliminateEnemy();
         }
+    }
+
+    private Coroutine StartCoroutine(IEnumerator coroutine)
+    {
+        return GameManager.Game.StartOtherManagerCoroutine(coroutine);
+    }
+
+    private void StopCoroutine(Coroutine coroutine)
+    {
+        GameManager.Game.StopCoroutine(coroutine);
     }
 }

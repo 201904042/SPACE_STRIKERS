@@ -18,12 +18,6 @@ public class PlayerControl : MonoBehaviour
     public bool isLeftCollide;
     public bool isRightCollide;
 
-    public bool canMove
-    {
-        get => pStat.CanMove;
-        set => pStat.CanMove = value;
-    }
-
     public void Init()
     {
         playerSprite = GetComponent<SpriteRenderer>();
@@ -46,11 +40,21 @@ public class PlayerControl : MonoBehaviour
 
     private void OnPlayerMove(InputAction.CallbackContext context)
     {
+        if (!PlayerMain.Instance.isControllable)
+        {
+            return;
+        }
+
         inputVector = context.ReadValue<Vector2>();
     }
 
     private void OnPlayerSkill(InputAction.CallbackContext context)
     {
+        if (!PlayerMain.Instance.isControllable)
+        {
+            return;
+        }
+
         PlayerSkillOn();
     }
 

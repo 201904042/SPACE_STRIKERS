@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1138483420573300054}
   - component: {fileID: 7875828439687295462}
   - component: {fileID: 7946328462876858113}
-  - component: {fileID: 8640802985623542945}
+  - component: {fileID: 8561566083705060474}
   - component: {fileID: 3742196645091833055}
   m_Layer: 0
   m_Name: PlayerBullet
@@ -114,8 +114,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8640802985623542945
-BoxCollider2D:
+--- !u!58 &8561566083705060474
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -143,22 +143,12 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.015016794, y: -0.09092426}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.4, y: 3.32}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.03, y: 0.53}
   serializedVersion: 2
-  m_Size: {x: 2.259511, y: 3.3435636}
-  m_EdgeRadius: 0
+  m_Radius: 0.56
 --- !u!114 &3742196645091833055
 MonoBehaviour:
   m_ObjectHideFlags: 0

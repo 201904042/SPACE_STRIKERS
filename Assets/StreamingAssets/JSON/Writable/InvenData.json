@@ -4,7 +4,7 @@
             "id": 1,
             "masterId": 1,
             "name": "미네랄",
-            "quantity": 909500
+            "quantity": 912500
         },
         {
             "id": 2,
@@ -52,7 +52,7 @@
             "id": 12,
             "masterId": 303,
             "name": "기어",
-            "quantity": 2
+            "quantity": 3
         },
         {
             "id": 13,
@@ -64,7 +64,7 @@
             "id": 14,
             "masterId": 305,
             "name": "디스플레이",
-            "quantity": 1
+            "quantity": 2
         },
         {
             "id": 15,
@@ -98,9 +98,9 @@
         },
         {
             "id": 20,
-            "masterId": 7,
-            "name": "랜덤재료1",
-            "quantity": 0
+            "masterId": 301,
+            "name": "강철파편",
+            "quantity": 1
         }
     ]
 }

@@ -25,11 +25,11 @@ public class Item_PowUp : Ingame_Item
         switch (pStat.IG_curPowerLevel)
         {
             case 0:
-                pStat.IG_curPowerLevel = 1; pStat.CurPow = 5; break;
+                pStat.CurPow = 5; break;
             case 1:
-                pStat.IG_curPowerLevel = 2; pStat.CurPow = 15; break;
+                pStat.CurPow = 15; break;
             case 2:
-                pStat.IG_curPowerLevel = 3; pStat.CurPow = 30; break;
+                pStat.CurPow = 30; break;
         }
     }
 }

@@ -14,7 +14,7 @@ public class Passive_Damage : PassiveSkill
     {
         base.ApplyEffect();
         pStat.PS_Dmg = CurrentEffectValue;
-        pStat.ApplyStat();
+        pStat.SetPassiveStat();
     }
 
 }

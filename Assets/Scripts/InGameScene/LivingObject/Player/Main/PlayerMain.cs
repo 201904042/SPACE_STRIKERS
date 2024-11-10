@@ -9,10 +9,7 @@ using UnityEngine.UI;
 
 public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 {
-    //파워 게이지 상수
-    public const float powlv1Max = 5;
-    public const float powlv2Max = 15;
-    public const float powMax = 30;
+    
 
     //무기 레벨별로 정리할것
     public const float bulletBaseInterval = 1f;  // 각 기본 발사 주기
@@ -114,8 +111,17 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     private void Update()
     {
         PlayerMove();
+        CheckPlayerLevel();
         IncreasePow();
         HpRegeneration();
+    }
+
+    private void CheckPlayerLevel()
+    {
+        if(pStat.IG_Level > pStat.levelInstance)
+        {
+            pStat.LevelUp();
+        }
     }
 
     public void SetCharSprite(int id)
@@ -136,7 +142,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         {
             return;
         }
-        HpRestore(pStat.IG_HpRegen * Time.deltaTime);
+        HpRestore(pStat.IG_HealthRegen * Time.deltaTime);
     }
 
     public void HpRestore(float healAmount)
@@ -167,34 +173,14 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     private void IncreasePow()
     {
-        if (pStat.CurPow < powMax)
+        if (pStat.CurPow < PlayerStat.powMax)
         {
-            float addValue = Time.deltaTime * pStat.IG_PowIncreaseRate;
-            pStat.CurPow = Mathf.Min(pStat.CurPow + addValue, powMax); // 초당 지정된 속도로 게이지 누적
+            float addValue = Time.deltaTime * pStat.IG_PowerGaugeSpeed;
+            pStat.CurPow = Mathf.Min(pStat.CurPow + addValue, PlayerStat.powMax); // 초당 지정된 속도로 게이지 누적
         }
-        PowerLvSet();
+
         pUI.PowBarChange();
     }
-
-    private void PowerLvSet()
-    {
-        float curPow = pStat.CurPow;
-        if (curPow > powlv1Max && pStat.IG_curPowerLevel == 0)
-        {
-            pStat.IG_curPowerLevel = 1;
-        }
-        else if (curPow > powlv2Max && pStat.IG_curPowerLevel == 1)
-        {
-            pStat.IG_curPowerLevel = 2;
-        }
-        else if (curPow >= powMax && pStat.IG_curPowerLevel == 2)
-        {
-            pStat.IG_curPowerLevel = 3;
-        }
-    }
-
-   
-    
 
 
     private void OnTriggerEnter2D(Collider2D collision)

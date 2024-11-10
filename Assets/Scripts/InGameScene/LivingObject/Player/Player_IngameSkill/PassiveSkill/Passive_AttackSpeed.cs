@@ -14,8 +14,8 @@ public class Passive_AttackSpeed : PassiveSkill
     public override void ApplyEffect()
     {
         base.ApplyEffect();
-        pStat.IG_ASpd = CurrentEffectValue;
-        pStat.ApplyStat();
+        pStat.PS_ASpd = CurrentEffectValue;
+        pStat.SetPassiveStat();
     }
 
 }

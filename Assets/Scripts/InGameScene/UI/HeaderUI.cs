@@ -20,7 +20,7 @@ public class HeaderUI : MonoBehaviour
 
     public void optionBtn()
     {
-        Time.timeScale = 0;
+        GameManager.Game.Pause();
         optionUI.SetActive(true);
     }
 }

@@ -36,6 +36,23 @@ public class Ability
         }
         return a;
     }
+
+    public static void AddOrUpdateAbility(List<Ability> abilities, Ability newAbility)
+    {
+        // 같은 ID의 Ability를 찾습니다.
+        var existingAbility = abilities.Find(ability => ability.key == newAbility.key);
+
+        if (existingAbility != null)
+        {
+            // 이미 존재하면 value를 합산합니다.
+            existingAbility.value += newAbility.value;
+        }
+        else
+        {
+            // 존재하지 않으면 새로운 Ability를 추가합니다.
+            abilities.Add(newAbility);
+        }
+    }
 }
 
 [Serializable]
@@ -117,13 +134,14 @@ public class PartsGradeColor
 
 public enum MasterType
 {
-    None,
-    Money,
-    Character,
-    Parts,
-    Ingredient, 
-    Consume,
-    Enemy 
+    None =0,
+    Money = 1,
+    Character = 2,
+    Parts = 3,
+    Ingredient = 4, 
+    Consume = 5,
+    Enemy = 6,
+    Skill = 7,
 }
 
 public enum SkillType

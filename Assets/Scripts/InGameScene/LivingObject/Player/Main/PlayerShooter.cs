@@ -10,12 +10,12 @@ public class PlayerShooter : MonoBehaviour
     private Transform InstanceTransform;
     public int shooterLevel 
     {
-        get => pStat.IG_WeaponLv;
+        get => pStat.IG_curWeaponLv;
         set
         {
             if(shooterLevel  < 3)
             {
-                pStat.IG_WeaponLv = value;
+                pStat.IG_curWeaponLv = value;
                 SetShooter(charId, value);
             }
         }

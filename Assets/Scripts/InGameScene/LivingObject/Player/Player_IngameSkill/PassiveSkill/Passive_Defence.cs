@@ -15,7 +15,7 @@ public class Passive_Defence : PassiveSkill
     {
         base.ApplyEffect();
         pStat.PS_Dfs = CurrentEffectValue;
-        pStat.ApplyStat();
+        pStat.SetPassiveStat();
     }
 
 }

@@ -265,7 +265,7 @@ public class EnemyObject : MonoBehaviour
 
     private OtherProjType DetermineProjType()
     {
-        return PlayerMain.pStat.IG_WeaponLv < 3
+        return PlayerMain.pStat.IG_curWeaponLv < 3
             ? OtherProjType.Item_ShooterUP
             : GetRandomItemType();
     }

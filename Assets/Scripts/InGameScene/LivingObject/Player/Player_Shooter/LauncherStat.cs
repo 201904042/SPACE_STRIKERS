@@ -24,7 +24,7 @@ public class LauncherStat : MonoBehaviour
     protected int projSpeed; //발사체의 속도. 총알 10, 미사일 5, 호밍15
 
   
-    protected float pAtkSpd => pStat.IG_ASpd;
+    protected float pAtkSpd => pStat.IG_AttackSpeed;
     protected bool playerReady => PlayerMain.Instance.isOnAttack; //플레이어에서 쏠 준비가 되었나
  
     protected bool isReadyToAttack; //런쳐가 쏠 준비가 되었나

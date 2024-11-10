@@ -8,12 +8,20 @@ using UnityEngine.InputSystem.Android;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
+using Random = UnityEngine.Random;
 
 
 public class Interface_GameEnd : UIInterface
 {
+    private const int defaultRewardRate = 100;
+    private const int defaultPerfactAddRate = 50;
+    private const int phase1Clear= 100;
+    private const int phase2Clear = 250;
+    private const int phase3Clear = 400;
+    private const int phase4Clear = 1000;
+
     public Transform ResultTexts;
-    public Transform Context;
+    public Transform Content;
     public TextMeshProUGUI StageText;
     public ScrollRect RewardScroll;
     public TextMeshProUGUI RewardText;
@@ -23,18 +31,21 @@ public class Interface_GameEnd : UIInterface
     private GameManager Game => GameManager.Game;
     private StageManager Stage => GameManager.Game.Stage;
 
-    private int RewardRate;
+    List<StageReward> rewardList = new List<StageReward>();
+
+    private float RewardRate;
 
     public override void SetComponent()
     {
         ResultTexts = transform.GetChild(2);
-        Context = transform.GetChild(3);
-        StageText = Context.GetChild(0).GetComponent<TextMeshProUGUI>();
-        RewardScroll =  Context.GetComponentInChildren<ScrollRect>();
+        Content = transform.GetChild(3);
+        StageText = Content.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        RewardScroll =  Content.GetComponentInChildren<ScrollRect>();
         RewardText = RewardScroll.content.GetComponentInChildren<TextMeshProUGUI>();
-        Buttons = Context.GetChild(2);
+        Buttons = Content.GetChild(2);
         GotoMainSceneBtn = Buttons.GetChild(0).GetComponent<Button>();
         RestartBtn = Buttons.GetChild(1).GetComponent<Button>();
+        SetButtons();
     }
 
     private void SetButtons()
@@ -48,46 +59,68 @@ public class Interface_GameEnd : UIInterface
 
     private void OnEnable()
     {
+        rewardList.Clear();
+        RewardRate = PlayerMain.pStat.IG_RewardRate;
         GetRewards();
         SetInterface();
     }
 
     private void GetRewards()
     {
-        if (!Game.IsClear)
+        if (!Game.IsClear) //클리어 실패시 보상 없음
         {
             return;
         }
 
-        RewardRate = PlayerMain.pStat.IG_RewardRate;
-
         if (Stage.curMode == GameMode.Infinite)
         {
-            float increase = 100;
-            switch(Game.phase)
+            int increase = defaultRewardRate;
+            switch(Game.phase) 
             {
-                case 1:  break;
-                case 2: increase = 150; break;
-                case 3: increase = 250; break;
-                case 4: increase = 400; break;
-                case 5: increase = 650; break;
-                case 6: increase = 1000; break;
+                case 2: increase = phase1Clear; break; //클리어 시점에서는 페이즈 2상태
+                case 3: increase = phase2Clear; break; //페이즈2 클리어
+                case 4: increase = phase3Clear; break; //페이즈3 클리어
+                case 5: increase = phase4Clear; break; //페이즈4 클리어
             }
 
-            RewardRate = (int)(RewardRate * (increase/100));
+            RewardRate += increase;
         }
         else
         {
             if (Game.IsPerfectClear)
             {
-                RewardRate = (int)(RewardRate * 1.5f); //퍼펙트 클리어시 1.5배
+                RewardRate += defaultPerfactAddRate;
             }
 
         }
 
         foreach (StageReward reward in Stage.ClearReward)
         {
-            DataManager.inven.DataAddOrUpdate(reward.itemId, reward.quantity * (RewardRate / 100));
+            if(reward.itemId == 7) //보상이 랜덤 재료일경우 => 추후 분리할것
+            {
+                for (int i = 0; i < reward.quantity * (RewardRate / 100); i++)
+                {
+                    List<MasterData> targetDatas = DataManager.master.GetItemsByType(MasterType.Ingredient);
+                    int randomInt = Random.Range(0, targetDatas.Count - 1);
+
+                    var existingReward = rewardList.Find(reward => reward.itemId == targetDatas[randomInt].id);
+
+                    if (existingReward != null)
+                    {
+                        existingReward.quantity += 1;
+                    }
+                    else
+                    {
+                        rewardList.Add(new StageReward(targetDatas[randomInt].id, 1));
+                    }
+
+                    DataManager.inven.DataAddOrUpdate(targetDatas[randomInt].id, 1);
+                }
+                continue;
+            }
+
+            rewardList.Add(new StageReward(reward.itemId, (int)(reward.quantity * (RewardRate / 100))));
+            DataManager.inven.DataAddOrUpdate(reward.itemId, (int)(reward.quantity * (RewardRate / 100)));
         }
         DataManager.inven.SaveData();
     }
@@ -121,13 +154,18 @@ public class Interface_GameEnd : UIInterface
 
     private void SetRewardText()
     {
+        if (!Game.IsClear) //클리어 실패시 보상 없음
+        {
+            RewardText.text = "전리품이 우주로 날라갔다!!";
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("획득 아이템");
 
-        foreach (StageReward reward in Stage.ClearReward)
+        foreach (StageReward reward in rewardList)
         {
             MasterData data = DataManager.master.GetData(reward.itemId);
-            sb.AppendLine($"{data.name} : {reward.quantity * (RewardRate / 100)}");
+            sb.AppendLine($"{data.name} : {reward.quantity}");
         }
 
         RewardText.text = sb.ToString();
@@ -135,7 +173,7 @@ public class Interface_GameEnd : UIInterface
 
     private void ReStartGame()
     {
-        GameManager.Game.RestartGame();
+        SceneManager.LoadScene("InGameTest");
     }
 
     public void GotoMainScene()

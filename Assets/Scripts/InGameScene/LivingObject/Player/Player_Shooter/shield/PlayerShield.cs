@@ -40,7 +40,7 @@ public class PlayerShield : MonoBehaviour
 
     private void ResetShield()
     {
-        maxShieldCount = pStat.IG_WeaponLv;
+        maxShieldCount = pStat.IG_curWeaponLv;
         curShieldCount = maxShieldCount;
         ShieldColorChange();
 

@@ -208,6 +208,9 @@ public class SpawnManager
         stopIndex = 1;
         spawnTimer = initialSpawnTimer;
 
+        RouteSpawn = null;
+        RandomSpawn = null;
+
         Debug.Log("스폰 초기화 완료");
     }
 
@@ -407,6 +410,6 @@ public class SpawnManager
 
     private void StopCoroutine(Coroutine coroutine)
     {
-        GameManager.Game.StopCoroutine(coroutine);
+        GameManager.Game.StopCoroutineSafely(coroutine);
     }
 }

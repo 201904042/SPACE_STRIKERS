@@ -63,10 +63,6 @@ public class IG_UIManager
         scoreText.text = "0";
         optionBtn.onClick.RemoveAllListeners();
         optionBtn.onClick.AddListener(IOption.OpenInterface);
-
-        //플레이어 초기화는 플레이어 생성후 플레이어쪽에서 초기화함
-
-        //인터페이스는 사용할때 초기화
     }
 
     public void SetTimeText(int minutes, int seconds)

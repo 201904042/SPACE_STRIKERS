@@ -15,6 +15,6 @@ public class Passive_MoveSpeed : PassiveSkill
     {
         base.ApplyEffect();
         pStat.PS_MSpd = CurrentEffectValue;
-        pStat.ApplyStat();
+        pStat.SetPassiveStat();
     }
 }

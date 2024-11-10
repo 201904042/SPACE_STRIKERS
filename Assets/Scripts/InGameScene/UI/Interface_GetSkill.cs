@@ -158,7 +158,7 @@ public class Interface_GetSkill : UIInterface
 
         //선택된 스킬을 스킬매니저를 통해 추가
         PlayerMain.pSkill.AddSkill(selectedSkill);
-        Time.timeScale = 1.0f;
+        GameManager.Game.Restart();
         CloseInterface();
     }
 
@@ -169,7 +169,7 @@ public class Interface_GetSkill : UIInterface
         pStat.IG_Level -= 1;
         pStat.IG_MaxExp = pStat.MaxExpInstance;
         pStat.CurExp = pStat.IG_MaxExp / 2;
-        Time.timeScale = 1.0f;
+        GameManager.Game.Restart();
         CloseInterface();
     }
 

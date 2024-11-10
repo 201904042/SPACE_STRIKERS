@@ -8,7 +8,7 @@ public class PlayerUI : MonoBehaviour
     PlayerStat pStat => PlayerMain.pStat;
     GameManager gm => GameManager.Game;
     private Slider hp => gm.UI.p_hpSlider;
-    private float maxHp => pStat.IG_Hp;
+    private float maxHp => pStat.IG_MaxHealth;
     private float curHp => pStat.CurHp;
 
     private Slider exp => gm.UI.p_expSlider;
@@ -16,7 +16,7 @@ public class PlayerUI : MonoBehaviour
     private float curExp => pStat.CurExp;
 
     private Slider pow => gm.UI.p_powSlider;
-    private float MaxPow => PlayerMain.powMax;
+    private float MaxPow => PlayerStat.powMax;
     private float curPow => pStat.CurPow;
 
    

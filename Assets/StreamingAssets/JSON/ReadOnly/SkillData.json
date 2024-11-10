@@ -885,40 +885,22 @@
           "level": 1,
           "ProjCount": 1,
           "ProjSpd": 5,
-          "CoolTime": 0,
-          "DmgRate": 50,
-          "AddEffect": [
-            {
-              "effect": 1,
-              "value1": 0
-            }
-          ]
+          "LiveTime": 3,
+          "DmgRate": 50
         },
         {
           "level": 2,
           "ProjCount": 3,
           "ProjSpd": 5,
-          "CoolTime": 0,
-          "DmgRate": 75,
-          "AddEffect": [
-            {
-              "effect": 1,
-              "value1": 0
-            }
-          ]
+          "LiveTime": 5,
+          "DmgRate": 75
         },
         {
           "level": 3,
           "ProjCount": 5,
           "ProjSpd": 5,
-          "CoolTime": 0,
-          "DmgRate": 100,
-          "AddEffect": [
-            {
-              "effect": 1,
-              "value1": 0
-            }
-          ]
+          "LiveTime": 8,
+          "DmgRate": 100
         }
       ]
     },

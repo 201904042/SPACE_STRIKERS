@@ -81,25 +81,8 @@ public class GameManager : MonoBehaviour
         _pool.Init();
 
         yield return StartCoroutine(SpawnPlayer());
+        yield return new WaitUntil(() => MyPlayer.GetComponent<PlayerMain>().isPlayerSetDone);
         GameStart();
-    }
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1;
-       
-        Destroy(MyPlayer);
-
-        Score = 0;
-        StageTime = 0;
-        phase = 1;
-        BattleSwitch = false;
-        IsClear = false;
-        IsPerfectClear = false;
-        StopCoroutineSafely(GameCoroutine);
-        StopCoroutineSafely(SpawnCoroutine);
-
-        InitializeGame();
     }
 
     private IEnumerator SpawnPlayer()
@@ -118,12 +101,12 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         BattleSwitch = true;
-        GameCoroutine ??= StartCoroutine(CheckInGameBehavior());
+        GameCoroutine ??= StartCoroutine(InGameRoutine());
     }
 
     #endregion
 
-    private IEnumerator CheckInGameBehavior()
+    private IEnumerator InGameRoutine()
     {
         //인게임 데이터 초기화
         Score = 0;
@@ -132,6 +115,7 @@ public class GameManager : MonoBehaviour
         BattleSwitch = false;
         IsClear = false;
         
+        //카운트 다운 후 시작
         yield return StartCoroutine(UI.IStartCount.StartCountdown());
         BattleSwitch = true;
 
@@ -147,7 +131,7 @@ public class GameManager : MonoBehaviour
         }
 
         BattleSwitch = false;
-        yield return EndGameSequence();
+        yield return StartCoroutine(EndGameSequence());
     }
 
     private void StartSpawningEnemies()
@@ -163,12 +147,13 @@ public class GameManager : MonoBehaviour
     private IEnumerator EndGameSequence()
     {
         StopSpawningEnemies();
-        _spawn.DeleteAllEnemy();
+        Spawn.DeleteAllEnemy();
 
         yield return IsClear ? StartCoroutine(MyPlayer.PlayerClearAnim()) : StartCoroutine(MyPlayer.PlayerDeadAnim());
         yield return new WaitForSeconds(1);
 
-        _ui.IGameEnd.OpenInterface();
+        UI.IGameEnd.OpenInterface();
+        Pause();
     }
 
     private GameMode CurrentGameMode => _stage.curMode;
@@ -306,6 +291,14 @@ public class GameManager : MonoBehaviour
     {
         StopSpawningEnemies();
         Spawn.SpawnBossById(531);
+    }
+
+    [ContextMenu("Victory")]
+    public void Victory()
+    {
+        IsClear = true;
+        BattleSwitch = false;
+        StartCoroutine(EndGameSequence());
     }
 
     #endregion

@@ -15,7 +15,7 @@ public class Passive_HpRegeneration : PassiveSkill
     {
         base.ApplyEffect();
         pStat.PS_HpRegen = CurrentEffectValue;
-        pStat.ApplyStat();
+        pStat.SetPassiveStat();
     }
 
 }

@@ -68,7 +68,7 @@ public class PlayerControl : MonoBehaviour
         if ((isRightCollide && h > 0) || (isLeftCollide && h < 0)) h = 0;
         if ((isTopCollide && v > 0) || (isBottomCollide && v < 0)) v = 0;
 
-        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.IG_MSpd / 5)) * Time.deltaTime;
+        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.IG_MoveSpeed / 5)) * Time.deltaTime;
         transform.position += moveDirection;
     }
 
@@ -106,7 +106,6 @@ public class PlayerControl : MonoBehaviour
 
         pStat.USkillCount--;
         PlayerMain.pUI.SetUniquSkillCount();
-        pStat.IG_curPowerLevel = 0;
         pStat.CurPow = 0;
     }
 

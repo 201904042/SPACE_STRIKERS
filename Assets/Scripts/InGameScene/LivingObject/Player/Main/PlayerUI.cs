@@ -8,7 +8,7 @@ public class PlayerUI : MonoBehaviour
     PlayerStat pStat => PlayerMain.pStat;
     GameManager gm => GameManager.Game;
     private Slider hp => gm.UI.p_hpSlider;
-    private float maxHp => pStat.IG_MaxHealth;
+    private float maxHp => pStat.IG_MaxHp;
     private float curHp => pStat.CurHp;
 
     private Slider exp => gm.UI.p_expSlider;
@@ -22,7 +22,7 @@ public class PlayerUI : MonoBehaviour
    
     private Image USImage => gm.UI.p_uSkillImage;
     private TextMeshProUGUI US_CountText => gm.UI.p_uSkillCountText;
-    private int USCount => pStat.USkillCount;
+    private int USCount => pStat.CurUSkillCount;
     private TextMeshProUGUI powText => gm.UI.p_powLvText;
 
     public void Init()

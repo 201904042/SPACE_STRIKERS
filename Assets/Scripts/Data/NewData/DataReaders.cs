@@ -11,6 +11,83 @@ using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
+public class AccountDataReader : OnlyAccountData
+{
+    protected override string GetUserId(AccountData data)
+    {
+        fieldType = DataFieldType.AccountData;
+        return data.id;
+    }
+    public void SetCharValue(int id)
+    {
+        data.useChar = id;
+        SaveData();
+    }
+    public void SetStageValue(int value)
+    {
+        data.stageIndex = value;
+        SaveData();
+    }
+    public void SetPlanetValue(int value)
+    {
+        data.planetIndex = value;
+        SaveData();
+    }
+    public void AddExp(int addAmount)
+    {
+        data.exp += addAmount;
+
+        while (true)
+        {
+            int maxExp = data.level * AccountData.DefaultMaxExp;
+            if (data.exp >= maxExp)
+            {
+                data.level++;
+                data.exp -= maxExp;
+            }
+            else
+            {
+                break;
+            }
+        }
+        SaveData();
+    }
+    public void SetParts(int slotNum, int partsInvenId)
+    {
+        data.useParts[slotNum - 1] = partsInvenId;
+        SaveData();
+    }
+    public void SetStageProgress(int progress)
+    {
+        data.stageProgress = progress;
+        SaveData();
+    }
+    public int GetChar()
+    {
+        return data.useChar;
+    }
+    public int[] GetPartsArray()
+    {
+        return data.useParts;
+    }
+    public int GetParts(int slotId)
+    {
+        return data.useParts[slotId - 1];
+    }
+    public int GetPlanet()
+    {
+        return data.planetIndex;
+    }
+    public int GetStage()
+    {
+        return data.stageIndex;
+    }
+    public int GetStageProgress()
+    {
+        return data.stageProgress;
+    }
+}
+
 public class MasterDataReader : ReadOnlyData<MasterData>
 {
     protected override int GetId(MasterData data)
@@ -19,6 +96,7 @@ public class MasterDataReader : ReadOnlyData<MasterData>
         return data.id;
     }
 
+
     public List<MasterData> GetItemsByType(MasterType type)
     {
         // 특정 type의 데이터를 필터링하여 반환
@@ -26,9 +104,9 @@ public class MasterDataReader : ReadOnlyData<MasterData>
     }
 }
 
-public class StoreItemReader : ReadOnlyData<StoreItemData>
+public class StoreDataReader : ReadOnlyData<StoreData>
 {
-    protected override int GetId(StoreItemData data)
+    protected override int GetId(StoreData data)
     {
         fieldType = DataFieldType.StoreData;
         return data.storeItemId;
@@ -101,105 +179,6 @@ public class GotchaDataReader : ReadOnlyData<GotchaData>
         return data.id;
     }
 }
-
-
-
-public class AccountJsonReader : EditableData<AccountData>
-{
-    protected override int GetId(AccountData data)
-    {
-        fieldType = DataFieldType.AccountData;
-        return data.id;
-    }
-
-    public void SetCharValue(int id)
-    {
-        dataDict[0].useChar = id;
-        SaveData();
-    }
-
-    public void SetStageValue(int value)
-    {
-        dataDict[0].stageIndex = value;
-        SaveData();
-    }
-    public void SetPlanetValue(int value)
-    {
-        dataDict[0].planetIndex = value;
-        SaveData();
-    }
-
-    public void AddExp(int addAmount)
-    {
-        dataDict[0].exp = addAmount;
-        CalculateLevel();
-        SaveData();
-    }
-
-    public void SetParts(int slotNum, int partsInvenId)
-    {
-        dataDict[0].useParts[slotNum-1] = partsInvenId;
-        SaveData();
-    }
-
-    public void SetStageProgress(int progress)
-    {
-        dataDict[0].stageProgress = progress;
-        SaveData();
-    }
-
-    public void CalculateLevel()
-    {
-        AccountData data = dataDict[0];
-        int level = 1; // 기본 레벨 1
-
-        for (int i = 0; i < data.needExp.Count; i++)
-        {
-            if (data.needExp[i] == -1) // -1이면 더 이상 레벨업 불가
-            {
-                break;
-            }
-
-            if (data.exp >= data.needExp[i]) // 현재 경험치가 필요한 경험치 이상일 경우 레벨업
-            {
-                level++;
-            }
-            else
-            {
-                break; // 현재 경험치가 필요 경험치보다 적으면 더 이상 레벨업 불가
-            }
-        }
-
-        data.level = level;
-    }
-
-    public int GetChar()
-    {
-        return dataDict[0].useChar;
-    }
-    public int[] GetPartsArray()
-    {
-        return dataDict[0].useParts;
-    }
-    public int GetParts(int slotId)
-    {
-        return dataDict[0].useParts[slotId-1];
-    }
-    public int GetPlanet()
-    {
-        return dataDict[0].planetIndex;
-    }
-    public int GetStage()
-    {
-        return dataDict[0].stageIndex;
-    }
-    public int GetStageProgress()
-    {
-        return dataDict[0].stageProgress;
-    }
-}
-
-
 public class InventoryDataReader : EditableData<InvenData>
 {
     protected override int GetId(InvenData data)
@@ -297,12 +276,12 @@ public class CharacterDataReader : EditableData<CharData>
     }
 }
 
-public class PartsAbilityDataReader : EditableData<PartsAbilityData>
+public class PartsDataReader : EditableData<PartsData>
 {
 
-    protected override int GetId(PartsAbilityData data)
+    protected override int GetId(PartsData data)
     {
-        fieldType = DataFieldType.PartsAbilityData;
+        fieldType = DataFieldType.PartsData;
         return data.invenId;
     }
 

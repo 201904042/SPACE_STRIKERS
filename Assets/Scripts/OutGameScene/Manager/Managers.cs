@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Managers : MonoBehaviour
 {
@@ -21,7 +22,22 @@ public class Managers : MonoBehaviour
 
     private void DefaultInit()
     {
-        Data.Init(); //데이터외에는 게임씬에 들어갈때 초기화 시킬것
+        if (Auth_Firebase.Instance.user != null)
+        {
+            Data.Init();
+            Debug.Log("매니저스 데이터 초기화");
+        }
+    }
+
+    public static T LoadInResources<T>(string path) where T : UnityEngine.Object
+    {
+        T instance = Resources.Load<T>(path);
+        if(instance == null)
+        {
+            Debug.Log($"리소스 오류 {path}");
+            return null;
+        }
+        return instance;
     }
 
     private readonly DataManager _data = new();

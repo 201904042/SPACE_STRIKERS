@@ -17,7 +17,7 @@ public class DailyStore : MonoBehaviour
     public string dateIndex;
     public DateTime curDate;
 
-    public StoreItemData[] registStoreItem = new StoreItemData[4]; 
+    public StoreData[] registStoreItem = new StoreData[4]; 
 
     private void Awake()
     {
@@ -67,7 +67,7 @@ public class DailyStore : MonoBehaviour
     private void ChangeItemList()
     {
         //상점에 보여질 아이템의 리스트를 새로운 데이터로 변경하고, 날짜 인덱스를 업데이트
-        registStoreItem = new StoreItemData[4];
+        registStoreItem = new StoreData[4];
 
         //임시로 하급뽑기권만 todo-> 랜덤한 아이템을 불러오도록
         registStoreItem[0] = DataManager.store.GetData(0); //하급뽑기권

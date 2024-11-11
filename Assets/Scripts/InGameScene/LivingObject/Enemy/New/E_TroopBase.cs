@@ -87,6 +87,22 @@ public class E_TroopBase : EnemyObject
         }
     }
 
+    public override void EnemyDamaged(GameObject hitObject, int damage)
+    {
+        if (!isDamageable)
+        {
+            return;
+        }
+        ActiveHitEffect();
+        curHp = Mathf.Max(curHp - (damage * (int)(damage*PlayerMain.pStat.IG_MobDamageRate/100)), 0);
+        UpdateHpBarValue();
+        if (curHp == 0)
+        {
+            EnemyDeath();
+        }
+        Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
+    }
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);

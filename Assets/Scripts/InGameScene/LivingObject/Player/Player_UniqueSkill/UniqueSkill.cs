@@ -8,12 +8,13 @@ public class UniqueSkill : ActiveSkill
 {
     //curSkillLevel을 사용하지 않음. PSpecial에서 사용할때 pstat의 파워레벨을 해당 스킬의 레벨로 설정
     public int useCharCode;
-
+    public bool isActive;
     public override void SkillReset()
     {
         SkillLevels = new Dictionary<int, Skill_LevelValue>();
         instantPoint = PlayerMain.Instance.transform;
         type = SkillType.Unique;
+        isActive = false;
     }
 
     public override void SetLevel()
@@ -33,15 +34,15 @@ public class UniqueSkill : ActiveSkill
     //pSpecial에 의해 사용됨
     public override IEnumerator ActivateSkillCoroutine(int level)
     {
-        if (level != 0)
+        if (level <= 0)
         {
-            SkillParameterSet(level); //레벨을 받아온 순간 파라미터를 조정
-            ActivateSkill(level); // 스킬 발동
-                                  //스킬 발동중
-
-            yield return new WaitForSeconds(liveTime); // 쿨타임 동안 대기 todo => 유효성 체크해보기
-                                                       //스킬발동 종료
+            yield break;
         }
+        isActive = true;
+        SkillParameterSet(level); //레벨을 받아온 순간 파라미터를 조정
+        ActivateSkill(level); // 스킬 발동
+        yield return new WaitForSeconds(liveTime); // 쿨타임 동안 대기 todo => 유효성 체크해보기
+        isActive = false;
     }
 
     /// <summary>

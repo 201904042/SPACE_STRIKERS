@@ -193,7 +193,7 @@ public class LabotoryUI : MainUIs
         foreach (UpgradeIngred cost in ingredientList)
         {
             // 재료 UI들 생성
-            ItemAmountPref itemAmountPref = Instantiate(OG_UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
+            ItemAmountPref itemAmountPref = Instantiate(OG_UIManager.UIInstance.ItemAmountUI, ingredientSlot).GetComponent<ItemAmountPref>();
             itemAmountPref.SetAmountUI(cost.ingredMasterId, cost.quantity);
         }
         upgradeInformText.text = MakeSBText(curLevel, resultAbility, beforeAbility);
@@ -223,7 +223,7 @@ public class LabotoryUI : MainUIs
     private void SetUpgradeUIForParts(int invenCode)
     {
         int masterCode = DataManager.inven.GetData(invenCode).masterId;
-        PartsAbilityData PartsAbilityData = DataManager.parts.GetData(invenCode);
+        PartsData PartsAbilityData = DataManager.parts.GetData(invenCode);
         int curLevel = PartsAbilityData.level;
 
         partsSlot.GetComponent<PartsSlot>().SetParts(invenCode);
@@ -252,12 +252,12 @@ public class LabotoryUI : MainUIs
 
         foreach (var cost in ingredientList)
         {
-            var itemAmountPref = Instantiate(OG_UIManager.UIInstance.itemAmountPref, ingredientSlot).GetComponent<ItemAmountPref>();
+            var itemAmountPref = Instantiate(OG_UIManager.UIInstance.ItemAmountUI, ingredientSlot).GetComponent<ItemAmountPref>();
             itemAmountPref.SetAmountUI(cost.ingredMasterId, cost.quantity);
         }
     }
 
-    private void UpdateUpgradeUIForParts(PartsAbilityData PartsAbilityData, int curLevel)
+    private void UpdateUpgradeUIForParts(PartsData PartsAbilityData, int curLevel)
     {
         var mainAbility = new Ability(PartsAbilityData.mainAbility);
         var beforeAbilities = new List<Ability> { mainAbility };
@@ -421,11 +421,11 @@ public class LabotoryUI : MainUIs
 
     private void ChangePartsAbilityData()
     {
-        PartsAbilityData targetParts = DataManager.parts.GetData(targetInvenCode);
+        PartsData targetParts = DataManager.parts.GetData(targetInvenCode);
         targetParts.level += 1;
         targetParts.mainAbility.value += 5;
         DataManager.parts.UpdateData(targetInvenCode, targetParts);
         DataManager.parts.SaveData();
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(PartsAbilityData),DataManager.parts.GetFilePath());
+        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(PartsData),DataManager.parts.GetFilePath());
     }
 }

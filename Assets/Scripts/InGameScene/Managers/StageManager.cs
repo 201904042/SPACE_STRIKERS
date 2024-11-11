@@ -28,7 +28,7 @@ public class StageManager
     /// </summary>
     public void SetStageData()
     {
-        AccountData account = DataManager.account.GetData(0); //어카운트에 저장된 데이터에서 플레이할 행성번호와 스테이지 번호를 추출
+        AccountData account = DataManager.account.GetData(); //어카운트에 저장된 데이터에서 플레이할 행성번호와 스테이지 번호를 추출
 
         //스테이지 코드 조합
         planet = account.planetIndex;

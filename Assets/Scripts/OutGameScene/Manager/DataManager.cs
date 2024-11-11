@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.IO;
 
 public enum DataFieldType
 {
@@ -11,7 +12,7 @@ public enum DataFieldType
     SkillData,
     AccountData,
     CharData,
-    PartsAbilityData,
+    PartsData,
     InvenData,
     EnemyData,
     GotchaData
@@ -21,30 +22,30 @@ public enum DataFieldType
 public class DataManager
 {
     public static Dictionary<DataFieldType, string> dataFieldNames = new Dictionary<DataFieldType, string>
-{
+ {
     { DataFieldType.AbilityData, "AbilityData" },
     { DataFieldType.MasterData, "MasterData" },
     { DataFieldType.StoreData, "StoreData" },
     { DataFieldType.StageData, "StageData" },
     { DataFieldType.UpgradeData, "UpgradeData" },
     { DataFieldType.SkillData, "SkillData" },
-    { DataFieldType.AccountData, "AccountData" },
+    { DataFieldType.AccountData, "Accountdata" },
     { DataFieldType.CharData, "CharacterData" },
-    { DataFieldType.PartsAbilityData, "PartsAbilityData" },
+    { DataFieldType.PartsData, "PartsData" },
     { DataFieldType.InvenData, "InvenData" },
     { DataFieldType.EnemyData, "EnemyData" },
     { DataFieldType.GotchaData, "GotchaData" }
 };
 
-    public static AccountJsonReader account = new();
+    public static AccountDataReader account = new();
     public static MasterDataReader master = new();
     public static InventoryDataReader inven = new();
     public static EnemyDataReader enemy = new ();
     public static SkillDataReader skill = new ();
     public static CharacterDataReader character = new ();
-    public static PartsAbilityDataReader parts = new ();
+    public static PartsDataReader parts = new ();
     public static AbilityDataReader ability = new ();
-    public static StoreItemReader store = new ();
+    public static StoreDataReader store = new ();
     public static StageDataReader stage = new ();
     public static UpgradeDataReader upgrade = new ();
     public static GotchaDataReader gotcha = new ();
@@ -54,23 +55,29 @@ public class DataManager
         LoadAllData();
     }
 
-    private void LoadAllData()
+    public static class JsonFilePaths
     {
-        master.LoadData($"Assets/StreamingAssets/JSON/ReadOnly/MasterData.json");
-        ability.LoadData("Assets/StreamingAssets/JSON/ReadOnly/AbilityData.json");
-        stage.LoadData("Assets/StreamingAssets/JSON/ReadOnly/StageData.json");
-        upgrade.LoadData("Assets/StreamingAssets/JSON/ReadOnly/UpgradeData.json");
-        enemy.LoadData("Assets/StreamingAssets/JSON/ReadOnly/EnemyData.json");
-        gotcha.LoadData("Assets/StreamingAssets/JSON/ReadOnly/GotchaData.json");
-        skill.LoadData("Assets/StreamingAssets/JSON/ReadOnly/SkillData.json");
-
-        store.LoadData("Assets/StreamingAssets/JSON/Writable/StoreData.json");
-        account.LoadData("Assets/StreamingAssets/JSON/Writable/AccountData.json");
-        character.LoadData("Assets/StreamingAssets/JSON/Writable/CharacterData.json");
-        inven.LoadData("Assets/StreamingAssets/JSON/Writable/InvenData.json");
-        parts.LoadData("Assets/StreamingAssets/JSON/Writable/PartsAbilityData.json");
-
+        public static readonly string ReadOnlyFolder = "Assets/StreamingAssets/JSON/ReadOnly/";
+        public static readonly string WritableFolder = "Assets/StreamingAssets/JSON/Writable/";
     }
+
+    public void LoadAllData()
+    {
+        master.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "MasterData.json"));
+        ability.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "AbilityData.json"));
+        stage.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "StageData.json"));
+        upgrade.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "UpgradeData.json"));
+        enemy.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "EnemyData.json"));
+        gotcha.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "GotchaData.json"));
+        skill.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "SkillData.json"));
+        store.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "StoreData.json"));
+
+        account.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "AccountData.json"));
+        character.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "CharacterData.json"));
+        inven.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "InvenData.json"));
+        parts.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "PartsData.json"));
+    }
+
 
 
 }

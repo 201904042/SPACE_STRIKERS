@@ -8,12 +8,13 @@ public class EnemyUI : MonoBehaviour
 {
     public Image enemyImage;
     public TextMeshProUGUI amountText;
-
+    public TextMeshProUGUI nameText;
 
     private void Awake()
     {
         enemyImage = transform.GetChild(0).GetComponent<Image>();
         amountText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        nameText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
 
     public void SetEnemyUI(int enemyCode, int amount)
@@ -24,6 +25,7 @@ public class EnemyUI : MonoBehaviour
         Sprite image = Resources.Load<Sprite>(master.spritePath);
         enemyImage.sprite = image;
         amountText.text = amount.ToString();
+        nameText.text = master.name;
     }
 
 }

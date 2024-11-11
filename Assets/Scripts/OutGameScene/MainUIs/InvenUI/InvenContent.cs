@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class InvenContent : MonoBehaviour
 {
-    public GameObject itemUIPref;
     public MasterType[] contentType; // 3: 파츠, 4: 재료, 5: 소모품
 
     private void OnEnable()
     {
+        if (OG_UIManager.UIInstance == null) return;
         UpdateContent();
     }
 
@@ -61,7 +61,7 @@ public class InvenContent : MonoBehaviour
 
     private void CreateItemUI(InvenData item)
     {
-        ItemUIPref itemUI = Instantiate(itemUIPref, transform).GetComponent<ItemUIPref>();
+        ItemUIPref itemUI = Instantiate(OG_UIManager.UIInstance.InvenItemUI, transform).GetComponent<ItemUIPref>();
         itemUI.SetByInvenId(item.id);
         Button btn = itemUI.GetComponent<Button>();
         btn.onClick.AddListener(() => UIBtnClickEvent(item.id));

@@ -12,7 +12,7 @@ public class ItemUIPref : MonoBehaviour
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
     public InvenData invenData;
-    public PartsAbilityData PartsAbilityData; //소유한 파츠의 데이터
+    public PartsData PartsAbilityData; //소유한 파츠의 데이터
     public MasterData itemData; //소유한 파츠 이외의 아이템이나 소유하지 않은 모든 아이템의 데이터
 
     [SerializeField] private Image bgImage;
@@ -127,7 +127,7 @@ public class ItemUIPref : MonoBehaviour
     {
         invenData = new InvenData();
         itemData = new MasterData();
-        PartsAbilityData = new PartsAbilityData();
+        PartsAbilityData = new PartsData();
 
         bgImage.color = Color.white;
         itemImage.sprite = null;

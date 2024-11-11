@@ -10,7 +10,6 @@ using UnityEngine.UI;
 
 public class LoginInterface : UIInterface
 {
-
     public Transform InputFields;
     public TMP_InputField emailField;
     public TMP_InputField pwField;

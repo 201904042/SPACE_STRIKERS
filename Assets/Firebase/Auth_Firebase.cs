@@ -67,7 +67,19 @@ public class Auth_Firebase
             FirebaseUser newUser = authResult.User;
             isSuccess = true;
             Debug.Log("회원가입 성공");
-            //todo -> 회원가입에 성공했다면 firebase 데이터베이스에 해당 계정의 정보 추가
+
+            await DB_Firebase.Instance.GetGameDataAsync();
+            await DB_Firebase.Instance.GetBaseAccountDataAsync();
+            Debug.Log("데이터 완료");
+
+            await DB_Firebase.Instance.UploadWritableJsonFilesAsync();
+            Debug.Log("뉴 데이터 전송 완료");
+
+            Managers.Instance.Data.Init();
+            Debug.Log("Auth 데이터 초기화");
+
+            
+
         }
         catch (Exception ex)
         {
@@ -90,6 +102,12 @@ public class Auth_Firebase
             FirebaseUser newUser = authResult.User;
             isSuccess = true;
             Debug.Log("로그인 완료");
+
+            await DB_Firebase.Instance.GetGameDataAsync();
+            await DB_Firebase.Instance.GetAccountDataAsync(UserId);
+            Debug.Log("데이터 완료");
+            Managers.Instance.Data.Init();
+            Debug.Log("Auth 데이터 초기화");
         }
         catch (Exception ex)
         {
@@ -97,11 +115,13 @@ public class Auth_Firebase
             Debug.LogError($"로그인 실패: {ex.Message}");
         }
 
+        
         return isSuccess;
     }
 
     public void LogOut()
     {
+        DB_Firebase.DeleteJsonData();
         auth.SignOut();
     }
 }

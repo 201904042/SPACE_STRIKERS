@@ -13,7 +13,7 @@ public class PartsSlot : MonoBehaviour
     //해당 UI에 파츠 혹은 아이템(재료, 소모품) 할당
     //파츠는 지금 있는거에 새롭게 넣은 UI요소 할당, 아이템은 새로 적용
 
-    public PartsAbilityData PartsAbilityData;
+    public PartsData PartsAbilityData;
     [SerializeField] private Image bgImage;
     [SerializeField] private Image partsImage;
 
@@ -37,7 +37,7 @@ public class PartsSlot : MonoBehaviour
             return;
         }
 
-        PartsAbilityData parts =  DataManager.parts.GetData(partsId);
+        PartsData parts =  DataManager.parts.GetData(partsId);
         if(parts == null)
         {
             return;

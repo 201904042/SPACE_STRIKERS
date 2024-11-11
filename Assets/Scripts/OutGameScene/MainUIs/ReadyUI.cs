@@ -151,7 +151,7 @@ public class ReadyUI : MainUIs
 
         foreach(int partsInvenId in PartsCode)
         {
-            PartsAbilityData partData = DataManager.parts.GetData(partsInvenId);
+            PartsData partData = DataManager.parts.GetData(partsInvenId);
             if(partData == null)
             {
                 continue;

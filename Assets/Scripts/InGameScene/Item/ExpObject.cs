@@ -8,9 +8,6 @@ public class Exp_object : MonoBehaviour
 {
     private int expAmount = 1;
     private float expSpeed = 5f;
-    private float amplitude = 0.5f; // 곡선의 높이
-    private float frequency = 2f; // 곡선의 주기
-    private float elapsedTime = 0f; // 시간 경과를 저장
 
     public void OnExp()
     {

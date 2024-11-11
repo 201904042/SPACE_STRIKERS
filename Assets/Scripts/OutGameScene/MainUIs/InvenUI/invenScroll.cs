@@ -10,7 +10,7 @@ public class invenScroll : MonoBehaviour
     public GameObject ingredContent;
     public GameObject consContent;
 
-    private AccountJsonReader accountData;
+    private AccountDataReader accountData;
     public GameObject partsInven;
     public GameObject ingredInven;
     public GameObject consInven;

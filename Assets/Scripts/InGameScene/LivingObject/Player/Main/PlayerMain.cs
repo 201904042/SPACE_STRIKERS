@@ -39,11 +39,9 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     public static PlayerStat pStat;
     public static PlayerControl pControl;
     public static PlayerUI pUI;
-
     public static PlayerShooter pShooter;
     public static PlayerUSkill pUSkill;
     public static PlayerSkill pSkill;
-
 
     
     [Header("각종 상태")]
@@ -142,7 +140,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         {
             return;
         }
-        HpRestore(pStat.IG_HealthRegen * Time.deltaTime);
+        HpRestore(pStat.IG_Regen * Time.deltaTime);
     }
 
     public void HpRestore(float healAmount)
@@ -162,17 +160,32 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     public IEnumerator PlayerDeadAnim()
     {
         //폭발 애니메이션 작동
+        PlayerProjectile proj = GameManager.Game.Pool.GetPlayerProj(PlayerProjType.Explosion, transform.position, transform.rotation).GetComponent<PlayerProjectile>();
+        proj.SetProjParameter(0, 0, 1, 1);
+        gameObject.SetActive(false);
         yield return null;
     }
 
     public IEnumerator PlayerClearAnim()
     {
-        //앞으로 전진
-        yield return null;
+        while(true)
+        {
+            if(transform.position.y > 5) //카메라 밖으로 나가는 기점
+            {
+                break;
+            }
+            transform.position += transform.up * 5 * Time.deltaTime;
+            yield return null;
+        }
     }
 
     private void IncreasePow()
     {
+        if (pUSkill.isSkillActivating || !GameManager.Game.BattleSwitch) //스킬 사용중에는 증가하지 않음 혹은 게임이 시작되지 않았다면 증가하지 않음
+        {
+            return;
+        }
+
         if (pStat.CurPow < PlayerStat.powMax)
         {
             float addValue = Time.deltaTime * pStat.IG_PowerGaugeSpeed;

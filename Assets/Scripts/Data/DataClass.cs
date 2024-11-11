@@ -50,7 +50,7 @@ public class Ability
         else
         {
             // 존재하지 않으면 새로운 Ability를 추가합니다.
-            abilities.Add(newAbility);
+            abilities.Add(new Ability(newAbility));
         }
     }
 }

@@ -68,7 +68,7 @@ public class PlayerControl : MonoBehaviour
         if ((isRightCollide && h > 0) || (isLeftCollide && h < 0)) h = 0;
         if ((isTopCollide && v > 0) || (isBottomCollide && v < 0)) v = 0;
 
-        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.IG_MoveSpeed / 5)) * Time.deltaTime;
+        Vector3 moveDirection = new Vector3(h, v, 0) * (playerMoveSpeedBase + (pStat.IG_MSpd / 5)) * Time.deltaTime;
         transform.position += moveDirection;
     }
 
@@ -93,21 +93,15 @@ public class PlayerControl : MonoBehaviour
         {
             Debug.Log("파워레벨이 충분하지 않음");
         }
-        else if(pStat.USkillCount <= 0)
+        else if(pStat.CurUSkillCount <= 0)
         {
             Debug.Log("사용 가능 횟수가 부족");
         }
-        //else if(현재 스킬 사용중일 경우)
-
         
-
-        //PlayerMain.pUSkill.isSkillActivating = true;
         PlayerMain.pUSkill.SpecialFire(pStat.curPlayerID, pStat.IG_curPowerLevel);
 
-        pStat.USkillCount--;
+        pStat.CurUSkillCount--;
         PlayerMain.pUI.SetUniquSkillCount();
         pStat.CurPow = 0;
     }
-
-    
 }

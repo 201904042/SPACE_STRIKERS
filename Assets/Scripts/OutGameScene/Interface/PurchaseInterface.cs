@@ -25,7 +25,7 @@ public class PurchaseInterface : UIInterface
     {
         base.SetComponent();
         Content = transform.GetChild(2);
-        itemImage = Content.GetChild(0).GetComponent<Image>();
+        itemImage = Content.GetChild(0).GetChild(1).GetComponent<Image>();
         itemText = Content.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
         Btns = transform.GetChild(3);
         cancelBtn = Btns.GetChild(0).GetComponent<Button>();

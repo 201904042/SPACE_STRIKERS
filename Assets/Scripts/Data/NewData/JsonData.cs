@@ -17,6 +17,8 @@ public abstract class ReadOnlyData<T>
     {
         filePath = _filePath;
         string json = File.ReadAllText(filePath);
+        
+
         List<T> dataList = null;
         dataList = SetJsonList(json, dataList);
 
@@ -49,7 +51,7 @@ public abstract class ReadOnlyData<T>
             var wrapper = JsonUtility.FromJson<AbilityDataWrapper>(json);
             dataList = wrapper.AbilityData as List<T>;
         }
-        else if (typeof(T) == typeof(StoreItemData))
+        else if (typeof(T) == typeof(StoreData))
         {
             var wrapper = JsonUtility.FromJson<StoreDataWrapper>(json);
             dataList = wrapper.StoreData as List<T>;
@@ -69,20 +71,15 @@ public abstract class ReadOnlyData<T>
             var wrapper = JsonUtility.FromJson<SkillDataWrapper>(json);
             dataList = wrapper.SkillData as List<T>;
         }
-        else if (typeof(T) == typeof(AccountData))
-        {
-            var wrapper = JsonUtility.FromJson<AccountDataWrapper>(json);
-            dataList = wrapper.AccountData as List<T>;
-        }
         else if (typeof(T) == typeof(CharData))
         {
             var wrapper = JsonUtility.FromJson<CharacterDataWrapper>(json);
             dataList = wrapper.CharacterData as List<T>;
         }
-        else if (typeof(T) == typeof(PartsAbilityData))
+        else if (typeof(T) == typeof(PartsData))
         {
-            var wrapper = JsonUtility.FromJson<PartsAbilityDataWrapper>(json);
-            dataList = wrapper.PartsAbilityData as List<T>;
+            var wrapper = JsonUtility.FromJson<PartsDataWrapper>(json);
+            dataList = wrapper.PartsData as List<T>;
         }
         else if (typeof(T) == typeof(InvenData))
         {
@@ -112,7 +109,6 @@ public abstract class ReadOnlyData<T>
     }
 
     protected abstract int GetId(T data);
-
     // 검색
     public T GetData(int id)
     {
@@ -209,6 +205,62 @@ public abstract class EditableData<T> : ReadOnlyData<T>
     }
 
 }
+
+public abstract class OnlyAccountData
+{
+    public AccountData data = new AccountData();
+    protected string filePath;
+    public DataFieldType fieldType = DataFieldType.AccountData;
+
+    public void LoadData(string _filePath)
+    {
+
+        filePath = _filePath;
+        string json = File.ReadAllText(filePath);
+        // 최상위 필드를 포함하는 래퍼 클래스로 파싱
+        AccountDataWrapper wrapper = JsonUtility.FromJson<AccountDataWrapper>(json);
+        if (wrapper != null && wrapper.accountData != null)
+        {
+            data = wrapper.accountData;
+            Debug.Log("계정 데이터 로드 성공");
+        }
+        else
+        {
+            Debug.LogWarning("계정 데이터 로드 실패");
+        }
+
+        GetUserId(data);
+    }
+
+    protected virtual string GetUserId(AccountData data)
+    {
+        fieldType = DataFieldType.AccountData;
+        return data.id;
+    }
+
+    public AccountData GetData()
+    {
+        return data;
+    }
+
+    // JSON으로 저장하는 함수
+    public void SaveData()
+    {
+        AccountDataWrapper wrapper = new AccountDataWrapper { accountData = data };
+        string json = JsonUtility.ToJson(wrapper, true);
+
+        // JSON 필드명 변경
+        json = json.Replace("\"dataList\"", $"\"{DataManager.dataFieldNames[fieldType]}\"");
+
+        // 파일에 저장
+        File.WriteAllText(filePath, json);
+#if UNITY_EDITOR
+        UnityEditor.AssetDatabase.Refresh();
+#endif
+    }
+}
+
+
 
 // 제네릭 리스트를 JSON으로 감싸는 Wrapper 클래스
 [System.Serializable]

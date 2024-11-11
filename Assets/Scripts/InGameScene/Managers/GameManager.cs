@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         Canvas = GameObject.Find("Canvas")?.transform;
         TriggerCheck = GameObject.Find("TriggerCheck")?.transform;
+        Time.timeScale = 1;
 
         _stage.Init();
         _spawn.Init();
@@ -211,7 +212,7 @@ public class GameManager : MonoBehaviour
         return StageTime >= 1800f; // Ends game at 30 minutes
     }
 
-    private bool IsPlayerDead() => PlayerMain.pStat.CurHp <= 0;
+    private bool IsPlayerDead() => PlayerMain.pStat.IG_Life <= 0;
 
     private bool IsTimerActive() => !Spawn.isBossSpawned || !BattleSwitch;
 
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
         StageTime += Time.deltaTime;
 
         CheckGamePhase();
-        _ui.SetTimeText(minutes, seconds);
+        UI.SetTimeText(minutes, seconds);
     }
 
     private void CheckGamePhase()

@@ -147,7 +147,10 @@ public class EnemyObject : MonoBehaviour
         isDropItem = false;
 
         GetComponent<SpriteRenderer>().color = Color.white;
-        hpBar?.gameObject.SetActive(false);
+        if (hpBar.gameObject.activeSelf)
+        {
+            hpBar.gameObject.SetActive(false);
+        }
         if (enemyBehavior != null)
         {
             StopCoroutine(enemyBehavior);
@@ -165,18 +168,18 @@ public class EnemyObject : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void EnemyDamaged(GameObject hitObject, int damage)
     {
-        if (!isDamageable)
-        {
-            return;
-        }
-        ActiveHitEffect();
-        curHp = Mathf.Max(curHp - damage, 0);
-        UpdateHpBarValue();
-        if(curHp == 0)
-        {
-            EnemyDeath();
-        }
-        Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
+        //if (!isDamageable)
+        //{
+        //    return;
+        //}
+        //ActiveHitEffect();
+        //curHp = Mathf.Max(curHp - damage, 0);
+        //UpdateHpBarValue();
+        //if(curHp == 0)
+        //{
+        //    EnemyDeath();
+        //}
+        //Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
     }
 
     protected void UpdateHpBarValue()

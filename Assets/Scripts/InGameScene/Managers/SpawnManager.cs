@@ -228,23 +228,23 @@ public class SpawnManager
 
     private IEnumerator RouteTimeSpawn() //정해진 시간에의한 패턴시간( 10 -> 5)초에 한번씩 패턴 실행
     {
-        float spanwTime = 10;
+        float spawnDelay = 10;
         while (true)
         {
             Debug.Log("정기 스폰");
             StartCoroutine(SpawnRandomPattern(true));
-            yield return new WaitForSeconds(spanwTime);
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
     private IEnumerator RandomTimeSpawn() //랜덤한 시간에 의한 패턴시간/2 (5-> 2.5)초를 기준으로 +- 1초의 스폰시간을 가짐
     {
-        float spanwTime = 5;
+        float spawnDelay = 5;
         float randomDelay = 0;
         while (true)
         {
             randomDelay = Random.Range(-1, 2); //-1에서 1초 사이의 랜덤한 딜레이를 줌
-            spanwTime += randomDelay;
-            yield return new WaitForSeconds(spanwTime);
+            spawnDelay += randomDelay;
+            yield return new WaitForSeconds(spawnDelay);
             Debug.Log("랜덤 스폰");
             StartCoroutine(SpawnRandomPattern(false));
         }

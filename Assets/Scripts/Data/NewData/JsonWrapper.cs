@@ -9,6 +9,14 @@ public class DataWrapper<T>
     public List<T> Data;
 }
 
+//onlyAccount
+[System.Serializable]
+public class AccountDataWrapper
+{
+    public AccountData accountData;
+}
+
+
 //ReadOnly
 [System.Serializable]
 public class MasterDataWrapper
@@ -19,7 +27,7 @@ public class MasterDataWrapper
 [System.Serializable]
 public class StoreDataWrapper
 {
-    public List<StoreItemData> StoreData;
+    public List<StoreData> StoreData;
 }
 
 [System.Serializable]
@@ -46,20 +54,14 @@ public class SkillDataWrapper
     public List<SkillData> SkillData;
 }
 
-
-
 //Writable
 [System.Serializable]
-public class PartsAbilityDataWrapper
+public class PartsDataWrapper
 {
-    public List<PartsAbilityData> PartsAbilityData;
+    public List<PartsData> PartsData;
 }
 
-[System.Serializable]
-public class AccountDataWrapper
-{
-    public List<AccountData> AccountData;
-}
+
 
 [System.Serializable]
 public class CharacterDataWrapper

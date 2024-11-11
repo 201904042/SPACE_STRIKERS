@@ -13,7 +13,6 @@ public class PlayerUSkill : MonoBehaviour
     public int powLv => pStat.IG_curPowerLevel;
   
     public bool isSkillActivating; //현재 스패셜 공격이 실행중인가
-
     public void Init()
     {
         isSkillActivating = false;
@@ -50,14 +49,14 @@ public class PlayerUSkill : MonoBehaviour
 
     }
 
-    public void SpecialFire(int charId,int powLevel) //컨트롤러의 키입력함수에 사용
+    public IEnumerator SpecialFire(int charId,int powLevel) //컨트롤러의 키입력함수에 사용
     {
         Debug.Log($"{pStat.curPlayerID}의 {powLevel}레벨 특수 스킬");
 
         UniqueSkill targetSkill = GetUniqueSkill(charId);
-        StartCoroutine(targetSkill.ActivateSkillCoroutine(powLevel));
-        //스킬 활성화시 파워레벨 초기화
-        
+        isSkillActivating = true;
+        yield return StartCoroutine(targetSkill.ActivateSkillCoroutine(powLevel));
+        isSkillActivating = false;
     }
 
     //public IEnumerator character1SpecialOn()

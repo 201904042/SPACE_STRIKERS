@@ -9,7 +9,6 @@ using UnityEngine.UIElements;
 public class E_531 : E_BossBase
 {
     private Vector3 startPos;
-    private bool isCollideStopLine;
     private void Awake() //최초 아이디 부여
     {
         id = 531;
@@ -18,7 +17,6 @@ public class E_531 : E_BossBase
     protected override void SetStat()
     {
         base.SetStat();
-        isCollideStopLine = false;
     }
 
     protected override IEnumerator AppearMove() //생성시 등장할때 움직임
@@ -215,9 +213,5 @@ public class E_531 : E_BossBase
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-        if (collision.CompareTag("Enemy_StopZone"))
-        {
-            isCollideStopLine = true;
-        }
     }
 }

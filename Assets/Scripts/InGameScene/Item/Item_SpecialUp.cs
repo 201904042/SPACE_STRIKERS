@@ -16,7 +16,7 @@ public class Item_SpecialUp : Ingame_Item
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.Game.Pool.ReleasePool(gameObject);
-            pStat.USkillCount++;
+            pStat.CurUSkillCount++;
         }
     }
 }

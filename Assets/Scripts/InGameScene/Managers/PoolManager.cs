@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.MaterialProperty;
 
 
 public class PoolManager 
@@ -31,16 +32,16 @@ public class PoolManager
         playerProjDataList = new List<PlayerProjData>();
         OtherProjDataList = new List<OtherProjData>();
 
+        //생각해보면 미리 할당할 필요없이 필요할때 딕셔너리에 널으면 되잖음. 체크할것
         FindDataObject(PlayerDataPath, playerProjDataList);
         FindDataObject(OtherDataPath, OtherProjDataList);
-
         foreach (int id in useEnemyList.Keys)
         {
             enemyDic[id] = new List<GameObject>();
         }
 
-        InitializeDictionary(playerProjDic);
-        InitializeDictionary(otherProjDic);
+        //InitializeDictionary(playerProjDic);
+        //InitializeDictionary(otherProjDic);
 
         //풀로 생성된 객체들의 부모 위치
         Transform Pools = GameObject.Find(PoolObjName).transform;
@@ -81,7 +82,14 @@ public class PoolManager
     /// </summary>
     public GameObject GetPlayerProj(PlayerProjType projType, Vector2 position, Quaternion rotation)
     {
+        if (!playerProjDic.ContainsKey(projType))
+        {
+            //새로운 풀 생성
+            playerProjDic.Add(projType, new List<GameObject>());
+        }
+
         List<GameObject> objectList = playerProjDic[projType]; //해당 타입의 리스트를 지정
+       
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
             if (!obj.activeInHierarchy) //비활성화상태인 오브젝트가 있다면 해당 오브젝트 반환
@@ -115,6 +123,12 @@ public class PoolManager
     /// </summary>
     public GameObject GetOtherProj(OtherProjType projType, Vector2 position, Quaternion rotation)
     {
+        if (!otherProjDic.ContainsKey(projType))
+        {
+            //새로운 풀 생성
+            otherProjDic.Add(projType, new List<GameObject>());
+        }
+
         List<GameObject> objectList = otherProjDic[projType]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {
@@ -150,6 +164,13 @@ public class PoolManager
     /// </summary>
     public GameObject GetEnemy(int id, Vector2 position, Quaternion rotation)
     {
+        if (!enemyDic.ContainsKey(id))
+        {
+            //새로운 풀 생성
+            enemyDic.Add(id, new List<GameObject>());
+        }
+
+
         List<GameObject> objectList = enemyDic[id]; //해당 타입의 리스트를 지정
         foreach (GameObject obj in objectList) //리스트에 오브젝트 검색
         {

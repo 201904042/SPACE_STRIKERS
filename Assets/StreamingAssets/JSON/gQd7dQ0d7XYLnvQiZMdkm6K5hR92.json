@@ -1,0 +1,284 @@
+{
+"gQd7dQ0d7XYLnvQiZMdkm6K5hR92" : {
+  "accountData": {
+    "id": "gQd7dQ0d7XYLnvQiZMdkm6K5hR92",
+    "name": "master",
+    "level": 3,
+    "exp": 13,
+    "stageProgress": 5,
+    "useChar": 101,
+    "useParts": [
+      19,
+      18,
+      0,
+      0
+    ],
+    "planetIndex": 1,
+    "stageIndex": 3
+  },
+  "CharacterData": [
+    {
+      "id": 101,
+      "name": "캐릭터1",
+      "level": 2,
+      "abilityDatas": [
+        {
+          "key": 1,
+          "value": 50
+        },
+        {
+          "key": 2,
+          "value": 50
+        },
+        {
+          "key": 3,
+          "value": 10
+        },
+        {
+          "key": 4,
+          "value": 10
+        },
+        {
+          "key": 5,
+          "value": 100
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "name": "캐릭터2",
+      "level": 3,
+      "abilityDatas": [
+        {
+          "key": 1,
+          "value": 40
+        },
+        {
+          "key": 2,
+          "value": 40
+        },
+        {
+          "key": 3,
+          "value": 10
+        },
+        {
+          "key": 4,
+          "value": 10
+        },
+        {
+          "key": 5,
+          "value": 100
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "name": "캐릭터3",
+      "level": 1,
+      "abilityDatas": [
+        {
+          "key": 1,
+          "value": 10
+        },
+        {
+          "key": 2,
+          "value": 10
+        },
+        {
+          "key": 3,
+          "value": 10
+        },
+        {
+          "key": 4,
+          "value": 10
+        },
+        {
+          "key": 5,
+          "value": 100
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "name": "캐릭터4",
+      "level": 1,
+      "abilityDatas": [
+        {
+          "key": 1,
+          "value": 10
+        },
+        {
+          "key": 2,
+          "value": 10
+        },
+        {
+          "key": 3,
+          "value": 10
+        },
+        {
+          "key": 4,
+          "value": 10
+        },
+        {
+          "key": 5,
+          "value": 100
+        }
+      ]
+    }
+  ],
+  "InvenData": [
+    {
+      "id": 1,
+      "masterId": 1,
+      "name": "미네랄",
+      "quantity": 913900
+    },
+    {
+      "id": 2,
+      "masterId": 2,
+      "name": "크립트",
+      "quantity": 50000
+    },
+    {
+      "id": 3,
+      "masterId": 4,
+      "name": "하급뽑기권",
+      "quantity": 3
+    },
+    {
+      "id": 4,
+      "masterId": 5,
+      "name": "중급뽑기권",
+      "quantity": 1
+    },
+    {
+      "id": 5,
+      "masterId": 6,
+      "name": "고급뽑기권",
+      "quantity": 1
+    },
+    {
+      "id": 6,
+      "masterId": 101,
+      "name": "캐릭터1",
+      "quantity": 1
+    },
+    {
+      "id": 7,
+      "masterId": 102,
+      "name": "캐릭터2",
+      "quantity": 1
+    },
+    {
+      "id": 11,
+      "masterId": 302,
+      "name": "전선",
+      "quantity": 2
+    },
+    {
+      "id": 12,
+      "masterId": 303,
+      "name": "기어",
+      "quantity": 6
+    },
+    {
+      "id": 13,
+      "masterId": 304,
+      "name": "칩셋",
+      "quantity": 5
+    },
+    {
+      "id": 14,
+      "masterId": 305,
+      "name": "디스플레이",
+      "quantity": 4
+    },
+    {
+      "id": 15,
+      "masterId": 401,
+      "name": "학습ai",
+      "quantity": 2
+    },
+    {
+      "id": 16,
+      "masterId": 402,
+      "name": "자기장코어",
+      "quantity": 1
+    },
+    {
+      "id": 17,
+      "masterId": 403,
+      "name": "BST-01",
+      "quantity": 1
+    },
+    {
+      "id": 18,
+      "masterId": 206,
+      "name": "베리어 배터리",
+      "quantity": 1
+    },
+    {
+      "id": 19,
+      "masterId": 202,
+      "name": "추진체",
+      "quantity": 1
+    },
+    {
+      "id": 20,
+      "masterId": 301,
+      "name": "강철파편",
+      "quantity": 2
+    }
+  ],
+  "PartsData": [
+    {
+      "invenId": 18,
+      "isActive": false,
+      "level": 1,
+      "rank": 2,
+      "mainAbility": {
+        "key": 2,
+        "value": 10
+      },
+      "subAbilities": [
+        {
+          "key": 3,
+          "value": 9
+        },
+        {
+          "key": 4,
+          "value": 8
+        }
+      ]
+    },
+    {
+      "invenId": 19,
+      "isActive": false,
+      "level": 1,
+      "rank": 4,
+      "mainAbility": {
+        "key": 3,
+        "value": 10
+      },
+      "subAbilities": [
+        {
+          "key": 204,
+          "value": 20
+        },
+        {
+          "key": 203,
+          "value": 6
+        },
+        {
+          "key": 4,
+          "value": 13
+        },
+        {
+          "key": 3,
+          "value": 16
+        }
+      ]
+    }
+  ]
+}
+}

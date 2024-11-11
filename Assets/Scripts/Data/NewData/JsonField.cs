@@ -13,7 +13,7 @@ public struct MasterData
 }
 
 [System.Serializable]
-public class StoreItemData
+public class StoreData
 {
     public int storeItemId;
     public int masterId;
@@ -35,7 +35,7 @@ public class AbilityData
 }
 
 [System.Serializable]
-public class PartsAbilityData
+public class PartsData
 {
     public int invenId;
     public bool isActive;
@@ -48,16 +48,17 @@ public class PartsAbilityData
 [System.Serializable]
 public class AccountData
 {
-    public int id;
+    public string id;
     public string name;
     public int level;
     public int exp;
-    public List<int> needExp;
     public int stageProgress;
     public int useChar;
     public int[] useParts;
     public int planetIndex;
     public int stageIndex;
+
+    public const int DefaultMaxExp = 5;
 }
 
 [System.Serializable]

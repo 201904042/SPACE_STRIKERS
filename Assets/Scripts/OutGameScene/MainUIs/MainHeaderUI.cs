@@ -19,6 +19,8 @@ public class MainHeaderUI : MainUIs
 
     public Button optionbtn;
 
+    
+
     protected override void Awake()
     {
         base.Awake();
@@ -47,8 +49,8 @@ public class MainHeaderUI : MainUIs
 
     private void SetUIs()
     {
-        AccountData accountData = DataManager.account.GetData(0);
-        //accountImage 지웅의 로그인 정보 연결시 설정 가능
+        AccountData accountData = DataManager.account.GetData();
+        //accountImage 지웅의 로그인 정보 연결시 설정 가능)
         accountName.text = accountData.name;
         ChangeLevelValue();
         Sprite mineralImage = Resources.Load<Sprite>(DataManager.master.GetData(1).spritePath);
@@ -71,14 +73,11 @@ public class MainHeaderUI : MainUIs
 
     public void ChangeLevelValue()
     {
-        AccountData accountData = DataManager.account.GetData(0);
-        DataManager.account.CalculateLevel();
-
-        int currentLevelExp = accountData.level > 1 ? accountData.needExp[accountData.level - 2] : 0; // 현재 레벨의 시작 경험치
-        int nextLevelExp = accountData.needExp[accountData.level - 1]; // 다음 레벨의 필요 경험치
+        AccountData accountData = DataManager.account.GetData();
+        float maxExp = AccountData.DefaultMaxExp * accountData.level;
 
         // 슬라이더 비율 계산
-        accountExp.value = (float)(accountData.exp - currentLevelExp) / (nextLevelExp - currentLevelExp);
+        accountExp.value = accountData.exp / maxExp;
 
         accountExp.GetComponentInChildren<TextMeshProUGUI>().text = $"lv : {accountData.level}";
     }

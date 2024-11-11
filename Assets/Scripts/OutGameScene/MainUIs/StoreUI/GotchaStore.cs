@@ -172,7 +172,7 @@ public class GotchaStore : MonoBehaviour
         
 
         //ÆÄÃ÷ ½ºÅÝ¿¡ ½ºÅÝµé ¼³Á¤
-        PartsAbilityData newParts = new PartsAbilityData()
+        PartsData newParts = new PartsData()
         {
             invenId = newPartsInven.id,
             isActive = false,

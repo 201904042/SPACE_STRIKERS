@@ -15,7 +15,7 @@ public class PlayerBulletLauncher : LauncherStat
         projDamageRate = PlayerMain.bulletBaseDamageRate;
         projSpeed = PlayerMain.bulletBaseSpeed;
         //최종 발사 주기(초) = 플레이어 공격속도 = 무기별 기본 공격속도 / (1 + (플레이어 공격속도 - 10(기준)) / 10(기준))
-        attackInterval = projFireDelay / (1 + (float)(pAtkSpd - PlayerStat.basicStat) / PlayerStat.basicStat);
+        attackInterval = projFireDelay / (1 + (float)(pAtkSpd - PlayerStat.BasicStat) / PlayerStat.BasicStat);
         
 
         isReadyToAttack = true;

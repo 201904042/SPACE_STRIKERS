@@ -32,7 +32,11 @@ public class OG_UIManager : MonoBehaviour
     public static ItemInformInterface itemInformInterface;
 
     //Prefab
-    public GameObject itemAmountPref;
+
+    public const string InvenItemUIPath = "UI/OutGame/Main/Item/InvenItemUI";
+    public const string ItemAmountUIPath = "UI/OutGame/Main/Item/ItemAmountUI";
+    public GameObject InvenItemUI;
+    public GameObject ItemAmountUI;
 
     private void Awake()
     {
@@ -71,6 +75,9 @@ public class OG_UIManager : MonoBehaviour
         gotchaInterface = interfaceUIs.GetComponentInChildren<GotchaInterface>();
         purchaseInterface = interfaceUIs.GetComponentInChildren<PurchaseInterface>();
         itemInformInterface = interfaceUIs.GetComponentInChildren<ItemInformInterface>();
+
+        InvenItemUI = Managers.LoadInResources<GameObject>(InvenItemUIPath);
+        ItemAmountUI = Managers.LoadInResources<GameObject>(ItemAmountUIPath);
     }
 
     private void UIInit()

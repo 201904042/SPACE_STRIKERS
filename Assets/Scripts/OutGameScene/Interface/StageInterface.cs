@@ -137,7 +137,7 @@ public class StageInterface : UIInterface
 
     private bool CheckIfFirstClear()
     {
-        if (curStage <= DataManager.account.GetData(0).stageProgress)
+        if (curStage <= DataManager.account.GetStageProgress())
         {
             return false;
         }

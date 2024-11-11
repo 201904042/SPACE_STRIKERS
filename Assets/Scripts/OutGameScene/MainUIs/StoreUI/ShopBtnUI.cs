@@ -15,7 +15,7 @@ public class ShopBtnUI : MonoBehaviour
     public Button button;
     private void Awake()
     {
-        itemImage = transform.GetChild(0).GetComponent<Image>();
+        itemImage = transform.GetChild(0).GetChild(1).GetComponent<Image>();
         costText = GetComponentInChildren<TextMeshProUGUI>();
         button = GetComponent<Button>();
     }

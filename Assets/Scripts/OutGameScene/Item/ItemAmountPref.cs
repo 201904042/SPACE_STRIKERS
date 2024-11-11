@@ -30,7 +30,7 @@ public class ItemAmountPref : MonoBehaviour
         itemImage.sprite = null;
         needAmountText.text = "";
         ownAmountText.text = "";
-        ownAmountText.color = Color.black;
+        ownAmountText.color = Color.white;
     }
 
     public void SetAmountUI(int masterId, float needAmount)

@@ -14,21 +14,6 @@ public class PlayerProjectile : Projectile
 {
     public PlayerStat playerStat => PlayerMain.pStat; //플레이어의 데미지를 불러올 스텟
     [SerializeField] protected List<GameObject> hittedEnemyList; //isHitOnce가 false라면 충돌한 적을 저장
-
-    ////todo -> 적리뉴얼후 적 스크립트로 바꿔보기
-    //[SerializeField] protected int damageRate; 
-    //[SerializeField] protected int speed;
-    //[SerializeField] protected float liveTime;
-    //[SerializeField] protected float range;
-
-    //protected int finalDamage; //플레이어의 스텟과 발사체의 데미지증폭을 곱하여 최종적으로 적용할 데미지
-
-    //protected Coroutine activated;
-
-    //protected Vector3 projScaleInstance; //발사체의 원래크기
-
-    //[SerializeField] protected bool isParameterSet; //파라미터가 설정됨? 설정되어야 움직임 : default =false
-
     protected Coroutine damaging;
 
     [SerializeField] protected bool isHitOnce;  //해당 발사체가 한번의 타격만을 다루는지 : default = true 기본적으로 한번의 데미지 처리 수행

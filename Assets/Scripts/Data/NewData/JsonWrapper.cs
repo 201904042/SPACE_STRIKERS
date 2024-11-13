@@ -13,7 +13,7 @@ public class DataWrapper<T>
 [System.Serializable]
 public class AccountDataWrapper
 {
-    public AccountData accountData;
+    public AccountData AccountData;
 }
 
 

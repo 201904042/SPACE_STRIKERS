@@ -7,20 +7,6 @@ using UnityEngine;
 
 public class Auth_Firebase
 {
-    private static Auth_Firebase instance = null;
-    public static Auth_Firebase Instance
-    {
-        get
-        {
-            if(instance == null)
-            {
-                instance = new Auth_Firebase();
-            }
-
-            return instance;
-        }
-    }
-
     public Action<bool> LoginState;
 
     public FirebaseAuth auth;
@@ -67,19 +53,16 @@ public class Auth_Firebase
             FirebaseUser newUser = authResult.User;
             isSuccess = true;
             Debug.Log("회원가입 성공");
-
-            await DB_Firebase.Instance.GetGameDataAsync();
-            await DB_Firebase.Instance.GetBaseAccountDataAsync();
+            
+            await Managers.Instance.FB_Db.GetGameDataAsync();
+            await Managers.Instance.FB_Db.GetBaseAccountDataAsync();
             Debug.Log("데이터 완료");
 
-            await DB_Firebase.Instance.UploadWritableJsonFilesAsync();
+            await Managers.Instance.FB_Db.UploadAllWritableJsonFilesAsync();
             Debug.Log("뉴 데이터 전송 완료");
 
             Managers.Instance.Data.Init();
             Debug.Log("Auth 데이터 초기화");
-
-            
-
         }
         catch (Exception ex)
         {
@@ -103,8 +86,7 @@ public class Auth_Firebase
             isSuccess = true;
             Debug.Log("로그인 완료");
 
-            await DB_Firebase.Instance.GetGameDataAsync();
-            await DB_Firebase.Instance.GetAccountDataAsync(UserId);
+            await Managers.Instance.FB_Db.GetAccountDataAsync(UserId);
             Debug.Log("데이터 완료");
             Managers.Instance.Data.Init();
             Debug.Log("Auth 데이터 초기화");
@@ -121,7 +103,8 @@ public class Auth_Firebase
 
     public void LogOut()
     {
-        DB_Firebase.DeleteJsonData();
+        Managers.Instance.Data.ClearAllData();
+        DB_Firebase.DeleteAccountData();
         auth.SignOut();
     }
 }

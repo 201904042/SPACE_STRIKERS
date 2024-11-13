@@ -78,7 +78,7 @@ public class PlayerStat : MonoBehaviour
 
     [SerializeField] private float IG_CurHp;
     [SerializeField] private float IG_PowValue; //지금까지 모인 파워값
-    [SerializeField] private int IG_CurExp;
+    [SerializeField] private float IG_CurExp;
     [SerializeField] private int IG_USkillCount;
 
     public float CurHp
@@ -98,12 +98,12 @@ public class PlayerStat : MonoBehaviour
             pUI.HpBarChange();
         }
     }
-    public int CurExp
+    public float CurExp
     {
         get => IG_CurExp;
         set
         {
-            IG_CurExp = value + (int)(value* IG_InGameExpRate/100);
+            IG_CurExp = value;
             if (IG_CurExp >= IG_MaxExp)
             {
                 IG_Level++;
@@ -132,10 +132,11 @@ public class PlayerStat : MonoBehaviour
         set
         {
             IG_PowValue = value;
+            PowerLvSet(IG_PowValue);
             pUI.PowBarChange();
         }
     }
-    public int IG_curPowerLevel => PowerLvSet(IG_PowValue); //파워값에 비례한 파워 레벨
+    public int IG_curPowerLevel; //파워값에 비례한 파워 레벨
 
     [Header("인게임 패시브 스킬 증가율")]
     // PassiveSkill
@@ -163,7 +164,7 @@ public class PlayerStat : MonoBehaviour
     {
         curPlayerID = id;
         PlayerMain.Instance.SetCharSprite(curPlayerID);
-
+        PlayerMain.pUI.SetUniqueSkillImage(curPlayerID);
         SetStat(curPlayerID);
     }
 
@@ -182,7 +183,7 @@ public class PlayerStat : MonoBehaviour
         IG_BossDamageRate = DefaultRate;
         IG_InGameExpRate = DefaultRate;
         IG_ItemDropRate = 30;
-        IG_PowerGaugeSpeed = 0;
+        IG_PowerGaugeSpeed = DefaultRate;
         IG_USkillCount = DefaultUSkillCount;
         IG_AccountExpRate = DefaultRate;
         IG_Life = DefaultCount;
@@ -451,15 +452,15 @@ public class PlayerStat : MonoBehaviour
     {
         if (curPow > powlv1Max && IG_curPowerLevel == 0)
         {
-            return 1;
+            IG_curPowerLevel =  1;
         }
         else if (curPow > powlv2Max && IG_curPowerLevel == 1)
         {
-            return 2;
+            IG_curPowerLevel = 2;
         }
         else if (curPow >= powMax && IG_curPowerLevel == 2)
         {
-            return 3;
+            IG_curPowerLevel = 3;
         }
 
         return 0;

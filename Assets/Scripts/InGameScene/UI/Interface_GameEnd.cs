@@ -65,12 +65,19 @@ public class Interface_GameEnd : UIInterface
         SetInterface();
     }
 
-    private void GetRewards()
+    private async void GetRewards()
     {
         if (!Game.IsClear) //클리어 실패시 보상 없음
         {
             return;
         }
+
+        //현재 스테이지 코드가 완료한 스테이지코드보다 크다면 스테이지코드 업데이트
+        if(GameManager.Game.Stage.stageCode > DataManager.account.GetStageProgress())
+        {
+            DataManager.account.SetStageProgress(GameManager.Game.Stage.stageCode);
+        }
+        
 
         if (Stage.curMode == GameMode.Infinite)
         {
@@ -122,7 +129,8 @@ public class Interface_GameEnd : UIInterface
             rewardList.Add(new StageReward(reward.itemId, (int)(reward.quantity * (RewardRate / 100))));
             DataManager.inven.DataAddOrUpdate(reward.itemId, (int)(reward.quantity * (RewardRate / 100)));
         }
-        DataManager.inven.SaveData();
+
+        await DataManager.inven.SaveData();
     }
 
     public void SetInterface()

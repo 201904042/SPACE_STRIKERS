@@ -53,13 +53,14 @@ public class E_BossBase : EnemyObject
             return;
         }
         ActiveHitEffect();
-        curHp = Mathf.Max(curHp - (damage * (int)(damage * PlayerMain.pStat.IG_BossDamageRate / 100)), 0);
+        int finalDamage = damage * (int)(damage * PlayerMain.pStat.IG_MobDamageRate / 100);
+        curHp = Mathf.Max(curHp - finalDamage, 0);
+        Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {finalDamage}의 데미지를 입음");
         UpdateHpBarValue();
         if (curHp == 0)
         {
             EnemyDeath();
         }
-        Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
 
         if (curHp <= maxHp * 0.5f && phase == 1) //hp가 절반에 다다르고 현재 페이즈가 1이라면 페이즈 전환 -> 하위 스크립트로 이동
         {

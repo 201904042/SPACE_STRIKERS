@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum GameMode
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
             UI.SetScoreText(value);
         }
     }
-
+    [SerializeField]
     private bool _isGameStarted;
     public bool IsClear { get; private set; }
     public bool IsPerfectClear { get; private set; }
@@ -75,6 +77,8 @@ public class GameManager : MonoBehaviour
         Canvas = GameObject.Find("Canvas")?.transform;
         TriggerCheck = GameObject.Find("TriggerCheck")?.transform;
         Time.timeScale = 1;
+
+        yield return new WaitUntil(() => Managers.Instance.Data.isDone == true);
 
         _stage.Init();
         _spawn.Init();
@@ -122,9 +126,20 @@ public class GameManager : MonoBehaviour
 
         StartSpawningEnemies();
 
-        while (!IsPlayerDead() && !IsGameClear())
+        while(true)
         {
             yield return new WaitUntil(() => BattleSwitch);
+
+            if (IsPlayerDead()) //플레이어가 죽으면 종료 //게임이 클리어되면 종료
+            {
+                break;
+            }
+
+            if (IsGameClear()) //플레이어가 죽으면 종료 //게임이 클리어되면 종료
+            {
+                break;
+            }
+
 
             if (IsTimerActive())
                 UpdateStageTimer();
@@ -212,7 +227,10 @@ public class GameManager : MonoBehaviour
         return StageTime >= 1800f; // Ends game at 30 minutes
     }
 
-    private bool IsPlayerDead() => PlayerMain.pStat.IG_Life <= 0;
+    private bool IsPlayerDead() 
+    {
+        return PlayerMain.pStat.IG_Life <= 0;
+    }
 
     private bool IsTimerActive() => !Spawn.isBossSpawned || !BattleSwitch;
 
@@ -250,7 +268,7 @@ public class GameManager : MonoBehaviour
             Destroy(target);
     }
 
-    public static T LoadFromResources<T>(string path) where T : Object
+    public static T LoadFromResources<T>(string path) where T : UnityEngine.Object
     {
         T asset = Resources.Load<T>(path);
         if (asset == null)

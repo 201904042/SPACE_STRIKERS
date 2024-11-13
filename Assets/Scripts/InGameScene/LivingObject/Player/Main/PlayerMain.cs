@@ -18,12 +18,12 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
     public const float TroopBaseInterval = 1f;
     public const float ShieldBaseInterval = 5; //쉴드의 재생성 시간
 
-    public const int bulletBaseDamageRate = 100;  // 각 기본 데미지 증가율
-    public const int MissileBaseDamageRate = 150; // 최종 데미지  = 플레이어 공격력 + (플공 * 증가율)
-    public const int ExplosionBaseDamageRate = 80;
+    public const int bulletBaseDamageRate = 50;  // 각 기본 데미지 증가율
+    public const int MissileBaseDamageRate = 80; // 최종 데미지  = 플레이어 공격력 + (플공 * 증가율)
+    public const int ExplosionBaseDamageRate = 40;
     public const int HomingBaseDamageRate = 30;
     public const int TroopBaseDamageRate = 80; // 80 => 100 => 120
-    public const float ShieldDamageRate = 300; //쉴드의 재생성 시간
+    public const float ShieldDamageRate = 300; 
 
     public const int bulletBaseSpeed = 10;
     public const int MissileBaseSpeed = 5;
@@ -168,15 +168,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     public IEnumerator PlayerClearAnim()
     {
-        while(true)
-        {
-            if(transform.position.y > 5) //카메라 밖으로 나가는 기점
-            {
-                break;
-            }
-            transform.position += transform.up * 5 * Time.deltaTime;
-            yield return null;
-        }
+        yield return null;
     }
 
     private void IncreasePow()
@@ -188,7 +180,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
         if (pStat.CurPow < PlayerStat.powMax)
         {
-            float addValue = Time.deltaTime * pStat.IG_PowerGaugeSpeed;
+            float addValue = Time.deltaTime * pStat.IG_PowerGaugeSpeed/100;
             pStat.CurPow = Mathf.Min(pStat.CurPow + addValue, PlayerStat.powMax); // 초당 지정된 속도로 게이지 누적
         }
 
@@ -270,6 +262,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
         TestButtons.Find("ShooterDown").GetComponent<Button>().onClick.AddListener(ShooterDownBtn);
         TestButtons.Find("NextChar").GetComponent<Button>().onClick.AddListener(NextBtn);
         TestButtons.Find("PrevChar").GetComponent<Button>().onClick.AddListener(PrevBtn);
+        TestButtons.Find("SpawnBoss").GetComponent<Button>().onClick.AddListener(GameManager.Game.SpawnBoss);
         Transform UniqueBtn = TestButtons.Find("UniqueBtn");
         for(int i = 0; i < UniqueBtn.childCount; i++)
         {
@@ -322,7 +315,7 @@ public class PlayerMain : MonoBehaviour //플레이어의 메인 스크립트
 
     public void USkillBtn(int i)
     {
-        pUSkill.SpecialFire(pStat.curPlayerID, i);
+        StartCoroutine(pUSkill.SpecialFire(pStat.curPlayerID, i));
     }
 
     #endregion

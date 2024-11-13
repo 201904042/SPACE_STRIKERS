@@ -88,7 +88,7 @@ public class LoginInterface : UIInterface
                 yield break;
             }
 
-            Task<bool> createTask = Auth_Firebase.Instance.CreateAccountAsync(emailField.text, pwField.text);
+            Task<bool> createTask = Managers.Instance.FB_Auth.CreateAccountAsync(emailField.text, pwField.text);
             yield return new WaitUntil(() => createTask.IsCompleted);
 
             if (createTask.Result)
@@ -136,7 +136,7 @@ public class LoginInterface : UIInterface
                 yield break;
             }
 
-            Task<bool> loginTask = Auth_Firebase.Instance.LoginAsync(emailField.text, pwField.text);
+            Task<bool> loginTask = Managers.Instance.FB_Auth.LoginAsync(emailField.text, pwField.text);
             yield return new WaitUntil(() => loginTask.IsCompleted);
 
             if (loginTask.Result)

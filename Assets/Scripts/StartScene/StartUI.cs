@@ -7,21 +7,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StartUI : MainUIs
+public class StartUI : MonoBehaviour
 {
-    private static StartUI instance;
-    public static StartUI Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new StartUI();
-            }
-
-            return instance;
-        }
-    }
     public static LoginInterface loginInterface;
     public static TFInterface tfInterface;
     public static AlertInterface alertInterface;
@@ -41,22 +28,68 @@ public class StartUI : MainUIs
 
     public bool isLogin = false;
 
-
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        Managers.Instance.FB_Auth.LoginState += OnChangeState;
+    }
+    protected void OnEnable()
+    {
+        // 로그인 상태 초기화
+        if (Managers.Instance.FB_Auth.user == null)
+        {
+            Managers.Instance.FB_Auth.Init();
+        }
 
-        Auth_Firebase.Instance.LoginState += OnChangeState;
-        Auth_Firebase.Instance.Init();
-
+        // UI 초기화
+        SetComponent();
+        SetInterfaces();
         SetButtons();
+
+        // 로그인 상태 반영
+        UpdateLoginState(Managers.Instance.FB_Auth.user != null);
+    }
+
+    private void OnDisable()
+    {
+        Managers.Instance.FB_Auth.LoginState -= OnChangeState;
+    }
+
+    private void OnChangeState(bool sign)
+    {
+        Debug.Log("로그인 상태가 변경되었습니다.");
+        UpdateLoginState(sign); // 로그인 상태 업데이트
+    }
+
+
+    // 로그인 상태에 따라 UI를 업데이트하는 메서드
+    private void UpdateLoginState(bool isLoggedIn)
+    {
+        if (isLoggedIn)
+        {
+            loginBtnText.text = "LogOut";
+            userInformText.text = Managers.Instance.FB_Auth.UserId;
+            isLogin = true;
+            if(loginInterface.gameObject.activeSelf == true)
+            {
+                loginInterface.CloseInterface();
+            }
+            
+        }
+        else
+        {
+            loginBtnText.text = "LogIn";
+            userInformText.text = "LogOut";
+            isLogin = false;
+        }
+
+        startBtn.interactable = isLogin;
     }
 
     
-    public override void SetComponent()
-    {
-        SetInterfaces();
 
+
+    public void SetComponent()
+    {
         backGround = transform.GetChild(0).GetComponent<Image>();
         optionBtn = transform.GetChild(1).GetComponent<Button>();
         Btns = transform.GetChild(2);
@@ -76,49 +109,54 @@ public class StartUI : MainUIs
         loginInterface = transform.parent.GetComponentInChildren<LoginInterface>();
         tfInterface = transform.parent.GetComponentInChildren<TFInterface>();
         alertInterface = transform.parent.GetComponentInChildren<AlertInterface>();
+        optionInterface = transform.parent.GetComponentInChildren<OptionInterface>();
+
         loginInterface.SetComponent();
         tfInterface.SetComponent();
         alertInterface.SetComponent();
+        optionInterface.SetComponent();
+        
         loginInterface.gameObject.SetActive(false);
         tfInterface.gameObject.SetActive(false);
         alertInterface.gameObject.SetActive(false);
-    }
-
-    private void OnChangeState(bool sign)
-    {
-        Debug.Log("로그인에 변화발생");
-        if (sign)
-        {
-            Debug.Log($"로그인이 완료됨 userId : {Auth_Firebase.Instance.UserId}");
-            loginInterface.CloseInterface();
-            loginBtnText.text = "LogOut";
-            userInformText.text = Auth_Firebase.Instance.UserId;
-            isLogin = true;
-        }
-        else
-        {
-            loginInterface.ResetAll();
-            loginBtnText.text = "LogIn";
-            userInformText.text = "LogOut";
-            isLogin = false;
-        }
-
-        startBtn.interactable = isLogin;
+        optionInterface.gameObject.SetActive(false);
     }
 
     private void SetButtons()
     {
+        optionBtn.onClick.RemoveAllListeners();
+        optionBtn.onClick.AddListener(OptionBtnHandler);
         for (int i = 0; i < Btns.childCount; i++)
         {
             Btns.GetChild(i).GetComponent<Button>().onClick.RemoveAllListeners();   
         }
 
+
         startBtn.onClick.AddListener(StartBtn);
         logInBtn.onClick.AddListener(LogInBtn);
+
+        //if (Managers.Instance.FB_Auth.user != null)
+        //{
+
+        //    loginBtnText.text = "LogOut";
+        //    userInformText.text = Managers.Instance.FB_Auth.UserId;
+        //    isLogin = true;
+        //}
+        //else
+        //{
+        //    loginBtnText.text = "LogIn";
+        //    userInformText.text = "LogOut";
+        //    isLogin = false;
+        //}
+        
         homePageBtn.onClick.AddListener(HomePageBtn);
         quitBtn.onClick.AddListener(EndBtn);
 
-        //startBtn.interactable = Auth_Firebase.Game.UserId == null ? false : true;
+    }
+
+    public void OptionBtnHandler()
+    {
+        optionInterface.OpenInterface();
     }
 
 
@@ -172,7 +210,7 @@ public class StartUI : MainUIs
 
         if ((bool)tFInterface.result)
         {
-            Auth_Firebase.Instance.LogOut();
+            Managers.Instance.FB_Auth.LogOut();
         }
         else
         {

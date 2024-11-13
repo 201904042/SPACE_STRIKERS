@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,8 +21,12 @@ public class MainUIs : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        //UI를 열때 초기화
-       
+        StartCoroutine(SetUI());
+    }
+
+    public virtual IEnumerator SetUI()
+    {
+        yield return new WaitUntil(() => Managers.Instance.Data.isDone == true);
     }
 
     public virtual void SetComponent()

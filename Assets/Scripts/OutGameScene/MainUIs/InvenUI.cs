@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,9 +47,10 @@ public class InvenUI : MainUIs
         laboBtn = Buttons.GetChild(1).GetComponent<Button>();
     }
 
-    protected override void OnEnable()
+
+    public override IEnumerator SetUI()
     {
-        base.OnEnable();
+        yield return base.SetUI();
         SetButtons();
 
         ChangeContent(partsContent);

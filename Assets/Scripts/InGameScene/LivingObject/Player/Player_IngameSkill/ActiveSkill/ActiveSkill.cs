@@ -62,6 +62,7 @@ public class ActiveSkill : InGameSkill
             SkillLevels.Add(skill.level, skill);
         }
         description = SkillLevels[curSkillLevel+1].Description;
+
     }
 
     public override void LevelUp()
@@ -73,6 +74,7 @@ public class ActiveSkill : InGameSkill
 
         SkillParameterSet(curSkillLevel);
         description = SkillLevels[curSkillLevel + 1].Description;
+        
     }
 
     //기본스킬에서는 레벨업시 적용, 유니크스킬은 발동 전 적용

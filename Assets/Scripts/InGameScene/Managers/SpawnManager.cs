@@ -40,7 +40,7 @@ public class SpawnManager
 
     private int stopIndex;
     private int spawnPhase => GameManager.Game.phase;
-    private float spawnTimer;
+    //private float spawnTimer;
     private float currentMinutes => GameManager.Game.minutes;
    
     public bool isBossSpawned; //보스가 생성되었는지
@@ -206,7 +206,7 @@ public class SpawnManager
         isBossSpawned = false;
         isBossDown = false;
         stopIndex = 1;
-        spawnTimer = initialSpawnTimer;
+        //spawnTimer = initialSpawnTimer;
 
         RouteSpawn = null;
         RandomSpawn = null;
@@ -231,7 +231,6 @@ public class SpawnManager
         float spawnDelay = 10;
         while (true)
         {
-            Debug.Log("정기 스폰");
             StartCoroutine(SpawnRandomPattern(true));
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -245,7 +244,6 @@ public class SpawnManager
             randomDelay = Random.Range(-1, 2); //-1에서 1초 사이의 랜덤한 딜레이를 줌
             spawnDelay += randomDelay;
             yield return new WaitForSeconds(spawnDelay);
-            Debug.Log("랜덤 스폰");
             StartCoroutine(SpawnRandomPattern(false));
         }
     }

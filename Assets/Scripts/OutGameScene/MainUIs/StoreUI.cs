@@ -23,11 +23,7 @@ public class StoreUI : MainUIs
     public GameObject[] StorePanels; 
     public Button[] StoreBtns;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
+   
     public override void SetComponent()
     {
         base.SetComponent();
@@ -50,9 +46,9 @@ public class StoreUI : MainUIs
         }
     }
 
-    protected override void OnEnable()
+    public override IEnumerator SetUI()
     {
-        base.OnEnable();
+        yield return base.SetUI();
         SetStoreBtns();
         SetUIBtn();
     }
@@ -122,7 +118,7 @@ public class StoreUI : MainUIs
     /// <summary>
     /// 구매할 아이템 정보 , 개당 구매 가격, 구매 개수
     /// </summary>
-    public static void TradeItem(TradeData data)
+    public static async void TradeItem(TradeData data, bool isPurchase = true)
     {
         MasterData tradeTargetMaster = DataManager.master.GetData(data.targetMasterId); //증가할 아이템
         InvenData tradeCostItem = new InvenData(); //감소할 아이템
@@ -157,17 +153,25 @@ public class StoreUI : MainUIs
         DataManager.inven.DataAddOrUpdate(data.targetMasterId, data.tradeAmount);
 
 
-        DataManager.inven.SaveData();
+        await DataManager.inven.SaveData();
 
         if(DataManager.master.GetData(tradeCostItem.masterId).type == MasterType.Parts||
             tradeTargetMaster.type == MasterType.Parts) // -> 파츠를 거래할경우 무조건 삭제가 일어나므로 
-            DataManager.parts.SaveData();
-
-        //완료시 파이어베이스로 보냄
-        //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(InvenData),DataManager.inven.GetFilePath());
+            await DataManager.parts.SaveData();
 
         //구매 성공시 알림 인터페이스 오픈
-        OG_UIManager.alertInterface.SetAlert("아이템을 구매하였습니다");
+        string text;
+        if (isPurchase)
+        {
+            text = "아이템을 구매하였습니다";
+        }
+        else
+        {
+            text = "아이템을 판매하였습니다";
+        }
+        OG_UIManager.alertInterface.SetAlert(text);
+
+        
     }
 }
  

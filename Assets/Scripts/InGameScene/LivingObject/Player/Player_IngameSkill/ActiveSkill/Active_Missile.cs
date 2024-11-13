@@ -10,8 +10,6 @@ public class Active_Missile : ActiveSkill
         SkillCode = 606;
         projType = PlayerProjType.Skill_Missile;
         SetLevel();
-        // 스킬 초기화 코드 (예: 스킬 레벨 세팅)
-        //Debug.Log("Active_Missile 초기화 완료");
         isInit = true;
     }
 

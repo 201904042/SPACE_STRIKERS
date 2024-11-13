@@ -25,7 +25,7 @@ public class SelectSkillBtn : MonoBehaviour
     {
         ResetData();
         skillData = skill;
-        skillImage.sprite = Resources.Load<Sprite>(DataManager.master.GetData(skill.SkillCode).spritePath); //todo db의 이미지대로
+        skillImage.sprite = Resources.Load<Sprite>(DataManager.master.GetData(skill.SkillCode).spritePath);
         levelText.text = $"lv . {skill.curSkillLevel}";
         descripText.text = skill.description;
     }

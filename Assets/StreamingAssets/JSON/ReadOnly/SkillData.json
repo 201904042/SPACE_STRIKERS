@@ -1,1 +1,1052 @@
-{ "SkillData": [{"id":601,"levels":[{"CoolTime":5,"Description":"에너지를 응집하여 사출합니다. 데미지 : 170%, 쿨타임 5초","DmgRate":150,"ProjCount":1,"ProjSpd":10,"level":1},{"CoolTime":5,"Description":"데미지+20% (170%)","DmgRate":170,"ProjCount":1,"ProjSpd":10,"level":2},{"AddEffect":[{"effect":3,"value1":1}],"CoolTime":4,"Description":"데미지+20%(190%), 쿨타임-1초(4), 관통+1(1)","DmgRate":190,"ProjCount":1,"ProjSpd":10,"level":3},{"AddEffect":[{"effect":3,"value1":1}],"CoolTime":4,"Description":"데미지+20%(210%)","DmgRate":210,"ProjCount":1,"ProjSpd":10,"level":4},{"AddEffect":[{"effect":3,"value1":2}],"CoolTime":3,"Description":"데미지+20%(230%), 쿨타임-1초(3), 관통+1(2)","DmgRate":230,"ProjCount":1,"ProjSpd":10,"level":5},{"AddEffect":[{"effect":3,"value1":2}],"CoolTime":3,"Description":"데미지+20%(250%)","DmgRate":250,"ProjCount":1,"ProjSpd":10,"level":6},{"AddEffect":[{"effect":3,"value1":3}],"CoolTime":3,"Description":"데미지+50%(300%), 관통+1(3)","DmgRate":300,"ProjCount":1,"ProjSpd":10,"level":7}],"type":1},{"id":602,"levels":[{"AddEffect":[{"effect":4,"value1":1},{"effect":1,"value1":30}],"CoolTime":5,"Description":"적을 느리게 만드는 범위충격탄을 사출. 범위에 들어온 적은 1초에 30% 피해를 입으며 30%둔화된다. 쿨타임 : 5초","DmgRate":30,"ProjCount":1,"ProjSpd":1,"level":1},{"AddEffect":[{"effect":4,"value1":1},{"effect":1,"value1":30}],"CoolTime":5,"Description":"데미지+15%(45%)","DmgRate":45,"ProjCount":1,"ProjSpd":1,"level":2},{"AddEffect":[{"effect":4,"value1":0.75},{"effect":1,"value1":50}],"CoolTime":5,"Description":"데미지+15%(60%), 타격딜레이 -0.25(0.75초), 둔화율 +20%(50%)","DmgRate":60,"ProjCount":1,"ProjSpd":1,"level":3},{"AddEffect":[{"effect":4,"value1":0.75},{"effect":1,"value1":50}],"CoolTime":5,"Description":"데미지+15%(75%)","DmgRate":75,"ProjCount":1,"ProjSpd":1,"level":4},{"AddEffect":[{"effect":4,"value1":0.5},{"effect":1,"value1":70}],"CoolTime":5,"Description":"데미지+15%(90%), 타격딜레이 -0.25(0.5초), 둔화율 +20%(70%)","DmgRate":90,"ProjCount":1,"ProjSpd":1,"level":5},{"AddEffect":[{"effect":4,"value1":0.5},{"effect":1,"value1":70}],"CoolTime":5,"Description":"데미지+15%(105%)","DmgRate":105,"ProjCount":1,"ProjSpd":1,"level":6},{"AddEffect":[{"effect":4,"value1":0.25},{"effect":1,"value1":70},{"effect":2,"value1":100}],"CoolTime":5,"Description":"데미지+15%(120%), 타격딜레이 -0.25(0.25초), 둔화율 +20%(50%), 둔화된 적에게 100% 피해증가","DmgRate":120,"ProjCount":1,"ProjSpd":1,"level":7}],"type":1},{"id":603,"levels":[{"AddEffect":[{"effect":4,"value1":1}],"CoolTime":10,"Description":"주변 적에게 20%의 피해를 주는 필드를 형성. 쿨타임10초, 유지시간 5초 , 타격딜레이 1초","DmgRate":20,"LiveTime":5,"ProjCount":1,"ProjSpd":0,"Size":2,"level":1},{"AddEffect":[{"effect":4,"value1":1}],"CoolTime":10,"Description":"데미지+10%(30%)","DmgRate":30,"LiveTime":5,"ProjCount":1,"ProjSpd":0,"Size":2,"level":2},{"AddEffect":[{"effect":4,"value1":0.75}],"CoolTime":10,"Description":"데미지+10%(40%),유지시간+1(6초), 크기+1, 타격딜레이 -0.25(0.75)","DmgRate":40,"LiveTime":6,"ProjCount":1,"ProjSpd":0,"Size":3,"level":3},{"AddEffect":[{"effect":4,"value1":0.75}],"CoolTime":10,"Description":"데미지+10%(50%), 관통+1(3)","DmgRate":50,"LiveTime":6,"ProjCount":1,"ProjSpd":0,"Size":3,"level":4},{"AddEffect":[{"effect":4,"value1":0.5}],"CoolTime":10,"Description":"데미지+10%(60%),유지시간+1(7초), 크기+1, 타격딜레이 -0.25(0.5)","DmgRate":60,"LiveTime":7,"ProjCount":1,"ProjSpd":0,"Size":4,"level":5},{"AddEffect":[{"effect":4,"value1":0.5}],"CoolTime":10,"Description":"데미지+10%(70%)","DmgRate":70,"LiveTime":7,"ProjCount":1,"ProjSpd":0,"Size":4,"level":6},{"AddEffect":[{"effect":4,"value1":0.25}],"CoolTime":10,"Description":"데미지+10%(80%),유지시간+1(8초), 크기+1, 타격딜레이 -0.25(0.25), 스킬이 끝나면 전방에 사출","DmgRate":80,"LiveTime":8,"ProjCount":10,"ProjSpd":10,"Size":5,"level":7}],"type":1},{"id":604,"levels":[{"CoolTime":3,"Description":"적을 추적하여 80%의 피해를 주는 미사일을 2회 발사. 쿨타임 3초","DmgRate":80,"ProjCount":2,"ProjSpd":20,"level":1},{"CoolTime":3,"Description":"개수 +2(4)","DmgRate":80,"ProjCount":4,"ProjSpd":20,"level":2},{"CoolTime":2.5,"Description":"개수 +2(6), 쿨타임 -0.5(2.5초)","DmgRate":80,"ProjCount":6,"ProjSpd":20,"level":3},{"CoolTime":2.5,"Description":"개수 +2(8), 데미지 +10(90%)","DmgRate":90,"ProjCount":8,"ProjSpd":20,"level":4},{"CoolTime":2,"Description":"개수 +2(10), 쿨타임 -0.5(2초)","DmgRate":90,"ProjCount":10,"ProjSpd":20,"level":5},{"CoolTime":2,"Description":"개수 +2(12)","DmgRate":90,"ProjCount":12,"ProjSpd":20,"level":6},{"CoolTime":1.5,"Description":"개수 +3(15), 데미지 +10(100%), 쿨타임 -0.5(1.5초)","DmgRate":100,"ProjCount":15,"ProjSpd":20,"level":7}],"type":1},{"id":605,"levels":[{"AddEffect":[{"effect":5,"value1":1.2,"value2":1.5}],"CoolTime":30,"Description":"범위 내 적을 자동 공격하는 드론을 1개 생성. 드론은 10초 동안 50%의 데미지를 가지며 1.2초의 속도로 공격. 쿨타임 30초","DmgRate":50,"LiveTime":10,"ProjCount":1,"ProjSpd":15,"level":1},{"AddEffect":[{"effect":5,"value1":1.2,"value2":1.5}],"CoolTime":30,"Description":"데미지+25%(75%)","DmgRate":75,"LiveTime":10,"ProjCount":1,"ProjSpd":15,"level":2},{"AddEffect":[{"effect":5,"value1":1,"value2":1.5}],"CoolTime":30,"Description":"생성개수 +1(2),데미지+25%(100%),드론 공격속도 -0.2(1초)","DmgRate":100,"LiveTime":10,"ProjCount":2,"ProjSpd":15,"level":3},{"AddEffect":[{"effect":5,"value1":1,"value2":1.75}],"CoolTime":25,"Description":"데미지+25%(125%), 유지시간+5(15), 감지범위+1","DmgRate":125,"LiveTime":15,"ProjCount":2,"ProjSpd":15,"level":4},{"AddEffect":[{"effect":5,"value1":0.8,"value2":1.75}],"CoolTime":25,"Description":"생성 개수 +1(3) 데미지+25%(150%), 드론 공격속도 -0.2(0.8)","DmgRate":150,"LiveTime":15,"ProjCount":3,"ProjSpd":15,"level":5},{"AddEffect":[{"effect":5,"value1":0.8,"value2":1.75}],"CoolTime":25,"Description":"데미지+25%(175%)","DmgRate":175,"LiveTime":15,"ProjCount":3,"ProjSpd":15,"level":6},{"AddEffect":[{"effect":5,"value1":0.5,"value2":2}],"CoolTime":20,"Description":"생성 개수 +1(4) 데미지+25%(200%), 드론 공격속도 -0.3(0.5), 드론감지범위 + 1","DmgRate":200,"LiveTime":20,"ProjCount":4,"ProjSpd":15,"level":7}],"type":1},{"id":606,"levels":[{"AddEffect":[{"effect":7,"value1":50,"value2":1,"value3":1}],"CoolTime":3,"Description":"적을 향해 150%의 데미지를 주는 미사일을 발사. 적 타격시 폭발하며 폭발데미지 50%, 폭발유지시간 1초 ","DmgRate":150,"ProjCount":1,"ProjSpd":15,"level":1},{"AddEffect":[{"effect":7,"value1":50,"value2":1,"value3":1.2}],"CoolTime":3,"Description":"생성개수 +1, 폭발크기+0.2","DmgRate":150,"ProjCount":2,"ProjSpd":15,"level":2},{"AddEffect":[{"effect":7,"value1":100,"value2":1,"value3":1.4}],"CoolTime":3,"Description":"데미지+20%(170), 폭발데미지 +50(100), 폭발크기+0.2 ","DmgRate":170,"ProjCount":2,"ProjSpd":15,"level":3},{"AddEffect":[{"effect":7,"value1":100,"value2":1,"value3":1.6}],"CoolTime":2,"Description":"생성개수 +1, 폭발크기+0.2","DmgRate":170,"ProjCount":3,"ProjSpd":15,"level":4},{"AddEffect":[{"effect":7,"value1":150,"value2":1,"value3":1.8}],"CoolTime":2,"Description":"데미지+20%(190), 폭발데미지 +50(150), 폭발크기+0.2 ","DmgRate":190,"ProjCount":3,"ProjSpd":15,"level":5},{"AddEffect":[{"effect":7,"value1":150,"value2":1,"value3":2}],"CoolTime":1,"Description":"생성개수 +1, 폭발크기+0.2","DmgRate":200,"ProjCount":4,"ProjSpd":15,"level":6},{"AddEffect":[{"effect":7,"value1":200,"value2":1,"value3":2.5}],"CoolTime":1,"Description":"데미지+50%(200%), 폭발크기+0.5","DmgRate":200,"ProjCount":4,"ProjSpd":15,"level":7}],"type":1},{"id":607,"levels":[{"CoolTime":20,"Description":"캐릭터를 보호하는 쉴드를 1회 전개. 충돌시 충돌한 적에게 200%의 피해를 주고 자신이 받는 피해1회 무시. 파괴되며 파괴이후 20초후 재생성","DmgRate":200,"Size":1,"level":1},{"CoolTime":18,"Description":"데미지+50%(250%), 재생성시간 -2(18)","DmgRate":250,"Size":1,"level":2},{"CoolTime":16,"Description":"데미지+50%(300%), 재생성시간 -2(16), 크기+0.2","DmgRate":300,"Size":1.2,"level":3},{"CoolTime":14,"Description":"데미지+50%(350%), 재생성시간 -2(14)","DmgRate":350,"Size":1.2,"level":4},{"CoolTime":12,"Description":"데미지+50%(400%), 재생성시간 -2(12), 크기+0.3","DmgRate":400,"Size":1.5,"level":5},{"CoolTime":10,"Description":"데미지+50%(450%), 재생성시간 -2(10)","DmgRate":450,"Size":1.5,"level":6},{"CoolTime":8,"Description":"데미지+50%(500%), 재생성시간 -2(8), 크기+0.5","DmgRate":500,"Size":2,"level":7}],"type":1},{"id":641,"levels":[{"Description":"캐릭터의 공격력 10%증폭(10%))","DmgRate":10,"level":1},{"Description":"캐릭터의 공격력 10%증폭(20%))","DmgRate":20,"level":2},{"Description":"캐릭터의 공격력 10%증폭(30%))","DmgRate":30,"level":3},{"Description":"캐릭터의 공격력 10%증폭(40%))","DmgRate":40,"level":4},{"Description":"캐릭터의 공격력 10%증폭(50%))","DmgRate":50,"level":5}],"type":2},{"id":642,"levels":[{"Description":"캐릭터의 방어력 10%증폭(10%))","DmgRate":10,"level":1},{"Description":"캐릭터의 방어력 10%증폭(20%))","DmgRate":20,"level":2},{"Description":"캐릭터의 방어력 10%증폭(30%))","DmgRate":30,"level":3},{"Description":"캐릭터의 방어력 10%증폭(40%))","DmgRate":40,"level":4},{"Description":"캐릭터의 방어력 10%증폭(50%))","DmgRate":50,"level":5}],"type":2},{"id":643,"levels":[{"Description":"캐릭터의 이동속도 10%증폭(10%))","DmgRate":10,"level":1},{"Description":"캐릭터의 이동속도 10%증폭(20%))","DmgRate":20,"level":2},{"Description":"캐릭터의 이동속도 10%증폭(30%))","DmgRate":30,"level":3},{"Description":"캐릭터의 이동속도 10%증폭(40%))","DmgRate":40,"level":4},{"Description":"캐릭터의 이동속도 10%증폭(50%))","DmgRate":50,"level":5}],"type":2},{"id":644,"levels":[{"Description":"캐릭터의 공격속도 10%증폭(10%))","DmgRate":10,"level":1},{"Description":"캐릭터의 공격속도 10%증폭(20%))","DmgRate":20,"level":2},{"Description":"캐릭터의 공격속도 10%증폭(30%))","DmgRate":30,"level":3},{"Description":"캐릭터의 공격속도 10%증폭(40%))","DmgRate":40,"level":4},{"Description":"캐릭터의 공격속도 10%증폭(50%))","DmgRate":50,"level":5}],"type":2},{"id":645,"levels":[{"Description":"캐릭터의 체력재생 +10(10%))","DmgRate":10,"level":1},{"Description":"캐릭터의 체력재생 +10(20%))","DmgRate":20,"level":2},{"Description":"캐릭터의 체력재생 +10(30%))","DmgRate":30,"level":3},{"Description":"캐릭터의 체력재생 +10(40%))","DmgRate":40,"level":4},{"Description":"캐릭터의 체력재생 +10(50%))","DmgRate":50,"level":5}],"type":2},{"id":661,"levels":[{"Description":"체력을 즉시 25% 회복","DmgRate":25,"level":1}],"type":3},{"id":662,"levels":[{"Description":"스테이지 보상 비율 25%증가","DmgRate":25,"level":1}],"type":3},{"id":691,"levels":[{"DmgRate":50,"LiveTime":3,"ProjCount":1,"ProjSpd":5,"level":1},{"DmgRate":75,"LiveTime":5,"ProjCount":3,"ProjSpd":5,"level":2},{"DmgRate":100,"LiveTime":8,"ProjCount":5,"ProjSpd":5,"level":3}],"type":4,"useChar":101},{"id":692,"levels":[{"AddEffect":[{"effect":7,"value1":50,"value2":3,"value3":2},{"effect":4,"value1":0.5}],"CoolTime":0,"DmgRate":150,"ProjCount":1,"ProjSpd":5,"level":1},{"AddEffect":[{"effect":7,"value1":100,"value2":5,"value3":4},{"effect":4,"value1":0.5}],"CoolTime":0,"DmgRate":300,"ProjCount":1,"ProjSpd":5,"level":2},{"AddEffect":[{"effect":7,"value1":150,"value2":5,"value3":4},{"effect":4,"value1":0.5}],"CoolTime":0,"DmgRate":500,"ProjCount":1,"ProjSpd":5,"level":3}],"type":4,"useChar":102},{"id":693,"levels":[{"AddEffect":[{"effect":4,"value1":0.5}],"CoolTime":0,"DmgRate":50,"ProjCount":1,"ProjSpd":0,"Size":2,"level":1},{"AddEffect":[{"effect":4,"value1":0.4}],"CoolTime":0,"DmgRate":80,"ProjCount":1,"ProjSpd":0,"Size":3.5,"level":2},{"AddEffect":[{"effect":4,"value1":0.3}],"CoolTime":0,"DmgRate":120,"ProjCount":1,"ProjSpd":0,"Size":4,"level":3}],"type":4,"useChar":103},{"id":694,"levels":[{"CoolTime":0,"DmgRate":100,"LiveTime":5,"ProjCount":10,"ProjSpd":10,"level":1},{"CoolTime":0,"DmgRate":120,"LiveTime":5,"ProjCount":15,"ProjSpd":10,"level":2},{"CoolTime":0,"DmgRate":150,"LiveTime":5,"ProjCount":25,"ProjSpd":10,"level":3}],"type":4,"useChar":104}] }
+{
+  "SkillData": [
+    {
+      "id": 601,
+      "levels": [
+        {
+          "CoolTime": 5,
+          "Description": "에너지를 응집하여 사출합니다. \n데미지 : 170%, \n쿨타임 5초",
+          "DmgRate": 150,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 1
+        },
+        {
+          "CoolTime": 5,
+          "Description": "데미지+20% (170%)",
+          "DmgRate": 170,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 3,
+              "value1": 1
+            }
+          ],
+          "CoolTime": 4,
+          "Description": "데미지+20%(190%)\n쿨타임-1초(4)\n관통+1(1)",
+          "DmgRate": 190,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 3
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 3,
+              "value1": 1
+            }
+          ],
+          "CoolTime": 4,
+          "Description": "데미지+20%(210%)",
+          "DmgRate": 210,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 4
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 3,
+              "value1": 2
+            }
+          ],
+          "CoolTime": 3,
+          "Description": "데미지+20%(230%)\n쿨타임-1초(3)\n관통+1(2)",
+          "DmgRate": 230,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 5
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 3,
+              "value1": 2
+            }
+          ],
+          "CoolTime": 3,
+          "Description": "데미지+20%(250%)",
+          "DmgRate": 250,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 6
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 3,
+              "value1": 3
+            }
+          ],
+          "CoolTime": 3,
+          "Description": "데미지+50%(300%)\n관통+1(3)",
+          "DmgRate": 300,
+          "ProjCount": 1,
+          "ProjSpd": 10,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 602,
+      "levels": [
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 1
+            },
+            {
+              "effect": 1,
+              "value1": 30
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "적을 느리게 만드는 범위충격탄을 사출\n데미지 : 30%/sec \n둔화율 : 30%\n쿨타임 : 5초",
+          "DmgRate": 30,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 1
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 1
+            },
+            {
+              "effect": 1,
+              "value1": 30
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "데미지+15%(45%)",
+          "DmgRate": 45,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.75
+            },
+            {
+              "effect": 1,
+              "value1": 50
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "데미지+15%(60%)\n타격딜레이 -0.25(0.75초)\n둔화율 +20%(50%)",
+          "DmgRate": 60,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 3
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.75
+            },
+            {
+              "effect": 1,
+              "value1": 50
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "데미지+15%(75%)",
+          "DmgRate": 75,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 4
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.5
+            },
+            {
+              "effect": 1,
+              "value1": 70
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "데미지+15%(90%)\n타격딜레이 -0.25(0.5초)\n둔화율 +20%(70%)",
+          "DmgRate": 90,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 5
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.5
+            },
+            {
+              "effect": 1,
+              "value1": 70
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "데미지+15%(105%)",
+          "DmgRate": 105,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 6
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.25
+            },
+            {
+              "effect": 1,
+              "value1": 70
+            },
+            {
+              "effect": 2,
+              "value1": 100
+            }
+          ],
+          "CoolTime": 5,
+          "Description": "데미지+15%(120%)\n타격딜레이 -0.25(0.25초)\n둔화율 +20%(50%)\n둔화된 적에게 100% 피해증가",
+          "DmgRate": 120,
+          "ProjCount": 1,
+          "ProjSpd": 1,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 603,
+      "levels": [
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 1
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "주변 적에게 피해를 주는 필드를 형성\n데미지 20%/sec\n쿨타임10초, 유지시간 5초",
+          "DmgRate": 20,
+          "LiveTime": 5,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 2,
+          "level": 1
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 1
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "데미지+10%(30%)",
+          "DmgRate": 30,
+          "LiveTime": 5,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 2,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.75
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "데미지+10%(40%),유지시간+1(6초)\n크기+1\n타격딜레이 -0.25(0.75)",
+          "DmgRate": 40,
+          "LiveTime": 6,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 3,
+          "level": 3
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.75
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "데미지+10%(50%)",
+          "DmgRate": 50,
+          "LiveTime": 6,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 3,
+          "level": 4
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.5
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "데미지+10%(60%)\n유지시간+1(7초)\n크기+1\n타격딜레이 -0.25(0.5)",
+          "DmgRate": 60,
+          "LiveTime": 7,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 4,
+          "level": 5
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.5
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "데미지+10%(70%)",
+          "DmgRate": 70,
+          "LiveTime": 7,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 4,
+          "level": 6
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.25
+            }
+          ],
+          "CoolTime": 10,
+          "Description": "데미지+10%(80%)\n유지시간+1(8초)\n크기+1\n타격딜레이 -0.25(0.25)\n스킬이 끝나면 전방에 사출",
+          "DmgRate": 80,
+          "LiveTime": 8,
+          "ProjCount": 10,
+          "ProjSpd": 10,
+          "Size": 5,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 604,
+      "levels": [
+        {
+          "CoolTime": 3,
+          "Description": "적을 추적하여 피해를 주는 미사일을 2회 발사\n데미지 : 80%\n쿨타임 3초",
+          "DmgRate": 80,
+          "ProjCount": 2,
+          "ProjSpd": 20,
+          "level": 1
+        },
+        {
+          "CoolTime": 3,
+          "Description": "개수 +2(4)",
+          "DmgRate": 80,
+          "ProjCount": 4,
+          "ProjSpd": 20,
+          "level": 2
+        },
+        {
+          "CoolTime": 2.5,
+          "Description": "개수 +2(6)\n쿨타임 -0.5(2.5초)",
+          "DmgRate": 80,
+          "ProjCount": 6,
+          "ProjSpd": 20,
+          "level": 3
+        },
+        {
+          "CoolTime": 2.5,
+          "Description": "개수 +2(8)\n데미지 +10(90%)",
+          "DmgRate": 90,
+          "ProjCount": 8,
+          "ProjSpd": 20,
+          "level": 4
+        },
+        {
+          "CoolTime": 2,
+          "Description": "개수 +2(10)\n쿨타임 -0.5(2초)",
+          "DmgRate": 90,
+          "ProjCount": 10,
+          "ProjSpd": 20,
+          "level": 5
+        },
+        {
+          "CoolTime": 2,
+          "Description": "개수+2(12)",
+          "DmgRate": 90,
+          "ProjCount": 12,
+          "ProjSpd": 20,
+          "level": 6
+        },
+        {
+          "CoolTime": 1.5,
+          "Description": "개수 +3(15)\n데미지 +10(100%)\n쿨타임 -0.5(1.5초)",
+          "DmgRate": 100,
+          "ProjCount": 15,
+          "ProjSpd": 20,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 605,
+      "levels": [
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 1.2,
+              "value2": 1.5
+            }
+          ],
+          "CoolTime": 30,
+          "Description": "범위 내 적을 자동 공격하는 드론을 1개 생성\n드론은 10초 동안 50%의 데미지를 가지며 1.2초의 속도로 공격\n쿨타임 30초",
+          "DmgRate": 50,
+          "LiveTime": 10,
+          "ProjCount": 1,
+          "ProjSpd": 15,
+          "level": 1
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 1.2,
+              "value2": 1.5
+            }
+          ],
+          "CoolTime": 30,
+          "Description": "데미지+25%(75%)",
+          "DmgRate": 75,
+          "LiveTime": 10,
+          "ProjCount": 1,
+          "ProjSpd": 15,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 1,
+              "value2": 1.5
+            }
+          ],
+          "CoolTime": 30,
+          "Description": "생성개수 +1(2)\n데미지+25%(100%)\n드론 공격속도 -0.2(1초)",
+          "DmgRate": 100,
+          "LiveTime": 10,
+          "ProjCount": 2,
+          "ProjSpd": 15,
+          "level": 3
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 1,
+              "value2": 1.75
+            }
+          ],
+          "CoolTime": 25,
+          "Description": "데미지+25%(125%)\n유지시간+5(15)\n감지범위+1",
+          "DmgRate": 125,
+          "LiveTime": 15,
+          "ProjCount": 2,
+          "ProjSpd": 15,
+          "level": 4
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 0.8,
+              "value2": 1.75
+            }
+          ],
+          "CoolTime": 25,
+          "Description": "생성 개수 +1(3) 데미지+25%(150%)\n드론 공격속도 -0.2(0.8)",
+          "DmgRate": 150,
+          "LiveTime": 15,
+          "ProjCount": 3,
+          "ProjSpd": 15,
+          "level": 5
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 0.8,
+              "value2": 1.75
+            }
+          ],
+          "CoolTime": 25,
+          "Description": "데미지+25%(175%)",
+          "DmgRate": 175,
+          "LiveTime": 15,
+          "ProjCount": 3,
+          "ProjSpd": 15,
+          "level": 6
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 5,
+              "value1": 0.5,
+              "value2": 2
+            }
+          ],
+          "CoolTime": 20,
+          "Description": "생성 개수 +1(4) 데미지+25%(200%)\n드론 공격속도 -0.3(0.5)\n드론감지범위 + 1",
+          "DmgRate": 200,
+          "LiveTime": 20,
+          "ProjCount": 4,
+          "ProjSpd": 15,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 606,
+      "levels": [
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 50,
+              "value2": 1,
+              "value3": 1
+            }
+          ],
+          "CoolTime": 3,
+          "Description": "적을 향해 150%의 데미지를 주는 미사일을 발사\n폭발데미지 50%\n폭발유지시간 1초 ",
+          "DmgRate": 150,
+          "ProjCount": 1,
+          "ProjSpd": 15,
+          "level": 1
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 50,
+              "value2": 1,
+              "value3": 1.2
+            }
+          ],
+          "CoolTime": 3,
+          "Description": "생성개수 +1\n폭발크기+0.2",
+          "DmgRate": 150,
+          "ProjCount": 2,
+          "ProjSpd": 15,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 100,
+              "value2": 1,
+              "value3": 1.4
+            }
+          ],
+          "CoolTime": 3,
+          "Description": "데미지+20%(170)\n폭발데미지 +50(100)\n폭발크기+0.2 ",
+          "DmgRate": 170,
+          "ProjCount": 2,
+          "ProjSpd": 15,
+          "level": 3
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 100,
+              "value2": 1,
+              "value3": 1.6
+            }
+          ],
+          "CoolTime": 2,
+          "Description": "생성개수 +1\n폭발크기+0.2",
+          "DmgRate": 170,
+          "ProjCount": 3,
+          "ProjSpd": 15,
+          "level": 4
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 150,
+              "value2": 1,
+              "value3": 1.8
+            }
+          ],
+          "CoolTime": 2,
+          "Description": "데미지+20%(190), 폭발데미지 +50(150), 폭발크기+0.2 ",
+          "DmgRate": 190,
+          "ProjCount": 3,
+          "ProjSpd": 15,
+          "level": 5
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 150,
+              "value2": 1,
+              "value3": 2
+            }
+          ],
+          "CoolTime": 1,
+          "Description": "생성개수 +1\n폭발크기+0.2",
+          "DmgRate": 200,
+          "ProjCount": 4,
+          "ProjSpd": 15,
+          "level": 6
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 200,
+              "value2": 1,
+              "value3": 2.5
+            }
+          ],
+          "CoolTime": 1,
+          "Description": "데미지+50%(200%)\n폭발크기+0.5",
+          "DmgRate": 200,
+          "ProjCount": 4,
+          "ProjSpd": 15,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 607,
+      "levels": [
+        {
+          "CoolTime": 20,
+          "Description": "캐릭터를 보호하는 쉴드를 1회 전개.\n충돌시 충돌한 적에게 200%의 피해를 주고 자신이 받는 피해1회 무시.\n파괴이후 20초후 재생성",
+          "DmgRate": 200,
+          "Size": 1,
+          "level": 1
+        },
+        {
+          "CoolTime": 18,
+          "Description": "데미지+50%(250%)\n재생성시간 -2(18)",
+          "DmgRate": 250,
+          "Size": 1,
+          "level": 2
+        },
+        {
+          "CoolTime": 16,
+          "Description": "데미지+50%(300%)\n재생성시간 -2(16), 크기+0.2",
+          "DmgRate": 300,
+          "Size": 1.2,
+          "level": 3
+        },
+        {
+          "CoolTime": 14,
+          "Description": "데미지+50%(350%)\n재생성시간 -2(14)",
+          "DmgRate": 350,
+          "Size": 1.2,
+          "level": 4
+        },
+        {
+          "CoolTime": 12,
+          "Description": "데미지+50%(400%)\n재생성시간 -2(12), 크기+0.3",
+          "DmgRate": 400,
+          "Size": 1.5,
+          "level": 5
+        },
+        {
+          "CoolTime": 10,
+          "Description": "데미지+50%(450%)\n재생성시간 -2(10)",
+          "DmgRate": 450,
+          "Size": 1.5,
+          "level": 6
+        },
+        {
+          "CoolTime": 8,
+          "Description": "데미지+50%(500%)\n재생성시간 -2(8), 크기+0.5",
+          "DmgRate": 500,
+          "Size": 2,
+          "level": 7
+        }
+      ],
+      "type": 1
+    },
+    {
+      "id": 641,
+      "levels": [
+        {
+          "Description": "캐릭터의 공격력 10%증폭(10%))",
+          "DmgRate": 10,
+          "level": 1
+        },
+        {
+          "Description": "캐릭터의 공격력 10%증폭(20%))",
+          "DmgRate": 20,
+          "level": 2
+        },
+        {
+          "Description": "캐릭터의 공격력 10%증폭(30%))",
+          "DmgRate": 30,
+          "level": 3
+        },
+        {
+          "Description": "캐릭터의 공격력 10%증폭(40%))",
+          "DmgRate": 40,
+          "level": 4
+        },
+        {
+          "Description": "캐릭터의 공격력 10%증폭(50%))",
+          "DmgRate": 50,
+          "level": 5
+        }
+      ],
+      "type": 2
+    },
+    {
+      "id": 642,
+      "levels": [
+        {
+          "Description": "캐릭터의 방어력 10%증폭(10%))",
+          "DmgRate": 10,
+          "level": 1
+        },
+        {
+          "Description": "캐릭터의 방어력 10%증폭(20%))",
+          "DmgRate": 20,
+          "level": 2
+        },
+        {
+          "Description": "캐릭터의 방어력 10%증폭(30%))",
+          "DmgRate": 30,
+          "level": 3
+        },
+        {
+          "Description": "캐릭터의 방어력 10%증폭(40%))",
+          "DmgRate": 40,
+          "level": 4
+        },
+        {
+          "Description": "캐릭터의 방어력 10%증폭(50%))",
+          "DmgRate": 50,
+          "level": 5
+        }
+      ],
+      "type": 2
+    },
+    {
+      "id": 643,
+      "levels": [
+        {
+          "Description": "캐릭터의 이동속도 10%증폭(10%))",
+          "DmgRate": 10,
+          "level": 1
+        },
+        {
+          "Description": "캐릭터의 이동속도 10%증폭(20%))",
+          "DmgRate": 20,
+          "level": 2
+        },
+        {
+          "Description": "캐릭터의 이동속도 10%증폭(30%))",
+          "DmgRate": 30,
+          "level": 3
+        },
+        {
+          "Description": "캐릭터의 이동속도 10%증폭(40%))",
+          "DmgRate": 40,
+          "level": 4
+        },
+        {
+          "Description": "캐릭터의 이동속도 10%증폭(50%))",
+          "DmgRate": 50,
+          "level": 5
+        }
+      ],
+      "type": 2
+    },
+    {
+      "id": 644,
+      "levels": [
+        {
+          "Description": "캐릭터의 공격속도 10%증폭(10%))",
+          "DmgRate": 10,
+          "level": 1
+        },
+        {
+          "Description": "캐릭터의 공격속도 10%증폭(20%))",
+          "DmgRate": 20,
+          "level": 2
+        },
+        {
+          "Description": "캐릭터의 공격속도 10%증폭(30%))",
+          "DmgRate": 30,
+          "level": 3
+        },
+        {
+          "Description": "캐릭터의 공격속도 10%증폭(40%))",
+          "DmgRate": 40,
+          "level": 4
+        },
+        {
+          "Description": "캐릭터의 공격속도 10%증폭(50%))",
+          "DmgRate": 50,
+          "level": 5
+        }
+      ],
+      "type": 2
+    },
+    {
+      "id": 645,
+      "levels": [
+        {
+          "Description": "캐릭터의 체력재생 +10(10%))",
+          "DmgRate": 10,
+          "level": 1
+        },
+        {
+          "Description": "캐릭터의 체력재생 +10(20%))",
+          "DmgRate": 20,
+          "level": 2
+        },
+        {
+          "Description": "캐릭터의 체력재생 +10(30%))",
+          "DmgRate": 30,
+          "level": 3
+        },
+        {
+          "Description": "캐릭터의 체력재생 +10(40%))",
+          "DmgRate": 40,
+          "level": 4
+        },
+        {
+          "Description": "캐릭터의 체력재생 +10(50%))",
+          "DmgRate": 50,
+          "level": 5
+        }
+      ],
+      "type": 2
+    },
+    {
+      "id": 661,
+      "levels": [
+        {
+          "Description": "체력을 즉시 25% 회복",
+          "DmgRate": 25,
+          "level": 1
+        }
+      ],
+      "type": 3
+    },
+    {
+      "id": 662,
+      "levels": [
+        {
+          "Description": "스테이지 보상 비율 25%증가",
+          "DmgRate": 25,
+          "level": 1
+        }
+      ],
+      "type": 3
+    },
+    {
+      "id": 691,
+      "levels": [
+        {
+          "DmgRate": 50,
+          "LiveTime": 3,
+          "ProjCount": 1,
+          "ProjSpd": 5,
+          "level": 1
+        },
+        {
+          "DmgRate": 75,
+          "LiveTime": 5,
+          "ProjCount": 3,
+          "ProjSpd": 5,
+          "level": 2
+        },
+        {
+          "DmgRate": 100,
+          "LiveTime": 8,
+          "ProjCount": 5,
+          "ProjSpd": 5,
+          "level": 3
+        }
+      ],
+      "type": 4,
+      "useChar": 101
+    },
+    {
+      "id": 692,
+      "levels": [
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 50,
+              "value2": 3,
+              "value3": 2
+            },
+            {
+              "effect": 4,
+              "value1": 0.5
+            }
+          ],
+          "CoolTime": 0,
+          "DmgRate": 150,
+          "ProjCount": 1,
+          "ProjSpd": 5,
+          "level": 1
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 100,
+              "value2": 5,
+              "value3": 4
+            },
+            {
+              "effect": 4,
+              "value1": 0.5
+            }
+          ],
+          "CoolTime": 0,
+          "DmgRate": 300,
+          "ProjCount": 1,
+          "ProjSpd": 5,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 7,
+              "value1": 150,
+              "value2": 5,
+              "value3": 4
+            },
+            {
+              "effect": 4,
+              "value1": 0.5
+            }
+          ],
+          "CoolTime": 0,
+          "DmgRate": 500,
+          "ProjCount": 1,
+          "ProjSpd": 5,
+          "level": 3
+        }
+      ],
+      "type": 4,
+      "useChar": 102
+    },
+    {
+      "id": 693,
+      "levels": [
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.5
+            }
+          ],
+          "LiveTime": 5,
+          "DmgRate": 50,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 2,
+          "level": 1
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.4
+            }
+          ],
+          "LiveTime": 8,
+          "DmgRate": 80,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 3.5,
+          "level": 2
+        },
+        {
+          "AddEffect": [
+            {
+              "effect": 4,
+              "value1": 0.3
+            }
+          ],
+          "LiveTime": 12,
+          "DmgRate": 120,
+          "ProjCount": 1,
+          "ProjSpd": 0,
+          "Size": 4,
+          "level": 3
+        }
+      ],
+      "type": 4,
+      "useChar": 103
+    },
+    {
+      "id": 694,
+      "levels": [
+        {
+          "CoolTime": 0,
+          "DmgRate": 100,
+          "LiveTime": 5,
+          "ProjCount": 10,
+          "ProjSpd": 10,
+          "level": 1
+        },
+        {
+          "CoolTime": 0,
+          "DmgRate": 120,
+          "LiveTime": 5,
+          "ProjCount": 15,
+          "ProjSpd": 10,
+          "level": 2
+        },
+        {
+          "CoolTime": 0,
+          "DmgRate": 150,
+          "LiveTime": 5,
+          "ProjCount": 25,
+          "ProjSpd": 10,
+          "level": 3
+        }
+      ],
+      "type": 4,
+      "useChar": 104
+    }
+  ]
+}

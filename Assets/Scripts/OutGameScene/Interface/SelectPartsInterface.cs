@@ -129,12 +129,7 @@ public class SelectPartsInterface : UIInterface
         isOnPartsList.Sort((part1, part2) => part2.rank.CompareTo(part1.rank));
         isOffPartsList.Sort((part1, part2) => part2.rank.CompareTo(part1.rank));
 
-        //빈 파츠를 담을 프리팹
-        ItemUIPref emptyPartsPrefab = Instantiate(partsUI, partsContainer.transform).GetComponent<ItemUIPref>();
-        emptyPartsPrefab.SetByInvenId(0);
-        emptyPartsPrefab.GetComponent<Button>().onClick.RemoveAllListeners();
-        emptyPartsPrefab.GetComponent<Button>().onClick.AddListener(() => PartsButtonEvent(emptyPartsPrefab));
-
+ 
         //장착되어 있는 파츠들 먼저 나열
         foreach (PartsData parts in isOnPartsList)
         {

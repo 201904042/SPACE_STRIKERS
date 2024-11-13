@@ -40,7 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnPlayerMove(InputAction.CallbackContext context)
     {
-        if (!PlayerMain.Instance.isControllable)
+        if (!GameManager.Game.BattleSwitch)
         {
             return;
         }
@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnPlayerSkill(InputAction.CallbackContext context)
     {
-        if (!PlayerMain.Instance.isControllable)
+        if (!GameManager.Game.BattleSwitch)
         {
             return;
         }
@@ -92,16 +92,20 @@ public class PlayerControl : MonoBehaviour
         if(pStat.IG_curPowerLevel <= 0)
         {
             Debug.Log("파워레벨이 충분하지 않음");
+            return;
         }
         else if(pStat.CurUSkillCount <= 0)
         {
             Debug.Log("사용 가능 횟수가 부족");
+            return;
         }
-        
-        PlayerMain.pUSkill.SpecialFire(pStat.curPlayerID, pStat.IG_curPowerLevel);
+
+        Debug.Log("uskill 작동");
+        StartCoroutine(PlayerMain.pUSkill.SpecialFire(pStat.curPlayerID, pStat.IG_curPowerLevel));
 
         pStat.CurUSkillCount--;
         PlayerMain.pUI.SetUniquSkillCount();
         pStat.CurPow = 0;
+        pStat.IG_curPowerLevel = 0;
     }
 }

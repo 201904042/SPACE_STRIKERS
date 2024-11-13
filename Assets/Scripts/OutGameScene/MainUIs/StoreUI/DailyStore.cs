@@ -9,7 +9,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DailyStore : MonoBehaviour
+public class DailyStore : MainUIs
 {
     public Transform ItemBtns;
     public TextMeshProUGUI timerText;
@@ -17,17 +17,19 @@ public class DailyStore : MonoBehaviour
     public string dateIndex;
     public DateTime curDate;
 
-    public StoreData[] registStoreItem = new StoreData[4]; 
+    public StoreData[] registStoreItem = new StoreData[4];
 
-    private void Awake()
+    public override void SetComponent()
     {
         ItemBtns = transform.GetChild(0).GetChild(0);
         timerText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void OnEnable()
+
+    public override IEnumerator SetUI()
     {
-        //시작시 아이템을 바꿔야하는지 여부 결정
+        yield return new WaitUntil(() => Managers.Instance.Data.isDone == true);
+
         if (PlayerPrefs.GetString("DateIndex") != null) //저장된 날짜 인덱스가 존재하는지 체크
         {
             dateIndex = PlayerPrefs.GetString("DateIndex");
@@ -60,7 +62,6 @@ public class DailyStore : MonoBehaviour
         {
             ShowRestTime();
         }
-        
     }
 
 

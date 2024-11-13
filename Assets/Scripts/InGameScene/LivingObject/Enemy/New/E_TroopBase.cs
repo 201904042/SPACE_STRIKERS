@@ -36,8 +36,6 @@ public class E_TroopBase : EnemyObject
         }
         else
         {
-            Debug.Log("멈춘 적 공격");
-
             // 지정된 공격 횟수만큼 공격
             int countInstance = atkCount;
             while (countInstance > 0)
@@ -55,7 +53,7 @@ public class E_TroopBase : EnemyObject
     protected virtual IEnumerator NonStopEnemyPattern()
     {
         Move();
-        if (!isAttack)
+        if (!isAttack && isAttackable)
         {
             StartCoroutine(Attacking());
         }
@@ -80,7 +78,6 @@ public class E_TroopBase : EnemyObject
     private void AddStopCount()
     {
         stopInstance++;
-        Debug.Log($"stopLine{stopInstance}");
         if (stopLine == stopInstance)
         {
             isStop = true; // 지정된 라인에서 멈춤
@@ -94,13 +91,15 @@ public class E_TroopBase : EnemyObject
             return;
         }
         ActiveHitEffect();
-        curHp = Mathf.Max(curHp - (damage * (int)(damage*PlayerMain.pStat.IG_MobDamageRate/100)), 0);
+        int finalDamage = damage + (int)(damage * PlayerMain.pStat.IG_MobDamageRate / 100);
+        curHp = Mathf.Max(curHp - finalDamage, 0);
+        Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {finalDamage}의 데미지를 입음");
         UpdateHpBarValue();
         if (curHp == 0)
         {
             EnemyDeath();
         }
-        Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
+        
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

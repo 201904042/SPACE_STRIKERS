@@ -483,357 +483,357 @@
       }
     ],
     "MasterData": [
-      {
-        "description": "미네랄\n행성의 에너지가 응축되어 있는 광석\n대부분의 행성에서 거래를 위한 재화로 쓰인다",
-        "id": 1,
-        "name": "미네랄",
-        "spritePath": "Sprite/MasterSprite/1",
-        "type": 1
-      },
-      {
-        "description": "크립트\n미네랄보다도 막대한 에너지를 응축한 광석\n희귀하게 공급되는 만큼 미네랄보다 가치가 높다",
-        "id": 2,
-        "name": "크립트",
-        "spritePath": "Sprite/MasterSprite/2",
-        "type": 1
-      },
-      {
-        "description": "계정 경험치\n계정 경험치",
-        "id": 3,
-        "name": "계정 경험치",
-        "spritePath": "Sprite/MasterSprite/3",
-        "type": 1
-      },
-      {
-        "description": "하급뽑기권\n하급뽑기를 1회 할수 있는 특별한 쿠폰",
-        "id": 4,
-        "name": "하급뽑기권",
-        "spritePath": "Sprite/MasterSprite/4",
-        "type": 1
-      },
-      {
-        "description": "중급뽑기권\n중급뽑기를 1회 할수 있는 특별한 쿠폰",
-        "id": 5,
-        "name": "중급뽑기권",
-        "spritePath": "Sprite/MasterSprite/5",
-        "type": 1
-      },
-      {
-        "description": "고급뽑기권\n고급뽑기를 1회 할수 있는 특별한 쿠폰",
-        "id": 6,
-        "name": "고급뽑기권",
-        "spritePath": "Sprite/MasterSprite/6",
-        "type": 1
-      },
-      {
-        "description": "랜덤한 재료를 얻을수 있다",
-        "id": 7,
-        "name": "랜덤재료1",
-        "spritePath": "Sprite/default",
-        "type": 1
-      },
-      {
-        "description": "캐릭터1 설명",
-        "id": 101,
-        "name": "캐릭터1",
-        "spritePath": "Sprite/MasterSprite/101",
-        "type": 2
-      },
-      {
-        "description": "캐릭터2 설명",
-        "id": 102,
-        "name": "캐릭터2",
-        "spritePath": "Sprite/MasterSprite/102",
-        "type": 2
-      },
-      {
-        "description": "캐릭터3 설명",
-        "id": 103,
-        "name": "캐릭터3",
-        "spritePath": "Sprite/MasterSprite/103",
-        "type": 2
-      },
-      {
-        "description": "캐릭터4 설명",
-        "id": 104,
-        "name": "캐릭터4",
-        "spritePath": "Sprite/MasterSprite/104",
-        "type": 2
-      },
-      {
-        "description": "증폭기\n증폭기설명",
-        "id": 201,
-        "name": "증폭기",
-        "spritePath": "Sprite/MasterSprite/201",
-        "type": 3
-      },
-      {
-        "description": "추진체\n추진체설명",
-        "id": 202,
-        "name": "추진체",
-        "spritePath": "Sprite/MasterSprite/202",
-        "type": 3
-      },
-      {
-        "description": "냉각기\n냉각기설명",
-        "id": 203,
-        "name": "냉각기",
-        "spritePath": "Sprite/MasterSprite/203",
-        "type": 3
-      },
-      {
-        "description": "전투AI\n전투ai설명",
-        "id": 204,
-        "name": "전투AI",
-        "spritePath": "Sprite/MasterSprite/204",
-        "type": 3
-      },
-      {
-        "description": "적재창고\n적재창고 설명",
-        "id": 205,
-        "name": "적재창고",
-        "spritePath": "Sprite/MasterSprite/205",
-        "type": 3
-      },
-      {
-        "description": "베리어\n베리어 배터리설명",
-        "id": 206,
-        "name": "베리어 배터리",
-        "spritePath": "Sprite/MasterSprite/206",
-        "type": 3
-      },
-      {
-        "description": "강철파편\n강철파편 설명",
-        "id": 301,
-        "name": "강철파편",
-        "spritePath": "Sprite/MasterSprite/301",
-        "type": 4
-      },
-      {
-        "description": "전선\n전선 설명",
-        "id": 302,
-        "name": "전선",
-        "spritePath": "Sprite/MasterSprite/302",
-        "type": 4
-      },
-      {
-        "description": "기어\n기어 설명",
-        "id": 303,
-        "name": "기어",
-        "spritePath": "Sprite/MasterSprite/303",
-        "type": 4
-      },
-      {
-        "description": "칩셋\n칩셋 설명",
-        "id": 304,
-        "name": "칩셋",
-        "spritePath": "Sprite/MasterSprite/304",
-        "type": 4
-      },
-      {
-        "description": "디스플레이\n디스플레이 설명",
-        "id": 305,
-        "name": "디스플레이",
-        "spritePath": "Sprite/MasterSprite/305",
-        "type": 4
-      },
-      {
-        "description": "코일\n코일 설명",
-        "id": 306,
-        "name": "코일",
-        "spritePath": "Sprite/MasterSprite/306",
-        "type": 4
-      },
-      {
-        "description": "학습ai\n학습ai 설명",
-        "id": 401,
-        "name": "학습ai",
-        "spritePath": "Sprite/MasterSprite/401",
-        "type": 5
-      },
-      {
-        "description": "자기장코어\n자기장코어 설명",
-        "id": 402,
-        "name": "자기장코어",
-        "spritePath": "Sprite/MasterSprite/402",
-        "type": 5
-      },
-      {
-        "description": "BST-01\nBST-01 설명",
-        "id": 403,
-        "name": "BST-01",
-        "spritePath": "Sprite/MasterSprite/403",
-        "type": 5
-      },
-      {
-        "description": "일반1 설명",
-        "id": 501,
-        "name": "일반1",
-        "spritePath": "Sprite/MasterSprite/501",
-        "type": 6
-      },
-      {
-        "description": "일반2 설명",
-        "id": 502,
-        "name": "일반2",
-        "spritePath": "Sprite/MasterSprite/502",
-        "type": 6
-      },
-      {
-        "description": "엘리트1 설명",
-        "id": 511,
-        "name": "엘리트1",
-        "spritePath": "Sprite/MasterSprite/511",
-        "type": 6
-      },
-      {
-        "description": "엘리트2설명",
-        "id": 512,
-        "name": "엘리트2",
-        "spritePath": "Sprite/MasterSprite/512",
-        "type": 6
-      },
-      {
-        "description": "보스 설명",
-        "id": 531,
-        "name": "보스",
-        "spritePath": "Sprite/MasterSprite/531",
-        "type": 6
-      },
-      {
-        "description": "샌드백 설명",
-        "id": 600,
-        "name": "샌드백",
-        "spritePath": "Sprite/default",
-        "type": 6
-      },
-      {
-        "description": "챠지샷 설명",
-        "id": 601,
-        "name": "챠지샷",
-        "spritePath": "Sprite/MasterSprite/601",
-        "type": 7
-      },
-      {
-        "description": "일렉쇼크 설명",
-        "id": 602,
-        "name": "일렉쇼크",
-        "spritePath": "Sprite/MasterSprite/602",
-        "type": 7
-      },
-      {
-        "description": "에너지필드 설명",
-        "id": 603,
-        "name": "에너지필드",
-        "spritePath": "Sprite/MasterSprite/603",
-        "type": 7
-      },
-      {
-        "description": "호밍미사일 설명",
-        "id": 604,
-        "name": "호밍미사일",
-        "spritePath": "Sprite/MasterSprite/604",
-        "type": 7
-      },
-      {
-        "description": "미니드론 설명",
-        "id": 605,
-        "name": "미니드론",
-        "spritePath": "Sprite/MasterSprite/605",
-        "type": 7
-      },
-      {
-        "description": "미사일런처 설명",
-        "id": 606,
-        "name": "미사일런처",
-        "spritePath": "Sprite/MasterSprite/606",
-        "type": 7
-      },
-      {
-        "description": "실드 설명",
-        "id": 607,
-        "name": "실드",
-        "spritePath": "Sprite/MasterSprite/607",
-        "type": 7
-      },
-      {
-        "description": "탄환 개선 설명",
-        "id": 641,
-        "name": "탄환 개선",
-        "spritePath": "Sprite/MasterSprite/641",
-        "type": 7
-      },
-      {
-        "description": "베리어 코팅 강화 설명",
-        "id": 642,
-        "name": "베리어 코팅 강화",
-        "spritePath": "Sprite/MasterSprite/642",
-        "type": 7
-      },
-      {
-        "description": "추진체 강화 설명",
-        "id": 643,
-        "name": "추진체 강화",
-        "spritePath": "Sprite/MasterSprite/643",
-        "type": 7
-      },
-      {
-        "description": "냉각기 강화 설명",
-        "id": 644,
-        "name": "냉각기 강화",
-        "spritePath": "Sprite/MasterSprite/644",
-        "type": 7
-      },
-      {
-        "description": "엔지니어 봇 설명",
-        "id": 645,
-        "name": "엔지니어 봇",
-        "spritePath": "Sprite/MasterSprite/645",
-        "type": 7
-      },
-      {
-        "description": "손상부위 교체 설명",
-        "id": 661,
-        "name": "손상부위 교체",
-        "spritePath": "Sprite/MasterSprite/661",
-        "type": 7
-      },
-      {
-        "description": "재화 획득 설명",
-        "id": 662,
-        "name": "재화 획득",
-        "spritePath": "Sprite/MasterSprite/662",
-        "type": 7
-      },
-      {
-        "description": "스페셜1 획득 설명",
-        "id": 691,
-        "name": "스페셜1 획득",
-        "spritePath": "Sprite/MasterSprite/691",
-        "type": 7
-      },
-      {
-        "description": "스페셜2 획득 설명",
-        "id": 692,
-        "name": "스페셜2 획득",
-        "spritePath": "Sprite/MasterSprite/692",
-        "type": 7
-      },
-      {
-        "description": "스페셜3 획득 설명",
-        "id": 693,
-        "name": "스페셜3 획득",
-        "spritePath": "Sprite/MasterSprite/693",
-        "type": 7
-      },
-      {
-        "description": "스페셜4 획득 설명",
-        "id": 694,
-        "name": "스페셜4 획득",
-        "spritePath": "Sprite/MasterSprite/694",
-        "type": 7
-      }
-    ],
+    {
+      "description": "미네랄\n행성의 에너지가 응축되어 있는 광석\n대부분의 행성에서 거래를 위한 재화로 쓰인다",
+      "id": 1,
+      "name": "미네랄",
+      "spritePath": "Sprite/MasterSprite/1",
+      "type": 1
+    },
+    {
+      "description": "크립트\n미네랄보다도 막대한 에너지를 응축한 광석\n희귀하게 공급되는 만큼 미네랄보다 가치가 높다",
+      "id": 2,
+      "name": "크립트",
+      "spritePath": "Sprite/MasterSprite/2",
+      "type": 1
+    },
+    {
+      "description": "계정 경험치\n스테이지를 클리어 하면 얻을 수 있다.",
+      "id": 3,
+      "name": "계정 경험치",
+      "spritePath": "Sprite/MasterSprite/3",
+      "type": 1
+    },
+    {
+      "description": "하급뽑기권\n 파츠를 뽑을 수 있는 쿠폰.\n 기대는 하지 않는게 좋아보인다",
+      "id": 4,
+      "name": "하급뽑기권",
+      "spritePath": "Sprite/MasterSprite/4",
+      "type": 1
+    },
+    {
+      "description": "중급뽑기권\n파츠를 뽑을 수 있는 쿠폰.\n 그래도 좋은 상품을 기대해 볼만 하다",
+      "id": 5,
+      "name": "중급뽑기권",
+      "spritePath": "Sprite/MasterSprite/5",
+      "type": 1
+    },
+    {
+      "description": "고급뽑기권\n파츠를 뽑을 수 있는 쿠폰.\n얻는게 하늘의 별따기라고 한다.",
+      "id": 6,
+      "name": "고급뽑기권",
+      "spritePath": "Sprite/MasterSprite/6",
+      "type": 1
+    },
+    {
+      "description": "랜덤한 재료를 얻을수 있다",
+      "id": 7,
+      "name": "랜덤재료1",
+      "spritePath": "Sprite/default",
+      "type": 1
+    },
+    {
+      "description": "모든 스텟이 적당한 기체.\n초보자가 쓰기에 좋다",
+      "id": 101,
+      "name": "캐릭터1",
+      "spritePath": "Sprite/MasterSprite/101",
+      "type": 2
+    },
+    {
+      "description": "공격력에 집중한 기체.\n강력한 미사일을 발사하지만. 공격속도와 이동속도가 느린것이 단점이다.",
+      "id": 102,
+      "name": "캐릭터2",
+      "spritePath": "Sprite/MasterSprite/102",
+      "type": 2
+    },
+    {
+      "description": "방어력과 체력에 집중한 기체.\n최대 3개까지 충전가능한 최신형 방어막전개장치를 내장하고 있다.",
+      "id": 103,
+      "name": "캐릭터3",
+      "spritePath": "Sprite/MasterSprite/103",
+      "type": 2
+    },
+    {
+      "description": "속도에 집중한 기체.\n넓은 범위의 공격과 호밍 미사일 런쳐가 내장되어 있다.",
+      "id": 104,
+      "name": "캐릭터4",
+      "spritePath": "Sprite/MasterSprite/104",
+      "type": 2
+    },
+    {
+      "description": "증폭기\n무기에 사용되는 동력을 증폭시켜 데미지를 올려주는 증폭기\n과열에 주의",
+      "id": 201,
+      "name": "증폭기",
+      "spritePath": "Sprite/MasterSprite/201",
+      "type": 3
+    },
+    {
+      "description": "추진체\n기체를 움직이게 하는 알파이자 오메가.\n좀더 빠르게 움직일 수 있을것 같다.",
+      "id": 202,
+      "name": "추진체",
+      "spritePath": "Sprite/MasterSprite/202",
+      "type": 3
+    },
+    {
+      "description": "냉각기\n무기를 빠르게 냉각시켜 준다.\n좀더 빠르게 공격이 가능하다",
+      "id": 203,
+      "name": "냉각기",
+      "spritePath": "Sprite/MasterSprite/203",
+      "type": 3
+    },
+    {
+      "description": "전투AI\n적들의 전투데이터를 학습하여 빠르게 시스템을 향상시켜준다.\n더 빠르게 레벨업이 가능하다",
+      "id": 204,
+      "name": "전투AI",
+      "spritePath": "Sprite/MasterSprite/204",
+      "type": 3
+    },
+    {
+      "description": "적재창고\n전리품을 보관하는 창고\n무려 공간굴절기술이 적용되어 보이는 것보다 더 많이 보관가능하다",
+      "id": 205,
+      "name": "적재창고",
+      "spritePath": "Sprite/MasterSprite/205",
+      "type": 3
+    },
+    {
+      "description": "베리어 베터리\n기체의 겉면을 베리어로 코팅하는데 필요.\n피해를 줄여준다",
+      "id": 206,
+      "name": "베리어 배터리",
+      "spritePath": "Sprite/MasterSprite/206",
+      "type": 3
+    },
+    {
+      "description": "강철파편\n적들을 파괴하고 얻은 파편.\n기체를 강화하는데 사용이 가능할것 같다",
+      "id": 301,
+      "name": "강철파편",
+      "spritePath": "Sprite/MasterSprite/301",
+      "type": 4
+    },
+    {
+      "description": "전선\n중간중간 끊어졌지만 이어붙이면 사용할수 있다..\n기체를 강화하는데 사용이 가능할것 같다",
+      "id": 302,
+      "name": "전선",
+      "spritePath": "Sprite/MasterSprite/302",
+      "type": 4
+    },
+    {
+      "description": "기어\n조금 닳아있지만 쓸만하다.\n기체를 강화하는데 사용이 가능할것 같다",
+      "id": 303,
+      "name": "기어",
+      "spritePath": "Sprite/MasterSprite/303",
+      "type": 4
+    },
+    {
+      "description": "칩셋\n땜질이 필요해보인다.\n기체를 강화하는데 사용이 가능할것 같다",
+      "id": 304,
+      "name": "칩셋",
+      "spritePath": "Sprite/MasterSprite/304",
+      "type": 4
+    },
+    {
+      "description": "디스플레이\n금이 가있지만 작동한다.\n기체를 강화하는데 사용이 가능할것 같다",
+      "id": 305,
+      "name": "디스플레이",
+      "spritePath": "Sprite/MasterSprite/305",
+      "type": 4
+    },
+    {
+      "description": "코일\n기름때가 붙어있지만 쓸만하다.\n기체를 강화하는데 사용이 가능할것 같다",
+      "id": 306,
+      "name": "코일",
+      "spritePath": "Sprite/MasterSprite/306",
+      "type": 4
+    },
+    {
+      "description": "학습ai\n비행간 사용자의 습관,행동 등을 학습하여 기체의 ai를 강화시켜준다.\n획득 경험치가 증가한다",
+      "id": 401,
+      "name": "학습ai",
+      "spritePath": "Sprite/MasterSprite/401",
+      "type": 5
+    },
+    {
+      "description": "자기장코어\n쓸만한 재료들을 끌어들인다.\n획득 보상이 증가한다.",
+      "id": 402,
+      "name": "자기장코어",
+      "spritePath": "Sprite/MasterSprite/402",
+      "type": 5
+    },
+    {
+      "description": "BST-01\n코어 에너지에 더해 더 강한 출력을 낼 수 있도록 해주는 연료\n 전체적인 스텟이 증가한다",
+      "id": 403,
+      "name": "BST-01",
+      "spritePath": "Sprite/MasterSprite/403",
+      "type": 5
+    },
+    {
+      "description": "일반1",
+      "id": 501,
+      "name": "일반1",
+      "spritePath": "Sprite/MasterSprite/501",
+      "type": 6
+    },
+    {
+      "description": "일반2",
+      "id": 502,
+      "name": "일반2",
+      "spritePath": "Sprite/MasterSprite/502",
+      "type": 6
+    },
+    {
+      "description": "엘리트1",
+      "id": 511,
+      "name": "엘리트1",
+      "spritePath": "Sprite/MasterSprite/511",
+      "type": 6
+    },
+    {
+      "description": "엘리트2",
+      "id": 512,
+      "name": "엘리트2",
+      "spritePath": "Sprite/MasterSprite/512",
+      "type": 6
+    },
+    {
+      "description": "보스",
+      "id": 531,
+      "name": "보스",
+      "spritePath": "Sprite/MasterSprite/531",
+      "type": 6
+    },
+    {
+      "description": "샌드백",
+      "id": 600,
+      "name": "샌드백",
+      "spritePath": "Sprite/default",
+      "type": 6
+    },
+    {
+      "description": "소모되는 코어에너지에서 버려지는 일부 에너지를 모아 강한 공격을 한다.",
+      "id": 601,
+      "name": "챠지샷",
+      "spritePath": "Sprite/MasterSprite/601",
+      "type": 7
+    },
+    {
+      "description": "자기장 형성기를 적용시켜 발사체에 전기폭풍을 둘러 근처 적에게 emp효과를 준다",
+      "id": 602,
+      "name": "일렉쇼크",
+      "spritePath": "Sprite/MasterSprite/602",
+      "type": 7
+    },
+    {
+      "description": "코어에너지를 발산시켜 주변에 데미지를 준다. 오래는 안될것 같다.",
+      "id": 603,
+      "name": "에너지필드",
+      "spritePath": "Sprite/MasterSprite/603",
+      "type": 7
+    },
+    {
+      "description": "S사가 만든 적을 추적하여 공격하는 미사일.\n N사의 무식한 미사일과는 다른 인텔리한 미사일이라고 한다",
+      "id": 604,
+      "name": "호밍미사일",
+      "spritePath": "Sprite/MasterSprite/604",
+      "type": 7
+    },
+    {
+      "description": "적을 같이 공격해주는 미니드론을 출격시킨다.\n베터리가 전부 소모되기 전에 돌아오게 해야한다",
+      "id": 605,
+      "name": "미니드론",
+      "spritePath": "Sprite/MasterSprite/605",
+      "type": 7
+    },
+    {
+      "description": "N사가 만든 강한 폭발력을 지닌 미사일.\n S사의 쪼꼬만한 미사일과는 다른 상남자 전용 미사일이라고 한다",
+      "id": 606,
+      "name": "미사일런처",
+      "spritePath": "Sprite/MasterSprite/606",
+      "type": 7
+    },
+    {
+      "description": "실드 전개 장치를 활성화 시킨다. 중고임에도 비싸다",
+      "id": 607,
+      "name": "실드",
+      "spritePath": "Sprite/MasterSprite/607",
+      "type": 7
+    },
+    {
+      "description": "더 높은 등급의 탄환을 보충한다.",
+      "id": 641,
+      "name": "탄환 개선",
+      "spritePath": "Sprite/MasterSprite/641",
+      "type": 7
+    },
+    {
+      "description": "베리어 코팅 장치를 강화시킨다",
+      "id": 642,
+      "name": "베리어 코팅 강화",
+      "spritePath": "Sprite/MasterSprite/642",
+      "type": 7
+    },
+    {
+      "description": "추가 추진체를 장착한다.",
+      "id": 643,
+      "name": "추진체 강화",
+      "spritePath": "Sprite/MasterSprite/643",
+      "type": 7
+    },
+    {
+      "description": "냉각기의 출력을 높인다",
+      "id": 644,
+      "name": "냉각기 강화",
+      "spritePath": "Sprite/MasterSprite/644",
+      "type": 7
+    },
+    {
+      "description": "수리나노봇을 출격시켜 서서히 hp를 회복",
+      "id": 645,
+      "name": "엔지니어 봇",
+      "spritePath": "Sprite/MasterSprite/645",
+      "type": 7
+    },
+    {
+      "description": "못쓸 부분은 과감하게 교체하자",
+      "id": 661,
+      "name": "손상부위 교체",
+      "spritePath": "Sprite/MasterSprite/661",
+      "type": 7
+    },
+    {
+      "description": "exp를 소모해 재화와 교환한다",
+      "id": 662,
+      "name": "재화 획득",
+      "spritePath": "Sprite/MasterSprite/662",
+      "type": 7
+    },
+    {
+      "description": "본부에 지원부대를 요청한다.\n파워가 높을수록 더 많이, 오래 출격한다",
+      "id": 691,
+      "name": "부대지원",
+      "spritePath": "Sprite/MasterSprite/691",
+      "type": 7
+    },
+    {
+      "description": "N사의 폭발력은 세계제일 이라고 적혀있다.\n파워가 높을수록 더 넓은 범위, 더 높은 데미지를 입힌다",
+      "id": 692,
+      "name": "누클리어",
+      "spritePath": "Sprite/MasterSprite/692",
+      "type": 7
+    },
+    {
+      "description": "쉴드전개장치를 과부하 시켜.\n쉴드를 회복시키며 주변에 장막을 전개해 내부의 적에게 데미지를 준다",
+      "id": 693,
+      "name": "쉴드 오버플로우",
+      "spritePath": "Sprite/MasterSprite/693",
+      "type": 7
+    },
+    {
+      "description": "공처럼 생겼지만 전후상하좌우 모든 적들을 추적하는 올트래킹 기술이 적용되었다고 적혀있다.",
+      "id": 694,
+      "name": "트래킹볼",
+      "spritePath": "Sprite/MasterSprite/694",
+      "type": 7
+    }
+  ],
     "SkillData": [
       {
         "id": 601,

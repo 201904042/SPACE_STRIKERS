@@ -36,8 +36,8 @@ public class PlayerSkill : MonoBehaviour
         ingameSkillList.Add(active_energyField);
         Active_HomingMissile active_homingMissile = new Active_HomingMissile();
         ingameSkillList.Add(active_homingMissile);
-        Active_MiniDrone active_miniDrone = new Active_MiniDrone();
-        ingameSkillList.Add(active_miniDrone);
+        //Active_MiniDrone active_miniDrone = new Active_MiniDrone();
+        //ingameSkillList.Add(active_miniDrone);
         Active_Missile active_missile = new Active_Missile();
         ingameSkillList.Add(active_missile);
         Active_Shield active_Shield = new Active_Shield();
@@ -63,6 +63,9 @@ public class PlayerSkill : MonoBehaviour
         {
             ingameSkillList[i].SkillReset();
         }
+
+
+        Debug.Log("플레이어스킬 설정 완료");
     }
 
     public InGameSkill FindSkillByCode(int skillCode)

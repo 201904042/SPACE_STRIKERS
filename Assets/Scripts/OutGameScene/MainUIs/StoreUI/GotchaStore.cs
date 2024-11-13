@@ -155,7 +155,7 @@ public class GotchaStore : MonoBehaviour
     }
 
     //파츠가 나왔을 경우 랭크에 따라 파츠를 인벤토리와 파츠스텟에 추가
-    private void AddParts(int partsRank)
+    private async void AddParts(int partsRank)
     {
         List<MasterData> partsList = DataManager.master.GetItemsByType(MasterType.Parts);
         int random = Random.Range(0, partsList.Count);
@@ -196,9 +196,9 @@ public class GotchaStore : MonoBehaviour
 
         //데이터 추가 및 세이브
         DataManager.inven.AddData(newPartsInven);
-        DataManager.inven.SaveData();
+        await DataManager.inven.SaveData();
         DataManager.parts.AddData(newParts);
-        DataManager.parts.SaveData();
+        await DataManager.parts.SaveData();
     }
 
     private int GetValue(int key ,int rank)
@@ -236,13 +236,13 @@ public class GotchaStore : MonoBehaviour
         return newAbility;
     }
 
-    private void AddRandomItem()
+    private async void AddRandomItem()
     {
         List<MasterData> consumeList = DataManager.master.GetItemsByType(MasterType.Consume);
 
         int random = Random.Range(0, consumeList.Count);
         DataManager.inven.DataAddOrUpdate(consumeList[random].id, 1);
-        DataManager.inven.SaveData();
+        await DataManager.inven.SaveData();
     }
 
 }

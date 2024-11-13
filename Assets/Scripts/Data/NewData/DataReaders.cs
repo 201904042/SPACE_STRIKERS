@@ -13,27 +13,23 @@ using static UnityEditor.Progress;
 
 public class AccountDataReader : OnlyAccountData
 {
-    protected override string GetUserId(AccountData data)
-    {
-        fieldType = DataFieldType.AccountData;
-        return data.id;
-    }
-    public void SetCharValue(int id)
+
+    public async void SetCharValue(int id)
     {
         data.useChar = id;
-        SaveData();
+        await SaveData();
     }
-    public void SetStageValue(int value)
+    public async void SetStageValue(int value)
     {
         data.stageIndex = value;
-        SaveData();
+        await SaveData();
     }
-    public void SetPlanetValue(int value)
+    public async void SetPlanetValue(int value)
     {
         data.planetIndex = value;
-        SaveData();
+        await SaveData();
     }
-    public void AddExp(int addAmount)
+    public async void AddExp(int addAmount)
     {
         data.exp += addAmount;
 
@@ -50,17 +46,17 @@ public class AccountDataReader : OnlyAccountData
                 break;
             }
         }
-        SaveData();
+        await SaveData();
     }
-    public void SetParts(int slotNum, int partsInvenId)
+    public async void SetParts(int slotNum, int partsInvenId)
     {
         data.useParts[slotNum - 1] = partsInvenId;
-        SaveData();
+        await SaveData();
     }
-    public void SetStageProgress(int progress)
+    public async void SetStageProgress(int progress)
     {
         data.stageProgress = progress;
-        SaveData();
+        await SaveData();
     }
     public int GetChar()
     {
@@ -239,6 +235,12 @@ public class InventoryDataReader : EditableData<InvenData>
             };
             DataManager.inven.AddData(newData);
         }
+
+        if (OG_UIManager.UIInstance != null)
+        {
+            //헤더 UI 업데이트
+            OG_UIManager.UIInstance.HeaderUI.SetUIs();
+        }
     }
 
     public void DataUpdateOrDelete(int invenId, int amount)
@@ -263,6 +265,12 @@ public class InventoryDataReader : EditableData<InvenData>
                 DataManager.parts.DeleteData(invenId);
             }
             DataManager.inven.DeleteData(invenData.id);
+        }
+
+        if (OG_UIManager.UIInstance != null)
+        {
+            //헤더 UI 업데이트
+            OG_UIManager.UIInstance.HeaderUI.SetUIs();
         }
     }
 }

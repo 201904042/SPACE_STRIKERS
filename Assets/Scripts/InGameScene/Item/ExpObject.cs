@@ -48,7 +48,7 @@ public class Exp_object : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerStat pstat = collision.GetComponent<PlayerStat>();
-            pstat.CurExp = pstat.CurExp + expAmount;
+            pstat.CurExp += expAmount * (PlayerMain.pStat.IG_InGameExpRate/100);
             GameManager.Game.Pool.ReleasePool(gameObject);
         }
     }

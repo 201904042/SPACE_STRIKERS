@@ -13,20 +13,9 @@ public class StageUI : MainUIs
 
     private Transform Stages;
 
-    protected override void Awake()
+    public override IEnumerator SetUI()
     {
-        base.Awake();
-    }
-
-    public override void SetComponent()
-    {
-        base.SetComponent();
-
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
+        yield return base.SetUI();
 
         curStage = 0;
         curPlanet = DataManager.account.GetPlanet();
@@ -54,10 +43,10 @@ public class StageUI : MainUIs
 
     private void FindMaxStageInData()
     {
-        int accountLastStage = DataManager.account.GetStageProgress();
+        int clearedLastStage = DataManager.account.GetStageProgress();
 
-        int lastPlanet = (accountLastStage / 10) +1;  //0부터가 아닌 1부터 시작
-        int lastStage = (accountLastStage % 10) +1 ;
+        int lastPlanet = (clearedLastStage / 10) +1;  //0부터가 아닌 1부터 시작
+        int lastStage = (clearedLastStage % 10);
 
         if(curPlanet > lastPlanet)
         {
@@ -102,6 +91,7 @@ public class StageUI : MainUIs
         for (int i = 0; i < Stages.childCount; i++)
         {
             int stageNum = i + 1;
+
             if (stageNum <= clearedStageNum) // clearedStageNum 이전의 스테이지들은 녹색
             {
                 Stages.GetChild(i).GetComponent<Button>().interactable = true;
@@ -143,6 +133,7 @@ public class StageUI : MainUIs
 
     public void GotoReady()
     {
+        DataManager.account.SetStageValue(curStage);
         ChangeUI(OG_UIManager.UIInstance.readyUI);
     }
 

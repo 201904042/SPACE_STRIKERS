@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 public enum DataFieldType
 {
@@ -50,6 +51,8 @@ public class DataManager
     public static UpgradeDataReader upgrade = new ();
     public static GotchaDataReader gotcha = new ();
 
+    public bool isDone = false;
+
     public void Init()
     {
         LoadAllData();
@@ -63,21 +66,40 @@ public class DataManager
 
     public void LoadAllData()
     {
-        master.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "MasterData.json"));
-        ability.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "AbilityData.json"));
-        stage.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "StageData.json"));
-        upgrade.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "UpgradeData.json"));
-        enemy.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "EnemyData.json"));
-        gotcha.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "GotchaData.json"));
-        skill.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "SkillData.json"));
-        store.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "StoreData.json"));
+         master.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "MasterData.json"));
+         ability.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "AbilityData.json"));
+         stage.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "StageData.json"));
+         upgrade.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "UpgradeData.json"));
+         enemy.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "EnemyData.json"));
+         gotcha.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "GotchaData.json"));
+         skill.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "SkillData.json"));
+         store.LoadData(Path.Combine(JsonFilePaths.ReadOnlyFolder, "StoreData.json"));
 
-        account.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "AccountData.json"));
-        character.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "CharacterData.json"));
-        inven.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "InvenData.json"));
-        parts.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "PartsData.json"));
+         account.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "AccountData.json"));
+         character.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "CharacterData.json"));
+         inven.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "InvenData.json"));
+         parts.LoadData(Path.Combine(JsonFilePaths.WritableFolder, "PartsData.json"));
+
+        isDone = true;
     }
 
+    public void ClearAllData()
+    {
+        master.ResetData();
+        ability.ResetData();
+        stage.ResetData();
+        upgrade.ResetData();
+        enemy.ResetData();
+        gotcha.ResetData();
+        skill.ResetData();
+        store.ResetData();
 
+        account.ResetData();
+        character.ResetData();
+        inven.ResetData();
+        parts.ResetData();
+
+        isDone = false;
+    }
 
 }

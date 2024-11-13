@@ -12,6 +12,7 @@ public class StageManager
     public GameMode curMode;
     public int planet;
     public int stage;
+    public int stageCode;
     
     public Dictionary<int, int> enemyCodeAmountFair = new Dictionary<int, int>(); //적의 코드, 양
     public List<StageReward> ClearReward = new List<StageReward>();
@@ -33,18 +34,18 @@ public class StageManager
         //스테이지 코드 조합
         planet = account.planetIndex;
         stage = account.stageIndex;
-        int StageCode = (planet-1) * 10 + stage;
+        stageCode = (planet-1) * 10 + stage;
 
-        StageData curStageData = DataManager.stage.GetData(StageCode);
+        StageData curStageData = DataManager.stage.GetData(stageCode);
 
-        curMode = StageCode > account.stageProgress 
+        curMode = stageCode > account.stageProgress 
             ? curStageData.stageType : GameMode.Infinite;
 
         curEnemyAmount = 0;
         foreach (StageEnemyData enemyInfo in curStageData.stageEnemy) //스테이지에 적 등록
         {
             enemyCodeAmountFair.Add(enemyInfo.enemyId,enemyInfo.quantity);
-            if (enemyInfo.enemyId > 20)
+            if (enemyInfo.enemyId > 530)
             {
                 stageBossId = enemyInfo.enemyId; //보스는 curEnemyAmount에 수량이 포함되지 않음
                 continue;

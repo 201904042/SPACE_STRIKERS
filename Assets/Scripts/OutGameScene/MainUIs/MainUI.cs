@@ -13,11 +13,7 @@ public class MainUI : MainUIs
 
     //public GameObject EventBannerZone; º¸·ù
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
+    
     public override void SetComponent()
     {
         base.SetComponent();
@@ -30,9 +26,9 @@ public class MainUI : MainUIs
     }
 
 
-    protected override void OnEnable()
+    public override IEnumerator SetUI()
     {
-        base.OnEnable();
+        yield return base.SetUI();
         Init();
     }
 

@@ -19,13 +19,6 @@ public class MainHeaderUI : MainUIs
 
     public Button optionbtn;
 
-    
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     public override void SetComponent()
     {
         base.SetComponent();
@@ -41,13 +34,26 @@ public class MainHeaderUI : MainUIs
         optionbtn = transform.GetChild(2).GetComponent<Button>();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
-        SetUIs();
     }
 
-    private void SetUIs()
+    public override IEnumerator SetUI()
+    {
+        yield return base.SetUI();
+        SetUIs();
+        SetBtn();
+    }
+
+    
+
+    public void SetUIs()
     {
         AccountData accountData = DataManager.account.GetData();
         //accountImage 지웅의 로그인 정보 연결시 설정 가능)
@@ -58,6 +64,12 @@ public class MainHeaderUI : MainUIs
         Mineral.GetChild(0).GetComponent<Image>().sprite = mineralImage;
         Ruby.GetChild(0).GetComponent<Image>().sprite= rubyImage;
         ChangeMoneyAmount();
+    }
+
+    private void SetBtn()
+    {
+        optionbtn.onClick.RemoveAllListeners();
+        optionbtn.onClick.AddListener(OptionHandler);
     }
 
     /// <summary>
@@ -80,5 +92,10 @@ public class MainHeaderUI : MainUIs
         accountExp.value = accountData.exp / maxExp;
 
         accountExp.GetComponentInChildren<TextMeshProUGUI>().text = $"lv : {accountData.level}";
+    }
+
+    public void OptionHandler()
+    {
+        OG_UIManager.optionInteface.OpenInterface();
     }
 }

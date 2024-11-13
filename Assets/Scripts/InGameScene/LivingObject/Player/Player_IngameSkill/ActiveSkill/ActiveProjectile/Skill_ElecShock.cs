@@ -70,9 +70,9 @@ public class Skill_ElecShock : PlayerProjectile
         if (collision.gameObject.tag == "Enemy")
         {
             //적 리뉴얼 후 슬로우 효과 추가
-            if (isSlow)
+            if (isSlow && !collision.GetComponent<EnemyObject>().isShocked)
             {
-                //
+                StartCoroutine(ShockingEnemy(collision.GetComponent<EnemyObject>()));
             }
         }
     }
@@ -101,6 +101,27 @@ public class Skill_ElecShock : PlayerProjectile
 
             yield return new WaitForSeconds(_cycleRate); // 주기적으로 데미지 적용
         }
+    }
+
+    private IEnumerator ShockingEnemy(EnemyObject enemy)
+    {
+        if(enemy.type == EnemyType.Boss)
+        {
+            yield break ; //보스는 디버프를 받지 않음
+        }
+        Debug.Log("적 쇼크");
+        enemy.isShocked = true;
+        enemy.isAttackable = false;
+        int enemyMoveSpeed = enemy.moveSpeed;
+        enemy.moveSpeed = enemyMoveSpeed /2;
+        Color colorInstance = enemy.GetComponent<SpriteRenderer>().color;
+        enemy.GetComponent<SpriteRenderer>().color = Color.blue;
+        yield return new WaitForSeconds(3);
+
+        enemy.isShocked = false;
+        enemy.isAttackable = true;
+        enemy.moveSpeed = enemyMoveSpeed;
+        enemy.GetComponent<SpriteRenderer>().color = colorInstance;
     }
 
     protected override void MultiEnemyDamage()

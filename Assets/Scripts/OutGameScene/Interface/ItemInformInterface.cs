@@ -152,8 +152,8 @@ public class ItemInformInterface : UIInterface
             isMultiTrade= false
         };
         
-        StoreUI.TradeItem(sellData);
-        OG_UIManager.alertInterface.SetAlert($"아이템 {invenItemId}이(가) 판매되었습니다.");
+        StoreUI.TradeItem(sellData, false);
+        
         OG_UIManager.UIInstance.invenUI.FetchContent();
 
         CloseInterface();

@@ -33,13 +33,7 @@ public class ReadyUI : MainUIs
         get => DataManager.account.GetPartsArray();
     }
 
-    //아이템 파트는 아직 미구현
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
+    
     public override void SetComponent()
     {
         base.SetComponent();
@@ -59,11 +53,14 @@ public class ReadyUI : MainUIs
         gotoIngameBtn = bottomZone.GetChild(1).GetChild(0).GetComponent<Button>();
     }
 
-    protected override void OnEnable()
+
+    public override IEnumerator SetUI()
     {
-        base.OnEnable();
+        yield return base.SetUI();
+
         SetInitUIs();
     }
+
 
     private void SetInitUIs()
     {
@@ -151,6 +148,11 @@ public class ReadyUI : MainUIs
 
         foreach(int partsInvenId in PartsCode)
         {
+            if(partsInvenId == 0)
+            {
+                continue;
+            }
+
             PartsData partData = DataManager.parts.GetData(partsInvenId);
             if(partData == null)
             {

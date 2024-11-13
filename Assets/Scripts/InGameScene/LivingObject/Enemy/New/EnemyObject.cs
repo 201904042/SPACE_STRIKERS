@@ -36,10 +36,10 @@ public class EnemyObject : MonoBehaviour
     public EnemyType type;
 
     //각 에너미 데이터의 스텟 * 게임페이즈의 증폭률 반영된 스텟
-    [SerializeField] protected int maxHp;
-    [SerializeField] protected int curHp;
+    [SerializeField] protected float maxHp;
+    [SerializeField] protected float curHp;
     [SerializeField] protected int damage;
-    [SerializeField] protected int moveSpeed;
+    [SerializeField] public int moveSpeed;
     [SerializeField] protected int attackSpeed;
     [SerializeField] protected int expAmount;
     [SerializeField] protected int scoreAmount;
@@ -53,15 +53,16 @@ public class EnemyObject : MonoBehaviour
 
     [Header("상태 스텟")]
     [SerializeField] protected bool isEliminatable; //시스템적 삭제가 가능
+    [SerializeField] public bool isAttackable; //시스템적 삭제가 가능
     [SerializeField] protected bool isDamageable; //시스템적 삭제가 가능
     [SerializeField] protected bool isDropItem; //죽으면 아이템을 드롭
     [SerializeField] protected bool isStop; //움직임을 정지한 상태
     [SerializeField] protected bool isAttack; //공격중인 상태
-    [SerializeField] protected bool isShocked; //플레이어의 스킬에 의한 상태, 속도 및 공속 감소
+    [SerializeField] public bool isShocked; //플레이어의 스킬에 의한 상태, 속도 및 공속 감소
 
     protected virtual void OnDisable() => ResetObject();
 
-  
+    
     private void Start()
     {
         SetEnemy();
@@ -86,6 +87,7 @@ public class EnemyObject : MonoBehaviour
         SetHpBar();
     }
 
+   
     
     protected virtual void SetStat() 
     {
@@ -103,6 +105,7 @@ public class EnemyObject : MonoBehaviour
 
         //상태 초기화
         isEliminatable = false;
+        isAttackable = false;
         isDamageable = false;
         isDropItem = false;
         isStop = false;
@@ -144,12 +147,14 @@ public class EnemyObject : MonoBehaviour
         //isStopByLine = false;
         //isAimAttack = false;
         isEliminatable = false;
+        isAttackable = false;
         isDropItem = false;
 
         GetComponent<SpriteRenderer>().color = Color.white;
         if (hpBar.gameObject.activeSelf)
         {
             hpBar.gameObject.SetActive(false);
+            hpBar.value = 1;
         }
         if (enemyBehavior != null)
         {
@@ -190,7 +195,7 @@ public class EnemyObject : MonoBehaviour
         }
         var hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - transform.localScale.y, 0));
         hpBar.GetComponent<RectTransform>().position = hpBarPos;
-        hpBar.value = (float)curHp / (float)maxHp;
+        hpBar.value = (float)(curHp / (float)maxHp);
     }
 
     //프레임마다 체크
@@ -222,6 +227,8 @@ public class EnemyObject : MonoBehaviour
 
         hit = null;
     }
+
+
 
     //시스템에 의한 보상이 주어지지 않는 제거
     public void EliminateEnemy()
@@ -256,7 +263,7 @@ public class EnemyObject : MonoBehaviour
     }
 
     //점수 추가
-    private void AddEnemyScoreToStageScore() => GameManager.Game.Score += scoreAmount;
+    private void AddEnemyScoreToStageScore() => GameManager.Game.Score += (int)scoreAmount;
 
 
 
@@ -296,8 +303,8 @@ public class EnemyObject : MonoBehaviour
         if ((!isEliminatable || !isDamageable) && IsVisibleFrom() ) //화면 안에 들어오면 삭제가 가능함
         {
             isEliminatable = true;
+            isAttackable = true;
             isDamageable = true;
-            Debug.Log($"{gameObject.name} 삭제준비");
         }
 
         yield return null;
@@ -391,7 +398,7 @@ public class EnemyObject : MonoBehaviour
 
     public int GetCollisionDamage()
     {
-        return damage;
+        return (int)damage;
     }
 
     private bool CheckEliminatable()

@@ -16,11 +16,10 @@ public class Active_Shield : ActiveSkill
         instantShield = null;
     }
 
-    //쉴드는 다른 것과 달리 1개만 생성하며 쉴드가 파괴되었을때를 기점으로 쿨타임이 돌아감
-
     public override void LevelUp()
     {
         base.LevelUp(); // 부모 클래스의 LevelUp 호출
+
         if (instantShield != null) {
             GameManager.Game.Pool.ReleasePool(instantShield.gameObject); // 레벨업시 기존 스킬 파괴 및 바로 재생성
             instantShield = null;
@@ -61,12 +60,5 @@ public class Active_Shield : ActiveSkill
     }
 
 
-    public override void SetLevel()
-    {
-        foreach(Skill_LevelValue skill in DataManager.skill.GetData(SkillCode).levels)
-        {
-            SkillLevels.Add(skill.level, skill);
-        }
-
-    }
+    
 }

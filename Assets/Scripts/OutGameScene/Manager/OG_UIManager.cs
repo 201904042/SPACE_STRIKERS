@@ -8,7 +8,7 @@ public class OG_UIManager : MonoBehaviour
     //UIs
     private Transform mainUIs;
 
-    public GameObject HeaderUIObj;
+    public MainHeaderUI HeaderUI;
     public MainUI mainUI;
     public PlanetUI planetUI;
     public StageUI stageUI;
@@ -54,7 +54,7 @@ public class OG_UIManager : MonoBehaviour
 
     private void UISetting()
     {
-        HeaderUIObj = FindObjectOfType<MainHeaderUI>().gameObject;
+        HeaderUI = GameObject.Find("Canvas").GetComponentInChildren<MainHeaderUI>();
 
         mainUIs = GameObject.Find("MainUIs").transform;
         mainUI = mainUIs.GetComponentInChildren<MainUI>();
@@ -82,7 +82,7 @@ public class OG_UIManager : MonoBehaviour
 
     private void UIInit()
     {
-        HeaderUIObj.SetActive(true);
+        HeaderUI.gameObject.SetActive(true);
 
         for (int i = 0; i < mainUIs.childCount; i++)
         {

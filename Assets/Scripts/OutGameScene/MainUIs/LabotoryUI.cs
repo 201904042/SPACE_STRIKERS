@@ -162,20 +162,18 @@ public class LabotoryUI : MainUIs
         yield return StartCoroutine(selecteCharInterface.GetValue());
         if(selecteCharInterface.result == true)
         {
-            targetInvenCode = DataManager.inven.GetDataWithMasterId(selecteCharInterface.SelectedCode).id;
             targetType = MasterType.Character;
-            SetUpgradeUIForCharacter(targetInvenCode);
+            SetUpgradeUIForCharacter(selecteCharInterface.SelectedCode);
         }
     }
 
-    private void SetUpgradeUIForCharacter(int invenCode)
+    private void SetUpgradeUIForCharacter(int masterId)
     {
-        int masterCode = DataManager.inven.GetData(invenCode).masterId;
-        charSlot.GetComponent<CharacterImageBtn>().SetImageByMasterCode(masterCode);
-        CharData charData = DataManager.character.GetData(masterCode);
+        charSlot.GetComponent<CharacterImageBtn>().SetImageByMasterCode(masterId);
+        CharData charData = DataManager.character.GetData(masterId);
         int curLevel = charData.level;
 
-        UpgradeData upgradeData = DataManager.upgrade.GetData(masterCode);
+        UpgradeData upgradeData = DataManager.upgrade.GetData(masterId);
 
         if (!CanUpgrade(upgradeData, curLevel))
         {
@@ -365,13 +363,13 @@ public class LabotoryUI : MainUIs
         }
     }
 
-    private void ChangeIngredientData()
+    private async void ChangeIngredientData()
     {
         foreach(UpgradeIngred ingred in ingredientList)
         {
             DataManager.inven.DataUpdateOrDelete(DataManager.inven.GetDataWithMasterId(ingred.ingredMasterId).id, ingred.quantity);
         }
-        DataManager.inven.SaveData();
+        await DataManager.inven.SaveData();
     }
 
     //실질적인 업그레이드로 인한 데이터 변화
@@ -395,7 +393,7 @@ public class LabotoryUI : MainUIs
     }
 
 
-    private void ChangeCharacterData()
+    private async void ChangeCharacterData()
     {
         CharData targetChar = DataManager.character.GetData(DataManager.inven.GetData(targetInvenCode).masterId);
         targetChar.level += 1;
@@ -415,17 +413,17 @@ public class LabotoryUI : MainUIs
         }
         Debug.Log("캐릭터 강화 완료");
         DataManager.character.UpdateData(DataManager.inven.GetData(targetInvenCode).masterId, targetChar);
-        DataManager.character.SaveData();
+        await DataManager.character.SaveData();
         //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(CharData),DataManager.character.GetFilePath());
     }
 
-    private void ChangePartsAbilityData()
+    private async void ChangePartsAbilityData()
     {
         PartsData targetParts = DataManager.parts.GetData(targetInvenCode);
         targetParts.level += 1;
         targetParts.mainAbility.value += 5;
         DataManager.parts.UpdateData(targetInvenCode, targetParts);
-        DataManager.parts.SaveData();
+        await DataManager.parts.SaveData();
         //DB_Firebase.UpdateFirebaseNodeFromJson(Auth_Firebase.Game.UserId,nameof(PartsData),DataManager.parts.GetFilePath());
     }
 }

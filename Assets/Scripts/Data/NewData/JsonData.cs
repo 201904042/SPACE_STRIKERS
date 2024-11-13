@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
@@ -125,6 +126,12 @@ public abstract class ReadOnlyData<T>
         return dataDict.ContainsKey(id) ? true : false;
     }
 
+    public void ResetData()
+    {
+        dataDict.Clear();
+        keysList.Clear();
+        filePath = null;
+    }
 }
 
 // 읽기 및 쓰기 가능 데이터 관리 클래스
@@ -179,7 +186,7 @@ public abstract class EditableData<T> : ReadOnlyData<T>
 
     // JSON으로 저장하는 함수 (필요 시 구현)
 
-    public void SaveData()
+    public async Task SaveData()
     {
         List<int> sortedKeys = dataDict.Keys.OrderBy(key => key).ToList();
 
@@ -201,6 +208,8 @@ public abstract class EditableData<T> : ReadOnlyData<T>
         File.WriteAllText(filePath, json);
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
+        await Managers.Instance.FB_Db.UploadWritableJsonFilesAsync(filePath);
+        Debug.Log($"&&{DataManager.dataFieldNames[fieldType]} json 파일 업로드 완료&&");
 #endif
     }
 
@@ -212,16 +221,15 @@ public abstract class OnlyAccountData
     protected string filePath;
     public DataFieldType fieldType = DataFieldType.AccountData;
 
-    public void LoadData(string _filePath)
+    public async void LoadData(string _filePath)
     {
-
         filePath = _filePath;
         string json = File.ReadAllText(filePath);
         // 최상위 필드를 포함하는 래퍼 클래스로 파싱
         AccountDataWrapper wrapper = JsonUtility.FromJson<AccountDataWrapper>(json);
-        if (wrapper != null && wrapper.accountData != null)
+        if (wrapper != null && wrapper.AccountData != null)
         {
-            data = wrapper.accountData;
+            data = wrapper.AccountData;
             Debug.Log("계정 데이터 로드 성공");
         }
         else
@@ -229,24 +237,24 @@ public abstract class OnlyAccountData
             Debug.LogWarning("계정 데이터 로드 실패");
         }
 
-        GetUserId(data);
+        if(data.id == "")
+        {
+            data.id = Managers.Instance.FB_Auth.UserId;
+            data.name = data.id; //나중에 수정예정
+            await SaveData();
+        }
     }
 
-    protected virtual string GetUserId(AccountData data)
-    {
-        fieldType = DataFieldType.AccountData;
-        return data.id;
-    }
-
+   
     public AccountData GetData()
     {
         return data;
     }
 
     // JSON으로 저장하는 함수
-    public void SaveData()
+    public async Task SaveData()
     {
-        AccountDataWrapper wrapper = new AccountDataWrapper { accountData = data };
+        AccountDataWrapper wrapper = new AccountDataWrapper { AccountData = data };
         string json = JsonUtility.ToJson(wrapper, true);
 
         // JSON 필드명 변경
@@ -256,7 +264,15 @@ public abstract class OnlyAccountData
         File.WriteAllText(filePath, json);
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
+        await Managers.Instance.FB_Db.UploadWritableJsonFilesAsync(filePath);
+        Debug.Log($"&&{DataManager.dataFieldNames[fieldType]} json 파일 업로드 완료&&");
 #endif
+    }
+
+    public void ResetData()
+    {
+        data = new AccountData();
+        filePath = null;
     }
 }
 

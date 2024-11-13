@@ -40,7 +40,6 @@ public class PlayerUI : MonoBehaviour
     public void ExpBarChange()
     {
         exp.value = curExp / MaxExp; //계산해야됨
-        Debug.Log(exp.value);
     }
 
     public void PowBarChange()

@@ -114,7 +114,7 @@ public class LabotoryUI : MainUIs
 
         upgradeBtn.onClick.AddListener(UpgradeBtn);
         mainBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.mainUI));
-        storeBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.stageUI));
+        storeBtn.onClick.AddListener(() => ChangeUI(OG_UIManager.UIInstance.storeUI));
     }
 
     //모든 버튼의 리스터 제거

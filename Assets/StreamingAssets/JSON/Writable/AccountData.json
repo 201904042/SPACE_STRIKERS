@@ -1,18 +1,1 @@
-{
-    "AccountData": {
-        "id": "gQd7dQ0d7XYLnvQiZMdkm6K5hR92",
-        "name": "master",
-        "level": 3,
-        "exp": 13,
-        "stageProgress": 5,
-        "useChar": 101,
-        "useParts": [
-            0,
-            0,
-            0,
-            0
-        ],
-        "planetIndex": 1,
-        "stageIndex": 5
-    }
-}
+{ "AccountData": {"exp":13,"id":"gQd7dQ0d7XYLnvQiZMdkm6K5hR92","level":3,"name":"master","planetIndex":1,"stageIndex":5,"stageProgress":9,"useChar":103,"useParts":[26,23,21,22]} }

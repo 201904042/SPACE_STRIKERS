@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class EnemyObject : MonoBehaviour
 {
     private const string HpBarPath = "UI/Ingame/Enemy/E_HpBar";
-    public Slider hpBar; //해당 적에게 할당된 HPBar UI객체. 반드시 소유하고 있어야함
+    public UnityEngine.UI.Slider hpBar; //해당 적에게 할당된 HPBar UI객체. 반드시 소유하고 있어야함
 
     protected const int C_DefaultAtkDelay = 10;
     protected const int C_DefaultProjNum = 1;
@@ -63,7 +63,7 @@ public class EnemyObject : MonoBehaviour
     protected virtual void OnDisable() => ResetObject();
 
     
-    private void Start()
+    private void OnEnable()
     {
         SetEnemy();
     }
@@ -124,13 +124,12 @@ public class EnemyObject : MonoBehaviour
         if (hpBar == null )
         {
             Transform hpBarParent = GameManager.Canvas.Find("E_HpBars");
-            hpBar = GameManager.InstantiateObject(GameManager.LoadFromResources<GameObject>(HpBarPath), hpBarParent).GetComponent<Slider>();
+            hpBar = Instantiate(Resources.Load<GameObject>(HpBarPath), hpBarParent).GetComponent<Slider>();
             hpBar.name = $"{gameObject.name}'s maxHp";
-            RectTransform hpRect = hpBar.GetComponent<RectTransform>();
-            hpRect.sizeDelta = new Vector2(transform.localScale.x * 200, hpRect.sizeDelta.y);
+            //RectTransform hpRect = hpBar.GetComponent<RectTransform>();
+            //hpRect.sizeDelta = new Vector2(200, hpRect.sizeDelta.y);
         }
-
-        hpBar.value = 1;
+        
         hpBar.gameObject.SetActive(false);
     }
 
@@ -144,8 +143,6 @@ public class EnemyObject : MonoBehaviour
         attackSpeed = 0;
         expAmount = 0;
         scoreAmount = 0;
-        //isStopByLine = false;
-        //isAimAttack = false;
         isEliminatable = false;
         isAttackable = false;
         isDropItem = false;
@@ -154,6 +151,7 @@ public class EnemyObject : MonoBehaviour
         if (hpBar.gameObject.activeSelf)
         {
             hpBar.gameObject.SetActive(false);
+            hpBar.value = hpBar.minValue;
             hpBar.value = 1;
         }
         if (enemyBehavior != null)
@@ -173,17 +171,6 @@ public class EnemyObject : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void EnemyDamaged(GameObject hitObject, int damage)
     {
-        //if (!isDamageable)
-        //{
-        //    return;
-        //}
-        //ActiveHitEffect();
-        //curHp = Mathf.Max(curHp - damage, 0);
-        //UpdateHpBarValue();
-        //if(curHp == 0)
-        //{
-        //    EnemyDeath();
-        //}
         //Debug.Log($"{gameObject.name}이 {hitObject}에 의해 {damage}의 데미지를 입음");
     }
 
@@ -195,7 +182,7 @@ public class EnemyObject : MonoBehaviour
         }
         var hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - transform.localScale.y, 0));
         hpBar.GetComponent<RectTransform>().position = hpBarPos;
-        hpBar.value = (float)(curHp / (float)maxHp);
+        hpBar.value = (float)curHp / (float)maxHp;
     }
 
     //프레임마다 체크
@@ -376,22 +363,6 @@ public class EnemyObject : MonoBehaviour
 
         return proj;
     }
-
-    ////일정 시간마다 반복 하여 발사함
-    //public void FireRepeat(OtherProjType _proj, int repeatTime, int _speed, int _dmgRate, int _liveTime = 0, int _size = 0, int _projectileCount = 1, float _spreadAngle = 0, bool _isAim = false)
-    //{
-    //    for(int i =0 ; i < repeatTime; i++)
-    //    {
-    //        if(_projectileCount == 1)
-    //        {
-    //            FireSingle(_proj, _dmgRate, _liveTime, _size, _isAim);
-    //        }
-    //        else
-    //        {
-    //            FireMulti(_proj, _dmgRate, _liveTime, _size, _projectileCount, _spreadAngle, _isAim);
-    //        }
-    //    }
-    //}
 
     #endregion
 

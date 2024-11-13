@@ -1,32 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Interface_Option : UIInterface
 {
+    public Button EndBtn;
+    public Button CancelBtn;
 
-    void Start()
+    public override void SetComponent()
     {
-        
+        Transform Buttons = transform.GetChild(3).GetChild(0);
+        EndBtn = Buttons.GetChild(0).GetComponent<Button>();
+        CancelBtn = Buttons.GetChild(1).GetComponent<Button>();
+
+
+        EndBtn.onClick.RemoveAllListeners();
+        CancelBtn.onClick.RemoveAllListeners();
+        EndBtn.onClick.AddListener(EndbtnHandler);
+        CancelBtn.onClick.AddListener(CancelBtnHandler);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EndbtnHandler()
     {
-        
+        GameManager game = GameManager.Game;
+        GameManager.Game.Restart();
+        game.BattleSwitch = false;
+        game.StartCoroutine(game.EndGameSequence());
+        CloseInterface();
     }
 
-    public void Endbtn()
+    public void CancelBtnHandler()
     {
-        //gameObject.SetActive(false);
-        //GameEndUI.SetActive(true);
-        //Time.timeScale = 1.0f;
-        ////이경우 무조건 패배
+        GameManager.Game.Restart();
+        CloseInterface();
     }
 
-    public void CancelBtn()
-    {
-        gameObject.SetActive(false);
-        Time.timeScale = 1.0f;
-    }
 }

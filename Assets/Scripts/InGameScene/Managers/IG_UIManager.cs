@@ -62,7 +62,7 @@ public class IG_UIManager
         timeText.text = "00:00";
         scoreText.text = "0";
         optionBtn.onClick.RemoveAllListeners();
-        optionBtn.onClick.AddListener(IOption.OpenInterface);
+        optionBtn.onClick.AddListener(optionHandler);
     }
 
     public void SetTimeText(int minutes, int seconds)
@@ -73,6 +73,12 @@ public class IG_UIManager
     public void SetScoreText(int score)
     {
         scoreText.text = string.Format("{0000000}", score);
+    }
+
+    public void optionHandler()
+    {
+        IOption.OpenInterface();
+        GameManager.Game.Pause();
     }
 
    

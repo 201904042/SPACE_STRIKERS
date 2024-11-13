@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         Canvas = GameObject.Find("Canvas")?.transform;
         TriggerCheck = GameObject.Find("TriggerCheck")?.transform;
-        Time.timeScale = 1;
+        Restart();
 
         yield return new WaitUntil(() => Managers.Instance.Data.isDone == true);
 
@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
         Spawn.StopSpawnEnemy();
     }
 
-    private IEnumerator EndGameSequence()
+    public IEnumerator EndGameSequence()
     {
         StopSpawningEnemies();
         Spawn.DeleteAllEnemy();
